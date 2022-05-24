@@ -1,7 +1,7 @@
 import * as AWS from 'aws-sdk';
 import multerS3 from 'multer-s3';
 import multer from 'multer';
-import { v1, v3, v4, v5} from 'uuid';
+import { v1 } from 'uuid';
 
 require('dotenv').config();
 
