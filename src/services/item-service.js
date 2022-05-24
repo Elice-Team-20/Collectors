@@ -6,6 +6,24 @@ class ItemService {
     this.itemModel = itemModel;
   }
 
+  async addItem(itemInof){
+
+    const item = await itemModel.create(itemInof);
+    return item;
+  }
+
+  async getItems(){
+    //평가지표 보고 만들기
+    //아이탬이 비었는지 검사
+    const itemData = await itemModel.find({});
+    return itemData;
+  }
+
+  async getItembyObId(objectId){
+    // object 아이디 검사
+    const itemData = await itemModel.findById(objectId);
+    return itemData;
+  }
 }
 
 const itemService = new ItemService(itemModel);
