@@ -20,10 +20,10 @@ const upload = multer({
     bucket: 'team20',
     // 객체 업로드할 s3 이름
     key:function(req, file, cb){
-      const type = file.mimetype.split("/")[1]
+      const type = file.mimetype.split("/")[1];
       // uuid + 파일명으로 생성
-      const fileName = `image/${v1().toString().replace('-','')}.${type}`
-      cb(null, fileName)
+      const fileName = `image/${v1().toString().replace('-','')}.${type}`;
+      cb(null, fileName);
   },
     acl: 'public-read-write',
   }),

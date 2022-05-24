@@ -5,19 +5,19 @@ const Item = model('items', ItemSchema);
 
 export class ItemModel {
   async findById(itemId) {
-    const item = await Item.findOne({__id: itemId})
-    return item
+    const item = await Item.findOne({__id: itemId});
+    return item;
 
   }
 
   async find(){
-    const item = await Item.find({})
-    return item
+    const item = await Item.find({});
+    return item;
   }
 
   async create(itemInfo) {
-    const item = await Item.create(itemInfo)
-    return item
+    const item = await Item.create(itemInfo);
+    return item;
   }
 
   async delete(itemId) {
