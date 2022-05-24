@@ -5,7 +5,8 @@ const Item = model('items', ItemSchema);
 
 export class ItemModel {
   async findById(itemId) {
-    
+    const item = await Item.findOne({id: itemId});
+    return item;
   }
 
   async create(itemInfo) {
@@ -18,7 +19,8 @@ export class ItemModel {
   }
 
   async update(itemId, newInfo){
-    const updatedItem = await Item.findByIdAndUpdate({id: itemId}, newInfo);
+    console.log(itemId, newInfo)
+    const updatedItem = await Item.updateOne({id: itemId}, newInfo);
     return updatedItem;
   }
 
