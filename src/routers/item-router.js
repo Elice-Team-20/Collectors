@@ -30,7 +30,7 @@ itemRouter.post('/', upload.single('file'), async(req,res)=>{
     hashTag: hashTag,
   }
   const resultData = await itemService.addItem(formData)
-  res.json({sucsess: resultData});
+  res.json({status: "ok", sucsess: resultData});
 })
 
 itemRouter.get('/:id', async(req, res) => {
@@ -41,9 +41,9 @@ itemRouter.get('/:id', async(req, res) => {
 
 // 로그인 인증 넣어야한가?
 // submit 할때 같이 올려야함 따로 떨어지면안됨
-itemRouter.post('/img/:imgName', upload.single('file'),function(req,res){
-  res.json({message: "성공"});
-})
+// itemRouter.post('/img/:imgName', upload.single('file'),function(req,res){
+//   res.json({message: "성공"});
+// })
 
 export {itemRouter};
 //관리자 계정이어야 할듯
@@ -51,7 +51,7 @@ itemRouter.delete('/delete/:id', (req, res) => {
   try{
     const { id } = req.params;
     const result = itemService.deleteItem(id);
-    res.json({result: 'ok'});
+    res.json({status: "ok" ,result: result});
   }catch(error){
     next(error);
   }
@@ -62,7 +62,8 @@ itemRouter.post('/update/:id', (req, res) => {
     const { id } = req.params;
     const info = req.body;
     const result = itemService.updateItem(id, info);
-    res.json({result: 'ok'});
+    // 추후 헤더 수정
+    res.json({status: 'ok', result: result});
   }catch(error){
     next(error);
   }
