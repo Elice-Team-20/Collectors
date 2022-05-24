@@ -68,6 +68,5 @@ itemRouter.post('/update/:id', (req, res) => {
   }
 })
 
-// itemRouter.delete()
 export default itemRouter;
 //SyntaxError: /home/mj/projects/pet_shop/src/routers/item-router.js: `itemRouter` has already been exported. Exported identifiers must be unique. (72:9)
