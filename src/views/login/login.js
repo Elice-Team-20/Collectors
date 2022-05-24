@@ -1,6 +1,9 @@
 import * as Api from '/api.js';
 import { validateEmail } from '/useful-functions.js';
 
+import { makeHeader } from '../components/header.js';
+makeHeader();
+
 // 요소(element), input 혹은 상수
 const emailInput = document.querySelector('#emailInput');
 const passwordInput = document.querySelector('#passwordInput');
@@ -29,9 +32,7 @@ async function handleSubmit(e) {
   const isPasswordValid = password.length >= 4;
 
   if (!isEmailValid || !isPasswordValid) {
-    return alert(
-      '비밀번호가 4글자 이상인지, 이메일 형태가 맞는지 확인해 주세요.'
-    );
+    return alert('비밀번호가 4글자 이상인지, 이메일 형태가 맞는지 확인해 주세요.');
   }
 
   // 로그인 api 요청
