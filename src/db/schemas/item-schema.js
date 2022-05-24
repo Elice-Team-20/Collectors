@@ -6,10 +6,7 @@ import { Schema } from 'mongoose';
   순서대로 id(shortId), 상품명, 카테고리, 제조사, 요약 설명, 메인 설명, 이미지, 재고수, 가격, 해쉬태그(필수요소 지정X)
 */
 const ItemSchema = new Schema(
-  {
-    id:{
-      default: nanoid()
-    },
+  { 
     itemName: {
       type: String,
       required: true,
@@ -43,7 +40,7 @@ const ItemSchema = new Schema(
       required: true,
     },
     hashTag:{
-      type: List,
+      type: [],
     }
   }
 )
