@@ -43,6 +43,6 @@ const ItemSchema = new Schema(
       type: [],
     }
   }
-)
+);
 
 export { ItemSchema };
