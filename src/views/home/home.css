@@ -2,7 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 300vh;
+  background-color: #202020;
 }
 
 .landing {

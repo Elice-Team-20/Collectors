@@ -26,7 +26,8 @@ export class ItemModel {
   }
 
   async update(itemId, newInfo){
-    const updatedItem = await Item.findByIdAndUpdate({id: itemId}, newInfo);
+    console.log(itemId, newInfo)
+    const updatedItem = await Item.updateOne({id: itemId}, newInfo);
     return updatedItem;
   }
 

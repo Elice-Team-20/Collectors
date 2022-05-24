@@ -1,6 +1,9 @@
 import * as Api from '/api.js';
 import { validateEmail } from '/useful-functions.js';
 
+import { makeHeader } from '../components/header.js';
+makeHeader();
+
 // 요소(element), input 혹은 상수
 const fullNameInput = document.querySelector('#fullNameInput');
 const emailInput = document.querySelector('#emailInput');
