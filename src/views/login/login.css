@@ -35,7 +35,10 @@
   color:black;
 
 }
-
+.login-form-box .field .input:focus {
+  border: 0.5px solid #e7484b;
+  box-shadow: 0 0 0 0.125em #F01E21;
+}
 .login-form-box .button { 
   width:100%;
   height:5vh;

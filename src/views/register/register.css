@@ -38,6 +38,11 @@
   color:black;
 }
 
+.register-user-form-box .field .input:focus {
+  border: 0.5px solid #e7484b;
+  box-shadow: 0 0 0 0.125em #F01E21;
+}
+
 .register-user-form-box .button {
   width:100%;
   height:5vh;
@@ -49,10 +54,6 @@
   font-weight: bold;
 }
 
-.register-user-form-box .input:focus {
-  border-color: #e7484b;
-  box-shadow: 0 0 0 0.125em #F01E21;
-}
 .register-user-form-box .button:hover{
   border-color: #e7484b;
   background-color: #e7484b;
