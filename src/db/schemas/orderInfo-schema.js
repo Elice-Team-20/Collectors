@@ -20,7 +20,7 @@ const OrderInfo = new Schema({
 
 },
 {
-  collection: 'orderinfos',
+  collection: 'orderinfoes',
   timestamps :true,
 }
 );
