@@ -5,14 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>쇼핑-데모</title>
     <!-- 아이콘 -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/elice-rabbit-favicon.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/elice-rabbit-favicon.png"
+    />
     <!-- bulma css 관련 -->
     <!-- <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
     /> -->
     <!-- 폰트 어썸: 아이콘 -->
-    <script defer src="https://kit.fontawesome.com/7630448495.js" crossorigin="anonymous"></script>
+    <script
+      defer
+      src="https://kit.fontawesome.com/7630448495.js"
+      crossorigin="anonymous"
+    ></script>
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="login.css" />
     <link rel="stylesheet" href="../style.css" />
@@ -20,40 +29,35 @@
   </head>
   <body>
     <div id="wrap">
-      <!-- 헤더 -->
+    <!-- 헤더 -->
       <nav></nav>
       <!-- 로그인 폼(Form) -->
       <section>
         <div class="login-form-container">
-          <form class="box login-form-box" id="loginForm">
-            <p class="title is-5 has-text-info">어서오세요!</p>
+          <form class="login-form-box">
             <div class="field">
               <label class="label" for="emailInput">이메일</label>
-              <div class="control">
-                <input
-                  class="input"
-                  id="emailInput"
-                  type="email"
-                  placeholder="abc@example.com"
-                  autocomplete="on"
-                />
-              </div>
+              <input
+                class="input"
+                id="emailInput"
+                type="email"
+                placeholder="abc@example.com"
+                autocomplete="on"
+              />
             </div>
 
-            <div class="field mb-5">
+            <div class="field">
               <label class="label" for="passwordInput">비밀번호</label>
-              <div class="control">
-                <input
-                  class="input"
-                  id="passwordInput"
-                  type="password"
-                  placeholder="********"
-                  autocomplete="on"
-                />
-              </div>
+              <input
+                class="input"
+                id="passwordInput"
+                type="password"
+                placeholder="********"
+                autocomplete="on"
+              />
             </div>
 
-            <button class="button is-info is-fullwidth" id="submitButton">
+            <button class="button" id="submitButton">
               로그인하기
             </button>
           </form>

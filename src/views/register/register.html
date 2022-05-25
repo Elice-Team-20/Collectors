@@ -29,8 +29,7 @@
       <!-- 회원가입 폼(Form) -->
       <section>
         <div class="register-user-form-container">
-          <form class="box register-user-form-box" id="registerUserForm">
-            <p class="title is-5 has-text-primary">환영합니다!</p>
+          <form class="register-user-form-box" id="registerUserForm">
             <div class="field">
               <label class="label" for="fullNameInput">이름</label>
               <div class="control">
@@ -39,7 +38,7 @@
                   id="fullNameInput"
                   type="text"
                   placeholder="유재석"
-                  autocomplete="on"
+                  autocomplete="off"
                 />
               </div>
             </div>
@@ -52,7 +51,7 @@
                   id="emailInput"
                   type="email"
                   placeholder="abc@example.com"
-                  autocomplete="on"
+                  autocomplete="off"
                 />
               </div>
             </div>
@@ -70,7 +69,7 @@
               </div>
             </div>
 
-            <div class="field mb-5">
+            <div class="field">
               <label class="label" for="passwordConfirmInput">비밀번호 확인</label>
               <div class="control">
                 <input
@@ -83,7 +82,7 @@
               </div>
             </div>
 
-            <button class="button is-primary is-fullwidth" id="submitButton">
+            <button class="button" id="submitButton">
               회원가입하기
             </button>
           </form>
