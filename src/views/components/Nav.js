@@ -1,5 +1,5 @@
 export const Nav = (isLoggedIn, page) => {
-  const loginMenu = isLoggedIn? '<li><a>로그아웃</a></li>' : '<li><a href="/login">로그인</a></li>';
+  const loginMenu = isLoggedIn? `<li><a>로그아웃</a></li><li><a href='/user'>계정 관리</a></li>` : `<li><a href="/login">로그인</a></li><li><a href='/register'>회원가입</a></li>`;
   let menu = ''
   if(page==="Login"){
     menu=`
@@ -14,7 +14,6 @@ export const Nav = (isLoggedIn, page) => {
   } else{
     menu=`
     ${loginMenu}
-    <li><a href="/register">회원가입</a></li>
     <li><a href="#cart">장바구니</a></li>
     `
   }

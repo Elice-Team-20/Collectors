@@ -15,13 +15,17 @@ const greetingDiv = document.querySelector('#greetingDiv');
 const nav = document.querySelector("nav")
 const footer = document.querySelector("footer")
 
-addDefault();
+const isLoggedIn = checkUser()
+addDefault(isLoggedIn);
 // addAllElements();
 // addAllEvents();
 
+function checkUser(){
+  return localStorage.getItem('token')? true : false
+}
 // Navigation Component 추가하는 역할
-function addDefault(){
-  nav.innerHTML=Nav(false,"Home")
+function addDefault(isLoggedIn){
+  nav.innerHTML=Nav(isLoggedIn,"Home")
   footer.innerHTML=Footer()
 }
 
