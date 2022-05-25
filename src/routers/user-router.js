@@ -134,4 +134,12 @@ userRouter.patch(
   }
 );
 
+userRouter.get('/logout', async (req, res, next) => {
+  try {
+    res.json(null);
+  } catch (error) {
+    next(error);
+  }
+})
+
 export { userRouter };
