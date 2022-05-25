@@ -4,16 +4,30 @@
 import * as Api from '/api.js';
 import { randomId } from '/useful-functions.js';
 
-import { makeHeader } from '../components/header.js';
-makeHeader();
+import { Nav } from '../components/Nav.js'; //네비게이션 컴포넌트
+import { Footer } from '../components/Footer.js'; //푸터 컴포넌트
+
 
 // =====
 // 요소(element), input 혹은 상수
 const landingDiv = document.querySelector('#landingDiv');
 const greetingDiv = document.querySelector('#greetingDiv');
+const nav = document.querySelector("nav")
+const footer = document.querySelector("footer")
 
-addAllElements();
-addAllEvents();
+const isLoggedIn = checkUser()
+addDefault(isLoggedIn);
+// addAllElements();
+// addAllEvents();
+
+function checkUser(){
+  return localStorage.getItem('token')? true : false
+}
+// Navigation Component 추가하는 역할
+function addDefault(isLoggedIn){
+  nav.innerHTML=Nav(isLoggedIn,"Home")
+  footer.innerHTML=Footer()
+}
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {

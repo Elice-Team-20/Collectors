@@ -7,50 +7,34 @@
     <!-- 아이콘 -->
     <link rel="icon" type="image/png" sizes="16x16" href="/elice-rabbit-favicon.png" />
     <!-- bulma css -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    /> -->
     <!-- 폰트 어썸: 아이콘 -->
     <script defer src="https://kit.fontawesome.com/7630448495.js" crossorigin="anonymous"></script>
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="../style.css" />
     <script src="home.js" type="module" defer></script>
   </head>
   <body>
-    <div class="div-container">
-      <!-- 헤더 style="background-color: #202020" -->
-      <nav class="navbar is-fixed-top has-background-black" role="navigation" aria-label="main navigation">
-        <div class="container mt-3 mb-3">
-          <div class="navbar-brand">
-            <a class="navbar-item has-background-danger" href="/">
-              <!-- <img src="/elice-rabbit.png" width="30" height="30" /> -->
-              <span class="has-text-white">MARVEL STORE</span>
-            </a>
-
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-            </a>
+    <div id="wrap">
+      <!-- 헤더 -->
+      <nav></nav>
+      <!-- 컨텐트 -->
+      <section>
+        <div class="div-container">
+          <div class="landing" id="landingDiv">
+            <h1>랜딩 페이지</h1>
           </div>
-
-          <div class="navbar-menu navbar-end breadcrumb has-dot-separator my-auto" aria-label="breadcrumbs">
-            <ul id="navbar">
-              <li>
-                <a href="#cart" aria-current="page">
-                  <span class="icon has-text-white">
-                    <i class="fas fa-cart-shopping"></i>
-                  </span>
-                  <span class="has-text-white">카트</span>
-                </a>
-              </li>
-            </ul>
+          <div class="greeting" id="greetingDiv">
+            <h1>안녕하세요!</h1>
           </div>
         </div>
-      </nav>
+      </section>
+      <!-- 푸터 -->
+      <footer></footer>
     </div>
-    <footer class="footer has-background-black">
-      <div class="content has-text-centered">
-        <p>By Team 20.</p>
-      </div>
-    </footer>
   </body>
 </html>
