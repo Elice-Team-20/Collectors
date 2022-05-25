@@ -23,7 +23,7 @@
 }
 .login-form-box .field .input{
   width:98%;
-  height:4vh;
+  height:5vh;
   padding-left: 2%;
 
   background: #FFFFFF;
@@ -38,7 +38,7 @@
 
 .login-form-box .button { 
   width:100%;
-  height:4vh;
+  height:5vh;
 
   border-color: #F01E21;
   border-radius: 7px;
