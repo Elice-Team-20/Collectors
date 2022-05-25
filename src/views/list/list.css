@@ -1,0 +1,19 @@
+.div-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300vh;
+  background-color: #202020;
+}
+
+div.container {
+  display: flex;
+}
+
+.list-wrapper {
+  display: flex;
+  width: 95%;
+  gap: 50px;
+  justify-content: center;
+  align-items: center;
+}
