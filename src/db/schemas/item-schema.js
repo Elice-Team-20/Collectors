@@ -45,7 +45,7 @@ const ItemSchema = new Schema(
     }
   },
   {
-    collection: 'orderinfos',
+    collection: 'items',
     timestamps :true,
   }
 );
