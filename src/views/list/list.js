@@ -12,22 +12,31 @@ const ITEMLIST = document.querySelector('.item-list');
 const nav = document.querySelector('nav');
 const footer = document.querySelector('footer');
 
-addDefault();
+const isLoggedIn = checkUser()
+
 addAllElements();
 addAllEvents();
 
+// 로그인 상태 확인
+function checkUser(){
+  return localStorage.getItem('token')? true : false
+}
 // Navigation Component 추가하는 역할
-function addDefault() {
-  nav.innerHTML = Nav(false, 'Register');
+function addDefault(isLoggedIn) {
+  nav.innerHTML = Nav(isLoggedIn, 'Register');
   footer.innerHTML = Footer();
 }
 
-async function addAllElements() {}
+async function addAllElements() {
+  addDefault(isLoggedIn);
+  insertItemElement();
+}
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-function addAllEvents() {}
+function addAllEvents() {
+  
+}
 
-insertItemElement();
 
 async function insertItemElement() {
   const response = await fetch(`/api/item`, {
@@ -36,27 +45,29 @@ async function insertItemElement() {
   });
   const items = await response.json();
   console.log(items);
-  items.item.forEach(({ itemName, mainExplanation, imgUrl, price }) => {
-    console.log(imgUrl);
+  items.item.forEach(({ _id, itemName, mainExplanation, imgUrl, price }) => {
+    console.log(_id);
     ITEMLIST.insertAdjacentHTML(
       'beforeend',
       `
-      <div class="item">
-        <div class="imgBox">
-          <figure>
-            <img id="itemImage" src="${imgUrl}" alt="item-image" />
-          </figure>
-        </div>
-        <div class="description">
-          <div class="detail">
-            <h1 id="itemName">${itemName}</h1>
-            <p id="mainExplanation">${mainExplanation}</p>
+      <a href="/items/detail/?id=${_id}">
+        <div class="item">
+          <div class="imgBox">
+            <figure>
+              <img id="itemImage" src="${imgUrl}" alt="item-image" />
+            </figure>
           </div>
-          <div>
-            <h2 id="price">${addCommas(price)}원</h2>
+          <div class="description">
+            <div class="detail">
+              <h1 id="itemName">${itemName}</h1>
+              <p id="mainExplanation">${mainExplanation}</p>
+            </div>
+            <div>
+              <h2 id="price">${addCommas(price)}원</h2>
+            </div>
           </div>
         </div>
-      </div>
+      </a>
     `
     );
   });
