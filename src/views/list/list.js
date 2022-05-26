@@ -25,7 +25,6 @@ function addAllEvents() {
   addNavEventListeners();
 }
 
-
 async function insertItemElement() {
   const response = await fetch(`/api/item`, {
     method: 'GET',
@@ -33,12 +32,12 @@ async function insertItemElement() {
   });
   const items = await response.json();
   console.log(items);
-  items.item.forEach(({ _id, itemName, mainExplanation, imgUrl, price }) => {
+  items.item.forEach(({ _id, itemName, summary, imgUrl, price }) => {
     console.log(_id);
     ITEMLIST.insertAdjacentHTML(
       'beforeend',
       `
-      <a href="/items/detail/?id=${_id}">
+      <a href="/item/?id=${_id}">
         <div class="item">
           <div class="imgBox">
             <figure>
@@ -48,7 +47,7 @@ async function insertItemElement() {
           <div class="description">
             <div class="detail">
               <h1 id="itemName">${itemName}</h1>
-              <p id="mainExplanation">${mainExplanation}</p>
+              <p id="summary">${summary}</p>
             </div>
             <div>
               <h2 id="price">${addCommas(price)}원</h2>

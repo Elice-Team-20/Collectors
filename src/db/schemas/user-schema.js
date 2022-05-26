@@ -40,6 +40,10 @@ const UserSchema = new Schema(
     type: Schema.Types.ObjectId,
     ref: "orderinfoes",
   }],
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    }
   },
   {
     collection: 'users',

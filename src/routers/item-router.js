@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import upload from '../db/models/s3-model';
 import { itemService } from '../services/index'
+import { adminRequired, loginRequired } from '../middlewares' ;
+
 
 const itemRouter = Router();
 
@@ -45,9 +47,8 @@ itemRouter.get('/:id', async(req, res) => {
 //   res.json({message: "성공"});
 // })
 
-export {itemRouter};
 //관리자 계정이어야 할듯
-itemRouter.delete('/delete/:id', (req, res) => {
+itemRouter.delete('/delete/:id', loginRequired, adminRequired, async (req, res, next) => {
   try{
     const { id } = req.params;
     const result = itemService.deleteItem(id);
@@ -57,7 +58,7 @@ itemRouter.delete('/delete/:id', (req, res) => {
   }
 })
 
-itemRouter.post('/update/:id', (req, res) => {
+itemRouter.post('/update/:id', loginRequired, adminRequired, async (req, res, next) => {
   try{
     const { id } = req.params;
     const info = req.body;
@@ -69,5 +70,6 @@ itemRouter.post('/update/:id', (req, res) => {
   }
 })
 
-export default itemRouter;
+export {itemRouter};
+
 //SyntaxError: /home/mj/projects/pet_shop/src/routers/item-router.js: `itemRouter` has already been exported. Exported identifiers must be unique. (72:9)

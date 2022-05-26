@@ -45,9 +45,8 @@ const ItemSchema = new Schema(
     }
   },
   {
-    collection: 'items',
-    timestamps :true,
-  }
+    timestamps: true,
+  },
 );
 
 export { ItemSchema };
