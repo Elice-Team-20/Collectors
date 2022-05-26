@@ -32,4 +32,10 @@ orderInfoRouter.get('/', async(req, res) => {
   res.json( await orderInfoService.getOrderInfo());
 })
 
+orderInfoRouter.get('/:id', async(req, res) => {
+  const {id} = req.params
+  res.json( await orderInfoService.getOrderInfoById(id));
+})
+
+
 export {orderInfoRouter};

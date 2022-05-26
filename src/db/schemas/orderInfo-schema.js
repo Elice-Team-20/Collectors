@@ -4,7 +4,7 @@ const OrderSchema = new Schema({
   shipAddress: {
     type: new Schema(
       {
-        postalCode: String,
+        postalCode: Number,
         address1: String,
         address2: String,
       },
@@ -20,7 +20,8 @@ const OrderSchema = new Schema({
     },
   recipientName: {
     type: String,
-     required: true}
+     required: true
+    }
      ,
   recipientPhone: {
     type: Number,

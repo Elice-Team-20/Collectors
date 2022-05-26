@@ -10,7 +10,11 @@ class OrderinfoService {
   };
 
   async getOrderInfo(){
-    return await this.orderModel.findAll()
+    return this.orderModel.findAll()
+  }
+
+  async getOrderInfoById(id){
+    return this.orderModel.findByObjectId(id)
   }
 
 

@@ -7,7 +7,7 @@ export class OrderModel{
   //r
   async findByObjectId(objectId){
     try{
-      const data = await orderInfoModel.findByid({objectId});
+      const data = await orderInfoModel.findOne({_id: objectId}).exec();
       if(!data){
         return new Error({message: "데이터가 없습니다."});
       }
