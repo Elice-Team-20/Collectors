@@ -1,11 +1,8 @@
 import { Router } from 'express';
 import upload from '../db/models/s3-model';
 import { itemService } from '../services/index'
-<<<<<<< HEAD
 import { adminRequired, loginRequired } from '../middlewares' ;
 
-=======
->>>>>>> index에서 가져오는 구조 획일화 반영
 
 const itemRouter = Router();
 

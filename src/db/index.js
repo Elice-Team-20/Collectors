@@ -20,12 +20,4 @@ db.on('error', (error) =>
 // '../db/index.js' 에서 index.js 는 생략 가능하므로, '../db' 면 됨 (index는 특별한 용어)
 export * from './models/user-model';
 export * from './models/item-model';
-<<<<<<< HEAD
-<<<<<<< HEAD
 export * from './models/orderInfo-model';
-=======
-export * from './models/order-model';
->>>>>>> export order 모델
-=======
-export * from './models/orderInfo-model';
->>>>>>> 파일 이름 바뀐거 반영 service router model
