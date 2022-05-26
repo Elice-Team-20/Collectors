@@ -33,15 +33,14 @@ orderInfoRouter.get('/', async(req, res) => {
 })
 
 orderInfoRouter.get('/:id', async(req, res) => {
-  const {id} = req.params
+  const {id} = req.params;
   res.json(await orderInfoService.getOrderInfoById(id));
 })
 
 orderInfoRouter.post('/makeOrder', async(req, res) => {
-  const {email, orderId} = req.body
+  const {email, orderId} = req.body;
   //res.json({email:email, orderid: orderId})
-  res.json(await orderInfoService.connectOrderAndInfo(email, orderId))
-
+  res.json(await orderInfoService.connectOrderAndInfo(email, orderId));
 })
 
 export {orderInfoRouter};
