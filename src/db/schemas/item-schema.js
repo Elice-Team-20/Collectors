@@ -1,5 +1,6 @@
 import { shortId } from './types/short-id';
-import { Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
+import { CategorySchema } from './category-schema';
 
 
 /*
@@ -12,8 +13,8 @@ const ItemSchema = new Schema(
       required: true,
     },
     category: {
-      type: String,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'categories',
     },
     manufacturingCompany: {
       type: String,
