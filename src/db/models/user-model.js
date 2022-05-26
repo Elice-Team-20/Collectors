@@ -32,7 +32,7 @@ export class UserModel {
     return updatedUser;
   }
 
-  async delete(userId, password) {
+  async delete(userId) {
     const removedUser = await User.findOneAndDelete({_id: userId});
     return removedUser;
   }
