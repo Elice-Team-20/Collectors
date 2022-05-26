@@ -8,10 +8,6 @@ class OrderinfoService {
   async addOrderInfo(orderData){
     return this.orderModel.create(orderData)
   };
-  // 피드백 받은 코드 반영
-  // async addOrderInfo(orderInfo){
-  //   return this.orderModel.crate(orderInfo)
-  // }
 
 
 
