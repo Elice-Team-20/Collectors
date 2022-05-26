@@ -5,7 +5,12 @@ const Item = model('items', ItemSchema);
 
 export class ItemModel {
   async findById(itemId) {
-    const item = await Item.findOne({__id: itemId});
+
+    // 오브젝트 아이디 무조건 _ 하나여야 검증 가능
+    const item = await Item.findOne({ _id: itemId});
+    console.log(item.id === itemId)
+    console.log(item._id === itemId)
+
     return item;
 
   }
