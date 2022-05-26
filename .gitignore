@@ -3,8 +3,5 @@ node_modules
 yarn.lock
 .env
 lib
-<<<<<<< HEAD
 package-lock.json
 .DSstore
-=======
->>>>>>> 바벨 컴파일한 파일 저장할 lib 폴더를 gitignore 에 넣었습니다
