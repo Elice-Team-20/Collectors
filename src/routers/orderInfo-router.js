@@ -3,14 +3,26 @@ import {orderInfoService} from './../services/index'
 const orderInfoRouter = Router();
 
 orderInfoRouter.post('/', (req, res) => {
-	const {shipAddress, totalCost, recipientName, recipientPhone} = req.body;
-	const inputOrderData = {
-		shipAddress: shipAddress,
-		totalCost: totalCost,
-		recipientName: recipientName,
-		recipientPhone: recipientPhone,
-	}
-	res.json(orderInfoService.addOrderInfo(inputOrderData))
+  const {
+          address1,
+          address2,
+          postalCode,
+          totalCost,
+          recipientName,
+          recipientPhone
+        } = req.body;
+  const address = {
+    postalCode: postalCode,
+    address1: address1,
+    address2: address2,
+  }
+  const inputOrderData = {
+      address: address,
+      totalCost: totalCost,
+      recipientName: recipientName,
+      recipientPhone: recipientPhone,
+  }
+    res.json(orderInfoService.addOrderInfo(inputOrderData))
 })
 
 export {orderInfoRouter}
