@@ -6,10 +6,12 @@ import { addCommas } from '/useful-functions.js';
 import { Nav } from '../../components/Nav.js'; //네비게이션 컴포넌트
 import { Footer } from '../../components/Footer.js'; //푸터 컴포넌트
 
+import { checkUserStatus } from '../../modules/user-status-functions.js'; // 로그인 상태 확인
+
 const nav = document.querySelector("nav")
 const footer = document.querySelector("footer")
 
-const isLoggedIn = checkUser() // 로그인 상태 확인 
+const isLoggedIn = checkUserStatus() // 로그인 상태 확인 
 
 // url에서 id 값 추출해오기
 const ITEMDETAIL = document.querySelector('.item-detail');
@@ -31,10 +33,6 @@ function addAllEvents() {
   
 }
 
-// 로그인 상태 확인 함수
-function checkUser(){
-  return localStorage.getItem('token')? true : false
-}
 // navigation, footer Component 추가하는 역할
 function addDefault(isLoggedIn){
   nav.innerHTML=Nav(isLoggedIn,"Home")

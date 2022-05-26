@@ -3,10 +3,10 @@
 // 코드 예시를 남겨 두었습니다.
 import * as Api from '/api.js';
 import { randomId } from '/useful-functions.js';
+import { checkUserStatus } from '../modules/user-status-functions.js';
 
 import { Nav } from '../components/Nav.js'; //네비게이션 컴포넌트
 import { Footer } from '../components/Footer.js'; //푸터 컴포넌트
-
 
 // =====
 // 요소(element), input 혹은 상수
@@ -15,14 +15,13 @@ const greetingDiv = document.querySelector('#greetingDiv');
 const nav = document.querySelector("nav")
 const footer = document.querySelector("footer")
 
-const isLoggedIn = checkUser()
-addDefault(isLoggedIn);
-// addAllElements();
-// addAllEvents();
+const isLoggedIn = checkUserStatus() // 로그인 상태 확인
+addAllElements();
+addAllEvents();
 
-function checkUser(){
-  return localStorage.getItem('token')? true : false
-}
+// function checkUser(){
+//   return localStorage.getItem('token')? true : false
+// }
 // Navigation Component 추가하는 역할
 function addDefault(isLoggedIn){
   nav.innerHTML=Nav(isLoggedIn,"Home")
@@ -31,6 +30,7 @@ function addDefault(isLoggedIn){
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
+  addDefault(isLoggedIn);
   insertTextToLanding();
   insertTextToGreeting();
 }
