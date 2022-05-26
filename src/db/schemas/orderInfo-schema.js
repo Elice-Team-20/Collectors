@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
-const OrderInfo = new Schema({
+const OrderSchema = new Schema({
   shipAddress: {
     type: String,
     required: true,
@@ -25,4 +25,4 @@ const OrderInfo = new Schema({
 }
 );
 
-export default OrderInfo;
+export default OrderSchema;
