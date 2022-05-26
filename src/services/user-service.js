@@ -129,9 +129,7 @@ class UserService {
 
   async deleteUser(userId, password){
     
-    console.log(userId);
     const user = await this.userModel.findById(userId);
-    console.log(user);
 
     
     const correctPasswordHash = user.password;

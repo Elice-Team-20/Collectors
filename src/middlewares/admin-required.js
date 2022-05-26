@@ -5,9 +5,7 @@ async function adminRequired(req, res, next) {
 
   try {
     const userId = req.currentUserId;
-    console.log("admin", userId);
     const user = await userService.getUser(userId);
-    console.log(user.isAdmin);
     
     if(!user.isAdmin) {
       throw new Error('관리자 계정이 아닙니다.');
@@ -15,7 +13,10 @@ async function adminRequired(req, res, next) {
 
     next();
   } catch (error) {
-    console.log(error);
+    res.status(401).json({
+      result: 'frobidden-approach',
+      reason: '권한이 없습니다.',
+    })
   }
 }
 
