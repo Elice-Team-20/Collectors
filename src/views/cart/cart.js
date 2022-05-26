@@ -6,10 +6,12 @@ import { addCommas } from '/useful-functions.js';
 import { Nav } from '../components/Nav.js'; //네비게이션 컴포넌트
 import { Footer } from '../components/Footer.js'; //푸터 컴포넌트
 import { OrderNav } from '../components/OrderNav.js'; // 주문 네비게이션 컴포넌트
+import { OrderInfo } from '../components/OrderInfo.js'; // 결제정보 컴포넌트
 
 const nav = document.querySelector('nav');
 const footer = document.querySelector('footer');
 const cartWrap = document.querySelector('.cart-wrap');
+const infoWrap = document.querySelector('.info > h2');
 const itemPrice = document.querySelector('#item-price');
 const itemNumber = document.querySelector('#item-number');
 const shipping = document.querySelector('#shipping');
@@ -23,7 +25,8 @@ addAllEvents();
 function addDefault() {
   nav.innerHTML = Nav(true, 'Cart');
   footer.innerHTML = Footer();
-  cartWrap.insertAdjacentHTML('afterbegin', OrderNav('Order'));
+  cartWrap.insertAdjacentHTML('afterbegin', OrderNav('Cart'));
+  infoWrap.insertAdjacentHTML('afterend', OrderInfo('Cart'));
 }
 
 async function addAllElements() {

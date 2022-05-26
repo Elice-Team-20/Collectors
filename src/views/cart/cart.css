@@ -34,13 +34,32 @@ div.items {
 div.select {
   display: flex;
   border-bottom: 1px solid white;
+  padding-bottom: 0.5rem;
+  margin-right: 1rem;
+}
+
+div.select > * {
+  margin-right: 1rem;
+}
+
+.checkbox {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 div.info {
   width: 30%;
-  height: 80vh;
+  height: 50vh;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+div.info > h2 {
+  border-bottom: 1px solid white;
+  padding-bottom: 0.5rem;
 }
 
 div.data {
