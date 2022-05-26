@@ -4,7 +4,7 @@ import { ItemSchema } from '../schemas/item-schema';
 const Item = model('items', ItemSchema);
 
 export class ItemModel {
-  async findById(itemId) {
+  async findById (itemId) {
 
     // 오브젝트 아이디 무조건 _ 하나여야 검증 가능
     //추후 async handler 추가 필요 - 일단 dev 에 넣기 위해 이렇게 처리
@@ -13,7 +13,7 @@ export class ItemModel {
       const item = await Item.findOne({ _id: itemId}).exec();
       return item;
     }
-    catch(er){
+    catch (er){
       console.log("에러 발생 개발자도구를 확인하세요");
       return er;
     }
@@ -24,7 +24,7 @@ export class ItemModel {
       const item = await Item.find({}).exec();
       return item;
     }
-    catch(er) {
+    catch (er) {
       console.log("에러 발생 개발자도구를 확인하세요");
       return er;
     }
@@ -35,7 +35,7 @@ export class ItemModel {
       const item = await Item.create(itemInfo).exec();
       return item;
     }
-    catch(er){
+    catch (er){
       console.log("에러 발생 개발자도구를 확인하세요");
       return er;
     }
@@ -46,7 +46,7 @@ export class ItemModel {
       const item = await Item.findOneAndDelete({_id: itemId}).exec();
       return item;
     }
-    catch(er){
+    catch (er){
       console.log("에러 발생 개발자도구를 확인하세요");
       return er;
     }
