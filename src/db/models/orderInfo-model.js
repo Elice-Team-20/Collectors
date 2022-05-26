@@ -1,5 +1,5 @@
 import { model } from 'mongoose';
-import OrderSchema from './../schemas/orderInfo-schema'
+import OrderSchema from '../schemas/orderInfo-schema'
 
 const orderInfoModel = model('orderinfoes', OrderSchema)
 
@@ -67,6 +67,6 @@ export class OrderModel{
 
 }
 
-const orderModel = new OrderModel();
+const orderInfo = new OrderModel();
 
-export { orderModel }
+export { orderInfo }
