@@ -2,7 +2,16 @@ import { Schema } from 'mongoose';
 
 const OrderSchema = new Schema({
   shipAddress: {
-    type: String,
+    type: new Schema(
+      {
+        postalCode: String,
+        address1: String,
+        address2: String,
+      },
+      {
+        _id: false,
+      }
+    ),
     required: true,
   },
   totalCost: {
