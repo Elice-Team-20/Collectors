@@ -11,11 +11,7 @@ export class ItemModel {
 
     try{
       const item = await Item.findOne({ _id: itemId}).exec();
-      if(item.id !== itemId) {
-      console.log("에러 진입");
-      return new Error("잘못된 아이디입니다 아이디를 확인해주세요");
-      }
-    return item;
+      return item;
     }
     catch(er){
       console.log("error 발생 개발자도구를 확인하세요");
@@ -40,24 +36,31 @@ export class ItemModel {
       return item;
     }
     catch(er){
+      console.log("error 발생 개발자도구를 확인하세요");
       return er;
     }
   }
 
   async delete(itemId) {
     try{
-      const item = await Item.findOneAndDelete({id: itemId}).exec();
+      const item = await Item.findOneAndDelete({_id: itemId}).exec();
       return item;
     }
     catch(er){
+      console.log("error 발생 개발자도구를 확인하세요");
       return er;
     }
   }
 
   async update(itemId, newInfo) {
     console.log(itemId, newInfo);
-    const updatedItem = await Item.updateOne({id: itemId}, newInfo).exec();
-    return updatedItem;
+    try{
+      const updatedItem = await Item.updateOne({_id: itemId}, newInfo).exec();
+      return updatedItem;
+    }
+    catch (er){
+      return er;
+    }
   }
 }
 
