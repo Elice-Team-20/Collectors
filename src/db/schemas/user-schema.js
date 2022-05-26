@@ -36,10 +36,10 @@ const UserSchema = new Schema(
       required: false,
       default: 'basic-user',
     },
-  orderInfo:{
+  orderInfo:[{
     type: Schema.Types.ObjectId,
     ref: "orderinfoes",
-  },
+  }],
   },
   {
     collection: 'users',
