@@ -7,9 +7,10 @@ export class ItemModel {
   async findById(itemId) {
 
     // 오브젝트 아이디 무조건 _ 하나여야 검증 가능
-    const item = await Item.findOne({ _id: itemId});
-    console.log(item.id === itemId)
-    console.log(item._id === itemId)
+    const item = await Item.findOne({ _id: itemId}).exec();
+    if(item.id !== itemId){
+      return new Error("잘못된 아이디입니다 아이디를 확인해주세요")
+    }
 
     return item;
 
