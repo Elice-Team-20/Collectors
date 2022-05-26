@@ -142,4 +142,24 @@ userRouter.get('/logout', async (req, res, next) => {
   }
 })
 
+// loginRequired 체크
+userRouter.delete('/delete/:userId', async(req, res, next) => {
+  try{
+    const { userId } = req.params;
+    const { password } = req.body;
+
+    if(!password){
+      throw new Error('회원 탈퇴를 위해서는 비밀번호 입력이 필요합니다.');
+    }
+
+    const result = await userService.deleteUser(userId, password);
+    
+    res.status(200).json({"result": "정상적으로 회원 정보가 삭제되었습니다."});
+
+
+  }catch(error){
+    next(error);
+  }
+})
+
 export { userRouter };

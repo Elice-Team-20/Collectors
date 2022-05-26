@@ -126,6 +126,34 @@ class UserService {
 
     return user;
   }
+
+  async deleteUser(userId, password){
+    
+    const user = await this.userModel.findById(userId);
+
+    
+    const correctPasswordHash = user.password;
+
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      correctPasswordHash
+    );
+
+    if (!isPasswordCorrect) {
+      throw new Error(
+        '현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.'
+      );
+    }
+
+    const deletedUser = await this.userModel.delete(userId, password);
+    return deletedUser;
+
+  }
+
+  async getUser(userId){
+    const user = await this.userModel.findById(userId);
+    return user;
+  }
 }
 
 const userService = new UserService(userModel);
