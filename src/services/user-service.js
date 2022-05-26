@@ -130,10 +130,8 @@ class UserService {
   async deleteUser(userId, password){
     
     const user = await this.userModel.findById(userId);
-
-    
     const correctPasswordHash = user.password;
-
+    
     const isPasswordCorrect = await bcrypt.compare(
       password,
       correctPasswordHash

@@ -1,8 +1,7 @@
 import { Router } from 'express';
 import upload from '../db/models/s3-model';
 import { itemService } from '../services/item-service';
-import { adminRequired } from '../middlewares' ;
-import { loginRequired } from '../middlewares' ;
+import { adminRequired, loginRequired } from '../middlewares' ;
 
 
 const itemRouter = Router();

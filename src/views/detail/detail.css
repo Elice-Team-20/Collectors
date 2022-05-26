@@ -86,3 +86,10 @@
 .item-right .item-buttons-box #buyNowBtn{
   background-color: #F01E21;
 }
+
+.item-right .item-buttons-box #addCartBtn:hover{
+  background-color: #9d9d9d;
+}
+.item-right .item-buttons-box #buyNowBtn:hover{
+  background-color: #e7484b;
+}
