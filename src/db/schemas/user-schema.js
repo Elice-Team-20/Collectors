@@ -36,6 +36,10 @@ const UserSchema = new Schema(
       required: false,
       default: 'basic-user',
     },
+    // isAdmin: {
+    //   type: Boolean,
+    //   default: false,
+    // }
   },
   {
     collection: 'users',

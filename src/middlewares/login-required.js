@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 function loginRequired(req, res, next) {
+  console.log(req.headers)
   // request 헤더로부터 authorization bearer 토큰을 받음.
   const userToken = req.headers['authorization']?.split(' ')[1];
 
@@ -22,6 +23,7 @@ function loginRequired(req, res, next) {
     const jwtDecoded = jwt.verify(userToken, secretKey);
 
     const userId = jwtDecoded.userId;
+    // console.log(userId);
 
     // 라우터에서 req.currentUserId를 통해 유저의 id에 접근 가능하게 됨
     req.currentUserId = userId;
