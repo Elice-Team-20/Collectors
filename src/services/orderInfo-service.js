@@ -1,13 +1,13 @@
-import { orderInfo } from "../db/index";
+import { orderInfoModel } from "../db/index";
 
 class OrderinfoService {
   constructor(inputOrderInfoModel){
     this.orderModel = inputOrderInfoModel;
   }
 
-  async addOrderInfo(){
-    console.log(this.orderModel.create)
-  }
+  async addOrderInfo(orderData){
+    return orderInfoModel.create({orderData})
+  };
   // 피드백 받은 코드 반영
   // async addOrderInfo(orderInfo){
   //   return this.orderModel.crate(orderInfo)
@@ -17,6 +17,6 @@ class OrderinfoService {
 
 }
 // 싱글톤
-const orderInfoService = new OrderinfoService(orderInfo)
-orderInfoService.test()
+const orderInfoService = new OrderinfoService(orderInfoModel)
+
 export {orderInfoService}
