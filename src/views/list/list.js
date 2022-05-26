@@ -38,7 +38,7 @@ async function insertItemElement() {
     ITEMLIST.insertAdjacentHTML(
       'beforeend',
       `
-      <a href="/items/detail/?id=${_id}">
+      <a href="/item/?id=${_id}">
         <div class="item">
           <div class="imgBox">
             <figure>
