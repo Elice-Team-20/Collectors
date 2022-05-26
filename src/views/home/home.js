@@ -4,67 +4,24 @@
 import * as Api from '/api.js';
 import { randomId } from '/useful-functions.js';
 
-import { Nav } from '../components/Nav.js'; //네비게이션 컴포넌트
-import { Footer } from '../components/Footer.js'; //푸터 컴포넌트
-
+import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
+import { addFooterElements } from '../components/Footer/event.js';
 
 // =====
 // 요소(element), input 혹은 상수
-const landingDiv = document.querySelector('#landingDiv');
-const greetingDiv = document.querySelector('#greetingDiv');
-const nav = document.querySelector("nav")
-const footer = document.querySelector("footer")
 
-const isLoggedIn = checkUser()
-addDefault(isLoggedIn);
-// addAllElements();
-// addAllEvents();
-
-function checkUser(){
-  return localStorage.getItem('token')? true : false
-}
-// Navigation Component 추가하는 역할
-function addDefault(isLoggedIn){
-  nav.innerHTML=Nav(isLoggedIn,"Home")
-  footer.innerHTML=Footer()
-}
+addAllElements();
+addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-async function addAllElements() {
-  insertTextToLanding();
-  insertTextToGreeting();
+function addAllElements() {
+  addNavElements();
+  addFooterElements();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
-  landingDiv.addEventListener('click', alertLandingText);
-  greetingDiv.addEventListener('click', alertGreetingText);
-}
-
-function insertTextToLanding() {
-  landingDiv.insertAdjacentHTML(
-    'beforeend',
-    `
-      <h2>n팀 쇼핑몰의 랜딩 페이지입니다. 자바스크립트 파일에서 삽입되었습니다.</h2>
-    `
-  );
-}
-
-function insertTextToGreeting() {
-  greetingDiv.insertAdjacentHTML(
-    'beforeend',
-    `
-      <h1>반갑습니다! 자바스크립트 파일에서 삽입되었습니다.</h1>
-    `
-  );
-}
-
-function alertLandingText() {
-  alert('n팀 쇼핑몰입니다. 안녕하세요.');
-}
-
-function alertGreetingText() {
-  alert('n팀 쇼핑몰에 오신 것을 환영합니다');
+  addNavEventListeners();
 }
 
 async function getDataFromApi() {

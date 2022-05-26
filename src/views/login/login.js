@@ -1,32 +1,27 @@
 import * as Api from '/api.js';
 import { validateEmail } from '/useful-functions.js';
 
-import { Nav } from '../components/Nav.js'; // 네비게이션 컴포넌트
-import { Footer } from '../components/Footer.js'; //푸터 컴포넌트
-
+import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
+import { addFooterElements } from '../components/Footer/event.js';
 
 // 요소(element), input 혹은 상수
 const emailInput = document.querySelector('#emailInput');
 const passwordInput = document.querySelector('#passwordInput');
 const submitButton = document.querySelector('#submitButton');
-const nav = document.querySelector("nav")
-const footer = document.querySelector("footer")
 
-addDefault();
+
 addAllElements();
 addAllEvents();
 
-// Navigation Component 추가하는 역할
-function addDefault(){
-  nav.innerHTML=Nav(false,"Login")
-  footer.innerHTML=Footer()
-}
-
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-async function addAllElements() {}
+async function addAllElements() {
+  addNavElements('Login');
+  addFooterElements();
+}
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
+  addNavEventListeners();
   submitButton.addEventListener('click', handleSubmit);
 }
 

@@ -3,13 +3,8 @@
 // 코드 예시를 남겨 두었습니다.
 import { addCommas } from '/useful-functions.js';
 
-import { Nav } from '../../components/Nav.js'; //네비게이션 컴포넌트
-import { Footer } from '../../components/Footer.js'; //푸터 컴포넌트
-
-const nav = document.querySelector("nav")
-const footer = document.querySelector("footer")
-
-const isLoggedIn = checkUser() // 로그인 상태 확인 
+import { addNavEventListeners, addNavElements } from '../../components/Nav/event.js';
+import { addFooterElements } from '../../components/Footer/event.js';
 
 // url에서 id 값 추출해오기
 const ITEMDETAIL = document.querySelector('.item-detail');
@@ -21,25 +16,17 @@ addAllElements();
 addAllEvents();
 
 async function addAllElements() {
-  console.log(id);
-  addDefault(isLoggedIn);
+  addNavElements();
+  addFooterElements();
+
   insertItemDetail(id);
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
-  
+  addNavEventListeners();
 }
 
-// 로그인 상태 확인 함수
-function checkUser(){
-  return localStorage.getItem('token')? true : false
-}
-// navigation, footer Component 추가하는 역할
-function addDefault(isLoggedIn){
-  nav.innerHTML=Nav(isLoggedIn,"Home")
-  footer.innerHTML=Footer()
-}
 // 상세 페이지 렌더링 함수
 async function insertItemDetail(id) {
   const response = await fetch(`/api/item/${id}`);
