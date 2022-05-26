@@ -5,17 +5,17 @@ export const Nav = (isLoggedIn, page) => {
   if(page==="Login"){
     menu=`
     <li><a href="/register">회원가입</a></li>
-    <li><a href="#cart">장바구니</a></li>
+    <li><a href="/cart">장바구니</a></li>
     `
   } else if(page === "Register"){
     menu=`
     ${loginMenu}
-    <li><a href="#cart">장바구니</a></li>
+    <li><a href="/cart">장바구니</a></li>
     `
   } else{
     menu=`
     ${loginMenu}
-    <li><a href="#cart">장바구니</a></li>
+    <li><a href="/cart">장바구니</a></li>
     `
   }
   return `
