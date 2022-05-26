@@ -5,6 +5,7 @@ a {
   background-color: #202020;
   color: white;
   text-decoration: none;
+  box-sizing: border-box;
 }
 #wrap {
   min-height: 100vh;
