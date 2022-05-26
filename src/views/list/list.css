@@ -2,7 +2,7 @@ section.item-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
-  padding: 50px 10rem 20px;
+  padding: 50px 10% 20px;
 }
 
 div.item {
@@ -31,7 +31,24 @@ div.imgBox {
   margin-bottom: 0.5rem;
 }
 
+#summary {
+  width: 100%;
+  font-size: 0.8rem;
+}
+
 #price {
   color: red;
   margin-top: 1rem;
+}
+
+@media all and (max-width: 768px) {
+  section.item-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media all and (min-width: 768px) and (max-width: 1100px) {
+  section.item-list {
+    grid-template-columns: 1fr 1fr;
+  }
 }
