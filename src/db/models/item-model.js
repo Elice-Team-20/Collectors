@@ -7,16 +7,27 @@ export class ItemModel {
   async findById(itemId) {
 
     // 오브젝트 아이디 무조건 _ 하나여야 검증 가능
-    const item = await Item.findOne({ _id: itemId}).exec();
-    if(item.id !== itemId){
+    try{
+      const item = await Item.findOne({ _id: itemId}).exec();
+      if(item.id !== itemId){
+      console.log("에러 진입")
       return new Error("잘못된 아이디입니다 아이디를 확인해주세요")
-    }
+      }
     return item;
+    }
+    catch(er){
+      return er
+    }
   }
 
   async find(){
-    const item = await Item.find({}).exec();
-    return item;
+    try{
+      const item = await Item.find({}).exec();
+      return item;
+    }
+    catch(er){
+      return{er}
+    }
   }
 
   async create(itemInfo) {
