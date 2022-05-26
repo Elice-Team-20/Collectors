@@ -21,7 +21,11 @@ db.on('error', (error) =>
 export * from './models/user-model';
 export * from './models/item-model';
 <<<<<<< HEAD
+<<<<<<< HEAD
 export * from './models/orderInfo-model';
 =======
 export * from './models/order-model';
 >>>>>>> export order 모델
+=======
+export * from './models/orderInfo-model';
+>>>>>>> 파일 이름 바뀐거 반영 service router model
