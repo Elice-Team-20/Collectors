@@ -10,13 +10,26 @@ const nav = document.querySelector("nav")
 const footer = document.querySelector("footer")
 
 const isLoggedIn = checkUser() // 로그인 상태 확인 
-addDefault(isLoggedIn); // navigation, footer 컴포넌트 넣기
 
 // url에서 id 값 추출해오기
 const ITEMDETAIL = document.querySelector('.item-detail');
 const queryString = window.location.search;
 const id = new URLSearchParams(queryString).get('id');
-insertItemDetail(id);  // rendering
+
+ // navigation, footer 컴포넌트 넣기
+addAllElements();
+addAllEvents();
+
+async function addAllElements() {
+  console.log(id);
+  addDefault(isLoggedIn);
+  insertItemDetail(id);
+}
+
+// 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
+function addAllEvents() {
+  
+}
 
 // 로그인 상태 확인 함수
 function checkUser(){
@@ -31,7 +44,7 @@ function addDefault(isLoggedIn){
 async function insertItemDetail(id) {
   const response = await fetch(`/api/item/${id}`);
   const details = await response.json();
-
+  console.log(details)
   const { itemName, category, manufacturingCompany, summary, mainExplanation, imgUrl, stocks, price, hashTag } = details;
   console.log(imgUrl)
   ITEMDETAIL.insertAdjacentHTML(
@@ -50,9 +63,7 @@ async function insertItemDetail(id) {
             <div class="item-contents">
               <div id="item-company">${manufacturingCompany}</div>
               <div id="item-price">${addCommas(price)}</div>
-              <div id="item-explanation">
-              토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 토르의 망치는 무겁고 무겁고 쎄다. 
-              </div>
+              <div id="item-explanation">${mainExplanation}</div>
             </div>
           </div>
           <div class="item-buttons-box">
