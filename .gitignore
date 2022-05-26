@@ -2,6 +2,11 @@
 node_modules
 yarn.lock
 .env
+<<<<<<< HEAD
 lib
 package-lock.json
 .DSstore
+=======
+package-lock.json
+lib
+>>>>>>> 3189f7c57fc6f585969f0962b712960a977c2886
