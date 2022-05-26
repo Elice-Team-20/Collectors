@@ -33,6 +33,11 @@ a {
 .navContainer #navMenuList li {
   margin-left: 5vh;
 }
+/* 
+.navContainer #navMenuList #logoutBtn{
+  border-style: none;
+} */
+/* section style */
 section {
   padding-bottom: 50px; /* footer의 height값과 동일 하단에 있게 하기 위함 */
   border: 1px slateblue solid;
