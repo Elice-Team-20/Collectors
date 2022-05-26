@@ -27,10 +27,10 @@
     <!-- 카카오 OAuth -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="cart.css" />
-    <link rel="stylesheet" href="../style.css" />
-    <link rel="stylesheet" href="../components/Order/style.css" />
-    <script src="cart.js" type="module" defer></script>
+    <link rel="stylesheet" href="orderComplete.css" />
+    <link rel="stylesheet" href="../../style.css" />
+    <link rel="stylesheet" href="../../components/Order/style.css" />
+    <script src="orderComplete.js" type="module" defer></script>
   </head>
   <body>
     <div id="wrap">
@@ -39,20 +39,9 @@
       <section class="cart">
         <div class="cart-wrap">
           <div class="info-wrapper">
-            <div class="items">
-              <div class="select">
-                <label class="checkbox">
-                  <input type="checkbox" id="allSelectCheckbox" />
-                  <div>전체 선택</div>
-                </label>
-                <div>선택 삭제</div>
-              </div>
-              <div class="seperator"></div>
-              <div id="cart"></div>
-            </div>
             <div class="info-card">
               <div class="info-name">
-                결제 정보
+                주문이 완료되었습니다!
                 <div class="seperator"></div>
               </div>
               <div class="order-info"></div>
@@ -60,7 +49,12 @@
                 <p>총 결제 금액</p>
                 <p id="total">원</p>
               </div>
-              <button class="button" id="order-btn">주문 하기</button>
+              <button class="button" id="order-list-page-btn">
+                주문 내역 가기
+              </button>
+              <button class="button" id="items-list-page-btn">
+                쇼핑 계속하기
+              </button>
             </div>
           </div>
         </div>

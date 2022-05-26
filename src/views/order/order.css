@@ -1,4 +1,4 @@
-#cart {
+#order {
   color: #f01e21;
   font-weight: bold;
 }
@@ -32,7 +32,6 @@ div.select > * {
 
 div.info-card {
   width: 30%;
-  height: 50vh;
 
   display: flex;
   flex-direction: column;
@@ -50,9 +49,21 @@ div.data {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: flex-end;
+
   gap: 1rem;
   margin-top: 1rem;
+}
+div.order-list #order-title {
+  min-width: 5vw;
+}
+div.order-list #order-items {
+  flex: display;
+  flex-direction: column;
+
+  text-align: right;
+}
+div.order-list #order-items > div {
+  margin-top: 4px;
 }
 
 div.total {
@@ -62,7 +73,7 @@ div.total {
   align-items: flex-end;
 }
 
-#order-btn {
+#purchase-btn {
   width: 100%;
   height: 5vh;
 
@@ -72,10 +83,6 @@ div.total {
 
   font-weight: bold;
   cursor: pointer;
-}
-#order-btn:hover {
-  border-color: #e7484b;
-  background-color: #e7484b;
 }
 
 @media all and (max-width: 768px) {
