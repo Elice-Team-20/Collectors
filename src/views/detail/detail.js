@@ -12,19 +12,28 @@ const queryString = window.location.search;
 const id = new URLSearchParams(queryString).get('id');
 
  // navigation, footer 컴포넌트 넣기
-addAllElements();
-addAllEvents();
+await addAllElements();
+await addAllEvents();
 
 async function addAllElements() {
   addNavElements();
   addFooterElements();
 
-  insertItemDetail(id);
+  await insertItemDetail(id);
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-function addAllEvents() {
+async function addAllEvents() {
   addNavEventListeners();
+  document.querySelector('#addCartBtn').addEventListener('click',addCartBtnHandler)
+}
+
+// 카트 추가
+function addCartBtnHandler(){
+  let currentCart = JSON.parse(localStorage.getItem('cart'))
+  if(!currentCart) currentCart = []
+  currentCart.push(id)
+  localStorage.setItem('cart',JSON.stringify(currentCart))
 }
 
 // 상세 페이지 렌더링 함수
