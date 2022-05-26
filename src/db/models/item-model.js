@@ -11,34 +11,31 @@ export class ItemModel {
     if(item.id !== itemId){
       return new Error("잘못된 아이디입니다 아이디를 확인해주세요")
     }
-
     return item;
-
   }
 
   async find(){
-    const item = await Item.find({});
+    const item = await Item.find({}).exec();
     return item;
   }
 
   async create(itemInfo) {
-    const item = await Item.create(itemInfo);
+    const item = await Item.create(itemInfo).exec();
     return item;
   }
 
   async delete(itemId) {
-    const item = await Item.findOneAndDelete({id: itemId});
+    const item = await Item.findOneAndDelete({id: itemId}).exec();
     return item;
   }
 
   async update(itemId, newInfo){
     console.log(itemId, newInfo)
-    const updatedItem = await Item.updateOne({id: itemId}, newInfo);
+    const updatedItem = await Item.updateOne({id: itemId}, newInfo).exec();
     return updatedItem;
   }
 
 }
-
 
 const itemModel = new ItemModel();
 
