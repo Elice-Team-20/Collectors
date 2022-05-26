@@ -39,9 +39,9 @@ export class UserModel {
 
   async appendOrder(userEmail, orderInfo){
     try{
-      await User.findOneAndUpdate({ email: userEmail }, {$push: {orderInfo: orderInfo}} )
       // findOneAndUpdate return the document _before_ `update` was applied
       //https://mongoosejs.com/docs/tutorials/findoneandupdate.html
+      await User.findOneAndUpdate({ email: userEmail }, {$push: {orderInfo: orderInfo}} )
       return await User.findOne({email: userEmail});
     }
     catch(er){
