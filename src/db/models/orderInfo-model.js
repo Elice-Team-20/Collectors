@@ -45,8 +45,8 @@ export class OrderModel{
   }
 
   async updateByObjectId(objectId, updateInfo){
-    const filter = {_id: objectId};
-    const returnOption = { returnOriginal: false};
+    const filter = { _id: objectId };
+    const returnOption = { returnOriginal: false };
     try{
       const updateResult = await orderInfoModel.updateOne({ filter, updateInfo, returnOption});
       return updateResult;
