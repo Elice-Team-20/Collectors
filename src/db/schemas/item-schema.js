@@ -42,7 +42,10 @@ const ItemSchema = new Schema(
     hashTag:{
       type: [],
     }
-  }
+  },
+  {
+    timestamps: true,
+  },
 );
 
 export { ItemSchema };
