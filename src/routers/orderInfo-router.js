@@ -24,7 +24,6 @@ orderInfoRouter.post('/', (req, res) => {
     recipientPhone: recipientPhone,
     shipAddress: address,
   }
-  console.log(inputOrderData)
   res.json(orderInfoService.addOrderInfo(inputOrderData))
 })
 
