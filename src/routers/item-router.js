@@ -1,6 +1,9 @@
 import { Router } from 'express';
 import upload from '../db/models/s3-model';
 import { itemService } from '../services/item-service';
+import { adminRequired } from '../middlewares' ;
+import { loginRequired } from '../middlewares' ;
+
 
 const itemRouter = Router();
 
@@ -57,7 +60,7 @@ itemRouter.delete('/delete/:id', (req, res) => {
   }
 })
 
-itemRouter.post('/update/:id', (req, res) => {
+itemRouter.post('/update/:id', loginRequired, adminRequired,(req, res) => {
   try{
     const { id } = req.params;
     const info = req.body;
