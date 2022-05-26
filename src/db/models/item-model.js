@@ -14,7 +14,7 @@ export class ItemModel {
       return item;
     }
     catch(er){
-      console.log("error 발생 개발자도구를 확인하세요");
+      console.log("에러 발생 개발자도구를 확인하세요");
       return er;
     }
   }
@@ -25,7 +25,7 @@ export class ItemModel {
       return item;
     }
     catch(er) {
-      console.log("error 발생 개발자도구를 확인하세요");
+      console.log("에러 발생 개발자도구를 확인하세요");
       return er;
     }
   }
@@ -36,7 +36,7 @@ export class ItemModel {
       return item;
     }
     catch(er){
-      console.log("error 발생 개발자도구를 확인하세요");
+      console.log("에러 발생 개발자도구를 확인하세요");
       return er;
     }
   }
@@ -47,7 +47,7 @@ export class ItemModel {
       return item;
     }
     catch(er){
-      console.log("error 발생 개발자도구를 확인하세요");
+      console.log("에러 발생 개발자도구를 확인하세요");
       return er;
     }
   }
