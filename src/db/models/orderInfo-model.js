@@ -56,7 +56,7 @@ export class OrderModel{
 
   //D
   async deleteByObjectId(objectId){
-    const delResult = await orderInfoModel.deleteOne({ __id: objectId})
+    const delResult = await orderInfoModel.deleteOne({ _id: objectId})
     return delResult;
   }
 
