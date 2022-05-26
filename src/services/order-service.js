@@ -19,4 +19,4 @@ class OrderinfoService {
 // 싱글톤
 const orderInfoService = new OrderinfoService(orderModel)
 orderInfoService.test()
-export {orderinfoService}
+export {orderInfoService}
