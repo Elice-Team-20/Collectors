@@ -26,6 +26,14 @@ class OrderinfoService {
     return res
 
   }
+  async updateInfo(orderId, info){
+    const order = await this.orderModel.findByObjectId(orderId)
+    if(!order) {
+      throw new Error('등록된 상품이 없습니다.');
+    }
+    const result = await this.orderModel.updateByObjectId(orderId, info);
+    return result;
+  }
 
 
 }

@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { json } from 'express/lib/response';
 import { orderInfoService } from './../services/index'
 const orderInfoRouter = Router();
 
@@ -33,15 +34,30 @@ orderInfoRouter.get('/', async(req, res) => {
 })
 
 orderInfoRouter.get('/:id', async(req, res) => {
-  const {id} = req.params
+  const {id} = req.params;
   res.json(await orderInfoService.getOrderInfoById(id));
 })
 
+// 주문 중복 해결해야함
 orderInfoRouter.post('/makeOrder', async(req, res) => {
-  const {email, orderId} = req.body
+  const {email, orderId} = req.body;
   //res.json({email:email, orderid: orderId})
-  res.json(await orderInfoService.connectOrderAndInfo(email, orderId))
+  console.log(orderId)
+  res.json(await orderInfoService.connectOrderAndInfo(email, orderId));
+})
+
+//주문정보 업데이트 이거 body 에 담아야하나?
+orderInfoRouter.post('/update', async(req, res) => {
+  const {orderId, updateInfo} = req.body
+  try{
+
+    const re = await orderInfoService.updateInfo(orderId, updateInfo)
+    res.json(re)
+  }
+  catch(er){
+    return er
+  }
 
 })
 
-export {orderInfoRouter};
+export { orderInfoRouter };
