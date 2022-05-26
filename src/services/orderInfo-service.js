@@ -9,6 +9,9 @@ class OrderinfoService {
     return this.orderModel.create(orderData)
   };
 
+  async getOrderInfo(){
+    return await this.orderModel.findAll()
+  }
 
 
 }

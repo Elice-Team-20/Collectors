@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { orderInfoService } from './../services/index'
 const orderInfoRouter = Router();
 
-orderInfoRouter.post('/', (req, res) => {
+orderInfoRouter.post('/', async(req, res) => {
   const {
           address1,
           address2,
@@ -16,15 +16,20 @@ orderInfoRouter.post('/', (req, res) => {
     postalCode: postalCode,
     address1: address1,
     address2: address2,
-  }
+  };
 
   const inputOrderData = {
     totalCost: totalCost,
     recipientName: recipientName,
     recipientPhone: recipientPhone,
     shipAddress: address,
-  }
-  res.json(orderInfoService.addOrderInfo(inputOrderData))
+  };
+
+  res.json(await orderInfoService.addOrderInfo(inputOrderData));
 })
 
-export {orderInfoRouter}
+orderInfoRouter.get('/', async(req, res) => {
+  res.json( await orderInfoService.getOrderInfo());
+})
+
+export {orderInfoRouter};

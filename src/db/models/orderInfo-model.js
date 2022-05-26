@@ -14,21 +14,19 @@ export class OrderModel{
       return data;
     }
     catch(er){
-      return er
+      return er;
     }
   }
 
 
-  async findall(){
+  async findAll(){
     try{
       const data = await orderInfoModel.find({});
-      if(!data){
-        return new Error({message: "데이터가 없습니다."});
-      }
       return data;
     }
     catch(er){
-      return er
+      console.log("에러 발생 개발자도구를 확인하세요");
+      return er;
     }
   }
 
@@ -42,7 +40,7 @@ export class OrderModel{
       return createResult;
     }
     catch(er){
-      return er
+      return er;
     }
   }
 
@@ -50,22 +48,22 @@ export class OrderModel{
     const filter = {_id: objectId};
     const returnOption = { returnOriginal: false};
     try{
-      const updateResult = await orderInfoModel.updateOne({ filter, updateInfo, returnOption})
+      const updateResult = await orderInfoModel.updateOne({ filter, updateInfo, returnOption});
       return updateResult;
     }
     catch (er){
-      return er
+      return er;
     }
   }
 
   //D
   async deleteByObjectId(objectId){
     try{
-      const delResult = await orderInfoModel.deleteOne({ _id: objectId})
+      const delResult = await orderInfoModel.deleteOne({ _id: objectId});
       return delResult;
     }
     catch(er){
-      return er
+      return er;
     }
   }
 
@@ -73,4 +71,4 @@ export class OrderModel{
 
 const orderInfo = new OrderModel();
 
-export { orderInfo }
+export { orderInfo };
