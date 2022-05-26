@@ -3,7 +3,7 @@
 // 코드 예시를 남겨 두었습니다.
 import * as Api from '/api.js';
 import { randomId } from '/useful-functions.js';
-import { checkUserStatus } from '../modules/user-status-functions.js';
+import { checkUserStatus, handleLogout } from '../modules/user-status-functions.js';
 
 import { Nav } from '../components/Nav.js'; //네비게이션 컴포넌트
 import { Footer } from '../components/Footer.js'; //푸터 컴포넌트
@@ -12,10 +12,13 @@ import { Footer } from '../components/Footer.js'; //푸터 컴포넌트
 // 요소(element), input 혹은 상수
 const landingDiv = document.querySelector('#landingDiv');
 const greetingDiv = document.querySelector('#greetingDiv');
+let logoutMenu;
+
 const nav = document.querySelector("nav")
 const footer = document.querySelector("footer")
 
 const isLoggedIn = checkUserStatus() // 로그인 상태 확인
+console.log(isLoggedIn)
 addAllElements();
 addAllEvents();
 
@@ -24,12 +27,14 @@ addAllEvents();
 // }
 // Navigation Component 추가하는 역할
 function addDefault(isLoggedIn){
-  nav.innerHTML=Nav(isLoggedIn,"Home")
+  nav.innerHTML= Nav(isLoggedIn,"Home")
   footer.innerHTML=Footer()
+  logoutMenu = document.querySelector("#logoutMenu")
+
 }
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-async function addAllElements() {
+function addAllElements() {
   addDefault(isLoggedIn);
   insertTextToLanding();
   insertTextToGreeting();
@@ -39,6 +44,8 @@ async function addAllElements() {
 function addAllEvents() {
   landingDiv.addEventListener('click', alertLandingText);
   greetingDiv.addEventListener('click', alertGreetingText);
+
+  if(logoutMenu) logoutMenu.addEventListener('click',handleLogout)
 }
 
 function insertTextToLanding() {
