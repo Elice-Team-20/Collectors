@@ -50,7 +50,13 @@ export class UserModel {
   }
 
   async getUserAndPopulate(userId){
-
+      try{
+        const data = await User.findOne({_id: userId}).populate('orderInfo')
+        return data;
+      }
+      catch(err){
+        return err;
+      }
   }
 }
 
