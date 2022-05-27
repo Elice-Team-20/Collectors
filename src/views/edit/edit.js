@@ -76,8 +76,8 @@ function handleAddress() {
 
 async function getUserDataToInput() {
   // const data = {};
-  const id = '6290320f3b855515043d47f0';
-  const response = await fetch(`http://localhost:5000/api/user/${id}`, {
+  const id = await findUserId();
+  const response = await fetch(`/api/user/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -86,7 +86,22 @@ async function getUserDataToInput() {
   });
   const userData = await response.json();
 
-  const { fullName } = userData;
-
+  const { fullName, password } = userData;
+  console.log(password);
   fullNameInput.value = fullName;
+}
+
+async function findUserId() {
+  const response = await fetch(`/api/user/id`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  console.log(response);
+  const userId = await response.json();
+  console.log(userId);
+
+  return userId;
 }
