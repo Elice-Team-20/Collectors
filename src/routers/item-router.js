@@ -41,6 +41,13 @@ itemRouter.get('/:id', async(req, res) => {
   res.json(itemData);
 })
 
+itemRouter.get('/category/:category', async(req, res) => {
+  const {category} = req.params;
+  console.log(category)
+  const itemData = await itemService.getItemsByCategory(category);
+  res.json(itemData);
+})
+
 // 로그인 인증 넣어야한가?
 // submit 할때 같이 올려야함 따로 떨어지면안됨
 // itemRouter.post('/img/:imgName', upload.single('file'),function(req,res){

@@ -46,7 +46,6 @@ class CategoryService {
 
   async updateCategory(oldname, newName){
     const result = await this.findCategory(oldname);
-    console.log(result)
 
     if (result) {
       const updatedCategory = await categoryModel.update(oldname, newName);

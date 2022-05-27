@@ -13,8 +13,8 @@ const ItemSchema = new Schema(
       required: true,
     },
     category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'categories',
+      type: String,
+      required: true,
     },
     manufacturingCompany: {
       type: String,
