@@ -1,0 +1,14 @@
+.order-container {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.order-title {
+  border-bottom: 1px solid white;
+  margin: 20px 0;
+}
+
+.order-info-header {
+  display: flex;
+  align-items: center;
+}
