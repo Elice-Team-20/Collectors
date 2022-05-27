@@ -29,13 +29,15 @@ class CategoryModel {
 
   async delete(categoryName) {
     const form = {"name": categoryName};
-    const deletedCategory = await Category.findOneAndDelete(form);
+    const deletedCategory = await Category.deleteOne(form);
     return deletedCategory;
   }
 
-  async update(newCategoryName){
+  async update(oldCategoryName, newCategoryName){
     const form = {"name": newCategoryName};
-    const updatedCategory = await Category.findOneAndUpdate(form);
+    const updatedCategory = await Category.updateOne({
+      "name": oldCategoryName,
+    }, form);
     return updatedCategory;
   }
 }
