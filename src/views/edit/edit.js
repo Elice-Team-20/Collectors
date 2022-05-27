@@ -74,7 +74,8 @@ function handleAddress() {
 }
 
 async function getUserDataToInput() {
-  const response = await Api.get('api/user/', token);
+  const data = {};
+  const response = await Api.get('api/user', token);
   const userData = await response.json();
 
   const { fullName, password, email, userAddress, userDetailAddress, userPostcode } = userData;
