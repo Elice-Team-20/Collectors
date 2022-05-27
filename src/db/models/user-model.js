@@ -5,22 +5,22 @@ const User = model('users', UserSchema);
 
 export class UserModel {
   async findByEmail(email) {
-    const user = await User.findOne({ email }).exec();
+    const user = await User.findOne({ email })
     return user;
   }
 
   async findById(userId) {
-    const user = await User.findOne({ _id: userId }).exec();
+    const user = await User.findOne({ _id: userId })
     return user;
   }
 
   async create(userInfo) {
-    const createdNewUser = await User.create(userInfo).exec();
+    const createdNewUser = await User.create(userInfo)
     return createdNewUser;
   }
 
   async findAll() {
-    const users = await User.find({}).exec();
+    const users = await User.find({})
     return users;
   }
 
@@ -28,12 +28,12 @@ export class UserModel {
     const filter = { _id: userId };
     const option = { returnOriginal: false };
 
-    const updatedUser = await User.findOneAndUpdate(filter, update, option).exec();
+    const updatedUser = await User.findOneAndUpdate(filter, update, option)
     return updatedUser;
   }
 
   async delete(userId) {
-    const removedUser = await User.findOneAndDelete({_id: userId}).exec();
+    const removedUser = await User.findOneAndDelete({_id: userId})
     return removedUser;
   }
 
@@ -41,7 +41,7 @@ export class UserModel {
     try{
       // findOneAndUpdate return the document _before_ `update` was applied
       //https://mongoosejs.com/docs/tutorials/findoneandupdate.html
-      await User.findOneAndUpdate({ email: userEmail }, {$push: {orderInfo: orderInfo}} ).exec()
+      await User.findOneAndUpdate({ email: userEmail }, {$push: {orderInfo: orderInfo}} )
       return await User.findOne({email: userEmail});
     }
     catch(er){
@@ -51,7 +51,7 @@ export class UserModel {
 
   async getUserAndPopulate(userId){
       try{
-        const data = await User.findOne({_id: userId}).populate({path:'orderInfo'}).exec()
+        const data = await User.findOne({_id: userId}).populate({path:'orderInfo'})
 
         return data;
       }
