@@ -21,12 +21,18 @@ userRouter.post('/register', async (req, res, next) => {
     const fullName = req.body.fullName;
     const email = req.body.email;
     const password = req.body.password;
+    const address = {
+      address1: req.body.address1,
+      address2: req.body.address2,
+      postalCode: req.body.postalCode,
+    }
 
     // 위 데이터를 유저 db에 추가하기
     const newUser = await userService.addUser({
       fullName,
       email,
       password,
+      address
     });
 
     // 추가된 유저의 db 데이터를 프론트에 다시 보내줌
@@ -153,7 +159,7 @@ userRouter.delete('/delete/:userId', async(req, res, next) => {
     }
 
     const result = await userService.deleteUser(userId, password);
-    
+
     res.status(200).json({"result": "정상적으로 회원 정보가 삭제되었습니다."});
 
 

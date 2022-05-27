@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import upload from '../db/models/s3-model';
-import { itemService } from '../services/item-service';
+import { itemService } from '../services/index'
 import { adminRequired, loginRequired } from '../middlewares' ;
 
 

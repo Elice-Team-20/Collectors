@@ -40,6 +40,7 @@ const ItemSchema = new Schema(
       required: true,
     },
     hashTag:{
+      // required
       type: [],
     }
   },

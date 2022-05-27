@@ -6,22 +6,22 @@ class ItemService {
     this.itemModel = itemModel;
   }
 
-  async addItem(itemInof){
+  async addItem(itemInfo){
 
-    const item = await itemModel.create(itemInof);
+    const item = await this.itemModel.create(itemInfo);
     return item;
   }
 
   async getItems(){
     //평가지표 보고 만들기
     //아이탬이 비었는지 검사
-    const itemData = await itemModel.find({});
+    const itemData = await this.itemModel.find({});
     return itemData;
   }
 
   async getItembyObId(objectId){
     // object 아이디 검사
-    const itemData = await itemModel.findById(objectId);
+    const itemData = await this.itemModel.findById(objectId);
     return itemData;
   }
 
