@@ -58,6 +58,6 @@ class OrderinfoService {
 
 }
 // 싱글톤
-const orderInfoService = new OrderinfoService(orderInfo, userModel)
+const orderInfoService = new OrderinfoService(orderInfo, userModel);
 
 export { orderInfoService }

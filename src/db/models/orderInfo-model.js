@@ -1,7 +1,7 @@
 import { model } from 'mongoose';
-import OrderSchema from '../schemas/orderInfo-schema'
+import OrderSchema from '../schemas/orderInfo-schema';
 
-const orderInfoModel = model('orderinfoes', OrderSchema)
+const orderInfoModel = model('orderinfoes', OrderSchema);
 
 export class OrderModel{
   //r
