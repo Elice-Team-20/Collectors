@@ -5,6 +5,7 @@ const UserSchema = new Schema(
     email: {
       type: String,
       required: true,
+      match : /.+\@.+@..+/,
     },
     fullName: {
       type: String,
@@ -39,6 +40,7 @@ const UserSchema = new Schema(
   orderInfo:[{
     type: Schema.Types.ObjectId,
     ref: "orderinfoes",
+    unique: true,
   }],
     isAdmin: {
       type: Boolean,
