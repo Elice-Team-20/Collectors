@@ -47,16 +47,20 @@ orderInfoRouter.post('/makeOrder', async(req, res) => {
 
 //주문정보 업데이트 이거 body 에 담아야하나?
 orderInfoRouter.post('/update', async(req, res) => {
-  const {orderId, updateInfo} = req.body
+  const {orderId, updateInfo} = req.body;
   try{
-
-    const re = await orderInfoService.updateInfo(orderId, updateInfo)
-    res.json(re)
+    res.json(await orderInfoService.updateInfo(orderId, updateInfo))
   }
   catch(er){
     return er
   }
-
 })
+
+orderInfoRouter.delete('/delete', async(req, res) => {
+  const {orderId} = req.body;
+  const deleteResult = await orderInfoService.deleteInfo(orderId);
+  res.json({deleteResult})
+})
+
 
 export { orderInfoRouter };

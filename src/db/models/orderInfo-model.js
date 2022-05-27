@@ -47,10 +47,10 @@ export class OrderModel{
   async updateByObjectId(objectId, updateInfo){
     const filter = { _id: objectId };
     const returnOption = { returnOriginal: false };
-    try{
-      await orderInfoModel.updateOne(filter, updateInfo, returnOption);
-      return await orderInfoModel.findOne(filter)
 
+    try{
+      await orderInfoModel.updateOne(filter, updateInfo,returnOption );
+      return await orderInfoModel.findOne(filter)
     }
     catch (er){
       return er;
@@ -60,7 +60,9 @@ export class OrderModel{
   //D
   async deleteByObjectId(objectId){
     try{
-      const delResult = await orderInfoModel.deleteOne({ _id: objectId});
+      const delResult = await orderInfoModel.deleteOne({ _id: objectId}, function(err, result){
+        console.log(err)
+      });
       return delResult;
     }
     catch(er){
