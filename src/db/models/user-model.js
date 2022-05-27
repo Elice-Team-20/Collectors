@@ -36,6 +36,18 @@ export class UserModel {
     const removedUser = await User.findOneAndDelete({_id: userId});
     return removedUser;
   }
+
+  async appendOrder(userEmail, orderInfo){
+    try{
+      // findOneAndUpdate return the document _before_ `update` was applied
+      //https://mongoosejs.com/docs/tutorials/findoneandupdate.html
+      await User.findOneAndUpdate({ email: userEmail }, {$push: {orderInfo: orderInfo}} )
+      return await User.findOne({email: userEmail});
+    }
+    catch(er){
+      return er
+    }
+  }
 }
 
 const userModel = new UserModel();

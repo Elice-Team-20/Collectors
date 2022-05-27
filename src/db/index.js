@@ -21,3 +21,4 @@ db.on('error', (error) =>
 export * from './models/user-model';
 export * from './models/item-model';
 export * from './models/orderInfo-model';
+export * from './models/category-model';

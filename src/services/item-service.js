@@ -25,6 +25,11 @@ class ItemService {
     return itemData;
   }
 
+  async getItemsByCategory(category){
+    const items = await this.itemModel.findByCategory(category);
+    return items;
+  }
+
   async deleteItem(itemId) {
     const item = await this.itemModel.findById(itemId);
 
@@ -43,6 +48,7 @@ class ItemService {
     }
 
     const result = await this.itemModel.update(itemId, info);
+    return result;
   }
 
 }

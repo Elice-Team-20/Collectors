@@ -30,6 +30,16 @@ export class ItemModel {
     }
   }
 
+  // 카테고리별 상품 검색
+  async findByCategory(category){
+    try{
+      const items = await Item.find({"category": category}).exec();
+      return items;
+    }catch(er){
+      return er;
+    }
+  }
+
   async create(itemInfo) {
     try{
       const item = await Item.create(itemInfo).exec();

@@ -1,8 +1,17 @@
-import mongoose, { Schema } from 'mongoose';
+import { Schema } from 'mongoose';
 
 const OrderSchema = new Schema({
   shipAddress: {
-    type: String,
+    type: new Schema(
+      {
+        postalCode: Number,
+        address1: String,
+        address2: String,
+      },
+      {
+        _id: false,
+      }
+    ),
     required: true,
   },
   totalCost: {
@@ -11,7 +20,8 @@ const OrderSchema = new Schema({
     },
   recipientName: {
     type: String,
-     required: true}
+     required: true
+    }
      ,
   recipientPhone: {
     type: Number,
