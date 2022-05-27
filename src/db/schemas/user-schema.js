@@ -40,7 +40,6 @@ const UserSchema = new Schema(
   orderInfo:[{
     type: Schema.Types.ObjectId,
     ref: "orderinfoes",
-    unique: true,
   }],
     isAdmin: {
       type: Boolean,
