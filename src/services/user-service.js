@@ -82,7 +82,7 @@ class UserService {
 
   async setOrderInfo(objectId){
     // objectId
-    const currentData = await this.userModel.findById({__id: objectId})
+    const currentData = await this.userModel.findById({_id: objectId})
     console.log(currentData.orderinfo)
     return;
   }
