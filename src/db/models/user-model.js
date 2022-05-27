@@ -4,7 +4,7 @@ import { UserSchema } from '../schemas/user-schema';
 const User = model('users', UserSchema);
 
 export class UserModel {
-  
+
   // 이메일로 유저 검색
   async findByEmail(email) {
     const user = await User.findOne({ email })
@@ -44,6 +44,7 @@ export class UserModel {
     return removedUser;
   }
 
+  //유저와 주문정보를 합치면서 주소를 user 에게 할당한다
   async appendOrder(userEmail, orderInfo){
     try{
       // findOneAndUpdate return the document _before_ `update` was applied
