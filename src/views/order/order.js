@@ -1,8 +1,3 @@
-// 아래는 현재 home.html 페이지에서 쓰이는 코드는 아닙니다.
-// 다만, 앞으로 ~.js 파일을 작성할 때 아래의 코드 구조를 참조할 수 있도록,
-// 코드 예시를 남겨 두었습니다.
-import { addCommas } from "/useful-functions.js";
-
 import {
   addNavEventListeners,
   addNavElements,
@@ -33,5 +28,3 @@ function addAllEvents() {
 function purchaseBtnHandler() {
   window.location.href = "/order/complete";
 }
-// 구매하기 버튼 처리
-// 로컬 스토리지에서 데이터 가져오기

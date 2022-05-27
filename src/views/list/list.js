@@ -1,14 +1,14 @@
-// 아래는 현재 home.html 페이지에서 쓰이는 코드는 아닙니다.
-// 다만, 앞으로 ~.js 파일을 작성할 때 아래의 코드 구조를 참조할 수 있도록,
-// 코드 예시를 남겨 두었습니다.
-import { addCommas } from '/useful-functions.js';
+import { addCommas } from "/useful-functions.js";
 
-import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
-import { addFooterElements } from '../components/Footer/event.js';
+import {
+  addNavEventListeners,
+  addNavElements,
+} from "../components/Nav/event.js";
+import { addFooterElements } from "../components/Footer/event.js";
 
 // GET / api/item/?id= ...
 
-const ITEMLIST = document.querySelector('.item-list');
+const ITEMLIST = document.querySelector(".item-list");
 
 addAllElements();
 addAllEvents();
@@ -27,15 +27,15 @@ function addAllEvents() {
 
 async function insertItemElement() {
   const response = await fetch(`/api/item`, {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
   });
   const items = await response.json();
   console.log(items);
   items.item.forEach(({ _id, itemName, summary, imgUrl, price }) => {
     console.log(_id);
     ITEMLIST.insertAdjacentHTML(
-      'beforeend',
+      "beforeend",
       `
       <a href="/item/?id=${_id}">
         <div class="item">

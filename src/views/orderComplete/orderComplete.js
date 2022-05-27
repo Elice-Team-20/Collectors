@@ -30,5 +30,3 @@ function addAllEvents() {
     window.location.href = "/items";
   });
 }
-// 구매하기 버튼 처리
-// 로컬 스토리지에서 데이터 가져오기
