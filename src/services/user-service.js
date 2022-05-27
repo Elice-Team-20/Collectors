@@ -2,6 +2,7 @@ import { userModel } from '../db';
 
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import res from 'express/lib/response';
 
 class UserService {
   // 본 파일의 맨 아래에서, new UserService(userModel) 하면, 이 함수의 인자로 전달됨
@@ -157,7 +158,11 @@ class UserService {
   }
 
   async getUser(userId){
+    // 주문 목록이 할당된게 없으면
     const user = await this.userModel.findById(userId);
+    if(user.orderInfo.length !== 0){
+      return await this.userModel.getUserAndPopulate(userId);
+    }
     return user;
   }
 }

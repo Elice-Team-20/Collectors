@@ -48,6 +48,10 @@ export class UserModel {
       return er
     }
   }
+
+  async getUserAndPopulate(userId){
+
+  }
 }
 
 const userModel = new UserModel();
