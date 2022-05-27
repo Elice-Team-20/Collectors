@@ -5,11 +5,12 @@ import { addNavEventListeners, addNavElements } from '../components/Nav/event.js
 import { addFooterElements } from '../components/Footer/event.js';
 
 // 요소(element), input 혹은 상수
-const emailInput = document.querySelector('#emailInput');
-const passwordInput = document.querySelector('#passwordInput');
+const token = localStorage.getItem('token');
 const submitButton = document.querySelector('#submitButton');
 const addressButton = document.querySelector('#addressButton');
-const token = localStorage.getItem('token');
+const fullNameInput = document.querySelector('#fullNameInput');
+const passwordInput = document.querySelector('#passwordInput');
+const phoneNumberInput = document.querySelector('#phoneNumberInput');
 
 addAllElements();
 addAllEvents();
@@ -74,9 +75,18 @@ function handleAddress() {
 }
 
 async function getUserDataToInput() {
-  const data = {};
-  const response = await Api.get('api/user', token);
+  // const data = {};
+  const id = '6290320f3b855515043d47f0';
+  const response = await fetch(`http://localhost:5000/api/user/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
   const userData = await response.json();
 
-  const { fullName, password, email, userAddress, userDetailAddress, userPostcode } = userData;
+  const { fullName } = userData;
+
+  fullNameInput.value = fullName;
 }
