@@ -1,5 +1,6 @@
 import { shortId } from './types/short-id';
-import { Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
+import { CategorySchema } from './category-schema';
 
 
 /*

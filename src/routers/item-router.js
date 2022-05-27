@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import upload from '../db/models/s3-model';
-import { itemService } from '../services/index'
+import { itemService } from '../services';
 import { adminRequired, loginRequired } from '../middlewares' ;
 
 
@@ -38,6 +38,13 @@ itemRouter.post('/', upload.single('file'), async(req,res)=>{
 itemRouter.get('/:id', async(req, res) => {
   const {id} = req.params;
   const itemData = await itemService.getItembyObId(id)
+  res.json(itemData);
+})
+
+itemRouter.get('/category/:category', async(req, res) => {
+  const {category} = req.params;
+  console.log(category)
+  const itemData = await itemService.getItemsByCategory(category);
   res.json(itemData);
 })
 
