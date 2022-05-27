@@ -17,7 +17,7 @@ async function addAllElements() {
   addFooterElements();
 
   addOrderNavElements();
-  addOrderInfoElements();
+  // addOrderInfoElements();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.

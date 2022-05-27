@@ -59,18 +59,6 @@ const OrderInfo = (page) => {
     <div class="data order-list">
       <div id="order-title">주문 상품</div>
       <div id="order-items">
-        <div>여성 니트 / 2개여성 니트 / 2개여성 니트 / 2개여성 니트 / 2개</div>
-        <div>남성 니트 / 2개</div>
-        <div>여성 니트 / 2개</div>
-        <div>남성 니트 / 2개</div>
-        <div>여성 니트 / 2개</div>
-        <div>남성 니트 / 2개</div>
-        <div>여성 니트 / 2개</div>
-        <div>남성 니트 / 2개</div>
-        <div>여성 니트 / 2개</div>
-        <div>남성 니트 / 2개</div>
-        <div>여성 니트 / 2개</div>
-        <div>남성 니트 / 2개</div>
         <div>여성 니트 / 2개</div>
         <div>남성 니트 / 2개</div>
       </div>
