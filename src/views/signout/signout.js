@@ -1,4 +1,4 @@
-import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
+import { addNavEventListeners, addNavElements, handleLogout } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
 
 // 요소(element), input 혹은 상수
@@ -27,26 +27,15 @@ async function handleSubmit(e) {
 
   // 유저 id 가져오기
   const userId = await findUserId();
-
-  // 비밀번호 찾기 -> 너무 많은 fetch인가..? 성능적 의문(오히려 pw도 findUserId에서 요청하는 것이 나은가?)
-  const response = await fetch(`/api/user/${userId}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const userData = await response.json();
-
-  const { userPassword } = userData;
+  const password = passwordInput.value;
 
   // 비밀번호 일치 여부 확인
   // 변환된 비밀번호와 입력하는 비밀번호가 다른데 어떻게 일치 시키지..?
   // 소셜 로그인의 경우 이 부분을 어떻게 구현해야 할지..
-  if (passwordInput !== userPassword) {
-    alert('비밀번호가 일치하지 않습니다.');
-    return;
-  }
+  // if (passwordInput !== userPassword) {
+  //   alert('비밀번호가 일치하지 않습니다.');
+  //   return;
+  // }
 
   // 회원 탈퇴(삭제 요청)
   await fetch(`/api/user/delete/${userId}`, {
@@ -54,8 +43,16 @@ async function handleSubmit(e) {
     headers: {
       'Content-Type': 'application/json',
     },
-  });
-  console.log('삭제가 완료되었습니다.');
+    body: JSON.stringify({ password: password }),
+  })
+    .then(() => {
+      console.log('삭제가 완료되었습니다.');
+      handleLogout();
+    })
+    .catch((err) => {
+      console.log(err);
+      alert('비밀번호가 일치하지 않습니다.');
+    });
 }
 
 // token으로 userId 찾기
