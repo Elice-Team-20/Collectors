@@ -81,6 +81,15 @@ userRouter.get('/userlist', loginRequired, async function (req, res, next) {
   }
 });
 
+userRouter.get('/id', loginRequired, async function(req, res, next) {
+  try{
+    const id = req.currentUserId;
+    res.status(200).json(id);
+  }catch(error){
+    next(error);
+  }
+})
+
 userRouter.get('/:userId', loginRequired, async (req, res, next) => {
   try{
     const {userId} = req.params;
@@ -149,14 +158,6 @@ userRouter.patch(
     }
   }
 );
-
-userRouter.get('/logout', async (req, res, next) => {
-  try {
-    res.json(null);
-  } catch (error) {
-    next(error);
-  }
-})
 
 // loginRequired 체크
 userRouter.delete('/delete/:userId', async(req, res, next) => {
