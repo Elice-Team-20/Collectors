@@ -1,0 +1,36 @@
+section.cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+div.cart-wrap {
+  width: 90%;
+
+  margin: 10vh 0;
+}
+
+div.title {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+
+  margin-bottom: 20px;
+
+  border-bottom: 1px solid white;
+
+  height: 8vh;
+  line-height: 8vh;
+
+  font-size: 20px;
+}
+
+div.title > p {
+  margin: 0 0.3rem;
+}
+
+div.info-wrapper {
+  display: flex;
+  gap: 1rem;
+  margin: 0 auto;
+}

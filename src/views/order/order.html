@@ -27,10 +27,10 @@
     <!-- 카카오 OAuth -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="cart.css" />
+    <link rel="stylesheet" href="order.css" />
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../components/Order/style.css" />
-    <script src="cart.js" type="module" defer></script>
+    <script src="order.js" type="module" defer></script>
   </head>
   <body>
     <div id="wrap">
@@ -48,30 +48,7 @@
                 <div>선택 삭제</div>
               </div>
               <div class="seperator"></div>
-              <div id="cart-item-wrapper">
-                <div class="cart-item">
-                  <input type="checkbox" class="item-select-checkbox" />
-                  <div class="item-image-box">
-                    <img
-                      class="item-image"
-                      src="https://team20.s3.ap-northeast-2.amazonaws.com/image/b6ace0b0db37-11ec-9596-73005b4a7f0b.jpeg"
-                      alt="item-image"
-                    />
-                  </div>
-                  <div class="item-name"><a href="/">핌 입자</a></div>
-                  <div class="item-price">18,000원</div>
-                  <div class="item-number-box">
-                    <button class="item-number-btn item-number-plus-btn">
-                      <i class="fa-solid fa-circle-plus"></i>
-                    </button>
-                    <div>2</div>
-                    <button class="item-number-btn item-number-minus-btn">
-                      <i class="fa-solid fa-circle-minus"></i>
-                    </button>
-                  </div>
-                  <div class="item-total-price">36,000원</div>
-                </div>
-              </div>
+              <div id="cart"></div>
             </div>
             <div class="info-card">
               <div class="info-name">
@@ -79,14 +56,17 @@
                 <div class="seperator"></div>
               </div>
               <div class="order-info">
-                <!-- component에서 추가하던 부분 -->
-                <div class="data">
-                  <p>상품 수</p>
-                  <p id="item-number">개</p>
+                <!-- component 들어가던 부분 -->
+                <div class="data order-list">
+                  <div id="order-title">주문 상품</div>
+                  <div id="order-items">
+                    <div>여성 니트 / 2개</div>
+                    <div>남성 니트 / 2개</div>
+                  </div>
                 </div>
                 <div class="data">
-                  <p>상품 금액</p>
-                  <p id="item-price">원</p>
+                  <p>상품 총액</p>
+                  <p id="item-total-price">원</p>
                 </div>
                 <div class="data">
                   <p>배송비</p>
@@ -98,7 +78,7 @@
                 <p>총 결제 금액</p>
                 <p id="total">원</p>
               </div>
-              <button class="button" id="order-btn">주문 하기</button>
+              <button class="button" id="purchase-btn">결제 하기</button>
             </div>
           </div>
         </div>

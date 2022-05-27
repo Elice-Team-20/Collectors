@@ -1,17 +1,20 @@
 // 아래는 현재 home.html 페이지에서 쓰이는 코드는 아닙니다.
 // 다만, 앞으로 ~.js 파일을 작성할 때 아래의 코드 구조를 참조할 수 있도록,
 // 코드 예시를 남겨 두었습니다.
-import { addCommas } from '/useful-functions.js';
+import { addCommas } from "/useful-functions.js";
 
-import { addNavEventListeners, addNavElements } from '../../components/Nav/event.js';
-import { addFooterElements } from '../../components/Footer/event.js';
+import {
+  addNavEventListeners,
+  addNavElements,
+} from "../../components/Nav/event.js";
+import { addFooterElements } from "../../components/Footer/event.js";
 
 // url에서 id 값 추출해오기
-const ITEMDETAIL = document.querySelector('.item-detail');
+const ITEMDETAIL = document.querySelector(".item-detail");
 const queryString = window.location.search;
-const id = new URLSearchParams(queryString).get('id');
+const id = new URLSearchParams(queryString).get("id");
 
- // navigation, footer 컴포넌트 넣기
+// navigation, footer 컴포넌트 넣기
 await addAllElements();
 await addAllEvents();
 
@@ -22,29 +25,41 @@ async function addAllElements() {
   await insertItemDetail(id);
 }
 
-// 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllEvents() {
   addNavEventListeners();
-  document.querySelector('#addCartBtn').addEventListener('click',addCartBtnHandler)
+  document
+    .querySelector("#addCartBtn")
+    .addEventListener("click", addCartBtnHandler);
 }
 
 // 카트 추가
-function addCartBtnHandler(){
-  let currentCart = JSON.parse(localStorage.getItem('cart'))
-  if(!currentCart) currentCart = []
-  currentCart.push(id)
-  localStorage.setItem('cart',JSON.stringify(currentCart))
+function addCartBtnHandler() {
+  let currentCart = JSON.parse(localStorage.getItem("cart"));
+  if (!currentCart) currentCart = [];
+  currentCart.push(id);
+  console.log("add cart", currentCart);
+  localStorage.setItem("cart", JSON.stringify(currentCart));
 }
 
 // 상세 페이지 렌더링 함수
 async function insertItemDetail(id) {
   const response = await fetch(`/api/item/${id}`);
   const details = await response.json();
-  console.log(details)
-  const { itemName, category, manufacturingCompany, summary, mainExplanation, imgUrl, stocks, price, hashTag } = details;
-  console.log(imgUrl)
+  console.log(details);
+  const {
+    itemName,
+    category,
+    manufacturingCompany,
+    summary,
+    mainExplanation,
+    imgUrl,
+    stocks,
+    price,
+    hashTag,
+  } = details;
+  console.log(imgUrl);
   ITEMDETAIL.insertAdjacentHTML(
-    'beforeend',
+    "beforeend",
     `
       <div class="item">
         <div class="item-left">
