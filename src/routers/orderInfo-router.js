@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { orderInfoService } from './../services/index'
-import {loginRequired, RouterLoggerMiddleware} from './../middlewares/index'
+import {loginRequired } from './../middlewares/index'
 const orderInfoRouter = Router();
 
-orderInfoRouter.post('/', RouterLoggerMiddleware, async(req, res) => {
+orderInfoRouter.post('/', async(req, res) => {
   const {
           address1,
           address2,
