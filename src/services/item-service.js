@@ -43,6 +43,7 @@ class ItemService {
     }
 
     const result = await this.itemModel.update(itemId, info);
+    return result;
   }
 
 }
