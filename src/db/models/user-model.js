@@ -1,3 +1,4 @@
+import { path } from 'express/lib/application';
 import { model } from 'mongoose';
 import { UserSchema } from '../schemas/user-schema';
 
@@ -51,7 +52,7 @@ export class UserModel {
 
   async getUserAndPopulate(userId){
       try{
-        const data = await User.findOne({_id: userId}).populate('orderInfo')
+        const data = await User.findOne({_id: userId}).populate({path:'orderInfo'}).exec()
         return data;
       }
       catch(err){
