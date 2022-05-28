@@ -2,6 +2,7 @@ import { addCommas } from '/useful-functions.js';
 import {
   addNavEventListeners,
   addNavElements,
+  checkUserStatus,
 } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
 import {
@@ -15,6 +16,7 @@ const cartItenWrapperDiv = document.querySelector('#cart-item-wrapper');
 
 let cart = cartInit(); //JSON.parse(localStorage.getItem('cart'));
 let itemMap = makeCartItemMap(cart); // 카트 Map 만들기, id - 개수 구조
+console.log(itemMap);
 // let items = Object.entries(itemMap);
 let checkedItems = makeCheckedItemMap(itemMap); // check된 상품들
 let infos = await getCartItemsInfos(Object.entries(itemMap));
@@ -173,10 +175,20 @@ function addOrderInfoElement() {
 
 // event 처리 부분
 function orderBtnHandler() {
-  let order = Object.keys(checkedItems).filter((id) => checkedItems[id]);
-  console.log('order', order);
-  localStorage.setItem('order', JSON.stringify(order));
-  window.location.href = '/order';
+  if (checkUserStatus()) {
+    let order = Object.keys(checkedItems).reduce((arr, id) => {
+      if (checkedItems[id]) {
+        arr.push([id, itemMap[id]]);
+      }
+      return arr;
+    }, []);
+    console.log('order', order);
+    localStorage.setItem('order', JSON.stringify(order));
+    window.location.href = '/order';
+  } else {
+    alert('로그인 정보가 없습니다. 로그인 후에 주문이 가능합니다.');
+    window.location.href = '/login';
+  }
 }
 
 function addCartEventListeners() {
