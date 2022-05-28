@@ -4,12 +4,15 @@
 import * as Api from '/api.js';
 import { randomId } from '/useful-functions.js';
 
-import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
+import {
+  addNavEventListeners,
+  addNavElements,
+} from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
 
 // =====
 // 요소(element), input 혹은 상수
-
+userInit();
 addAllElements();
 addAllEvents();
 
@@ -24,6 +27,14 @@ function addAllEvents() {
   addNavEventListeners();
 }
 
+function userInit() {
+  let cart = JSON.parse(localStorage.getItem('cart'));
+  console.log('cart', cart);
+  if (!cart) {
+    car = [];
+    localStorage.setItem('cart', JSON.stringify([]));
+  }
+}
 async function getDataFromApi() {
   // 예시 URI입니다. 현재 주어진 프로젝트 코드에는 없는 URI입니다.
   const data = await Api.get('/api/user/data');
