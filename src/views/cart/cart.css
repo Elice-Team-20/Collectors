@@ -40,13 +40,14 @@ div.select > * {
   justify-content: space-around;
  */
   display: grid;
-  grid-template-columns: 0.1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
   column-gap: 3%;
   align-items: center;
   justify-items: center;
 
   width: 100%;
-  margin: 5% 0;
+  /* margin: 5% 0; */
+  padding: 5% 2%;
 }
 /* 아이템 이미지 */
 .cart-item .item-image-box {
@@ -66,10 +67,13 @@ div.select > * {
   place-self: center center;
   width: 50%;
 }
-.cart-item .item-number-box .item-number-btn {
+.cart-item button {
+  /*.item-number-box .item-number-btn { */
   border-style: none;
 }
-.cart-item .item-number-box .item-number-btn i:hover {
+
+.cart-item button i:hover {
+  /*.item-number-box .item-number-btn i:hover {*/
   color: #f01e21;
 }
 /* 카트 정보 (선택에 맞춰서) */

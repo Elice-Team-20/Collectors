@@ -8,43 +8,164 @@ import {
   addOrderNavElements,
   addOrderInfoElements,
 } from '../components/Order/event.js';
+import { OrderInfo } from '../components/Order/index.js';
 
 const orderBtn = document.querySelector('#order-btn');
 const cartItenWrapperDiv = document.querySelector('#cart-item-wrapper');
 
 let cart = JSON.parse(localStorage.getItem('cart'));
 let itemMap = makeCartItemMap(cart); // 카트 Map 만들기, id - 개수 구조
-let items = Object.entries(itemMap);
+// let items = Object.entries(itemMap);
 let checkedItems = makeCheckedItemMap(itemMap); // check된 상품들
+let infos = await getCartItemsInfos(Object.entries(itemMap));
 console.log(checkedItems);
 
-// const itemArr = Object.entries(items);
+// 카트 아이템들 자료구조
+// 카트 아이템 관리 map
+function makeCartItemMap(cart) {
+  return cart.reduce((map, item) => {
+    // console.log(item, map[item]);
+    if (!map[item]) {
+      // console.log("map init", item);
+      map[item] = 0;
+    }
+    map[item] += 1;
+    return map;
+  }, {});
+}
+// 선택 아이템 관리 map
+function makeCheckedItemMap(map) {
+  return Object.keys(map).reduce((map, id) => {
+    map[id] = true;
+    return map;
+  }, {});
+}
+// 전체 엘리먼트, 이벤트 처리 함수
 await addAllElements();
 await addAllEvents();
 
-async function addAllElements() {
+function addAllElements() {
   addNavElements();
   addFooterElements();
 
   addOrderNavElements('Cart');
   // addOrderInfoElements("Cart");
 
-  await addCartItemsElements(items);
+  addCartItemsElements();
+  addOrderInfoElement();
 }
 
 async function addAllEvents() {
   addNavEventListeners();
   orderBtn.addEventListener('click', orderBtnHandler);
 
-  addCartEventListeners(items);
+  addCartEventListeners();
 }
 
+// elements 추가 부분
+function addCartItemsElements() {
+  // let items = Object.entries(itemMap);
+  // infos =  // 전역 변수에 저장/
+  // console.log(infos);
+  cartItenWrapperDiv.innerHTML = Object.keys(itemMap).reduce((elements, id) => {
+    if (itemMap[id] != 0) {
+      const { imgUrl, itemName, price } = infos[id];
+      return (
+        elements +
+        `
+          <div class="cart-item" id="item-${id}">
+            <input type="checkbox" class="item-select-checkbox" name="${id}" checked/>
+            <div class="item-image-box">
+              <img
+                class="item-image"
+                src="${imgUrl}"
+                alt="item-image"
+              />
+            </div>
+            <div class="item-name"><a href="/item/?id=${id}">${itemName}</a></div>
+            <div class="item-price">${addCommas(price)}원</div>
+            <div class="item-number-box">
+              <button class="item-number-btn item-number-minus-btn" name="${id}">
+                <i class="fa-solid fa-circle-minus"></i>
+              </button>
+              <div>${itemMap[id]}</div>
+              <button class="item-number-btn item-number-plus-btn" name="${id}">
+                <i class="fa-solid fa-circle-plus"></i>
+              </button>
+            </div>
+            <div class="item-total-price">${addCommas(
+              itemMap[id] * price,
+            )}원</div>
+            <button class="item-delete-btn" name="${id}"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        `
+      );
+    } else {
+      return elements;
+    }
+  }, ``);
+}
+
+// DB에서 item 정보가져오기
+async function getCartItemsInfos(items) {
+  let infos = {};
+  for (let i = 0; i < items.length; i++) {
+    const [_id, num] = items[i];
+    const response = await fetch(`/api/item/${_id}`);
+    let info = await response.json();
+    // info = {
+    //   ...info,
+    //   num,
+    // };
+    infos[_id] = info;
+  }
+  return infos;
+}
+function addOrderInfoElement() {
+  // checketItems를 통해 선택된 거 체크
+  // itemsMap 통해 개수 체크
+  // infos를 통해 가격 체크
+  let nums = 0;
+  let totalPrice = 0;
+  let shipFee = 3000;
+  console.log(infos);
+  Object.entries(checkedItems).forEach(([id, checked]) => {
+    if (checked) {
+      const num = itemMap[id];
+      const { price } = infos[id];
+      console.log('order card', id, num, price);
+      nums += Number(num);
+      totalPrice += Number(price * num);
+    }
+  });
+  // let orderInfoDiv = document.querySelector('.order-info');
+  document.querySelector('.order-info').innerHTML = `
+    <div class="data">
+      <p>상품 수</p>
+      <p id="item-number">${nums}개</p>
+    </div>
+    <div class="data">
+      <p>상품 금액</p>
+      <p id="item-price">${addCommas(totalPrice)}원</p>
+    </div>
+    <div class="data">
+      <p>배송비</p>
+      <p id="shipping">${addCommas(shipFee)}원</p>
+    </div>  
+  `;
+  document.querySelector('.total').innerHTML = `
+    <p>총 결제 금액</p>
+    <p id="total">${addCommas(totalPrice + shipFee)}원</p>
+  `;
+}
+
+// event 처리 부분
 function orderBtnHandler() {
   window.location.href = '/order';
 }
 
-function addCartEventListeners(items) {
-  console.log(items);
+function addCartEventListeners() {
+  // console.log(items);
   // 전체 선택 체크 박스 이벤트 처리
   document
     .querySelector('#allSelectCheckbox')
@@ -59,23 +180,9 @@ function addCartEventListeners(items) {
   document.querySelectorAll('.item-number-minus-btn').forEach((node) => {
     node.addEventListener('click', handleNumberMinusBtn);
   });
-  // items.forEach(([_id, num]) => {
-  //   console.log(_id, num);
-  //   // document
-  //   //   .querySelector(`#checkbox-${_id}`)
-  //   //   .addEventListener("click", handleItemCheckbox);
-  //   const item = document.querySelector(`#item-${_id}`);
-  //   console.log(item);
-  //   item
-  //     .querySelector('.item-select-checkbox')
-  //     .addEventListener('click', handleItemCheckbox);
-  //   item
-  //     .querySelector('.item-number-plus-btn')
-  //     .addEventListener('click', handleNumberPlusBtn);
-  //   item
-  //     .querySelector('.item-number-minus-btn')
-  //     .addEventListener('click', handleNumberMinusBtn);
-  // });
+  document.querySelectorAll('.item-delete-btn').forEach((node) => {
+    node.addEventListener('click', handleDeleteItemBtn);
+  });
 }
 function handleAllCheckbox(e) {
   console.log(this.checked);
@@ -96,6 +203,7 @@ function handleAllCheckbox(e) {
       node.checked = false;
     });
   }
+  addOrderInfoElement();
 }
 function handleItemCheckbox(e) {
   console.log('check', this.checked);
@@ -110,102 +218,50 @@ function handleItemCheckbox(e) {
   document.querySelector('#allSelectCheckbox').checked = Object.values(
     checkedItems,
   ).every((value) => value === true);
+  addOrderInfoElement();
 }
 function handleNumberPlusBtn(e) {
   console.log('plus', this.name);
   console.log('plus', e);
+  console.log('cur', cart);
+  cart.push(this.name);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  itemMap[this.name] += 1;
+  // window.location.reload();
+  addCartItemsElements();
+  addCartEventListeners();
+  addOrderInfoElement();
 }
 function handleNumberMinusBtn(e) {
   console.log('Min', this.name);
   console.log('Min', e);
-}
-async function addCartItemsElements(items) {
-  let infos = await getCartItemsInfos(items);
-  // console.log(infos);
-  cartItenWrapperDiv.innerHTML = infos.reduce(
-    (elements, { imgUrl, itemName, num, price, _id }) => {
-      return (
-        elements +
-        `
-      <div class="cart-item" id="item-${_id}">
-        <input type="checkbox" class="item-select-checkbox" name="${_id}" checked/>
-        <div class="item-image-box">
-          <img
-            class="item-image"
-            src="${imgUrl}"
-            alt="item-image"
-          />
-        </div>
-        <div class="item-name"><a href="/item/?id=${_id}">${itemName}</a></div>
-        <div class="item-price">${addCommas(price)}원</div>
-        <div class="item-number-box">
-          <button class="item-number-btn item-number-plus-btn" name="${_id}">
-            <i class="fa-solid fa-circle-plus"></i>
-          </button>
-          <div>${num}</div>
-          <button class="item-number-btn item-number-minus-btn" name="${_id}">
-            <i class="fa-solid fa-circle-minus"></i>
-          </button>
-        </div>
-        <div class="item-total-price">${addCommas(num * price)}원</div>
-      </div>
-    `
-      );
-    },
-    ``,
-  );
-}
-// 구매하기 버튼 처리
-// 로컬 스토리지에서 데이터 가져오기
-function makeCartItemMap(cart) {
-  return cart.reduce((map, item) => {
-    // console.log(item, map[item]);
-    if (!map[item]) {
-      // console.log("map init", item);
-      map[item] = 0;
-    }
-    map[item] += 1;
-    return map;
-  }, {});
-}
-function makeCheckedItemMap(map) {
-  return Object.keys(map).reduce((map, id) => {
-    map[id] = true;
-    return map;
-  }, {});
-}
-// DB에서 item 정보가져오기
-async function getCartItemsInfos(items) {
-  // console.log(itemArr);
-  let infos = [];
-  for (let i = 0; i < items.length; i++) {
-    // console.log(i);
-    const [_id, num] = items[i];
-    // console.log(i, itemArr[i]);
-    const response = await fetch(`/api/item/${_id}`);
-    let info = await response.json();
-    info = {
-      ...info,
-      num,
-    };
-    infos.push(info);
+  console.log('cur', cart);
+  if (itemMap[this.name] > 1) {
+    cart.splice(
+      cart.findIndex((val) => val === this.name),
+      1,
+    );
+    // console.log(cart.findIndex((val) => val === this.name));
+    localStorage.setItem('cart', JSON.stringify(cart));
+    console.log('after', cart);
+    itemMap[this.name] -= 1;
+    // window.location.reload();
+    addCartItemsElements();
+    addCartEventListeners();
+    addOrderInfoElement();
+  } else {
+    alert('수량이 하나 남았습니다. 삭제를 원하면 삭제 버튼을 이용해주세요.');
   }
-  // console.log(infos);
-  return infos;
-  // 프로미스가 반환되는데 다른 방법이 있을까요?
-  // return Object.entries(items).map(async ([_id, num]) => {
-  //   console.log(_id, num);
-  //   try {
-  //     const response = await fetch(`/api/item/${_id}`);
-  //     const info = await response.json();
-  //     // const info = await getCartItemInfo(_id);
-  //     console.log(info);
-  //     info[num] = num;
-  //     // map[_id] = info;
-  //     // return [info, ...map];
-  //     return info;
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // });
+}
+
+function handleDeleteItemBtn(e) {
+  console.log('delete');
+  cart = cart.filter((id) => id !== this.name);
+  console.log(cart);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  console.log('after', cart);
+  itemMap[this.name] = 0;
+  addCartItemsElements();
+  addCartEventListeners();
+  addOrderInfoElement();
 }
