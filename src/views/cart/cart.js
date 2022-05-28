@@ -13,7 +13,7 @@ import { OrderInfo } from '../components/Order/index.js';
 const orderBtn = document.querySelector('#order-btn');
 const cartItenWrapperDiv = document.querySelector('#cart-item-wrapper');
 
-let cart = JSON.parse(localStorage.getItem('cart'));
+let cart = cartInit(); //JSON.parse(localStorage.getItem('cart'));
 let itemMap = makeCartItemMap(cart); // 카트 Map 만들기, id - 개수 구조
 // let items = Object.entries(itemMap);
 let checkedItems = makeCheckedItemMap(itemMap); // check된 상품들
@@ -21,6 +21,15 @@ let infos = await getCartItemsInfos(Object.entries(itemMap));
 console.log(checkedItems);
 
 // 카트 아이템들 자료구조
+// 카트 init
+function cartInit() {
+  let cart = JSON.parse(localStorage.getItem('cart'));
+  if (!cart) {
+    cart = [];
+    localStorage.setItem('cart', JSON.stringify([]));
+  }
+  return cart;
+}
 // 카트 아이템 관리 map
 function makeCartItemMap(cart) {
   return cart.reduce((map, item) => {
@@ -70,11 +79,14 @@ function addCartItemsElements() {
   cartItenWrapperDiv.innerHTML = Object.keys(itemMap).reduce((elements, id) => {
     if (itemMap[id] != 0) {
       const { imgUrl, itemName, price } = infos[id];
+      console.log('addItem checkbox', checkedItems[id]);
       return (
         elements +
         `
           <div class="cart-item" id="item-${id}">
-            <input type="checkbox" class="item-select-checkbox" name="${id}" checked/>
+            <input type="checkbox" class="item-select-checkbox" name="${id}" ${
+          checkedItems[id] ? 'checked' : ''
+        }/>
             <div class="item-image-box">
               <img
                 class="item-image"
@@ -170,6 +182,10 @@ function addCartEventListeners() {
   document
     .querySelector('#allSelectCheckbox')
     .addEventListener('click', handleAllCheckbox);
+  // 전체 삭제 버튼 이벤트 처리
+  document
+    .querySelector('#delete-all-btn')
+    .addEventListener('click', handleDeleteAllBtn);
   // 각 아이템 별 체크 박스, 수량 조절 버튼 이벤트 처리
   document.querySelectorAll('.item-select-checkbox').forEach((node) => {
     node.addEventListener('click', handleItemCheckbox);
@@ -186,6 +202,7 @@ function addCartEventListeners() {
 }
 function handleAllCheckbox(e) {
   console.log(this.checked);
+  console.log('cheklist', checkedItems);
   const itemCheckBox = document.querySelectorAll('.item-select-checkbox');
   console.log(itemCheckBox);
   if (this.checked) {
@@ -204,6 +221,24 @@ function handleAllCheckbox(e) {
     });
   }
   addOrderInfoElement();
+}
+function handleDeleteAllBtn() {
+  console.log('cart', cart);
+  if (cart.length !== 0) {
+    Object.keys(checkedItems).forEach((id) => {
+      if (checkedItems[id]) {
+        itemMap[id] = 0;
+        cart = cart.filter((cartId) => cartId !== id);
+      }
+    });
+    console.log('after', cart);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    addCartItemsElements();
+    addCartEventListeners();
+    addOrderInfoElement();
+  } else {
+    alert('장바구니에 삭제할 아이템이 없습니다.');
+  }
 }
 function handleItemCheckbox(e) {
   console.log('check', this.checked);
