@@ -5,3 +5,4 @@ yarn.lock
 lib
 package-lock.json
 .DSstore
+.prettierrc
