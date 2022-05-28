@@ -35,10 +35,18 @@ div.select > * {
 }
 /* 카트 내용 */
 .items #cart-item-wrapper .cart-item {
-  display: flex;
+  /* display: flex;
   align-items: center;
   justify-content: space-around;
+ */
+  display: grid;
+  grid-template-columns: 0.1fr 1fr 1fr 1fr 1fr 1fr;
+  column-gap: 3%;
+  align-items: center;
+  justify-items: center;
+
   width: 100%;
+  margin: 5% 0;
 }
 /* 아이템 이미지 */
 .cart-item .item-image-box {
@@ -54,7 +62,9 @@ div.select > * {
 .cart-item .item-number-box {
   display: flex;
   justify-content: space-between;
-  width: 8%;
+
+  place-self: center center;
+  width: 50%;
 }
 .cart-item .item-number-box .item-number-btn {
   border-style: none;
