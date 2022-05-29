@@ -82,7 +82,7 @@ class UserService {
 
   async setOrderInfo(objectId){
     // objectId
-    const currentData = await this.userModel.findById({__id: objectId})
+    const currentData = await this.userModel.findById({_id: objectId})
     console.log(currentData.orderinfo)
     return;
   }
@@ -169,7 +169,7 @@ class UserService {
     return user;
   }
 
-  async getUserAddress(userId){
+  async getUserAddressInOrder(userId){
         // 주문 목록이 할당된게 없으면
         let user = await this.userModel.findById(userId);
         if(user.orderInfo.length !== 0){
@@ -177,11 +177,13 @@ class UserService {
           user = await this.userModel.getUserAndPopulate(userId);
         }
         const address = []
+        // 주문 주소 만 address 에 push
         for (let key in user.orderInfo){
           address.push(user.orderInfo[key].shipAddress)
         }
+        // 주문 주소가 없으면 에러 출력
         if(address.length === 0){
-          return new Error("할당된 주문목록이 없습니다.")
+          throw new Error("할당된 주문목록이 없습니다.")
         }
         return address;
   }
