@@ -1,4 +1,4 @@
-import { Nav } from "./index.js"; //네비게이션 컴포넌트
+import { Nav } from './index.js'; //네비게이션 컴포넌트
 
 const nav = document.querySelector('nav');
 
