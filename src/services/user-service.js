@@ -168,6 +168,20 @@ class UserService {
     }
     return user;
   }
+
+  async getUserAddress(userId){
+        // 주문 목록이 할당된게 없으면
+        let user = await this.userModel.findById(userId);
+        if(user.orderInfo.length !== 0){
+          // 1개라도 있으면 populate 사용해서 보여준다.
+          user = await this.userModel.getUserAndPopulate(userId);
+        }
+        const address = []
+        for (let key in user.orderInfo){
+          address.push(user.orderInfo[key].shipAddress)
+        }
+        return address;
+  }
 }
 
 const userService = new UserService(userModel);
