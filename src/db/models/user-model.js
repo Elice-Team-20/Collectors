@@ -4,7 +4,7 @@ import { UserSchema } from '../schemas/user-schema';
 const User = model('users', UserSchema);
 
 export class UserModel {
-  
+
   // 이메일로 유저 검색
   async findByEmail(email) {
     const user = await User.findOne({ email })
@@ -48,7 +48,7 @@ export class UserModel {
     try{
       // findOneAndUpdate return the document _before_ `update` was applied
       //https://mongoosejs.com/docs/tutorials/findoneandupdate.html
-      await User.findOneAndUpdate({ email: userEmail }, {$push: {orderInfo: orderInfo}} )
+      await User.findOneAndUpdate({ email: userEmail }, {$addToSet: {orderInfo: orderInfo}} )
       return await User.findOne({email: userEmail});
     }
     catch(er){

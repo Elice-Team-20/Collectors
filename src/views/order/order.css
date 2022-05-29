@@ -1,21 +1,17 @@
-/* 공통 */
+#order {
+  color: #f01e21;
+  font-weight: bold;
+}
 .seperator {
   width: 100%;
   height: 0px;
   border: 0.5px solid #c5c5c5;
 }
-/* 타이틀 */
-#cart {
-  color: #f01e21;
-  font-weight: bold;
-}
-
-/* 카트 정보 */
 div.items {
   width: 65%;
   padding: 10px;
 }
-/* 선택 메뉴 */
+
 div.select {
   display: flex;
   margin-right: 1rem;
@@ -33,43 +29,12 @@ div.select > * {
   gap: 0.5rem;
   align-items: center;
 }
-/* 카트 내용 */
-.items #cart-item-wrapper .cart-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  width: 100%;
-}
-/* 아이템 이미지 */
-.cart-item .item-image-box {
-  width: 150px;
-  height: 150px;
-}
-.cart-item .item-image-box .item-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-/* 아이템 수량 조절 */
-.cart-item .item-number-box {
-  display: flex;
-  justify-content: space-between;
-  width: 8%;
-}
-.cart-item .item-number-box .item-number-btn {
-  border-style: none;
-}
-.cart-item .item-number-box .item-number-btn i:hover {
-  color: #f01e21;
-}
-/* 카트 정보 (선택에 맞춰서) */
+
 div.info-card {
   width: 30%;
-  height: 50vh;
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 
   padding: 10px;
 }
@@ -83,9 +48,21 @@ div.data {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: flex-end;
+
   gap: 1rem;
   margin-top: 1rem;
+}
+div.order-list #order-title {
+  min-width: 5vw;
+}
+div.order-list #order-items {
+  flex: display;
+  flex-direction: column;
+
+  text-align: right;
+}
+div.order-list #order-items > div {
+  margin-top: 4px;
 }
 
 div.total {
@@ -95,7 +72,7 @@ div.total {
   align-items: flex-end;
 }
 
-#order-btn {
+#purchase-btn {
   width: 100%;
   height: 5vh;
 
@@ -105,10 +82,6 @@ div.total {
 
   font-weight: bold;
   cursor: pointer;
-}
-#order-btn:hover {
-  border-color: #e7484b;
-  background-color: #e7484b;
 }
 
 @media all and (max-width: 768px) {

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>쇼핑-데모</title>
+    <!-- 아이콘 -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/elice-rabbit-favicon.png"
+    />
+    <!-- bulma css 관련 -->
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    /> -->
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/7630448495.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 구글 OAuth -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- 카카오 OAuth -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="orderComplete.css" />
+    <link rel="stylesheet" href="../../style.css" />
+    <link rel="stylesheet" href="../../components/Order/style.css" />
+    <script src="orderComplete.js" type="module" defer></script>
+  </head>
+  <body>
+    <div id="wrap">
+      <!-- 헤더 -->
+      <nav></nav>
+      <section class="cart">
+        <div class="cart-wrap">
+          <div class="info-wrapper">
+            <div class="info-card">
+              <div class="info-name">
+                주문이 완료되었습니다!
+                <div class="seperator"></div>
+              </div>
+              <div class="order-info">
+                <div class="data">
+                  <p>주문 상품</p>
+                  <p id="ordered"></p>
+                </div>
+              </div>
+              <div class="data total">
+                <p>총 결제 금액</p>
+                <p id="total">원</p>
+              </div>
+              <button class="button" id="order-list-page-btn">
+                주문 내역 가기
+              </button>
+              <button class="button" id="items-list-page-btn">
+                쇼핑 계속하기
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer></footer>
+    </div>
+  </body>
+</html>

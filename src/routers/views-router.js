@@ -1,5 +1,5 @@
-import express from 'express';
-import path from 'path';
+import express from "express";
+import path from "path";
 
 const viewsRouter = express.Router();
 
@@ -20,7 +20,7 @@ viewsRouter.use('/order', serveStatic('order'));
 viewsRouter.use('/order/complete', serveStatic('orderComplete'));
 
 // views 폴더의 최상단 파일인 rabbit.png, api.js 등을 쓸 수 있게 함
-viewsRouter.use('/', serveStatic(''));
+viewsRouter.use("/", serveStatic(""));
 
 // views폴더 내의 ${resource} 폴더 내의 모든 파일을 웹에 띄우며,
 // 이 때 ${resource}.html 을 기본 파일로 설정함.
