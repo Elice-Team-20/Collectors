@@ -1,6 +1,10 @@
 import { Schema } from 'mongoose';
 
 const OrderSchema = new Schema({
+  orderList:{
+    type: [],
+    required: true,
+  },
   shipAddress: {
     type: new Schema(
       {
@@ -21,13 +25,15 @@ const OrderSchema = new Schema({
   recipientName: {
     type: String,
      required: true
-    }
-     ,
+    },
   recipientPhone: {
     type: Number,
      required: true
     },
-
+  status:{
+    type: String,
+    default: "상품 준비중",
+  }
 },
 {
   collection: 'orderinfoes',
