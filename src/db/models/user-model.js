@@ -4,7 +4,7 @@ import { UserSchema } from '../schemas/user-schema';
 const User = model('users', UserSchema);
 
 export class UserModel {
-  
+
   // 이메일로 유저 검색
   async findByEmail(email) {
     const user = await User.findOne({ email })
@@ -36,6 +36,20 @@ export class UserModel {
 
     const updatedUser = await User.findOneAndUpdate(filter, update, option)
     return updatedUser;
+  }
+
+  // email로 유져 정보 update 아직 서비스 할당안됨
+  async updateByEmail({ userEmail, update }) {
+    const filter = { email: userEmail };
+    // after 사용해도 변화된 결과 돌려줌
+    const option = { returnDocument: 'after' };
+    try{
+      const updatedUser = await User.findOneAndUpdate(filter, update, option)
+      return updatedUser;
+    }
+    catch(er){
+      return er
+    }
   }
 
   // 유저 정보 삭제

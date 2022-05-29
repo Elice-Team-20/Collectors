@@ -82,7 +82,7 @@ class UserService {
 
   async setOrderInfo(objectId){
     // objectId
-    const currentData = await this.userModel.findById({__id: objectId})
+    const currentData = await this.userModel.findById({_id: objectId})
     console.log(currentData.orderinfo)
     return;
   }
@@ -134,6 +134,15 @@ class UserService {
     return user;
   }
 
+  // 패스워드를 요구하지 않는 update 함수입니다. 보안상 좋지는 않을거 같습니다.
+  async NoPasswordUpdateAddress(userId, address){
+    const updateRes = await this.userModel.update({
+      userId: userId,
+      update: address,
+    })
+    return updateRes;
+  }
+
   // 유저 삭제 (회원 탈퇴)
   async deleteUser(userId, password){
 
@@ -167,6 +176,25 @@ class UserService {
       return await this.userModel.getUserAndPopulate(userId);
     }
     return user;
+  }
+
+  async getUserAddressInOrder(userId){
+        // 주문 목록이 할당된게 없으면
+        let user = await this.userModel.findById(userId);
+        if(user.orderInfo.length !== 0){
+          // 1개라도 있으면 populate 사용해서 보여준다.
+          user = await this.userModel.getUserAndPopulate(userId);
+        }
+        const address = []
+        // 주문 주소 만 address 에 push
+        for (let key in user.orderInfo){
+          address.push(user.orderInfo[key].shipAddress)
+        }
+        // 주문 주소가 없으면 에러 출력
+        if(address.length === 0){
+          throw new Error("할당된 주문목록이 없습니다.")
+        }
+        return address;
   }
 }
 
