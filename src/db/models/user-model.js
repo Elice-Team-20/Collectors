@@ -24,12 +24,27 @@ export class UserModel {
     return users;
   }
 
+  // userId 로 유저정보 update
   async update({ userId, update }) {
     const filter = { _id: userId };
     const option = { returnOriginal: false };
 
     const updatedUser = await User.findOneAndUpdate(filter, update, option)
     return updatedUser;
+  }
+
+  // email로 유져 정보 update 아직 서비스 할당안됨
+  async updateByEmail({ userEmail, update }) {
+    const filter = { email: userEmail };
+    const option = { returnDocument: 'after' };
+    console.log(filter, update)
+    try{
+      const updatedUser = await User.findOneAndUpdate(filter, update, option)
+      return updatedUser;
+    }
+    catch(er){
+      return er
+    }
   }
 
   async delete(userId) {
