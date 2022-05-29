@@ -180,6 +180,9 @@ class UserService {
         for (let key in user.orderInfo){
           address.push(user.orderInfo[key].shipAddress)
         }
+        if(address.length === 0){
+          return new Error("할당된 주문목록이 없습니다.")
+        }
         return address;
   }
 }
