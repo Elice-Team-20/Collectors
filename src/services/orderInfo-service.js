@@ -28,22 +28,20 @@ class OrderinfoService {
       const user = await this.userModel.findByEmail(email)
       const order = await this.orderModel.findByObjectId(id)
       const res = await this.userModel.appendOrder(email, order)
-      // 주소를 가져와야하는지 의문?
-      // 주소 조회
-    //   const address = await this.orderModel.findByObjectId(id)
-    //   const { postalCode, address1, address2 } = address.shipAddress
-    //   const updateAdddress = await this.userModel.updateByEmail({
-    //     userEmail: email,
-    //     update:{
-    //       address:
-    //     {
-    //       postalCode:postalCode,
-    //       address1: address1,
-    //       address2: address2
-    //     }
-    //   }
-    // })
-      return res
+      const address = await this.orderModel.findByObjectId(id)
+      const { postalCode, address1, address2 } = address.shipAddress
+      const updateAdddressRes = await this.userModel.updateByEmail({
+        userEmail: email,
+        update:{
+          address:
+        {
+          postalCode:postalCode,
+          address1: address1,
+          address2: address2
+         }
+       }
+     })
+      return updateAdddressRes
     }
     catch(er){
       return er
