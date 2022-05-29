@@ -10,7 +10,7 @@ div.cart-wrap {
   margin: 10vh 0;
 }
 
-div.title {
+.order-status {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -25,7 +25,7 @@ div.title {
   font-size: 20px;
 }
 
-div.title > p {
+.order-status > p {
   margin: 0 0.3rem;
 }
 

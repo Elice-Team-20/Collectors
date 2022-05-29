@@ -1,36 +1,76 @@
-#order {
-  color: #f01e21;
-  font-weight: bold;
-}
+/* 공통 */
 .seperator {
   width: 100%;
   height: 0px;
   border: 0.5px solid #c5c5c5;
 }
-div.items {
-  width: 65%;
-  padding: 10px;
-}
-
-div.select {
-  display: flex;
-  margin-right: 1rem;
-
+.title {
   height: 5vh;
   line-height: 5vh;
+
+  font-size: 20px;
+}
+/* 진행사항 */
+#order {
+  color: #f01e21;
+  font-weight: bold;
 }
 
-div.select > * {
-  margin-right: 1rem;
-}
-
-.checkbox {
+/* 주문자 정보 */
+.form {
   display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
+  flex-direction: column;
 
-div.info-card {
+  width: 65%;
+  height: 40%;
+  padding: 10px;
+}
+#user-info-form {
+  display: grid;
+  flex-direction: column;
+  grid-template-rows: 1fr 1fr 3fr 1fr;
+}
+#user-info-form .field {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+
+  margin-top: 4%;
+}
+#user-info-form .field .input,
+select {
+  width: 100%;
+  height: 5vh;
+  padding-left: 2%;
+
+  background: #ffffff;
+  border: 1px solid #c5c5c5;
+  box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  outline-style: none;
+
+  color: black;
+}
+/* 우편번호와 주소찾기 줄 */
+#user-info-form .address {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+#user-info-form #addressInput #findAddressBtnLine {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  column-gap: 3%;
+}
+#user-info-form #addressInput #findAddressBtnLine button {
+  width: 100%;
+  border-style: none;
+  border-radius: 5px;
+  color: black;
+  background-color: #d9d9d9;
+}
+/* 결제 정보 */
+.info-card {
   width: 30%;
 
   display: flex;
@@ -38,20 +78,17 @@ div.info-card {
 
   padding: 10px;
 }
-div.info-name {
-  height: 5vh;
-  line-height: 5vh;
 
-  font-size: 20px;
-}
-div.data {
+.data {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: flex-start;
 
   gap: 1rem;
   margin-top: 1rem;
 }
+
 div.order-list #order-title {
   min-width: 5vw;
 }
@@ -91,7 +128,7 @@ div.total {
   }
 
   div.info-card,
-  div.items {
+  .form {
     width: 90%;
   }
 }
