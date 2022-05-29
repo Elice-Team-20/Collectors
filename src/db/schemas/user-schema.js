@@ -7,6 +7,7 @@ const UserSchema = new Schema(
     email: {
       type: String,
       required: true,
+      match : /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/,
     },
     fullName: {
       type: String,
