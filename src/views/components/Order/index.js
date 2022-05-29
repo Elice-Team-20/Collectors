@@ -28,7 +28,7 @@ const OrderNav = (page) => {
 
   // return `${menu}`;
   return `
-    <div class="title">
+    <div class="order-status">
       <p id="cart">장바구니</p>
       <p id="order">> 주문 결제</p>
       <p id="complete">> 주문 완료</p>
@@ -37,9 +37,9 @@ const OrderNav = (page) => {
 };
 
 const OrderInfo = (page) => {
-  let info = "";
+  let info = '';
   // let page = "";
-  if (page === "Cart") {
+  if (page === 'Cart') {
     info = `
     <div class="data">
       <p>상품 수</p>
@@ -54,7 +54,7 @@ const OrderInfo = (page) => {
       <p id="shipping">원</p>
     </div>
     `;
-  } else if (page === "Order") {
+  } else if (page === 'Order') {
     info = `
     <div class="data order-list">
       <div id="order-title">주문 상품</div>

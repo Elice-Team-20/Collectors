@@ -173,6 +173,9 @@ function addOrderInfoElement() {
 
 // event 처리 부분
 function orderBtnHandler() {
+  let order = Object.keys(checkedItems).filter((id) => checkedItems[id]);
+  console.log('order', order);
+  localStorage.setItem('order', JSON.stringify(order));
   window.location.href = '/order';
 }
 

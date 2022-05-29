@@ -4,6 +4,12 @@
   height: 0px;
   border: 0.5px solid #c5c5c5;
 }
+.title {
+  height: 5vh;
+  line-height: 5vh;
+
+  font-size: 20px;
+}
 /* 타이틀 */
 #cart {
   color: #f01e21;
@@ -87,17 +93,12 @@ div.info-card {
 
   padding: 10px;
 }
-div.info-name {
-  height: 5vh;
-  line-height: 5vh;
-
-  font-size: 20px;
-}
 div.data {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
+
   gap: 1rem;
   margin-top: 1rem;
 }
