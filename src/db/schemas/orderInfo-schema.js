@@ -27,7 +27,7 @@ const OrderSchema = new Schema({
      required: true
     },
   recipientPhone: {
-    type: Number,
+    type: String,
      required: true
     },
   status:{

@@ -4,7 +4,7 @@ import { UserSchema } from '../schemas/user-schema';
 const User = model('users', UserSchema);
 
 export class UserModel {
-  
+
   // 이메일로 유저 검색
   async findByEmail(email) {
     const user = await User.findOne({ email })

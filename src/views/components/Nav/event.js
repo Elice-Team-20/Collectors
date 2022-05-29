@@ -1,20 +1,19 @@
-import { Nav } from "./index.js"; //네비게이션 컴포넌트
+import { Nav } from './index.js'; //네비게이션 컴포넌트
 
-const nav = document.querySelector("nav");
+const nav = document.querySelector('nav');
 
 // 로그인 상태 확인 함수
 const checkUserStatus = () => {
-  return localStorage.getItem("token") ? true : false;
+  return localStorage.getItem('token');
 };
 
-// 로그아웃 처리 함수
 const handleLogout = () => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   if (token) {
-    localStorage.removeItem("token");
-    window.location.reload();
+    localStorage.removeItem('token');
+    window.location.href = '/';
   } else {
-    alert("token이 없는 상태입니다.");
+    alert('token이 없는 상태입니다.');
   }
 };
 
@@ -23,9 +22,9 @@ const addNavElements = (page) => {
   nav.innerHTML = Nav(isLoggedIn, page);
 };
 const addNavEventListeners = () => {
-  const logoutMenu = document.querySelector("#logoutMenu");
+  const logoutMenu = document.querySelector('#logoutMenu');
   console.log(logoutMenu);
-  if (logoutMenu) logoutMenu.addEventListener("click", handleLogout);
+  if (logoutMenu) logoutMenu.addEventListener('click', handleLogout);
 };
 
-export { addNavEventListeners, addNavElements };
+export { addNavEventListeners, addNavElements, handleLogout, checkUserStatus };

@@ -1,0 +1,54 @@
+.signout-form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 85vh;
+}
+
+.signout-form-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+  width: 30rem;
+  height: 40%;
+}
+.signout-form-box .field {
+  width: 100%;
+}
+.signout-form-box .field .label {
+  display: block;
+  margin-bottom: 10px;
+}
+.signout-form-box .field .input {
+  width: 98%;
+  height: 5vh;
+  padding-left: 2%;
+
+  background: #ffffff;
+  border: 1px solid #c5c5c5;
+  box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  outline-style: none;
+
+  color: black;
+}
+.signout-form-box .field .input:focus {
+  border: 0.5px solid #e7484b;
+  box-shadow: 0 0 0 0.125em #f01e21;
+}
+.signout-form-box .button {
+  width: 100%;
+  height: 5vh;
+
+  border-color: #f01e21;
+  border-radius: 7px;
+  background-color: #f01e21;
+
+  font-weight: bold;
+}
+.signout-form-box .button:hover {
+  border-color: #e7484b;
+  background-color: #e7484b;
+}

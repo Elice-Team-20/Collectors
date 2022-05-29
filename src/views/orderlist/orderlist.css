@@ -1,0 +1,37 @@
+.order-container {
+  width: 95%;
+  margin: 0 auto;
+}
+
+.order-title {
+  border-bottom: 1px solid white;
+  margin: 20px 0;
+}
+
+.order-header,
+.order-data {
+  display: grid;
+  grid-template-columns: 100px 3fr 2fr 100px;
+  text-align: center;
+}
+
+.order-data {
+  border-top: 1px solid #fff;
+  padding-top: 1rem;
+}
+
+@media all and (max-width: 768px) {
+  .order-header {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .order-header > h3 {
+    font-size: 1rem;
+    font-weight: normal;
+  }
+
+  .order-data {
+    grid-template-columns: 1fr;
+  }
+}

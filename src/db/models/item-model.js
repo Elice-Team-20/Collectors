@@ -42,7 +42,7 @@ export class ItemModel {
 
   async create(itemInfo) {
     try{
-      const item = await Item.create(itemInfo).exec();
+      const item = await Item.create(itemInfo);
       return item;
     }
     catch (er){

@@ -18,21 +18,14 @@ userRouter.post('/register', async (req, res, next) => {
     }
 
     // req (request)의 body 에서 데이터 가져오기
-    const fullName = req.body.fullName;
-    const email = req.body.email;
-    const password = req.body.password;
-    const address = {
-      address1: req.body.address1,
-      address2: req.body.address2,
-      postalCode: req.body.postalCode,
-    }
+    // 회원가입 할때 주소를 받지 않는다.
+    const { fullName, email, password } = req.body;
 
     // 위 데이터를 유저 db에 추가하기
     const newUser = await userService.addUser({
       fullName,
       email,
       password,
-      address
     });
 
     // 추가된 유저의 db 데이터를 프론트에 다시 보내줌
@@ -81,6 +74,7 @@ userRouter.get('/userlist', loginRequired, async function (req, res, next) {
   }
 });
 
+// user 아이디를 반환하는 api
 userRouter.get('/id', loginRequired, async function(req, res, next) {
   try{
     const id = req.currentUserId;
@@ -90,6 +84,7 @@ userRouter.get('/id', loginRequired, async function(req, res, next) {
   }
 })
 
+// 유저아이디 에 맞는 유저 정보 가져옴 만약 주문 정보 가 있으면 주문정보도 보여주는 api
 userRouter.get('/:userId', loginRequired, async (req, res, next) => {
   try{
     const {userId} = req.params;
@@ -97,6 +92,18 @@ userRouter.get('/:userId', loginRequired, async (req, res, next) => {
     res.status(200).json(user);
   }catch(error){
     next(error);
+  }
+})
+
+userRouter.patch('/users/:userId/address', loginRequired, async(req, res, next) =>{
+  try{
+    const  address  = req.body;
+    const { userId } = req.params;
+    const result = await userService.noPasswordUpdateAddress(userId, address)
+    res.json(result)
+  }
+  catch(err){
+    next(err)
   }
 })
 
@@ -159,7 +166,7 @@ userRouter.patch(
   }
 );
 
-// loginRequired 체크
+// loginRequired 체크하고 유저 정보를 제거하는 api
 userRouter.delete('/delete/:userId', async(req, res, next) => {
   try{
     const { userId } = req.params;
