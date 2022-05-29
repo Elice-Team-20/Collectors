@@ -4,7 +4,7 @@ const nav = document.querySelector('nav');
 
 // 로그인 상태 확인 함수
 const checkUserStatus = () => {
-  return localStorage.getItem('token') ? true : false;
+  return localStorage.getItem('token');
 };
 
 const handleLogout = () => {
@@ -27,4 +27,4 @@ const addNavEventListeners = () => {
   if (logoutMenu) logoutMenu.addEventListener('click', handleLogout);
 };
 
-export { addNavEventListeners, addNavElements, handleLogout };
+export { addNavEventListeners, addNavElements, handleLogout, checkUserStatus };
