@@ -75,7 +75,7 @@ function handleAddress() {
 }
 
 async function getUserDataToInput() {
-  // const data = {};
+  // user 데이터 가져오기
   const id = await findUserId();
   const response = await fetch(`/api/user/${id}`, {
     method: 'GET',
@@ -86,8 +86,11 @@ async function getUserDataToInput() {
   });
   const userData = await response.json();
 
+  // 주문 데이터 가져오기
+  const orderInfo = findOrders(id);
+
   const { fullName, password } = userData;
-  console.log(password);
+
   fullNameInput.value = fullName;
 }
 
@@ -99,9 +102,20 @@ async function findUserId() {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(response);
   const userId = await response.json();
-  console.log(userId);
 
   return userId;
+}
+
+async function findOrders(userId) {
+  const response = await fetch(`/api/order/${userId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const orders = await response.json();
+  console.log(orders);
+  return orders;
 }
