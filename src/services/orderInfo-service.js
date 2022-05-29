@@ -1,4 +1,4 @@
-import { orderInfo, userModel } from "../db/index";
+import { orderInfo, userModel, itemModel } from "../db/index";
 
 const checkData = async function(orderId){
   return await orderInfo.findByObjectId(orderId) ? true: false;
@@ -13,14 +13,54 @@ class OrderinfoService {
     return this.orderModel.create(orderData)
   };
 
+  // 전체 주문 조회
   async getOrderInfo(){
     return this.orderModel.findAll()
   }
 
+  // 아이디별 조회
   async getOrderInfoById(id){
     if(checkData(id)){
       return this.orderModel.findByObjectId(id);
     }
+  }
+
+  async getOrderList(orderInfo){
+    const array = [];
+
+    for(let i = 0 ; i < orderInfo.length; i++){
+      const temp = {};
+      temp.orderId = orderInfo[i].id;
+
+      const date = new Date(orderInfo[i].createdAt);
+      temp.orderDate = this.getDate(date);
+
+      const orderList = await this.idToOrderName(orderInfo[i].orderList);
+      temp.orderList = orderList;
+
+      temp.status = orderInfo[i].status;
+
+      array.push(temp);
+    }
+    return array;
+  }
+
+  getDate(date){
+    const year = date.getFullYear();
+    const month = ("0" + (1 + date.getMonth())).slice(-2);
+    const day = ("0" + date.getDate()).slice(-2);
+
+    return year + "-" + month + "-" + day;
+  }
+
+  async idToOrderName(orderList) {
+    const array = [];
+
+    for(let i = 0 ; i < orderList.length; i++){
+      const res = await itemModel.findById(orderList[i].itemId);
+      array.push({"itemName": res.itemName, "count": orderList[i].count});
+    }
+    return array;
   }
 
   async connectOrderAndInfo(email, id){

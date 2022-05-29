@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { orderInfoService } from './../services/index'
-import {loginRequired } from './../middlewares/index'
+import { orderInfoService, userService } from './../services/index'
+import { loginRequired } from './../middlewares/index'
 const orderInfoRouter = Router();
 
 orderInfoRouter.post('/', async(req, res) => {
   const {
+          orderList,
           address1,
           address2,
           postalCode,
@@ -20,6 +21,7 @@ orderInfoRouter.post('/', async(req, res) => {
   };
 
   const inputOrderData = {
+    orderList: orderList,
     totalCost: totalCost,
     recipientName: recipientName,
     recipientPhone: recipientPhone,
@@ -31,6 +33,17 @@ orderInfoRouter.post('/', async(req, res) => {
 
 orderInfoRouter.get('/', loginRequired, async(req, res) => {
   res.json(await orderInfoService.getOrderInfo());
+})
+
+// api/order/list
+// 로그인한 유저의 주문내역을 반환
+orderInfoRouter.get('/list', loginRequired, async(req, res) => {
+  const userId = req.currentUserId;
+  const userInfo = await userService.getUser(userId);
+
+  const result = await orderInfoService.getOrderList(userInfo.orderInfo);
+
+  res.json(result);
 })
 
 orderInfoRouter.get('/:id', loginRequired, async(req, res) => {
