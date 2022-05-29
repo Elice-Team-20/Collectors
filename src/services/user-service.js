@@ -134,6 +134,15 @@ class UserService {
     return user;
   }
 
+  // 패스워드를 요구하지 않는 update 함수입니다. 보안상 좋지는 않을거 같습니다.
+  async NoPasswordUpdateAddress(userId, address){
+    const updateRes = await this.userModel.update({
+      userId: userId,
+      update: address,
+    })
+    return updateRes;
+  }
+
   // 유저 삭제 (회원 탈퇴)
   async deleteUser(userId, password){
 
