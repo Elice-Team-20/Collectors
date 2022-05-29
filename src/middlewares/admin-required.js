@@ -4,6 +4,9 @@ import { userService } from "../services";
 async function adminRequired(req, res, next) {
 
   try {
+    
+    // 이전 미들웨어 (loginRequired)에서 현재 로그인한 유저의 아이디를 가져옴
+    // 유저의 아이디를 검색해서 만약 admin이면(true일 경우) next, 아닐 경우 에러 처리
     const userId = req.currentUserId;
     const user = await userService.getUser(userId);
     

@@ -134,16 +134,20 @@ class UserService {
     return user;
   }
 
+  // 유저 삭제 (회원 탈퇴)
   async deleteUser(userId, password){
 
+    // objectId로 유저 검색
     const user = await this.userModel.findById(userId);
     const correctPasswordHash = user.password;
 
+    // 비밀번호 일치하는지 검사
     const isPasswordCorrect = await bcrypt.compare(
       password,
       correctPasswordHash
     );
 
+    // 일치하지 않을 경우 에러
     if (!isPasswordCorrect) {
       throw new Error(
         '현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.'
