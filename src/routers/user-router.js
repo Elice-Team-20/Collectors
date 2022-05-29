@@ -102,6 +102,18 @@ userRouter.get('/:userId', loginRequired, async (req, res, next) => {
   }
 })
 
+userRouter.patch('/users/:userId/address', loginRequired, async(req, res, next) =>{
+  try{
+    const  address  = req.body;
+    const { userId } = req.params;
+    const result = await userService.NoPasswordUpdateAddress(userId, address)
+    res.json(result)
+  }
+  catch(err){
+    next(err)
+  }
+})
+
 // 사용자 정보 수정
 // (예를 들어 /api/users/abc12345 로 요청하면 req.params.userId는 'abc12345' 문자열로 됨)
 userRouter.patch(
