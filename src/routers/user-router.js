@@ -91,37 +91,11 @@ userRouter.get('/id', loginRequired, async function(req, res, next) {
   }
 })
 
-
 // 유저아이디 에 맞는 유저 정보 가져옴 만약 주문 정보 가 있으면 주문정보도 보여주는 api
 userRouter.get('/:userId', loginRequired, async (req, res, next) => {
   try{
     const {userId} = req.params;
     const user = await userService.getUser(userId);
-    res.status(200).json(user);
-  }catch(error){
-    next(error);
-  }
-})
-
-// 주소를 할당하는 API
-userRouter.post('/:userId/address', loginRequired, async(req, res, next) => {
-  try{
-    const {userId} = req.params;
-    const user = await userService.upd(userId);
-    res.status(200).json(user);
-  }catch(error){
-    next(error);
-  }
-})
-
-
-// 주소를 보여주는 API
-// 회원정보 -> 주문정보순으로 보여주는 api
-//쓸모 없는  api  유저에게 할당된 주문 주소 만 보여주는 api
-userRouter.get('/:userId/address', loginRequired, async(req, res ,next) => {
-  try{
-    const {userId} = req.params;
-    const user = await userService.getUserAddressInOrder(userId);
     res.status(200).json(user);
   }catch(error){
     next(error);
