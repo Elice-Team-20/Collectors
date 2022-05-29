@@ -1,7 +1,6 @@
 import { Router } from 'express';
-import upload from '../db/models/s3-model';
 import { itemService } from '../services';
-import { adminRequired, loginRequired } from '../middlewares' ;
+import { adminRequired, loginRequired, upload } from '../middlewares/index' ;
 
 
 const itemRouter = Router();
@@ -9,9 +8,10 @@ const itemRouter = Router();
 // 아이탬을 생성하는 라우터
 itemRouter.get('/', async (req, res) => {
   const item = await itemService.getItems()
-  res.json({item});
+  res.json({ item });
 })
 
+// s3 에 이미지 업로드후 req 에 링크 넣고 아이템 db에 등록
 itemRouter.post('/', upload.single('file'), async(req,res)=>{
   const {
   itemName,
