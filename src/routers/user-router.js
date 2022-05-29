@@ -106,7 +106,7 @@ userRouter.patch('/users/:userId/address', loginRequired, async(req, res, next) 
   try{
     const  address  = req.body;
     const { userId } = req.params;
-    const result = await userService.NoPasswordUpdateAddress(userId, address)
+    const result = await userService.noPasswordUpdateAddress(userId, address)
     res.json(result)
   }
   catch(err){
