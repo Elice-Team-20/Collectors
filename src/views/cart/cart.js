@@ -177,6 +177,7 @@ function addOrderInfoElement() {
 function orderBtnHandler() {
   if (checkUserStatus()) {
     let order = Object.keys(checkedItems).reduce((arr, id) => {
+      console.log(checkedItems[id]);
       if (checkedItems[id]) {
         arr.push([id, itemMap[id]]);
       }

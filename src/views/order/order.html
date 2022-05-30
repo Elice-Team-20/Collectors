@@ -22,6 +22,8 @@
       src="https://kit.fontawesome.com/7630448495.js"
       crossorigin="anonymous"
     ></script>
+    <!-- 다음 주소찾기 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- 구글 OAuth -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <!-- 카카오 OAuth -->
@@ -44,11 +46,11 @@
               <div class="seperator"></div>
               <div id="user-info-form">
                 <div class="field" id="nameInput">
-                  <label class="label" for="receiverName">이름</label>
+                  <label class="label" for="name">이름</label>
                   <div class="control">
                     <input
                       class="input"
-                      id="receiverName"
+                      id="name"
                       type="text"
                       placeholder="주문자 이름"
                       autocomplete="off"
@@ -56,11 +58,11 @@
                   </div>
                 </div>
                 <div class="field" id="phoneNumberInput">
-                  <label class="label" for="receiverPhoneNumber">연락처</label>
+                  <label class="label" for="phoneNumber">연락처</label>
                   <div class="control">
                     <input
                       class="input"
-                      id="receiverPhoneNumber"
+                      id="phoneNumber"
                       type="text"
                       placeholder="- 없이 입력해주세요."
                       autocomplete="off"
@@ -75,11 +77,11 @@
                         class="input"
                         id="postNumber"
                         type="text"
-                        placeholder="주소찾기를 클릭해주세요"
+                        placeholder="주소찾기를 클릭해주세요."
                         autocomplete="off"
                         readonly
                       />
-                      <button>주소찾기</button>
+                      <button id="findAddressBtn">주소찾기</button>
                     </div>
                     <input
                       class="input"
@@ -92,8 +94,8 @@
                       class="input"
                       id="address2"
                       type="text"
+                      placeholder="상세 주소를 적어주세요."
                       autocomplete="off"
-                      readonly
                     />
                   </div>
                 </div>
@@ -122,25 +124,25 @@
               <div class="order-info">
                 <!-- component 들어가던 부분 -->
                 <div class="data order-list">
-                  <div id="order-title">주문 상품</div>
-                  <div id="order-items">
-                    <div>여성 니트 / 2개</div>
-                    <div>남성 니트 / 2개</div>
+                  <div id="orderTitle">주문 상품</div>
+                  <div id="orderItems">
+                    <!-- <div>여성 니트 / 2개</div>
+                    <div>남성 니트 / 2개</div> -->
                   </div>
                 </div>
                 <div class="data">
-                  <p>상품 총액</p>
-                  <p id="item-total-price">원</p>
+                  <div>상품 총액</div>
+                  <div id="itemTotalPrice">원</div>
                 </div>
                 <div class="data">
-                  <p>배송비</p>
-                  <p id="shipping">원</p>
+                  <div>배송비</div>
+                  <div id="shipFee">원</div>
                 </div>
                 <!--  -->
               </div>
               <div class="data total">
-                <p>총 결제 금액</p>
-                <p id="total">원</p>
+                <div>총 결제 금액</div>
+                <div id="totalPrice">원</div>
               </div>
               <button class="button" id="purchase-btn">결제 하기</button>
             </div>

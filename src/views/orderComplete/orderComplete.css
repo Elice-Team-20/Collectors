@@ -1,29 +1,36 @@
-#complete {
-  color: #f01e21;
-  font-weight: bold;
-}
+/* 겅텅 */
 .seperator {
   width: 100%;
   height: 0px;
   border: 0.5px solid #c5c5c5;
 }
-
-div.info-card {
-  width: 30%;
+/* 진행 상태 */
+#complete {
+  color: #f01e21;
+  font-weight: bold;
+}
+/* 컨텐츠 */
+.info-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 주문 정보 박스 */
+.info-card {
+  width: 60%;
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-
   padding: 10px;
 }
-div.info-name {
+.info-name {
   height: 5vh;
   line-height: 5vh;
 
   font-size: 20px;
 }
-div.data {
+/* 주문 정보 */
+.data {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -31,8 +38,12 @@ div.data {
   gap: 1rem;
   margin-top: 1rem;
 }
-
-div.total {
+/* 주문 상품 정보 */
+#orderedItem {
+  text-align: end;
+}
+/* 최종 결제 금액 */
+.total {
   font-size: 1.25rem;
   font-weight: bold;
   margin: 2rem 0;
@@ -58,8 +69,7 @@ button {
     justify-content: center;
   }
 
-  div.info-card,
-  div.items {
+  div.info-card {
     width: 90%;
   }
 }
