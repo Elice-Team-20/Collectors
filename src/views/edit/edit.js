@@ -9,8 +9,15 @@ const token = localStorage.getItem('token');
 const submitButton = document.querySelector('#submitButton');
 const addressButton = document.querySelector('#addressButton');
 const fullNameInput = document.querySelector('#fullNameInput');
+const emailInput = document.querySelector('#emailInput');
 const passwordInput = document.querySelector('#passwordInput');
+const passwordConfirmInput = document.querySelector('#passwordConfirmInput');
 const phoneNumberInput = document.querySelector('#phoneNumberInput');
+
+const postcode = document.querySelector('#postcode');
+const address = document.querySelector('#address');
+const detailAddress = document.querySelector('#detailAddress');
+const extraAddress = document.querySelector('#extraAddress');
 
 addAllElements();
 addAllEvents();
@@ -27,6 +34,7 @@ async function addAllElements() {
 function addAllEvents() {
   addNavEventListeners();
   addressButton.addEventListener('click', handleAddress);
+  submitButton.addEventListener('click', updateUserData);
 }
 
 function handleAddress() {
@@ -60,16 +68,16 @@ function handleAddress() {
           extraAddr = ' (' + extraAddr + ')';
         }
         // 조합된 참고항목을 해당 필드에 넣는다.
-        document.getElementById('extraAddress').value = extraAddr;
+        extraAddress.value = extraAddr;
       } else {
-        document.getElementById('extraAddress').value = '';
+        extraAddress.value = '';
       }
 
       // 우편번호와 주소 정보를 해당 필드에 넣는다.
-      document.getElementById('postcode').value = data.zonecode;
-      document.getElementById('address').value = addr;
+      postcode.value = data.zonecode;
+      address.value = addr;
       // 커서를 상세주소 필드로 이동한다.
-      document.getElementById('detailAddress').focus();
+      detailAddress.focus();
     },
   }).open();
 }
@@ -77,6 +85,8 @@ function handleAddress() {
 async function getUserDataToInput() {
   // user 데이터 가져오기
   const id = await findUserId();
+
+  // 유저 데이터 가져오기
   const response = await fetch(`/api/user/${id}`, {
     method: 'GET',
     headers: {
@@ -86,14 +96,24 @@ async function getUserDataToInput() {
   });
   const userData = await response.json();
 
-  // 주문 데이터 가져오기
-  const orderInfo = findOrders(id);
-
-  const { fullName, password } = userData;
-
+  // 유저 데이터 가져와서 삽입
+  const { fullName, email } = userData;
   fullNameInput.value = fullName;
+  emailInput.innerHTML = email;
+
+  // 주소 데이터 가져와서 삽입
+  if (userData.address) {
+    const { phoneNumber } = userData;
+    const { postalCode, address1, address2 } = userData.address;
+    console.log(phoneNumber, postalCode, address1, address2);
+    postcode.value = postalCode;
+    address.value = address1;
+    detailAddress.value = address2;
+    phoneNumberInput.value = phoneNumber;
+  }
 }
 
+// 유저 아이디 찾기
 async function findUserId() {
   const response = await fetch(`/api/user/id`, {
     method: 'GET',
@@ -107,15 +127,48 @@ async function findUserId() {
   return userId;
 }
 
-async function findOrders(userId) {
-  const response = await fetch(`/api/order/${userId}`, {
-    method: 'GET',
+// 유저 데이터 수정하기
+async function updateUserData() {
+  const id = await findUserId();
+  const newPassword = passwordInput.value;
+  const newPasswordConfirm = passwordConfirmInput.value;
+
+  // 비밀번호 확인
+  if (newPassword !== newPasswordConfirm) {
+    alert('비밀번호가 일치하지 않습니다.');
+    return;
+  }
+  if (newPassword.length < 8) {
+    alert('비밀번호는 8자 이상이어야 합니다.');
+    return;
+  }
+
+  // 유저 데이터 수정하기
+  const response = await fetch(`/api/user/users/${id}`, {
+    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
+    body: JSON.stringify({
+      fullName: fullNameInput.value,
+      password: newPassword,
+      phoneNumber: phoneNumberInput.value,
+      address: {
+        postalCode: postcode.value,
+        address1: address.value,
+        address2: detailAddress.value,
+      },
+    }),
   });
-  const orders = await response.json();
-  console.log(orders);
-  return orders;
+
+  const updatedUserData = await response.json();
+  console.log(updatedUserData);
+
+  if (response.status === 200) {
+    alert('수정되었습니다.');
+    location.href = '/';
+  } else {
+    alert('수정에 실패하였습니다.');
+  }
 }

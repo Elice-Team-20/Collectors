@@ -6,13 +6,19 @@
 .edit-title {
   border-bottom: 1px solid white;
   margin: 20px 0;
+  display: flex;
+  align-items: baseline;
+}
+
+.edit-title > h2 {
+  margin-right: 0.5rem;
 }
 
 .edit-user-form-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 70vh;
+  /* height: 70vh; */
 }
 
 .edit-user-form-box {
@@ -31,12 +37,13 @@
 
 .edit-user-form-box .field .label {
   display: block;
-  margin-bottom: 10px;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
 }
 
 .edit-user-form-box .field .input {
   width: 98%;
-  height: 5vh;
+  height: 4vh;
   padding-left: 2%;
 
   background: #ffffff;
@@ -46,6 +53,7 @@
   outline-style: none;
 
   color: black;
+  margin-bottom: 0.5rem;
 }
 
 .edit-user-form-box .field .input:focus {
@@ -53,17 +61,30 @@
   box-shadow: 0 0 0 0.125em #f01e21;
 }
 
-.edit-user-form-box .button {
-  width: 100%;
-  height: 5vh;
+.edit-user-form-box .button,
+#addressButton {
+  width: 30%;
+  height: 4vh;
   border-color: #f01e21;
   border-radius: 7px;
   background-color: #f01e21;
-
+  color: #ffffff;
   font-weight: bold;
+  text-align: center;
 }
 
-.edit-user-form-box .button:hover {
+.edit-user-form-box .button:hover,
+#addressButton:hover {
   border-color: #e7484b;
   background-color: #e7484b;
+}
+
+#postcode {
+  width: 40%;
+}
+
+.address-container {
+  width: 98%;
+  display: flex;
+  justify-content: space-between;
 }
