@@ -96,14 +96,11 @@ async function purchaseBtnHandler() {
     const orderData = {
       userId: user_id,
       orderInfo: shipData,
-      orderList: itemList, // 안들어감
+      orderList: itemList,
     };
     console.log(orderData);
     console.log(user_id);
     await Api.post('/api/order/makeOrder', orderData);
-    await Api.patch(`/api/user/users/${user_id}/address`, '', {
-      address: addressData,
-    });
 
     localStorage.removeItem('order');
     localStorage.setItem('orderInfo', JSON.stringify(orderInfo));
