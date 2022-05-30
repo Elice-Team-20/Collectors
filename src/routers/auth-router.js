@@ -22,12 +22,13 @@ authRouter.get('/kakao/finish', async(req, res, next) => {
         redirect_uri: 'http://localhost:5000/api/auth/kakao/finish',
         code: req.query.code,
       };
-      const email = await kakaoOAuthService.requestUserEmail(config);
-      const isthereDB = await kakaoOAuthService.checkMember(email);
+      const userInfo = await kakaoOAuthService.requestUser(config);
+      const isthereDB = await kakaoOAuthService.checkMember(userInfo);
       if(!isthereDB){
-        await kakaoOAuthService.signUp(email);
+        const user = await kakaoOAuthService.signUp(userInfo);
+        console.log(user)
       }
-      const token = kakaoOAuthService.getToken()
+      //const token = kakaoOAuthService.getToken()
 
       res.json({'email':isthereDB})
   }
