@@ -23,4 +23,17 @@ async function addAllElements() {
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   addNavEventListeners();
+  addBtnEvents();
+}
+
+function addBtnEvents() {
+  registerItemsBtn.addEventListener('click', () => {
+    window.location.href = '/admin/register';
+  });
+  manageItemsBtn.addEventListener('click', () => {
+    window.location.href = '/admin/manage';
+  });
+  orderListBtn.addEventListener('click', () => {
+    window.location.href = '/admin/order_list';
+  });
 }

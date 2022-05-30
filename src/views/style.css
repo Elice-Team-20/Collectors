@@ -57,3 +57,8 @@ footer {
   position: absolute;
   background-color: dimgray;
 }
+@media all and (max-width: 768px) {
+  /* .seperator{
+    wid
+  } */
+}
