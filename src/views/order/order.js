@@ -23,7 +23,6 @@ window.onload = () => {
 
 let orderInfo = { orderList };
 const shipFreeMinPrice = 50000;
-console.log(orderList);
 
 const purchaseBtn = document.querySelector('#purchase-btn');
 const findAddressBtn = document.querySelector('#findAddressBtn');
@@ -67,16 +66,13 @@ async function purchaseBtnHandler() {
   if (!address2Input.value) {
     return alert('상세 주소를 입력해주세요.');
   }
-  console.log(orderInfo.totalCost);
   if (!orderInfo.totalCost || !orderList) {
     window.location.href = '/cart';
     return alert('결제 정보를 다시 확인해주세요.');
   }
-  console.log(orderInfo);
   const itemList = orderList.map(([id, num]) => {
     return { itemId: id, count: num };
   });
-  console.log(itemList);
   const addressData = {
     postalCode: postNumberInput.value,
     address1: address1Input.value,
@@ -89,8 +85,6 @@ async function purchaseBtnHandler() {
     recipientPhone: phoneNumberInput.value,
     shipRequest: requestMsgInput.value,
   };
-  console.log(addressData);
-  console.log(shipData);
   try {
     const user_id = await Api.get('/api/user/id');
     const orderData = {
@@ -98,12 +92,11 @@ async function purchaseBtnHandler() {
       orderInfo: shipData,
       orderList: itemList,
     };
-    console.log(orderData);
-    console.log(user_id);
     await Api.post('/api/order/makeOrder', orderData);
 
     localStorage.removeItem('order');
     localStorage.setItem('orderInfo', JSON.stringify(orderInfo));
+
     alert(`정상적으로 주문이 완료되었습니다.`);
 
     // 주문 완료 페이지 이동
@@ -117,11 +110,8 @@ async function purchaseBtnHandler() {
 function handleFindAddressBtn() {
   new daum.Postcode({
     oncomplete: function (data) {
-      //data는 사용자가 선택한 주소 정보를 담고 있는 객체이며, 상세 설명은 아래 목록에서 확인하실 수 있습니다.
-      console.log(data);
       postNumberInput.value = data.zonecode;
       address1Input.value = data.address;
-      // 이때 readonly를 해제하고 싶은데 안된다..
       address2Input.value = '';
     },
   }).open();
@@ -138,26 +128,7 @@ async function getUserShipInfos() {
   try {
     const user_id = await Api.get('/api/user/id');
     const userInfo = await Api.get(`/api/user/${user_id}`);
-    console.log('user', userInfo);
     return userInfo;
-    // const orderData = {
-    //   userId: user_id,
-    //   orderInfo: shipData,
-    //   orderList: itemList, // 안들어감
-    // };
-    // console.log(orderData);
-    // console.log(user_id);
-    // await Api.post('/api/order/makeOrder', orderData);
-    // await Api.patch(`/api/user/users/${user_id}/address`, '', {
-    //   address: addressData,
-    // });
-
-    // localStorage.removeItem('order');
-    // localStorage.setItem('orderInfo', JSON.stringify(orderInfo));
-    // alert(`정상적으로 주문이 완료되었습니다.`);
-
-    // // 주문 완료 페이지 이동
-    // window.location.href = '/order/complete';
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
@@ -170,7 +141,7 @@ async function addOrderInfoElements() {
   const totalPriceDiv = document.querySelector('#totalPrice');
 
   const { orderItemsText, totalItemPrice, shipFee } = await getOrderItemInfos();
-  console.log(orderItemsText);
+
   orderItemsDiv.innerHTML = orderItemsText;
   itemTotalPriceDiv.innerHTML = `${addCommas(totalItemPrice)}원`;
   shipFeeDiv.innerHTML = `${addCommas(shipFee)}원`;
@@ -182,10 +153,8 @@ async function getOrderItemInfos() {
   let totalItemPrice = 0;
   for (let i = 0; i < orderList.length; i++) {
     const [id, num] = orderList[i];
-    console.log(id, num);
     const response = await fetch(`/api/item/${id}`);
     const info = await response.json();
-    console.log(info);
     const { itemName, price } = info;
     orderItemsText += `<div>${itemName} / ${num}개</div>`;
     totalItemPrice += Number(price) * num;
