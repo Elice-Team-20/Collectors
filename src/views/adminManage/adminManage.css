@@ -4,7 +4,8 @@ section {
 }
 
 #content {
-  margin-top: 5vh;
+  width: 80%;
+  margin: 5vh 0;
 }
 #title {
   height: 50px;
@@ -26,9 +27,10 @@ section {
   border: 1px solid #f01e21;
 }
 .item-content-box {
-  display: flex;
-  column-gap: 10%;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
   align-items: center;
+  justify-items: center;
 }
 .item .item-delete-btn {
   display: flex;
@@ -51,7 +53,7 @@ section {
 }
 
 .item .item-content-box .item-name {
-  max-width: 30%;
+  max-width: 80%;
   margin: 2vw 0;
   text-overflow: ellipsis;
   overflow: hidden;
