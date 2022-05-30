@@ -47,6 +47,17 @@ orderInfoRouter.get('/', loginRequired, async(req, res, next) => {
   }
 })
 
+// api/order/list
+// 로그인한 유저의 주문내역을 반환
+orderInfoRouter.get('/list', loginRequired, async(req, res) => {
+  const userId = req.currentUserId;
+  const userInfo = await userService.getUser(userId);
+
+  const result = await orderInfoService.getOrderList(userInfo.orderInfo);
+
+  res.json(result);
+})
+
 // 주문id 로 주문을 조회하는 api
 orderInfoRouter.get('/:id', loginRequired, async(req, res, next) => {
   try{
@@ -59,16 +70,6 @@ orderInfoRouter.get('/:id', loginRequired, async(req, res, next) => {
   }
 })
 
-// api/order/list
-// 로그인한 유저의 주문내역을 반환
-orderInfoRouter.get('/list', loginRequired, async(req, res) => {
-  const userId = req.currentUserId;
-  const userInfo = await userService.getUser(userId);
-
-  const result = await orderInfoService.getOrderList(userInfo.orderInfo);
-
-  res.json(result);
-})
 
 orderInfoRouter.get('/:id', loginRequired, async(req, res) => {
   const {id} = req.params;
