@@ -1,0 +1,139 @@
+/* 공통 */
+.seperator {
+  width: 100%;
+  height: 0px;
+  border: 0.5px solid #c5c5c5;
+}
+.title {
+  height: 5vh;
+  line-height: 5vh;
+
+  font-size: 20px;
+}
+/* 타이틀 */
+#cart {
+  color: #f01e21;
+  font-weight: bold;
+}
+
+/* 카트 정보 */
+div.items {
+  width: 65%;
+  padding: 10px;
+}
+/* 선택 메뉴 */
+div.select {
+  display: flex;
+  margin-right: 1rem;
+
+  height: 5vh;
+  line-height: 5vh;
+}
+
+div.select > * {
+  margin-right: 1rem;
+}
+
+.checkbox {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+/* 카트 내용 */
+.items #cart-item-wrapper .cart-item {
+  /* display: flex;
+  align-items: center;
+  justify-content: space-around;
+ */
+  display: grid;
+  grid-template-columns: 0.1fr 1fr 1fr 1fr 1fr 1fr 0.1fr;
+  column-gap: 3%;
+  align-items: center;
+  justify-items: center;
+
+  width: 100%;
+  /* margin: 5% 0; */
+  padding: 5% 2%;
+}
+/* 아이템 이미지 */
+.cart-item .item-image-box {
+  width: 150px;
+  height: 150px;
+}
+.cart-item .item-image-box .item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* 아이템 수량 조절 */
+.cart-item .item-number-box {
+  display: flex;
+  justify-content: space-between;
+
+  place-self: center center;
+  width: 50%;
+}
+.cart-item button {
+  /*.item-number-box .item-number-btn { */
+  border-style: none;
+}
+
+.cart-item button i:hover {
+  /*.item-number-box .item-number-btn i:hover {*/
+  color: #f01e21;
+}
+/* 카트 정보 (선택에 맞춰서) */
+div.info-card {
+  width: 30%;
+  height: 50vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 10px;
+}
+div.data {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+div.total {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 2rem 0;
+  align-items: flex-end;
+}
+
+#order-btn {
+  width: 100%;
+  height: 5vh;
+
+  border-color: #f01e21;
+  border-radius: 7px;
+  background-color: #f01e21;
+
+  font-weight: bold;
+  cursor: pointer;
+}
+#order-btn:hover {
+  border-color: #e7484b;
+  background-color: #e7484b;
+}
+
+@media all and (max-width: 768px) {
+  div.info-wrapper {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  div.info-card,
+  div.items {
+    width: 90%;
+  }
+}

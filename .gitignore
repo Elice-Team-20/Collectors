@@ -2,3 +2,7 @@
 node_modules
 yarn.lock
 .env
+lib
+package-lock.json
+.DSstore
+.prettierrc

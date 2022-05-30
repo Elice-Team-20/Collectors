@@ -1,55 +1,37 @@
 // 아래는 현재 home.html 페이지에서 쓰이는 코드는 아닙니다.
 // 다만, 앞으로 ~.js 파일을 작성할 때 아래의 코드 구조를 참조할 수 있도록,
 // 코드 예시를 남겨 두었습니다.
-
 import * as Api from '/api.js';
 import { randomId } from '/useful-functions.js';
 
-// 요소(element), input 혹은 상수
-const landingDiv = document.querySelector('#landingDiv');
-const greetingDiv = document.querySelector('#greetingDiv');
+import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
+import { addFooterElements } from '../components/Footer/event.js';
 
+// =====
+// 요소(element), input 혹은 상수
+userInit();
 addAllElements();
 addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-async function addAllElements() {
-  insertTextToLanding();
-  insertTextToGreeting();
+function addAllElements() {
+  addNavElements();
+  addFooterElements();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
-  landingDiv.addEventListener('click', alertLandingText);
-  greetingDiv.addEventListener('click', alertGreetingText);
+  addNavEventListeners();
 }
 
-function insertTextToLanding() {
-  landingDiv.insertAdjacentHTML(
-    'beforeend',
-    `
-      <h2>n팀 쇼핑몰의 랜딩 페이지입니다. 자바스크립트 파일에서 삽입되었습니다.</h2>
-    `
-  );
+function userInit() {
+  let cart = JSON.parse(localStorage.getItem('cart'));
+  console.log('cart', cart);
+  if (!cart) {
+    car = [];
+    localStorage.setItem('cart', JSON.stringify([]));
+  }
 }
-
-function insertTextToGreeting() {
-  greetingDiv.insertAdjacentHTML(
-    'beforeend',
-    `
-      <h1>반갑습니다! 자바스크립트 파일에서 삽입되었습니다.</h1>
-    `
-  );
-}
-
-function alertLandingText() {
-  alert('n팀 쇼핑몰입니다. 안녕하세요.');
-}
-
-function alertGreetingText() {
-  alert('n팀 쇼핑몰에 오신 것을 환영합니다');
-}
-
 async function getDataFromApi() {
   // 예시 URI입니다. 현재 주어진 프로젝트 코드에는 없는 URI입니다.
   const data = await Api.get('/api/user/data');
@@ -58,3 +40,49 @@ async function getDataFromApi() {
   console.log({ data });
   console.log({ random });
 }
+
+const swiper = new Swiper('.swiper', {
+  // Optional parameters
+  direction: 'horizontal',
+  loop: true,
+  autoplay: {
+    delay: 3000,
+  },
+  pauseOnMouseEnter: true,
+
+  // If we need pagination
+  pagination: {
+    el: '.swiper-pagination',
+  },
+
+  // Navigation arrows
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+});
+
+const quickMenu = document.querySelector('#quick-menu');
+
+window.onresize = () => {
+  let x = window.innerWidth;
+  x < 1250 ? (quickMenu.style.display = 'none') : (quickMenu.style.display = 'block');
+};
+
+window.addEventListener('scroll', () => {
+  let y = +window.scrollY;
+  console.log(y);
+  y > 250 ? (quickMenu.style.top = y + 250 + 'px') : (quickMenu.style.top = '500px');
+});
+
+const scrollTop = document.querySelector('.scrollTop');
+
+window.addEventListener('scroll', () => {
+  let y = window.pageYOffset;
+  // console.log(y)
+  if (y > 700) {
+    scrollTop.style.bottom = 15 + 'px';
+  } else {
+    scrollTop.style.bottom = -58 + 'px';
+  }
+});

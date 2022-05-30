@@ -18,9 +18,8 @@ userRouter.post('/register', async (req, res, next) => {
     }
 
     // req (request)의 body 에서 데이터 가져오기
-    const fullName = req.body.fullName;
-    const email = req.body.email;
-    const password = req.body.password;
+    // 회원가입 할때 주소를 받지 않는다.
+    const { fullName, email, password } = req.body;
 
     // 위 데이터를 유저 db에 추가하기
     const newUser = await userService.addUser({
@@ -74,6 +73,39 @@ userRouter.get('/userlist', loginRequired, async function (req, res, next) {
     next(error);
   }
 });
+
+// user 아이디를 반환하는 api
+userRouter.get('/id', loginRequired, async function(req, res, next) {
+  try{
+    const id = req.currentUserId;
+    res.status(200).json(id);
+  }catch(error){
+    next(error);
+  }
+})
+
+// 유저아이디 에 맞는 유저 정보 가져옴 만약 주문 정보 가 있으면 주문정보도 보여주는 api
+userRouter.get('/:userId', loginRequired, async (req, res, next) => {
+  try{
+    const {userId} = req.params;
+    const user = await userService.getUser(userId);
+    res.status(200).json(user);
+  }catch(error){
+    next(error);
+  }
+})
+
+userRouter.patch('/users/:userId/address', loginRequired, async(req, res, next) =>{
+  try{
+    const  address  = req.body;
+    const { userId } = req.params;
+    const result = await userService.noPasswordUpdateAddress(userId, address)
+    res.json(result)
+  }
+  catch(err){
+    next(err)
+  }
+})
 
 // 사용자 정보 수정
 // (예를 들어 /api/users/abc12345 로 요청하면 req.params.userId는 'abc12345' 문자열로 됨)
@@ -133,5 +165,25 @@ userRouter.patch(
     }
   }
 );
+
+// loginRequired 체크하고 유저 정보를 제거하는 api
+userRouter.delete('/delete/:userId', async(req, res, next) => {
+  try{
+    const { userId } = req.params;
+    const { password } = req.body;
+
+    if(!password){
+      throw new Error('회원 탈퇴를 위해서는 비밀번호 입력이 필요합니다.');
+    }
+
+    const result = await userService.deleteUser(userId, password);
+
+    res.status(200).json({"result": "정상적으로 회원 정보가 삭제되었습니다."});
+
+
+  }catch(error){
+    next(error);
+  }
+})
 
 export { userRouter };

@@ -1,0 +1,54 @@
+*,
+a {
+  margin: 0;
+  padding: 0;
+  background-color: #202020;
+  color: white;
+  text-decoration: none;
+  box-sizing: border-box;
+  list-style: none;
+}
+#wrap {
+  min-height: 100vh;
+  position: relative;
+  width: 100%;
+}
+
+/* Nav Style */
+.navContainer {
+  padding: 0 3vw;
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navBrand {
+  text-decoration: none;
+  background-color: red;
+}
+.navContainer #navMenuList {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+}
+
+.navContainer #navMenuList li {
+  margin-left: 5vh;
+}
+/* 
+.navContainer #navMenuList #logoutBtn{
+  border-style: none;
+} */
+/* section style */
+section {
+  padding-bottom: 50px; /* footer의 height값과 동일 하단에 있게 하기 위함 */
+  border: 1px slateblue solid;
+}
+/* footer style */
+footer {
+  width: 100vw;
+  height: 50px; /* 내용물에 따라 알맞는 값 설정 */
+  bottom: 0px;
+  position: absolute;
+  background-color: dimgray;
+}

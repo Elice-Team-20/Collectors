@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>쇼핑-데모</title>
+    <!-- 아이콘 -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/elice-rabbit-favicon.png"
+    />
+    <!-- bulma css 관련 -->
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    /> -->
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/7630448495.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 다음 주소찾기 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- 구글 OAuth -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- 카카오 OAuth -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="order.css" />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../components/Order/style.css" />
+    <script src="order.js" type="module" defer></script>
+  </head>
+  <body>
+    <div id="wrap">
+      <!-- 헤더 -->
+      <nav></nav>
+      <section class="cart">
+        <div class="cart-wrap">
+          <div class="info-wrapper">
+            <div class="form">
+              <div class="title">배송지 정보</div>
+              <div class="seperator"></div>
+              <div id="user-info-form">
+                <div class="field" id="nameInput">
+                  <label class="label" for="name">이름</label>
+                  <div class="control">
+                    <input
+                      class="input"
+                      id="name"
+                      type="text"
+                      placeholder="주문자 이름"
+                      autocomplete="off"
+                    />
+                  </div>
+                </div>
+                <div class="field" id="phoneNumberInput">
+                  <label class="label" for="phoneNumber">연락처</label>
+                  <div class="control">
+                    <input
+                      class="input"
+                      id="phoneNumber"
+                      type="text"
+                      placeholder="- 없이 입력해주세요."
+                      autocomplete="off"
+                    />
+                  </div>
+                </div>
+                <div class="field" id="addressInput">
+                  <label class="label" for="addressInput">주소</label>
+                  <div class="control address">
+                    <div id="findAddressBtnLine">
+                      <input
+                        class="input"
+                        id="postNumber"
+                        type="text"
+                        placeholder="주소찾기를 클릭해주세요."
+                        autocomplete="off"
+                        readonly
+                      />
+                      <button id="findAddressBtn">주소찾기</button>
+                    </div>
+                    <input
+                      class="input"
+                      id="address1"
+                      type="text"
+                      autocomplete="off"
+                      readonly
+                    />
+                    <input
+                      class="input"
+                      id="address2"
+                      type="text"
+                      placeholder="상세 주소를 적어주세요."
+                      autocomplete="off"
+                    />
+                  </div>
+                </div>
+                <div class="field" id="requestMsgInput">
+                  <label class="label" for="requestMsgInput">요청사항</label>
+                  <div class="control">
+                    <select id="requestMsgInput">
+                      <option selected disabled>
+                        배송시 요청사항을 선택해주세요.
+                      </option>
+                      <option>직접 수령하겠습니다.</option>
+                      <option>배송 전 연락바랍니다.</option>
+                      <option>부재 시 경비실에 맡겨주세요.</option>
+                      <option>부재 시 문 앞에 놓아주세요.</option>
+                      <option>부재 시 택배함에 넣어주세요.</option>
+                      <option>직접 입력하기</option>
+                    </select>
+                    <div id="requiredMsgTextInput"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="info-card">
+              <div class="title">결제 정보</div>
+              <div class="seperator"></div>
+              <div class="order-info">
+                <!-- component 들어가던 부분 -->
+                <div class="data order-list">
+                  <div id="orderTitle">주문 상품</div>
+                  <div id="orderItems">
+                    <!-- <div>여성 니트 / 2개</div>
+                    <div>남성 니트 / 2개</div> -->
+                  </div>
+                </div>
+                <div class="data">
+                  <div>상품 총액</div>
+                  <div id="itemTotalPrice">원</div>
+                </div>
+                <div class="data">
+                  <div>배송비</div>
+                  <div id="shipFee">원</div>
+                </div>
+                <!--  -->
+              </div>
+              <div class="data total">
+                <div>총 결제 금액</div>
+                <div id="totalPrice">원</div>
+              </div>
+              <button class="button" id="purchase-btn">결제 하기</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <footer></footer>
+    </div>
+  </body>
+</html>
