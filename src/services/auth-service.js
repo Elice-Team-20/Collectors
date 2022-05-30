@@ -11,7 +11,7 @@ class KakaoOAuthService{
     return url
   }
 
-  async requestUserEmail (config) {
+  async requestUser (config) {
       const baseUrl = "https://kauth.kakao.com/oauth/token";
       const params = new URLSearchParams(config).toString()
       const url = `${baseUrl}?${params}`;
@@ -32,26 +32,36 @@ class KakaoOAuthService{
             }
           })
         const userReuestJson = await userReuest.json()
-        const {email} = userReuestJson.kakao_account;
-        return email
+
+        return userReuestJson
       }
       else{
-        throw new Error("토큰이 없습니다.")
+        throw new Error( "토큰이 없습니다." )
       }
   }
 // 회원인지 검사 개체지향에  책임을 분리원칙
 //..? 일단 분리 했는데 통합하는것이에 보기에 맞는거 같기도 하고
-  async checkMember (inputEmail) {
-    const getDBEmail = userService.getUserByEmail(inputEmail);
+  async checkMember (userInfo) {
+    const{email} = userInfo.kakao_account;
+    console.log(email)
+    const getDBEmail = userService.getUserByEmail(email);
     return getDBEmail;
   }
 
-  async signUp (inputEmail){
-    await this.userService.addUser(inputEmail);
+  async signUp (userInfo){
+    const { email, profile } = userInfo.kakao_account;
+    const {nickname} = profile
+    const userData = {
+      email: email,
+      fullName: nickname,
+      password: Math.floor(Math.random() * 100000000).toString(),
+    }
+    return await this.userService.addUser(userData);
   }
 
-  async getToket(){
-    const secretKey = process.env.JWT
+  async getToken(){
+    const secretKey = process.env.JWT_SECRET_KEY ||'secret-key'
+    //const token = jwt.sign({})
   }
 //
 }
