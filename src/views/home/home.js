@@ -4,10 +4,7 @@
 import * as Api from '/api.js';
 import { randomId } from '/useful-functions.js';
 
-import {
-  addNavEventListeners,
-  addNavElements,
-} from '../components/Nav/event.js';
+import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
 
 // =====
@@ -43,3 +40,24 @@ async function getDataFromApi() {
   console.log({ data });
   console.log({ random });
 }
+
+const swiper = new Swiper('.swiper', {
+  // Optional parameters
+  direction: 'horizontal',
+  loop: true,
+  autoplay: {
+    delay: 3000,
+  },
+  pauseOnMouseEnter: true,
+
+  // If we need pagination
+  pagination: {
+    el: '.swiper-pagination',
+  },
+
+  // Navigation arrows
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+});

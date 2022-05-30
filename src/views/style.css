@@ -6,6 +6,7 @@ a {
   color: white;
   text-decoration: none;
   box-sizing: border-box;
+  list-style: none;
 }
 #wrap {
   min-height: 100vh;
