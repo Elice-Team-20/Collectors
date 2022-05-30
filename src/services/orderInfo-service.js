@@ -35,8 +35,8 @@ class OrderinfoService {
       const date = new Date(orderInfo[i].createdAt);
       temp.orderDate = this.getDate(date);
 
-      const orderList = await this.idToOrderName(orderInfo[i].orderList);
-      temp.orderList = orderList;
+      const itemList = await this.idToOrderName(orderInfo[i].itemList);
+      temp.itemList = itemList;
 
       temp.status = orderInfo[i].status;
 
@@ -93,7 +93,8 @@ class OrderinfoService {
          }
        }
      });
-      return updateAdddressRes;
+     const populateRes = await this.userModel.getUserAndPopulate(userId);
+      return populateRes;
     }
     catch(er){
       return er

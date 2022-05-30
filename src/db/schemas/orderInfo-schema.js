@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 
 const OrderSchema = new Schema({
-  orderList:{
+  itemList:{
     type: [],
     required: true,
   },
@@ -33,6 +33,10 @@ const OrderSchema = new Schema({
   status:{
     type: String,
     default: "상품 준비중",
+  },
+  shipRequest :{
+    type:"String",
+    required: false,
   }
 },
 {
