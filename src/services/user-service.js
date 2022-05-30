@@ -196,6 +196,9 @@ class UserService {
         }
         return address;
   }
+  async getUserByEmail(userEmail){
+    return await this.userModel.findByEmail(userEmail)
+  }
 }
 
 const userService = new UserService(userModel);

@@ -27,14 +27,14 @@ class OrderinfoService {
 
   async getOrderList(orderInfo){
     const array = [];
-
+    console.log(orderInfo)
     for(let i = 0 ; i < orderInfo.length; i++){
       const temp = {};
       temp.orderId = orderInfo[i].id;
 
       const date = new Date(orderInfo[i].createdAt);
       temp.orderDate = this.getDate(date);
-
+      console.log(temp.orderDate)
       const itemList = await this.idToOrderName(orderInfo[i].itemList);
       temp.itemList = itemList;
 
@@ -96,7 +96,7 @@ class OrderinfoService {
        }
      });
      const populateRes = await this.userModel.getUserAndPopulate(userId);
-      return result;
+      return populateRes;
     }
     catch(er){
       return er

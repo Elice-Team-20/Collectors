@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import passport from 'passport'
 import { kakaoOAuthService } from '../services/index'
 
 const authRouter = Router();
@@ -9,7 +8,6 @@ authRouter.get('/kakao/start',(req, res, next) =>{
   const url  = kakaoOAuthService.makeUrlKakaoToken()
   res.redirect(url)
 })
-
 
 authRouter.get('/kakao/finish', async(req, res, next) => {
 
@@ -24,8 +22,14 @@ authRouter.get('/kakao/finish', async(req, res, next) => {
         redirect_uri: 'http://localhost:5000/api/auth/kakao/finish',
         code: req.query.code,
       };
-      const email = await kakaoOAuthService.requestUserEmail(config)
-      res.json({'email':email})
+      const email = await kakaoOAuthService.requestUserEmail(config);
+      const isthereDB = await kakaoOAuthService.checkMember(email);
+      if(!isthereDB){
+        await kakaoOAuthService.signUp(email);
+      }
+      const token = kakaoOAuthService.getToken()
+
+      res.json({'email':isthereDB})
   }
   catch(err){
     next(err)

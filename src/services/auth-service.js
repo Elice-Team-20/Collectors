@@ -1,6 +1,9 @@
 import fetch from 'cross-fetch';
-
+import { userService } from '../services/index';
 class KakaoOAuthService{
+  constructor(inputUserService){
+    this.userService = inputUserService
+  }
   makeUrlKakaoToken () {
     const REST_API_KEY = process.env.KAKAO_KEY
     const REDIRECT_URI = 'http://localhost:5000/api/auth/kakao/finish'
@@ -35,10 +38,25 @@ class KakaoOAuthService{
       else{
         throw new Error("토큰이 없습니다.")
       }
-    }
+  }
+// 회원인지 검사 개체지향에  책임을 분리원칙
+//..? 일단 분리 했는데 통합하는것이에 보기에 맞는거 같기도 하고
+  async checkMember (inputEmail) {
+    const getDBEmail = userService.getUserByEmail(inputEmail);
+    return getDBEmail;
+  }
+
+  async signUp (inputEmail){
+    await this.userService.addUser(inputEmail);
+  }
+
+  async getToket(){
+    const secretKey = process.env.JWT
+  }
+//
 }
 
-const kakaoOAuthService = new KakaoOAuthService()
+const kakaoOAuthService = new KakaoOAuthService(userService)
 
 export { kakaoOAuthService }
 
