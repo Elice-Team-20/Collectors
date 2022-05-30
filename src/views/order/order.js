@@ -34,6 +34,7 @@ const phoneNumberInput = document.querySelector('#phoneNumber');
 const postNumberInput = document.querySelector('#postNumber');
 const address1Input = document.querySelector('#address1');
 const address2Input = document.querySelector('#address2');
+const requestMsgInput = document.querySelector('#requestMsgInput');
 
 addAllElements();
 addAllEvents();
@@ -42,6 +43,7 @@ function addAllElements() {
   addNavElements();
   addFooterElements();
   addOrderNavElements('Order');
+  addUserShipElements();
   addOrderInfoElements();
 }
 
@@ -71,7 +73,9 @@ async function purchaseBtnHandler() {
     return alert('결제 정보를 다시 확인해주세요.');
   }
   console.log(orderInfo);
-  const itemList = orderList.map(([id, num]) => id);
+  const itemList = orderList.map(([id, num]) => {
+    return { itemId: id, count: num };
+  });
   console.log(itemList);
   const addressData = {
     postalCode: postNumberInput.value,
@@ -83,6 +87,7 @@ async function purchaseBtnHandler() {
     totalCost: orderInfo.totalCost,
     recipientName: nameInput.value,
     recipientPhone: phoneNumberInput.value,
+    shipRequest: requestMsgInput.value,
   };
   console.log(addressData);
   console.log(shipData);
@@ -120,10 +125,47 @@ function handleFindAddressBtn() {
       postNumberInput.value = data.zonecode;
       address1Input.value = data.address;
       // 이때 readonly를 해제하고 싶은데 안된다..
+      address2Input.value = '';
     },
   }).open();
 }
+async function addUserShipElements() {
+  const { fullName, address, phoneNumber } = await getUserShipInfos();
+  nameInput.value = fullName;
+  phoneNumberInput.value = phoneNumber;
+  postNumberInput.value = address.postalCode;
+  address1Input.value = address.address1;
+  address2Input.value = address.address2;
+}
+async function getUserShipInfos() {
+  try {
+    const user_id = await Api.get('/api/user/id');
+    const userInfo = await Api.get(`/api/user/${user_id}`);
+    console.log('user', userInfo);
+    return userInfo;
+    // const orderData = {
+    //   userId: user_id,
+    //   orderInfo: shipData,
+    //   orderList: itemList, // 안들어감
+    // };
+    // console.log(orderData);
+    // console.log(user_id);
+    // await Api.post('/api/order/makeOrder', orderData);
+    // await Api.patch(`/api/user/users/${user_id}/address`, '', {
+    //   address: addressData,
+    // });
 
+    // localStorage.removeItem('order');
+    // localStorage.setItem('orderInfo', JSON.stringify(orderInfo));
+    // alert(`정상적으로 주문이 완료되었습니다.`);
+
+    // // 주문 완료 페이지 이동
+    // window.location.href = '/order/complete';
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
+}
 async function addOrderInfoElements() {
   const orderItemsDiv = document.querySelector('#orderItems');
   const itemTotalPriceDiv = document.querySelector('#itemTotalPrice');
@@ -133,9 +175,9 @@ async function addOrderInfoElements() {
   const { orderItemsText, totalItemPrice, shipFee } = await getOrderItemInfos();
   console.log(orderItemsText);
   orderItemsDiv.innerHTML = orderItemsText;
-  itemTotalPriceDiv.innerHTML = addCommas(totalItemPrice);
-  shipFeeDiv.innerHTML = addCommas(shipFee);
-  totalPriceDiv.innerHTML = addCommas(totalItemPrice + shipFee);
+  itemTotalPriceDiv.innerHTML = `${addCommas(totalItemPrice)}원`;
+  shipFeeDiv.innerHTML = `${addCommas(shipFee)}원`;
+  totalPriceDiv.innerHTML = `${addCommas(totalItemPrice + shipFee)}원`;
 }
 
 async function getOrderItemInfos() {
