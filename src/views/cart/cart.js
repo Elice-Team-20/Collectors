@@ -98,7 +98,7 @@ function addCartItemsElements() {
             <div class="item-name"><a href="/item/?id=${id}">${itemName}</a></div>
             <div class="item-price">${addCommas(price)}원</div>
             <div class="item-number-box">
-              <button class="item-number-btn item-number-minus-btn" name="${id}">
+              <button class="item-number-btn item-number-minus-btn" id="minBtn${id}"name="${id}">
                 <i class="fa-solid fa-circle-minus"></i>
               </button>
               <div>${itemMap[id]}</div>
@@ -284,22 +284,21 @@ function handleNumberPlusBtn(e) {
   addOrderInfoElement();
 }
 function handleNumberMinusBtn(e) {
-  console.log('Min', this.name);
-  console.log('Min', e);
-  console.log('cur', cart);
   if (itemMap[this.name] > 1) {
     cart.splice(
       cart.findIndex((val) => val === this.name),
       1,
     );
-    // console.log(cart.findIndex((val) => val === this.name));
     localStorage.setItem('cart', JSON.stringify(cart));
-    console.log('after', cart);
     itemMap[this.name] -= 1;
-    // window.location.reload();
     addCartItemsElements();
     addCartEventListeners();
     addOrderInfoElement();
+    if (itemMap[this.name] === 1) {
+      const btn = document.querySelector(`#minBtn${this.name}`);
+      console.log('this', this, btn);
+      btn.disabled = true;
+    }
   } else {
     alert('수량이 하나 남았습니다. 삭제를 원하면 삭제 버튼을 이용해주세요.');
   }
