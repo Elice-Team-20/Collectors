@@ -6,15 +6,15 @@ const orderInfoRouter = Router();
 orderInfoRouter.post('/', async(req, res) => {
   try{
   const {
-          orderList,
+          itemList,
           address1,
           address2,
           postalCode,
           totalCost,
           recipientName,
-          recipientPhone
+          recipientPhone,
+          shipRequest,
         } = req.body;
-
     const address = {
       postalCode: postalCode,
       address1: address1,
@@ -22,11 +22,12 @@ orderInfoRouter.post('/', async(req, res) => {
     };
 
   const inputOrderData = {
-    orderList: orderList,
+    itemList:itemList,
     totalCost: totalCost,
     recipientName: recipientName,
     recipientPhone: recipientPhone,
     shipAddress: address,
+    shipRequest: shipRequest
   };
 
     res.json(await orderInfoService.addOrderInfo(inputOrderData));
@@ -75,7 +76,7 @@ orderInfoRouter.get('/:id', loginRequired, async(req, res) => {
   const {id} = req.params;
   res.json(await orderInfoService.getOrderInfoById(id));
 })
-  
+
 // 결제를 누르면 주문 목록이 해당 유저에게 할당시키는 api
 orderInfoRouter.post('/makeOrder',loginRequired, async(req, res, next) => {
   try{
