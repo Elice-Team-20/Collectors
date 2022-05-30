@@ -27,7 +27,8 @@
       <section class="edit">
         <div class="edit-container">
           <div class="edit-title">
-            <h2>회원 정보 관리 (이메일 추가)</h2>
+            <h2>회원 정보 관리</h2>
+            <p id="emailInput"></p>
           </div>
 
           <div class="edit-user-form-container">
@@ -41,29 +42,31 @@
               <div class="field">
                 <label class="label" for="passwordInput">비밀번호</label>
                 <div class="control">
-                  <input class="input" id="passwordInput" type="password" autocomplete="off" />
+                  <input class="input" id="passwordInput" type="password" autocomplete="off" placeholder="변경할 비밀번호를 입력해 주세요." />
                 </div>
               </div>
               <div class="field">
                 <label class="label" for="passwordConfirmInput">비밀번호 확인</label>
                 <div class="control">
-                  <input class="input" id="passwordConfirmInput" type="password" autocomplete="off" />
+                  <input class="input" id="passwordConfirmInput" type="password" autocomplete="off" placeholder="변경할 비밀번호를 한 번 더 입력해 주세요." />
                 </div>
               </div>
               <div class="field">
                 <label class="label" for="addressInput">주소</label>
                 <div class="control">
-                  <input class="input" type="text" id="postcode" />
-                  <input class="input" id="addressButton" type="button" value="주소 찾기" /><br />
-                  <input class="input" type="text" id="address" /><br />
-                  <input class="input" type="text" id="detailAddress" />
+                  <div class="address-container">
+                    <input class="input" type="text" id="postcode" placeholder="우편 번호" />
+                    <input id="addressButton" type="button" value="주소 찾기" />
+                  </div>
+                  <input class="input" type="text" id="address" placeholder="주소를 입력해 주세요." />
+                  <input class="input" type="text" id="detailAddress" placeholder="상세 주소를 입력해 주세요." />
                   <input class="input" type="text" id="extraAddress" />
                 </div>
               </div>
               <div class="field">
                 <label class="label" for="phoneNumberInput">전화번호</label>
                 <div class="control">
-                  <input class="input" id="phoneNumberInput" type="number" autocomplete="off" />
+                  <input class="input" id="phoneNumberInput" type="number" autocomplete="off" placeholder="전화번호를 입력해 주세요." />
                 </div>
               </div>
               <button class="button" id="submitButton">저장하기</button>
