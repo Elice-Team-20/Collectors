@@ -4,6 +4,11 @@ import { CategorySchema } from '../schemas/category-schema';
 const Category = model('categories', CategorySchema);
 class CategoryModel {
 
+  // async findById(id){
+  //   const category = await Category.findById({"_id": id}).populate({path:'name'});
+  //   return category;
+  // }
+
   // 카테고리 이름으로 검색
   async findByName(categoryName) {
     try{
