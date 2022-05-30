@@ -70,7 +70,6 @@ class OrderinfoService {
      // const order = await this.orderModel.findByObjectId(id);
 
      // 새로운 주문 정보를 만듦
-      console.log(orderInfo)
       const newOrderInfo = await this.orderModel.create(orderInfo)
       // 주문 정보로 부터 아이디 획득
       const orderId = newOrderInfo._id.toString()
