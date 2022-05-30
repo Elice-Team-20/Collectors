@@ -79,22 +79,24 @@ class OrderinfoService {
       // user 와 생성된 orderInfo 연결
       await this.userModel.appendOrder(userId, DBorderData);
       // 마찬가지로 주문정보 db에서 주소정보를 가져왔습니다.
-      const address = await this.orderModel.findByObjectId(orderId);
-      const { postalCode, address1, address2 } = address.shipAddress;
+      const createdOrder = await this.orderModel.findByObjectId(orderId);
+      const { postalCode, address1, address2 } = createdOrder.shipAddress;
+      const phoneNumber = createdOrder.recipientPhone;
       // 가져온 주문정보 의 주소를 user 정보에 업데이트 시킵니다.
-      const updateAdddressRes = await this.userModel.update({
-         userId: userId,
-         update:{
-           address:
-        {
-          postalCode:postalCode,
-          address1: address1,
-          address2: address2
-         }
+      const result = await this.userModel.update({
+          userId,
+          update:{
+            address:
+            {
+            postalCode,
+            address1,
+            address2
+            },
+          phoneNumber
        }
      });
      const populateRes = await this.userModel.getUserAndPopulate(userId);
-      return populateRes;
+      return result;
     }
     catch(er){
       return er
