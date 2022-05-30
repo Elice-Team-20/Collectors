@@ -22,6 +22,8 @@
       src="https://kit.fontawesome.com/7630448495.js"
       crossorigin="anonymous"
     ></script>
+    <!-- 다음 주소찾기 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- 구글 OAuth -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <!-- 카카오 OAuth -->
@@ -44,11 +46,11 @@
               <div class="seperator"></div>
               <div id="user-info-form">
                 <div class="field" id="nameInput">
-                  <label class="label" for="receiverName">이름</label>
+                  <label class="label" for="name">이름</label>
                   <div class="control">
                     <input
                       class="input"
-                      id="receiverName"
+                      id="name"
                       type="text"
                       placeholder="주문자 이름"
                       autocomplete="off"
@@ -56,11 +58,11 @@
                   </div>
                 </div>
                 <div class="field" id="phoneNumberInput">
-                  <label class="label" for="receiverPhoneNumber">연락처</label>
+                  <label class="label" for="phoneNumber">연락처</label>
                   <div class="control">
                     <input
                       class="input"
-                      id="receiverPhoneNumber"
+                      id="phoneNumber"
                       type="text"
                       placeholder="- 없이 입력해주세요."
                       autocomplete="off"
@@ -75,11 +77,11 @@
                         class="input"
                         id="postNumber"
                         type="text"
-                        placeholder="주소찾기를 클릭해주세요"
+                        placeholder="주소찾기를 클릭해주세요."
                         autocomplete="off"
                         readonly
                       />
-                      <button>주소찾기</button>
+                      <button id="findAddressBtn">주소찾기</button>
                     </div>
                     <input
                       class="input"
@@ -92,8 +94,8 @@
                       class="input"
                       id="address2"
                       type="text"
+                      placeholder="상세 주소를 적어주세요."
                       autocomplete="off"
-                      readonly
                     />
                   </div>
                 </div>
