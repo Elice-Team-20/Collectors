@@ -44,12 +44,12 @@ export class UserModel {
     return removedUser;
   }
 
-  async appendOrder(userEmail, orderInfo){
+  async appendOrder(id, orderInfo){
     try{
       // findOneAndUpdate return the document _before_ `update` was applied
       //https://mongoosejs.com/docs/tutorials/findoneandupdate.html
-      await User.findOneAndUpdate({ email: userEmail }, {$addToSet: {orderInfo: orderInfo}} )
-      return await User.findOne({email: userEmail});
+      await User.findOneAndUpdate({ _id: id }, {$addToSet: {orderInfo: orderInfo}} )
+      return await User.findOne({_id: id});
     }
     catch(er){
       return er
