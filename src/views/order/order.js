@@ -4,11 +4,23 @@ import { addCommas } from '/useful-functions.js';
 import {
   addNavEventListeners,
   addNavElements,
+  checkUserStatus,
 } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
 import { addOrderNavElements } from '../components/Order/event.js';
 
 const orderList = JSON.parse(localStorage.getItem('order'));
+window.onload = () => {
+  if (!orderList) {
+    alert('주문 정보가 없습니다. 주문 정보를 확인해주세요.');
+    window.location.href = '/cart';
+  }
+  if (!checkUserStatus()) {
+    alert('비정상적인 접근입니다.');
+    window.location.href = '/';
+  }
+};
+
 let orderInfo = { orderList };
 const shipFreeMinPrice = 50000;
 console.log(orderList);
@@ -53,12 +65,14 @@ async function purchaseBtnHandler() {
   if (!address2Input.value) {
     return alert('상세 주소를 입력해주세요.');
   }
-  // else {
-  //   // 정상
-  //   sendOrderInfo();
-  //   // window.location.href = '/order/complete';
-  // }
+  console.log(orderInfo.totalCost);
+  if (!orderInfo.totalCost || !orderList) {
+    window.location.href = '/cart';
+    return alert('결제 정보를 다시 확인해주세요.');
+  }
   console.log(orderInfo);
+  const itemList = orderList.map(([id, num]) => id);
+  console.log(itemList);
   const addressData = {
     postalCode: postNumberInput.value,
     address1: address1Input.value,
@@ -72,28 +86,32 @@ async function purchaseBtnHandler() {
   };
   console.log(addressData);
   console.log(shipData);
-  // const response = await fetch(`/api/order`,{
-  //   method:'POST',
-
-  // })
   try {
     const user_id = await Api.get('/api/user/id');
+    const orderData = {
+      userId: user_id,
+      orderInfo: shipData,
+      orderList: itemList, // 안들어감
+    };
+    console.log(orderData);
     console.log(user_id);
-    await Api.post('/api/order', shipData);
-    await Api.patch(`/api/user/users/${user_id}/address`, {
+    await Api.post('/api/order/makeOrder', orderData);
+    await Api.patch(`/api/user/users/${user_id}/address`, '', {
       address: addressData,
     });
 
+    localStorage.removeItem('order');
+    localStorage.setItem('orderInfo', JSON.stringify(orderInfo));
     alert(`정상적으로 주문이 완료되었습니다.`);
 
-    // 로그인 페이지 이동
-    // window.location.href = '/login';
+    // 주문 완료 페이지 이동
+    window.location.href = '/order/complete';
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
-async function sendOrderInfo() {}
+
 function handleFindAddressBtn() {
   new daum.Postcode({
     oncomplete: function (data) {
@@ -137,6 +155,10 @@ async function getOrderItemInfos() {
   let shipFee = totalItemPrice > shipFreeMinPrice ? 0 : 3000;
   orderInfo = {
     totalCost: totalItemPrice + shipFee,
+    orderItemsText,
   };
   return { orderItemsText, totalItemPrice, shipFee };
 }
+window.onunload = () => {
+  localStorage.removeItem('order');
+};

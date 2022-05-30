@@ -89,16 +89,16 @@ select {
   margin-top: 1rem;
 }
 
-div.order-list #order-title {
+div.order-list #orderTitle {
   min-width: 5vw;
 }
-div.order-list #order-items {
+div.order-list #orderItems {
   flex: display;
   flex-direction: column;
 
   text-align: right;
 }
-div.order-list #order-items > div {
+div.order-list #orderItems > div {
   margin-top: 4px;
 }
 
