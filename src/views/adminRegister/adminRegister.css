@@ -12,6 +12,7 @@ section {
   line-height: 50px;
   font-size: 30px;
 }
+/* 등록 폼 */
 .item-form {
   display: flex;
   justify-content: space-around;
@@ -27,7 +28,7 @@ section {
   width: 45%;
   height: 80%;
 }
-
+/* 폼들 */
 .input,
 select {
   width: 100%;
@@ -61,13 +62,15 @@ textarea {
   display: block;
   margin-bottom: 3%;
 }
-#imgUrlInputDiv .control input {
+/* 이미지 파일 불러오기 */
+#imgFileInputDiv .control input {
   margin-top: 3%;
   height: 5vh;
 
   font-size: 15px;
   text-align: center;
 }
+/* 태그 관련 */
 #tagTextBtnDiv {
   display: grid;
   grid-template-columns: 4fr 1fr;
@@ -80,7 +83,34 @@ textarea {
   color: black;
   background-color: #d9d9d9;
 }
+/* 태그 등록 후 */
+#tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  /* row-gap: 5%; */
+  margin-top: 3%;
+}
+#tagList .tag-name {
+  width: fit-content;
+  min-width: 25%;
+  max-width: 50%;
+  height: 4vh;
+  line-height: 4vh;
+  padding: 0 3%;
 
+  border-radius: 4px;
+  color: black;
+  background-color: aliceblue;
+
+  font-size: 0.9rem;
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* 등록 버튼 */
 #registerItemBtn {
   height: 5vh;
   margin-top: 6%;

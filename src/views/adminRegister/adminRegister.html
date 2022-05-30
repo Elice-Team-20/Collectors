@@ -42,7 +42,7 @@
           <div class="item-form">
             <div class="form-sector">
               <!-- 제품 이름 -->
-              <div class="field" id="itemNameInput">
+              <div class="field" id="itemNameInputDiv">
                 <label class="label" for="itemNameInput">제품 이름</label>
                 <div class="control">
                   <input
@@ -55,20 +55,18 @@
                 </div>
               </div>
               <!-- 카테고리 -->
-              <div class="field" id="categorySelector">
+              <div class="field" id="categorySelectorDiv">
                 <label class="label" for="categorySelector">카테고리</label>
                 <div class="control">
                   <select id="categorySelector">
                     <option selected disabled>카테고리를 선택해주세요.</option>
-                    <option>히어로</option>
-                    <option>빌런</option>
-                    <option>능력</option>
-                    <option>우주</option>
+                    <option value="hero">히어로</option>
+                    <option value="villain">빌런</option>
                   </select>
                 </div>
               </div>
               <!-- 제조사 -->
-              <div class="field" id="companyInput">
+              <div class="field" id="companyInputDiv">
                 <label class="label" for="companyInput">제조사</label>
                 <div class="control">
                   <input
@@ -81,14 +79,14 @@
                 </div>
               </div>
               <!-- 요약 설명 -->
-              <div class="field" id="summaryInput">
+              <div class="field" id="summaryInputDiv">
                 <label class="label" for="summaryInput">요약 설명</label>
                 <div class="control">
-                  <textarea id="companyInput" cols="40" rows="5"></textarea>
+                  <textarea id="summaryInput" cols="40" rows="5"></textarea>
                 </div>
               </div>
               <!-- 상세 설명 -->
-              <div class="field" id="mainExlainInput">
+              <div class="field" id="mainExlainInputDiv">
                 <label class="label" for="mainExlainInput">상세 설명</label>
                 <div class="control">
                   <textarea id="mainExlainInput" cols="40" rows="10"></textarea>
@@ -97,20 +95,19 @@
             </div>
             <div class="form-sector">
               <!-- 제품 사진 -->
-              <div class="field" id="imgUrlInputDiv">
-                <label for="imgUrlInput">제품 사진</label>
+              <div class="field" id="imgFileInputDiv">
+                <label for="imgFileInput">제품 사진</label>
                 <div class="control">
                   <input
                     type="file"
-                    id="imgUrlInput"
-                    name="imgUrlInput"
+                    id="imgFileInput"
+                    name="imgFileInput"
                     accept="image/*"
-                    onchange="loadFile(this)"
                   />
                 </div>
               </div>
               <!-- 재고 수 -->
-              <div class="field" id="stockInput">
+              <div class="field" id="stockInputDiv">
                 <label class="label" for="stockInput">재고 수</label>
                 <div class="control">
                   <input
@@ -123,14 +120,14 @@
                 </div>
               </div>
               <!-- 가격 -->
-              <div class="field" id="priceInput">
+              <div class="field" id="priceInputDiv">
                 <label class="label" for="priceInput">가격</label>
                 <div class="control">
                   <input
                     class="input"
                     id="priceInput"
                     type="number"
-                    placeholder="300"
+                    placeholder="50000"
                     autocomplete="off"
                   />
                 </div>
