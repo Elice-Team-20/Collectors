@@ -33,7 +33,7 @@ function addBtnEvents() {
   manageItemsBtn.addEventListener('click', () => {
     window.location.href = '/admin/manage';
   });
-  lookupItemsBtn.addEventListener('click', () => {
+  orderListBtn.addEventListener('click', () => {
     window.location.href = '/admin/order_list';
   });
 }
