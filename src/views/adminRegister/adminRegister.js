@@ -66,7 +66,8 @@ function handleImgFileInput(e) {
   //   console.log(imgFileUrl);
   // };
 }
-function handleAddTagBtn() {
+function handleAddTagBtn(e) {
+  e.preventDefault();
   tagListDiv.innerHTML += `
         <div class="tag-name">${tagInput.value}</div>
     `;
@@ -74,7 +75,8 @@ function handleAddTagBtn() {
   console.log('tag', tags);
   tagInput.value = '';
 }
-async function handleRegisterItemBtn() {
+async function handleRegisterItemBtn(e) {
+  e.preventDefault();
   console.log(
     categorySelector.selectedIndex,
     categorySelector.options[categorySelector.selectedIndex].value,
@@ -110,24 +112,36 @@ async function handleRegisterItemBtn() {
   }
 
   try {
-    const itemData = {
-      itemName: itemNameInput.value,
-      category: categorySelector.options[categorySelector.selectedIndex].value,
-      manufacturingCompany: companyInput.value,
-      summary: summaryInput.value,
-      mainExplanation: mainExlainInput.value,
-      file, // 임시
-      stocks: stockInput.value,
-      price: priceInput.value,
-      hashTag: tags,
-    };
-    console.log(itemData);
-    const res = await Api.post('/api/item/', itemData);
-    console.log(res);
+    let formData = new FormData();
+    formData.append('itemName', itemNameInput.value);
+    formData.append(
+      'category',
+      categorySelector.options[categorySelector.selectedIndex].value,
+    );
+    formData.append('manufacturingCompany', companyInput.value);
+    formData.append('summary', summaryInput.value);
+    formData.append('mainExplanation', mainExlainInput.value);
+    formData.append('file', mainExlainInput.value); //
+    formData.append('stocks', stockInput.value);
+    formData.append('hashTag', tags);
+    console.log(formData);
+    // const itemData = {
+    //   itemName: itemNameInput.value,
+    //   category:
+    //   manufacturingCompany: companyInput.value,
+    //   summary: summaryInput.value,
+    //   mainExplanation: mainExlainInput.value,
+    //   file, // 임시
+    //   stocks: stockInput.value,
+    //   price: priceInput.value,
+    //   hashTag: tags,
+    // };
+    // const res = await Api.post('/api/item/', itemData);
+    // console.log(res);
     alert(`정상적으로 상품이 등록되었습니다.`);
 
     // 관리자 페이지로 이동
-    window.location.href = '/admin';
+    // window.location.href = '/admin';
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
