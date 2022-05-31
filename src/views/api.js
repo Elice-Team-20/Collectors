@@ -63,7 +63,6 @@ async function postFromData(endpoint, bodyData) {
   const res = await fetch(apiUrl, {
     method: 'POST',
     headers: {
-      'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
     body: bodyData,

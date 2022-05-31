@@ -17,6 +17,9 @@ section {
   display: flex;
   flex-direction: column;
 }
+.item-container .deleted {
+  display: none;
+}
 .item {
   display: grid;
   grid-template-columns: 8fr 1fr;

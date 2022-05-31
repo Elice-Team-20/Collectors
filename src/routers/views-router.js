@@ -19,6 +19,7 @@ viewsRouter.use('/user/resign', serveStatic('resign'));
 viewsRouter.use('/admin', serveStatic('admin'));
 viewsRouter.use('/admin/register', serveStatic('adminRegister'));
 viewsRouter.use('/admin/manage', serveStatic('adminManage'));
+viewsRouter.use('/admin/manage/item', serveStatic('adminItemEdit'));
 viewsRouter.use('/admin/order_list', serveStatic('adminOrderList'));
 viewsRouter.use('/order', serveStatic('order'));
 viewsRouter.use('/order/complete', serveStatic('orderComplete'));

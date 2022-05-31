@@ -1,0 +1,149 @@
+section {
+  display: flex;
+  justify-content: center;
+}
+
+#content {
+  width: 60%;
+  margin-top: 5vh;
+}
+#title {
+  height: 50px;
+  line-height: 50px;
+  font-size: 30px;
+}
+/* 등록 폼 */
+.item-form {
+  display: flex;
+  justify-content: space-around;
+  /* height: 80%; */
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+
+.item-form .form-sector {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 45%;
+  height: 80%;
+}
+/* 폼들 */
+.input,
+select {
+  width: 100%;
+  height: 5vh;
+  padding-left: 2%;
+
+  background: #ffffff;
+  border: 1px solid #c5c5c5;
+  box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  outline-style: none;
+
+  color: black;
+}
+
+textarea {
+  width: 100%;
+  padding: 2%;
+
+  resize: none;
+  background: #ffffff;
+  border: 1px solid #c5c5c5;
+  box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  outline-style: none;
+  color: black;
+}
+.field {
+  margin-top: 3%;
+}
+.field .label {
+  display: block;
+  margin-bottom: 3%;
+}
+/* 이미지 파일 불러오기 */
+#imgFileInputDiv .control input {
+  margin-top: 3%;
+  height: 5vh;
+
+  font-size: 15px;
+  text-align: center;
+}
+#imgFileInputDiv #imgFileBox {
+  width: fit-content;
+  height: 10vw;
+  margin-top: 1vh;
+}
+#imgFileInputDiv #imgFileBox img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+#imgFileInputDiv #imgFileBox i {
+  font-size: 700%;
+}
+/* 태그 관련 */
+#tagTextBtnDiv {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  column-gap: 3%;
+}
+#tagTextBtnDiv button {
+  width: 100%;
+  border-style: none;
+  border-radius: 5px;
+  color: black;
+  background-color: #d9d9d9;
+}
+/* 태그 등록 후 */
+#tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  /* row-gap: 5%; */
+  margin-top: 3%;
+}
+#tagList .tag-name {
+  width: fit-content;
+  min-width: 25%;
+  max-width: 50%;
+  height: 4vh;
+  line-height: 4vh;
+  padding: 0 3%;
+
+  border-radius: 4px;
+  color: black;
+  background-color: aliceblue;
+
+  font-size: 0.9rem;
+  text-align: center;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* 등록 버튼 */
+#registerItemBtn {
+  height: 5vh;
+  margin-top: 6%;
+
+  border-color: #f01e21;
+  border-radius: 7px;
+  background-color: #f01e21;
+
+  font-weight: bold;
+  cursor: pointer;
+}
+@media all and (max-width: 768px) {
+  section {
+    height: auto;
+  }
+  .item-form {
+    flex-direction: column;
+  }
+  .item-form .form-sector {
+    width: 100%;
+  }
+}

@@ -1,14 +1,14 @@
-import { addCommas } from "/useful-functions.js";
+import { addCommas } from '/useful-functions.js';
 
 import {
   addNavEventListeners,
   addNavElements,
-} from "../components/Nav/event.js";
-import { addFooterElements } from "../components/Footer/event.js";
+} from '../components/Nav/event.js';
+import { addFooterElements } from '../components/Footer/event.js';
 
 // GET / api/item/?id= ...
 
-const ITEMLIST = document.querySelector(".item-list");
+const ITEMLIST = document.querySelector('.item-list');
 
 addAllElements();
 addAllEvents();
@@ -27,17 +27,18 @@ function addAllEvents() {
 
 async function insertItemElement() {
   const response = await fetch(`/api/item`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
   });
   const items = await response.json();
   console.log(items);
   items.item.forEach(({ _id, itemName, summary, imgUrl, price }) => {
     console.log(_id);
+    // isDeleted = true이면 deleted 클래스 넣기
     ITEMLIST.insertAdjacentHTML(
-      "beforeend",
+      'beforeend',
       `
-      <a href="/item/?id=${_id}">
+      <a href="/item/?id=${_id}" >
         <div class="item">
           <div class="imgBox">
             <figure>
@@ -55,7 +56,7 @@ async function insertItemElement() {
           </div>
         </div>
       </a>
-    `
+    `,
     );
   });
 }
