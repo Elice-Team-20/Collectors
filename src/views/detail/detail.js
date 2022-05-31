@@ -70,13 +70,14 @@ async function insertItemDetail(id) {
     `
   );
 
-  addRecentItem(itemName, imgUrl);
+  addRecentItem(id, itemName, imgUrl);
 }
 
 // 최근 본 상품 추가
-function addRecentItem(itemName, imgUrl) {
+function addRecentItem(itemId, itemName, imgUrl) {
   // 최근 본 상품 로컬 스토리지에 저장할 데이터 구조
   const recentData = {
+    itemId,
     itemName,
     imgUrl,
   };
