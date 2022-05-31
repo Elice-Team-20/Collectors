@@ -20,6 +20,16 @@ itemRouter.get('/soldOut', async (req, res, next) => {
   }
 });
 
+// 신상품인 아이템 조회하는 라우터
+itemRouter.get('/newItem', async (req, res, next) => {
+  try{
+    const items = await itemService.getNewItems();
+    res.json(items);
+  }catch(error){
+    next(error);
+  }
+})
+
 // s3 에 이미지 업로드후 req 에 링크 넣고 아이템 db에 등록
 itemRouter.post('/', upload.single('file'), async (req, res) => {
   const {

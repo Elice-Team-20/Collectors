@@ -46,6 +46,12 @@ export class ItemModel {
     return items;
   }
 
+  // 최근에 등록된 6개의 아이템 검색
+  async findNewItems() {
+    const items = await Item.find({}).sort({createdAt: -1}).limit(6);
+    return items;
+  }
+
   async create(itemInfo) {
     try{
       const item = await Item.create(itemInfo);

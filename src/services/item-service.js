@@ -52,6 +52,11 @@ class ItemService {
     return shuffledItems;
   }
 
+  async getNewItems() {
+    const items = await this.itemModel.findNewItems();
+    return items;
+  }
+
   // 상품 삭제
   async deleteItem(itemId) {
     // 먼저 상품이 있는지 검사하고, 있을 경우 삭제. 그렇지 않으면 에러처리.
