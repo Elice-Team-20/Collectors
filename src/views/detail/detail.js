@@ -40,9 +40,7 @@ function addCartBtnHandler() {
 async function insertItemDetail(id) {
   const response = await fetch(`/api/item/${id}`);
   const details = await response.json();
-  console.log(details);
   const { itemName, category, manufacturingCompany, summary, mainExplanation, imgUrl, stocks, price, hashTag } = details;
-  console.log(imgUrl);
   ITEMDETAIL.insertAdjacentHTML(
     'beforeend',
     `
@@ -88,13 +86,23 @@ function addRecentItem(itemId, itemName, imgUrl) {
   // 없으면 새로 생성
   if (!recentItemList) recentItemList = [];
 
-  // 3개 이상이면 첫 번째 아이템 삭제
-  if (recentItemList.length === 3) recentItemList.shift();
+  // 동일한 상품이 있으면 추가하지 않음
+  let isItemExist = false;
 
-  console.log(recentItemList);
-  // 최근 본 상품 추가
-  recentItemList.push(recentData);
+  isItemExist = recentItemList.some((item) => {
+    return item.itemId == itemId;
+  });
 
-  // 로컬 스토리지에 추가
-  localStorage.setItem('recentItem', JSON.stringify(recentItemList));
+  if (!isItemExist) {
+    // 3개 이상이면 첫 번째 아이템 삭제
+    if (recentItemList.length === 3) recentItemList.shift();
+
+    // 최근 본 상품 추가
+    recentItemList.push(recentData);
+
+    // 로컬 스토리지에 추가
+    localStorage.setItem('recentItem', JSON.stringify(recentItemList));
+
+    isItemExist = false;
+  }
 }

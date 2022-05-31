@@ -9,10 +9,12 @@ import { addFooterElements } from '../components/Footer/event.js';
 
 // =====
 // 요소(element), input 혹은 상수
+const quickMenu = document.querySelector('#quick-menu');
+const quickItems = document.querySelector('.quick-items');
+
 userInit();
 addAllElements();
 addAllEvents();
-const quickItems = document.querySelector('.quick-items');
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllElements() {
@@ -63,8 +65,6 @@ const swiper = new Swiper('.swiper', {
     prevEl: '.swiper-button-prev',
   },
 });
-
-const quickMenu = document.querySelector('#quick-menu');
 
 window.onresize = () => {
   let x = window.innerWidth;
