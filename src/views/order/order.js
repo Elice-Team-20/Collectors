@@ -14,10 +14,12 @@ window.onload = () => {
   if (!orderList) {
     alert('주문 정보가 없습니다. 주문 정보를 확인해주세요.');
     window.location.href = '/cart';
+    return;
   }
   if (!checkUserStatus()) {
     alert('비정상적인 접근입니다.');
     window.location.href = '/';
+    return;
   }
 };
 
@@ -47,7 +49,7 @@ function addAllElements() {
   addNavElements();
   addFooterElements();
   addOrderNavElements('Order');
-  addUserShipElements();
+  addUserShipElements(); // 유저 배송지 정보 가져오기
   addOrderInfoElements();
 }
 
@@ -140,11 +142,13 @@ function handleFindAddressBtn() {
 }
 async function addUserShipElements() {
   const { fullName, address, phoneNumber } = await getUserShipInfos();
-  nameInput.value = fullName;
-  phoneNumberInput.value = phoneNumber;
-  postNumberInput.value = address.postalCode;
-  address1Input.value = address.address1;
-  address2Input.value = address.address2;
+  if (fullName) nameInput.value = fullName;
+  if (phoneNumber) phoneNumberInput.value = phoneNumber;
+  if (address) {
+    postNumberInput.value = address.postalCode;
+    address1Input.value = address.address1;
+    address2Input.value = address.address2;
+  }
 }
 async function getUserShipInfos() {
   try {
