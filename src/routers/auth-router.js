@@ -24,13 +24,25 @@ authRouter.get('/kakao/finish', async(req, res, next) => {
       };
       const userInfo = await kakaoOAuthService.requestUser(config);
       const isthereDB = await kakaoOAuthService.checkMember(userInfo);
+      let user = null;
       if(!isthereDB){
-        const user = await kakaoOAuthService.signUp(userInfo);
-        console.log(user)
+        //회원정보 등록
+        user = await kakaoOAuthService.signUp(userInfo);
       }
-      //const token = kakaoOAuthService.getToken()
+      else{
+        const { email } = userInfo.kakao_account;
+        console.log(email)
+        //기존회원이면 회원 정보 찾아옴
+        user = await kakaoOAuthService.getUserByEmail(email)
+      }
 
-      res.json({'email':isthereDB})
+      if(!user){
+        res.status(401).send("유저 정보가 할당이 안됩니다 양식을 확인하세요")
+      }
+
+      const  token = await kakaoOAuthService.getToken(user)
+      console.log(token)
+      res.status(201).json(token)
   }
   catch(err){
     next(err)

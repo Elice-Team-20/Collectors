@@ -1,8 +1,13 @@
 import fetch from 'cross-fetch';
 import { userService } from '../services/index';
+import jwt from 'jsonwebtoken';
 class KakaoOAuthService{
   constructor(inputUserService){
     this.userService = inputUserService
+  }
+
+  async getUserByEmail(email){
+    return await this.userService.getUserByEmail(email);
   }
   makeUrlKakaoToken () {
     const REST_API_KEY = process.env.KAKAO_KEY
@@ -44,7 +49,7 @@ class KakaoOAuthService{
   async checkMember (userInfo) {
     const{email} = userInfo.kakao_account;
     console.log(email)
-    const getDBEmail = userService.getUserByEmail(email);
+    const getDBEmail = this.userService.getUserByEmail(email);
     return getDBEmail;
   }
 
@@ -59,9 +64,11 @@ class KakaoOAuthService{
     return await this.userService.addUser(userData);
   }
 
-  async getToken(){
+  async getToken(user){
     const secretKey = process.env.JWT_SECRET_KEY ||'secret-key'
-    //const token = jwt.sign({})
+    console.log(user._id)
+    const token = jwt.sign({ userId: user._id, role: user.role } , secretKey)
+    return { token }
   }
 //
 }
