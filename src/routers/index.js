@@ -6,5 +6,4 @@ export * from './user-router';
 export * from './item-router';
 export * from  './orderInfo-router';
 export * from './category-router';
-export * from './auth-router';
-
+export * from './auth-router'

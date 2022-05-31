@@ -28,7 +28,7 @@ class OrderinfoService {
 
   async getOrderList(orderInfo){
     const array = [];
-
+    console.log(orderInfo)
     for(let i = 0 ; i < orderInfo.length; i++){
       const temp = {};
       temp.orderId = orderInfo[i].id;
@@ -89,7 +89,7 @@ class OrderinfoService {
        }
      });
      const populateRes = await this.userModel.getUserAndPopulate(userId);
-      return result;
+      return populateRes;
     }
     catch(er){
       return er
