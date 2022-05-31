@@ -4,67 +4,68 @@ import {
   addNavEventListeners,
   addNavElements,
 } from '../../components/Nav/event.js';
+import { addItemInputFormElement } from '../../components/Admin/event.js';
 import { addFooterElements } from '../../components/Footer/event.js';
 
 window.onload = () => {
   // admin인지 확인하기
 };
 
-const itemNameInput = document.querySelector('#itemNameInput');
-const categorySelector = document.querySelector('#categorySelector');
-const companyInput = document.querySelector('#companyInput');
-const summaryInput = document.querySelector('#summaryInput');
-const mainExlainInput = document.querySelector('#mainExlainInput');
-const imgFileInput = document.querySelector('#imgFileInput');
-let imgFileUrl = ``;
-const stockInput = document.querySelector('#stockInput');
-const priceInput = document.querySelector('#priceInput');
-const tagInput = document.querySelector('#tagInput');
-const addTagBtn = document.querySelector('#addTagBtn');
-const tagListDiv = document.querySelector('#tagList');
 let tags = []; //document.querySelectorAll('.tag-name');
 let file;
 const registerItemBtn = document.querySelector('#registerItemBtn');
 // 요소(element), input 혹은 상수
-addAllElements();
-addAllEvents();
+await addAllElements();
+await addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
   addNavElements('User');
+  addItemInputFormElement();
   addFooterElements();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-function addAllEvents() {
+async function addAllEvents() {
   addNavEventListeners();
-  addTagBtn.addEventListener('click', handleAddTagBtn);
-  registerItemBtn.addEventListener('click', handleRegisterItemBtn);
-  imgFileInput.addEventListener('change', handleImgFileInput);
+  //   console.log(document.querySelector('#addTagBtn'));
+  document
+    .querySelector('#addTagBtn')
+    .addEventListener('click', handleAddTagBtn);
+  document
+    .querySelector('#registerItemBtn')
+    .addEventListener('click', handleRegisterItemBtn);
+  document
+    .querySelector('#imgFileInput')
+    .addEventListener('change', handleImgFileInput);
 }
 function handleImgFileInput(e) {
   // e.select();
+  const imgFileInput = document.querySelector('#imgFileInput');
   if (imgFileInput.files.length === 0) {
     return alert('이미지 파일이 선택되지 않았습니다.');
   }
   file = imgFileInput.files[0];
 }
 function handleAddTagBtn(e) {
+  const tagListDiv = document.querySelector('#tagList');
+  const tagInput = document.querySelector('#tagInput');
   e.preventDefault();
   tagListDiv.innerHTML += `
         <div class="tag-name">${tagInput.value}</div>
     `;
   tags = [tagInput.value, ...tags];
-  console.log('tag', tags);
   tagInput.value = '';
 }
 async function handleRegisterItemBtn(e) {
   e.preventDefault();
-  console.log(
-    categorySelector.selectedIndex,
-    categorySelector.options[categorySelector.selectedIndex].value,
-  );
-  console.log('등록 버튼');
+  const itemNameInput = document.querySelector('#itemNameInput');
+  const categorySelector = document.querySelector('#categorySelector');
+  const companyInput = document.querySelector('#companyInput');
+  const summaryInput = document.querySelector('#summaryInput');
+  const mainExlainInput = document.querySelector('#mainExlainInput');
+  const stockInput = document.querySelector('#stockInput');
+  const priceInput = document.querySelector('#priceInput');
   if (!itemNameInput.value) {
     return alert('제품 이름이 작성되지 않았습니다.');
   }
@@ -80,7 +81,6 @@ async function handleRegisterItemBtn(e) {
   if (!mainExlainInput.value) {
     return alert('상세 설명이 작성되지 않았습니다.');
   }
-  // 제품 사진
   if (!file) {
     return alert('이미지가 추가 되지 않았습니다.');
   }

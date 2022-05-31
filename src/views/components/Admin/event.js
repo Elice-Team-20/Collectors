@@ -2,7 +2,7 @@ import { ItemInputForm } from './index.js';
 
 const content = document.querySelector('#content');
 
-const addItemInputFormElement = () => {
+const addItemInputFormElement = async () => {
   content.insertAdjacentHTML('beforeend', ItemInputForm());
 };
 
