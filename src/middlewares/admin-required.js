@@ -9,7 +9,6 @@ async function adminRequired(req, res, next) {
     // 토큰에 저장된 isAdmin을 사용함.
 
     const isAdmin = req.isAdmin;
-    console.log(isAdmin)
     
     if(!isAdmin) {
       throw new Error('관리자 계정이 아닙니다.');
