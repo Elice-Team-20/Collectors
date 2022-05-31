@@ -34,6 +34,11 @@ const postNumberInput = document.querySelector('#postNumber');
 const address1Input = document.querySelector('#address1');
 const address2Input = document.querySelector('#address2');
 const requestMsgInput = document.querySelector('#requestMsgInput');
+const requestMsgTextInputDiv = document.querySelector(
+  '#requestMsgTextInputDiv',
+);
+
+let shipRequest = ``;
 
 addAllElements();
 addAllEvents();
@@ -47,12 +52,25 @@ function addAllElements() {
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-async function addAllEvents() {
+function addAllEvents() {
   addNavEventListeners();
-  purchaseBtn.addEventListener('click', purchaseBtnHandler);
+  purchaseBtn.addEventListener('click', handlePurchaseBtn);
   findAddressBtn.addEventListener('click', handleFindAddressBtn);
+  requestMsgInput.addEventListener('change', handleRequestMsgInput);
 }
-async function purchaseBtnHandler() {
+function handleRequestMsgInput() {
+  // 요청 사항 핸들러
+  if (this.selectedIndex === 0) {
+    shipRequest = '';
+    requestMsgTextInputDiv.innerHTML = '';
+  } else if (this.selectedIndex === this.options.length - 1) {
+    requestMsgTextInputDiv.innerHTML = `<input class="input" id="requestMsgText" type="text"/>`;
+  } else {
+    shipRequest = this.options[this.selectedIndex].text;
+    requestMsgTextInputDiv.innerHTML = '';
+  }
+}
+async function handlePurchaseBtn() {
   // 주문 내역 전송.
   if (!nameInput.value) {
     return alert('주문자 이름을 적어주세요.');
@@ -70,6 +88,10 @@ async function purchaseBtnHandler() {
     window.location.href = '/cart';
     return alert('결제 정보를 다시 확인해주세요.');
   }
+  if (requestMsgInput.selectedIndex === requestMsgInput.options.length - 1) {
+    // 요청 사항 직접 입력하기 처리
+    shipRequest = document.querySelector('#requestMsgText').value;
+  }
   const itemList = orderList.map(([id, num]) => {
     return { itemId: id, count: num };
   });
@@ -83,7 +105,7 @@ async function purchaseBtnHandler() {
     totalCost: orderInfo.totalCost,
     recipientName: nameInput.value,
     recipientPhone: phoneNumberInput.value,
-    shipRequest: requestMsgInput.value,
+    shipRequest,
     itemList,
   };
   try {
