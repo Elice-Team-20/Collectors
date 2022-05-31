@@ -43,6 +43,10 @@ const ItemSchema = new Schema(
     hashTag:{
       // required
       type: [],
+    },
+    deleteFlag:{
+      type: Boolean,
+      required: true
     }
   },
   {
