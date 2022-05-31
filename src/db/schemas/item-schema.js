@@ -44,7 +44,8 @@ const ItemSchema = new Schema(
     },
     deleteFlag:{
       type: Boolean,
-      required: true
+      required: true,
+      default: false,
     }
   },
   {

@@ -14,7 +14,7 @@ export class ItemModel {
       return item;
     }
     catch (er){
-      console.log("에러 발생 개발자도구를 확인하세요");
+      console.log("모델 에러 발생 개발자도구를 확인하세요");
       return er;
     }
   }
@@ -25,7 +25,7 @@ export class ItemModel {
       return item;
     }
     catch (er) {
-      console.log("에러 발생 개발자도구를 확인하세요");
+      console.log("모델 에러 발생 개발자도구를 확인하세요");
       return er;
     }
   }
@@ -52,14 +52,18 @@ export class ItemModel {
       return item;
     }
     catch (er){
-      console.log("에러 발생 개발자도구를 확인하세요");
+      console.log(" 모델 에러 발생 개발자도구를 확인하세요");
       return er;
     }
   }
 
   async delete(itemId) {
     try{
-      const item = await Item.findOneAndDelete({_id: itemId}).exec();
+      const filter = { _id: itemId };
+      const option = { returnOriginal: false };
+      //const item = await Item.findOneAndDelete({_id: itemId}).exec();
+      const data = { deleteFlag : true}
+      const item = await Item.findOneAndUpdate(filter, data, option)
       return item;
     }
     catch (er){
