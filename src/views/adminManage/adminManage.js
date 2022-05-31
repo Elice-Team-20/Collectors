@@ -35,7 +35,7 @@ async function addItemListElements() {
         text +
         `
           <div class="item">
-            <a href="/items" class="item-content-box">
+            <a href="/admin/manage/item/?id=${_id}" class="item-content-box">
               <div class="item-image-box">
                 <img
                   id="itemImage"
