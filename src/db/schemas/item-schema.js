@@ -1,7 +1,5 @@
 import { shortId } from './types/short-id';
-import mongoose, { Schema } from 'mongoose';
-import { CategorySchema } from './category-schema';
-
+import { Schema } from 'mongoose';
 
 /*
   순서대로 id(shortId), 상품명, 카테고리, 제조사, 요약 설명, 메인 설명, 이미지, 재고수, 가격, 해쉬태그(필수요소 지정X)
@@ -43,6 +41,11 @@ const ItemSchema = new Schema(
     hashTag:{
       // required
       type: [],
+    },
+    deleteFlag:{
+      type: Boolean,
+      required: true,
+      default: false,
     }
   },
   {
