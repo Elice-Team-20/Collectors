@@ -47,28 +47,35 @@ authRouter.get('/kakao/finish', async(req, res, next) => {
     //만약 유저정보가 등록도 안되고 db에서 찾는것도 안되면 다음 오류 발생
     if(!user){
       res.status(401).send("유저 정보가 할당이 안됩니다 양식을 확인하세요")
-    }
 
     // 토큰 생성
     const  token = await kakaoOAuthService.getToken(user)
     res.status(200).json(token)
-  }
-  catch(err){
+    }
+    }catch(err){
     next(err)
   }
 });
 
 authRouter.get('/naver', passport.authenticate('naver', { authType: 'reprompt' }));
 
-authRouter.get('/naver/callback', passport.authenticate('naver', {session:false}),
-async (req, res, next) => {
-  try{
-    res.status(200).json({"token": req.user.token});
-  }
-  catch(err){
-    next(err)
-  }
-}
-)
+authRouter.get('/naver/callback', passport.authenticate('naver', {session:false}), (req, res, next) => {
+    try{
+        res.status(200).json({"token": req.user.token});
+    }
+    catch(err){
+        next(err)
+    }
+})
+
+authRouter.get('/google', passport.authenticate('google', { scope: ['profile', 'email']}));
+
+authRouter.get('/google/callback', passport.authenticate('google', { session: false }), (req, res, next) => {
+    try{
+        res.status(200).json({"token": req.user.token});
+    }catch(err){
+        next(err);
+    }
+  });
 
 export { authRouter };
