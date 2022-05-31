@@ -4,7 +4,7 @@ section {
 }
 
 #order-container {
-  width: 60%;
+  width: 80%;
   margin-top: 5vh;
 }
 #title {
@@ -19,7 +19,7 @@ section {
 .order-list-box .order-header,
 .order-data {
   display: grid;
-  grid-template-columns: 1fr 3fr 3fr 3fr 2fr;
+  grid-template-columns: 4fr 3fr 3fr 3fr 2fr;
   align-items: center;
   justify-items: center;
   text-align: center;
@@ -35,7 +35,15 @@ section {
   justify-content: space-between;
 }
 .order-data {
-  height: 8vh;
+  margin-bottom: 3vh;
+  padding: 3vw;
+}
+.order-data:hover {
+  border: 1px solid #f01e21;
+}
+.order-data .order-name {
+  display: flex;
+  flex-direction: column;
 }
 .order-data #cancelButton {
   width: 80%;
