@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>콜렉샵</title>
+    <!-- 아이콘 -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/elice-rabbit-favicon.png"
+    />
+    <!-- bulma css 관련 -->
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    /> -->
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/7630448495.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- 구글 OAuth -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- 카카오 OAuth -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="adminRegister.css" />
+    <link rel="stylesheet" href="../../style.css" />
+    <script src="adminRegister.js" type="module" defer></script>
+  </head>
+  <body>
+    <div id="wrap">
+      <!-- 헤더 -->
+      <nav></nav>
+      <section>
+        <div id="content">
+          <div id="title">상품 등록하기</div>
+          <div class="seperator"></div>
+          <form class="item-form" enctype="multipart/form-data">
+            <div class="form-sector">
+              <!-- 제품 이름 -->
+              <div class="field" id="itemNameInputDiv">
+                <label class="label" for="itemNameInput">제품 이름</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    id="itemNameInput"
+                    type="text"
+                    placeholder="아이언맨 수트"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <!-- 카테고리 -->
+              <div class="field" id="categorySelectorDiv">
+                <label class="label" for="categorySelector">카테고리</label>
+                <div class="control">
+                  <select id="categorySelector">
+                    <option selected disabled>카테고리를 선택해주세요.</option>
+                    <option value="hero">히어로</option>
+                    <option value="villain">빌런</option>
+                  </select>
+                </div>
+              </div>
+              <!-- 제조사 -->
+              <div class="field" id="companyInputDiv">
+                <label class="label" for="companyInput">제조사</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    id="companyInput"
+                    type="text"
+                    placeholder="Stark Industry"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <!-- 요약 설명 -->
+              <div class="field" id="summaryInputDiv">
+                <label class="label" for="summaryInput">요약 설명</label>
+                <div class="control">
+                  <textarea id="summaryInput" cols="40" rows="5"></textarea>
+                </div>
+              </div>
+              <!-- 상세 설명 -->
+              <div class="field" id="mainExlainInputDiv">
+                <label class="label" for="mainExlainInput">상세 설명</label>
+                <div class="control">
+                  <textarea id="mainExlainInput" cols="40" rows="10"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="form-sector">
+              <!-- 제품 사진 -->
+              <div class="field" id="imgFileInputDiv">
+                <label for="imgFileInput">제품 사진</label>
+                <div id="imgFileBox"></div>
+                <div class="control">
+                  <input
+                    type="file"
+                    id="imgFileInput"
+                    name="imgFileInput"
+                    accept="image/*"
+                  />
+                </div>
+              </div>
+              <!-- 재고 수 -->
+              <div class="field" id="stockInputDiv">
+                <label class="label" for="stockInput">재고 수</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    id="stockInput"
+                    type="number"
+                    placeholder="300"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <!-- 가격 -->
+              <div class="field" id="priceInputDiv">
+                <label class="label" for="priceInput">가격</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    id="priceInput"
+                    type="number"
+                    placeholder="50000"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <!-- 검색 키워드 -->
+              <div class="field" id="tagInputDiv">
+                <label class="label" for="tagInput">검색 키워드</label>
+                <div class="control" id="tagTextBtnDiv">
+                  <input
+                    class="input"
+                    id="tagInput"
+                    type="text"
+                    placeholder="300"
+                    autocomplete="off"
+                  />
+                  <button id="addTagBtn">추가하기</button>
+                </div>
+                <div id="tagList"></div>
+              </div>
+              <!-- 제품 등록하기 버튼 -->
+              <button id="registerItemBtn">제품 등록하기</button>
+            </div>
+          </form>
+        </div>
+      </section>
+      <footer></footer>
+    </div>
+  </body>
+</html>
