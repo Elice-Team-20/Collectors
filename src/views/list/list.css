@@ -1,8 +1,11 @@
-section.item-list {
+.item-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
   padding: 50px 10% 20px;
+}
+.item-list a.deleted {
+  display: none;
 }
 
 div.item {
