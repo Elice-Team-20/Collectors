@@ -29,14 +29,6 @@ async function handleSubmit(e) {
   const userId = await findUserId();
   const password = passwordInput.value;
 
-  // 비밀번호 일치 여부 확인
-  // 변환된 비밀번호와 입력하는 비밀번호가 다른데 어떻게 일치 시키지..?
-  // 소셜 로그인의 경우 이 부분을 어떻게 구현해야 할지..
-  // if (passwordInput !== userPassword) {
-  //   alert('비밀번호가 일치하지 않습니다.');
-  //   return;
-  // }
-
   // 회원 탈퇴(삭제 요청)
   await fetch(`/api/user/delete/${userId}`, {
     method: 'DELETE',
