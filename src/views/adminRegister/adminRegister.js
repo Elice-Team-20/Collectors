@@ -23,6 +23,7 @@ const tagInput = document.querySelector('#tagInput');
 const addTagBtn = document.querySelector('#addTagBtn');
 const tagListDiv = document.querySelector('#tagList');
 let tags = []; //document.querySelectorAll('.tag-name');
+let file;
 const registerItemBtn = document.querySelector('#registerItemBtn');
 console.log(categorySelector);
 // 요소(element), input 혹은 상수
@@ -42,16 +43,22 @@ function addAllEvents() {
   registerItemBtn.addEventListener('click', handleRegisterItemBtn);
   imgFileInput.addEventListener('change', handleImgFileInput);
 }
-function handleImgFileInput() {
+function handleImgFileInput(e) {
+  // e.select();
   if (imgFileInput.files.length === 0) {
     return alert('이미지 파일이 선택되지 않았습니다.');
   }
-  // console.log('이미지', imgFileInput.files[0]);
-  // const file = imgFileInput.files[0];
+  // document.selection.createRangeCollection()[0].text.toString();
+  console.log('이미지', imgFileInput.files[0]);
+  file = imgFileInput.files[0];
+  console.log(file);
   // console.log(file);
+  // imgFileUrl = imgFileInput.value;
+  // console.log(imgFileUrl);
   // const fileReader = new FileReader();
   // fileReader.readAsDataURL(imgFileInput.files[0]);
-  // fileReader.onload = (e) => {
+  // fileReader.onloadend = (e) => {
+  //   console.log(e);
   //   imgFileUrl = e.target.result;
   //   document.querySelector(
   //     '#imgFileBox',
@@ -89,7 +96,7 @@ async function handleRegisterItemBtn() {
     return alert('상세 설명이 작성되지 않았습니다.');
   }
   // 제품 사진
-  if (!imgFileUrl) {
+  if (!file) {
     return alert('이미지가 추가 되지 않았습니다.');
   }
   if (!stockInput.value) {
@@ -109,7 +116,7 @@ async function handleRegisterItemBtn() {
       manufacturingCompany: companyInput.value,
       summary: summaryInput.value,
       mainExplanation: mainExlainInput.value,
-      file: imgFileUrl, // 임시
+      file, // 임시
       stocks: stockInput.value,
       price: priceInput.value,
       hashTag: tags,
