@@ -42,12 +42,13 @@ categoryRouter.delete('/', async (req, res, next) => {
 })
 
 // POST api/category/:name
-// 파라미터로 받은 name으로 카테고리명 수정
-categoryRouter.post('/:name', async (req, res, next) => {
+// 파라미터로 받은 name으로 검색하고, 해당 카테고리명을 body로 받은 값으로 수정
+categoryRouter.post('/:oldName', async (req, res, next) => {
   try{
-    const newCategoryName = req.params.name;
-    const {categoryName} = req.body;
-    const updatedCategory = await categoryService.updateCategory(categoryName, newCategoryName);
+    const {oldName} = req.params;
+    const {newCategoryName} = req.body;
+    
+    const updatedCategory = await categoryService.updateCategory(oldName, newCategoryName);
     res.json(updatedCategory);
   }catch(error){
     next(error);

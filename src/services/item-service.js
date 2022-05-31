@@ -1,4 +1,5 @@
 import { itemModel } from '../db';
+import { shuffle } from '../utils/shuffle-array';
 
 class ItemService {
 
@@ -16,7 +17,7 @@ class ItemService {
   async getItems(){
     //평가지표 보고 만들기
     //아이탬이 비었는지 검사
-    const itemData = await this.itemModel.find({});
+    const itemData = await this.itemModel.find();
     return itemData;
   }
 
@@ -31,6 +32,24 @@ class ItemService {
   async getItemsByCategory(category){
     const items = await this.itemModel.findByCategory(category);
     return items;
+  }
+
+  // 상품 중에 stocks가 5개 이하인 물품들 가져오기 (매진임박인 아이템 가져오기)
+  async getSoldOutImminentItems(){
+    const items = await this.itemModel.findFiveOrLessThanItems();
+    let shuffledItems = shuffle(items);
+    // 만약 item의 개수가 3개 이상이라면, 랜덤으로 3개를 골라서 돌려줌
+    if (items.length == 0) {
+      throw new Error('매진임박인 상품이 없습니다.');
+    }
+    
+    if (items.length >= 3) {
+        const array = shuffledItems.slice(0,3);
+        return array;
+    }
+    
+    // item의 개수가 3개 미만일 경우 바로 아이템 리턴
+    return shuffledItems;
   }
 
   // 상품 삭제
