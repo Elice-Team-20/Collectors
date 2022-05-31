@@ -50,7 +50,7 @@ function addAllElements() {
   addFooterElements();
   addOrderNavElements('Order');
   addUserShipElements(); // 유저 배송지 정보 가져오기
-  addOrderInfoElements();
+  addOrderInfoElements(); // 주문 정보 가져오기
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -177,21 +177,26 @@ async function addOrderInfoElements() {
 async function getOrderItemInfos() {
   let orderItemsText = ``;
   let totalItemPrice = 0;
-  for (let i = 0; i < orderList.length; i++) {
-    const [id, num] = orderList[i];
-    const response = await fetch(`/api/item/${id}`);
-    const info = await response.json();
-    const { itemName, price } = info;
-    orderItemsText += `<div>${itemName} / ${num}개</div>`;
-    totalItemPrice += Number(price) * num;
-  }
+  try {
+    for (let i = 0; i < orderList.length; i++) {
+      const [id, num] = orderList[i];
+      const info = await Api.get(`/api/item/${id}`);
+      // const info = await response.json();
+      const { itemName, price } = info;
+      orderItemsText += `<div>${itemName} / ${num}개</div>`;
+      totalItemPrice += Number(price) * num;
+    }
 
-  let shipFee = totalItemPrice > shipFreeMinPrice ? 0 : 3000;
-  orderInfo = {
-    totalCost: totalItemPrice + shipFee,
-    orderItemsText,
-  };
-  return { orderItemsText, totalItemPrice, shipFee };
+    let shipFee = totalItemPrice > shipFreeMinPrice ? 0 : 3000;
+    orderInfo = {
+      totalCost: totalItemPrice + shipFee,
+      orderItemsText,
+    };
+    return { orderItemsText, totalItemPrice, shipFee };
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
 }
 window.onunload = () => {
   localStorage.removeItem('order');

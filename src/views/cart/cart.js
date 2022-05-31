@@ -1,4 +1,6 @@
+import * as Api from '/api.js';
 import { addCommas } from '/useful-functions.js';
+
 import {
   addNavEventListeners,
   addNavElements,
@@ -19,7 +21,7 @@ let itemMap = makeCartItemMap(cart); // 카트 Map 만들기, id - 개수 구조
 console.log(itemMap);
 // let items = Object.entries(itemMap);
 let checkedItems = makeCheckedItemMap(itemMap); // check된 상품들
-let infos = await getCartItemsInfos(Object.entries(itemMap));
+let infos = await getCartItemsInfos(itemMap);
 console.log(checkedItems);
 
 // 카트 아이템들 자료구조
@@ -75,9 +77,6 @@ async function addAllEvents() {
 
 // elements 추가 부분
 function addCartItemsElements() {
-  // let items = Object.entries(itemMap);
-  // infos =  // 전역 변수에 저장/
-  // console.log(infos);
   cartItenWrapperDiv.innerHTML = Object.keys(itemMap).reduce((elements, id) => {
     if (itemMap[id] != 0) {
       const { imgUrl, itemName, price } = infos[id];
@@ -121,19 +120,20 @@ function addCartItemsElements() {
 }
 
 // DB에서 item 정보가져오기
-async function getCartItemsInfos(items) {
+async function getCartItemsInfos(itemMap) {
   let infos = {};
-  for (let i = 0; i < items.length; i++) {
-    const [_id, num] = items[i];
-    const response = await fetch(`/api/item/${_id}`);
-    let info = await response.json();
-    // info = {
-    //   ...info,
-    //   num,
-    // };
-    infos[_id] = info;
+  let items = Object.entries(itemMap);
+  try {
+    for (let i = 0; i < items.length; i++) {
+      const [_id, num] = items[i];
+      const info = await Api.get(`/api/item/${_id}`);
+      infos[_id] = info;
+    }
+    return infos;
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
-  return infos;
 }
 function addOrderInfoElement() {
   // checketItems를 통해 선택된 거 체크
