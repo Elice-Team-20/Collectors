@@ -86,7 +86,7 @@ itemRouter.post(
   '/update/:id',
   upload.single('file'),
   loginRequired,
-  adminRequired,
+  //adminRequired,
   async (req, res, next) => {
     try {
       // 변경할 아이탬 id
