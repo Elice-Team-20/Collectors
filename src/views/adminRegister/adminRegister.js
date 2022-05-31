@@ -25,7 +25,6 @@ const tagListDiv = document.querySelector('#tagList');
 let tags = []; //document.querySelectorAll('.tag-name');
 let file;
 const registerItemBtn = document.querySelector('#registerItemBtn');
-console.log(categorySelector);
 // 요소(element), input 혹은 상수
 addAllElements();
 addAllEvents();
@@ -48,23 +47,7 @@ function handleImgFileInput(e) {
   if (imgFileInput.files.length === 0) {
     return alert('이미지 파일이 선택되지 않았습니다.');
   }
-  // document.selection.createRangeCollection()[0].text.toString();
-  console.log('이미지', imgFileInput.files[0]);
   file = imgFileInput.files[0];
-  console.log(file);
-  // console.log(file);
-  // imgFileUrl = imgFileInput.value;
-  // console.log(imgFileUrl);
-  // const fileReader = new FileReader();
-  // fileReader.readAsDataURL(imgFileInput.files[0]);
-  // fileReader.onloadend = (e) => {
-  //   console.log(e);
-  //   imgFileUrl = e.target.result;
-  //   document.querySelector(
-  //     '#imgFileBox',
-  //   ).innerHTML = `<img src=${imgFileUrl}/>`;
-  //   console.log(imgFileUrl);
-  // };
 }
 function handleAddTagBtn(e) {
   e.preventDefault();
@@ -122,37 +105,15 @@ async function handleRegisterItemBtn(e) {
     formData.append('summary', summaryInput.value);
     formData.append('mainExplanation', mainExlainInput.value);
     formData.append('file', file); //
+    formData.append('price', priceInput.value); //
     formData.append('stocks', stockInput.value);
     formData.append('hashTag', tags);
-    console.log(formData);
-    for (var value of formData.values()) {
-      console.log(value);
-    }
-    // const itemData = {
-    //   itemName: itemNameInput.value,
-    //   category:
-    //   manufacturingCompany: companyInput.value,
-    //   summary: summaryInput.value,
-    //   mainExplanation: mainExlainInput.value,
-    //   file, // 임시
-    //   stocks: stockInput.value,
-    //   price: priceInput.value,
-    //   hashTag: tags,
-    // };
-    const res = await Api.postFromData('/api/item', formData);
 
-    // await fetch('/api/item', {
-    //   method: 'POST',
-    //   headers: {
-    //     Authorization: `Bearer ${localStorage.getItem('token')}`,
-    //   },
-    //   body: formData,
-    // }); //await Api.post('/api/item', formData);
-    console.log(res);
+    const res = await Api.postFromData('/api/item', formData);
     alert(`정상적으로 상품이 등록되었습니다.`);
 
     // 관리자 페이지로 이동
-    // window.location.href = '/admin';
+    window.location.href = '/admin';
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);

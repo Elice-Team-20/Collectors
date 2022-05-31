@@ -55,17 +55,15 @@ async function post(endpoint, data) {
 }
 
 // api로 formData 형식의 POST 요청
-async function postFromData(endpoint, data) {
+async function postFromData(endpoint, bodyData) {
   const apiUrl = endpoint;
-  // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
-  // 예시: {name: "Kim"} => {"name": "Kim"}
-  const bodyData = JSON.stringify(data);
   console.log(`%cPOST 요청: ${apiUrl}`, 'color: #296aba;');
   console.log(`%cPOST 요청 데이터: ${bodyData}`, 'color: #296aba;');
 
   const res = await fetch(apiUrl, {
     method: 'POST',
     headers: {
+      'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
     body: bodyData,
