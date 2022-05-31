@@ -69,7 +69,6 @@ export class ItemModel {
   }
 
   async update(itemId, newInfo) {
-    console.log(itemId, newInfo);
     try{
       const updatedItem = await Item.updateOne({_id: itemId}, newInfo).exec();
       return updatedItem;
