@@ -83,21 +83,20 @@
   cursor: pointer;
 }
 
-.scrollTop {
-  width: 3.625rem;
-  height: 3.625rem;
-
-  overflow: hidden;
-  position: fixed;
-  right: 31px;
-  bottom: -58px;
-
-  transition: all 0.5s;
+.recent-item {
+  height: 5rem;
 }
 
-i.fa-light {
-  width: 3.625rem;
-  height: 3.625rem;
+.recent-item img {
+  width: 50px;
+  height: 50px;
+}
+
+.recent-item p {
+  width: 100%;
+  height: 1rem;
+  font-size: 0.5rem;
+  overflow: hidden;
 }
 
 #items {

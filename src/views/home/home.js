@@ -9,6 +9,9 @@ import { addFooterElements } from '../components/Footer/event.js';
 
 // =====
 // 요소(element), input 혹은 상수
+const quickMenu = document.querySelector('#quick-menu');
+const quickItems = document.querySelector('.quick-items');
+
 userInit();
 addAllElements();
 addAllEvents();
@@ -17,6 +20,7 @@ addAllEvents();
 function addAllElements() {
   addNavElements();
   addFooterElements();
+  addRecentItem();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -28,7 +32,7 @@ function userInit() {
   let cart = JSON.parse(localStorage.getItem('cart'));
   console.log('cart', cart);
   if (!cart) {
-    car = [];
+    cart = [];
     localStorage.setItem('cart', JSON.stringify([]));
   }
 }
@@ -62,8 +66,6 @@ const swiper = new Swiper('.swiper', {
   },
 });
 
-const quickMenu = document.querySelector('#quick-menu');
-
 window.onresize = () => {
   let x = window.innerWidth;
   x < 1250 ? (quickMenu.style.display = 'none') : (quickMenu.style.display = 'block');
@@ -75,14 +77,23 @@ window.addEventListener('scroll', () => {
   y > 250 ? (quickMenu.style.top = y + 250 + 'px') : (quickMenu.style.top = '500px');
 });
 
-const scrollTop = document.querySelector('.scrollTop');
+// 최근 본 상품 추가하기
+function addRecentItem() {
+  let recentItems = JSON.parse(localStorage.getItem('recentItem'));
 
-window.addEventListener('scroll', () => {
-  let y = window.pageYOffset;
-  // console.log(y)
-  if (y > 700) {
-    scrollTop.style.bottom = 15 + 'px';
-  } else {
-    scrollTop.style.bottom = -58 + 'px';
-  }
-});
+  if (!recentItems) return;
+
+  // 추가하기
+  recentItems.forEach(({ itemId, itemName, imgUrl }) => {
+    const recentItemList = `
+      <li class="recent-item">
+        <a href="/item/?id=${itemId}">
+          <img src="${imgUrl}" alt="${itemName}">
+          <p>${itemName}</p>
+        </a>
+      </li>
+    `;
+
+    quickItems.insertAdjacentHTML('beforeend', recentItemList);
+  });
+}
