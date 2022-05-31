@@ -73,12 +73,33 @@ class UserService {
     return { token };
   }
 
+  async setUserTokenNaver(loginInfo) {
+
+    const { email } = loginInfo;
+    const user = await this.userModel.findByEmail(email);
+    if (!user) {
+      throw new Error(
+        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.'
+      );
+    }
+
+    const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
+
+    const token = jwt.sign({ userId: user._id, role: user.role, isAdmin: user.isAdmin }, secretKey);
+
+    return { token };
+  }
+
   // 사용자 목록을 받음.
   async getUsers() {
     const users = await this.userModel.findAll();
     return users;
   }
 
+  async getUserByEmail(email) {
+    const user = await this.userModel.findByEmail(email);
+    return user;
+  }
 
   async setOrderInfo(objectId){
     // objectId
@@ -170,6 +191,7 @@ class UserService {
   async getUser(userId){
     // 주문 목록이 할당된게 없으면
     const user = await this.userModel.findById(userId);
+    console.log(user)
     if(user.orderInfo.length !== 0){
       // 1개라도 있으면 populate 사용해서 보여준다.
       return await this.userModel.getUserAndPopulate(userId);
