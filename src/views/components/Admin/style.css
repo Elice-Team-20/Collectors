@@ -46,6 +46,7 @@ select {
 
 textarea {
   width: 100%;
+  padding: 2%;
 
   resize: none;
   background: #ffffff;
@@ -69,6 +70,19 @@ textarea {
 
   font-size: 15px;
   text-align: center;
+}
+#imgFileInputDiv #imgFileBox {
+  width: fit-content;
+  height: 10vw;
+  margin-top: 1vh;
+}
+#imgFileInputDiv #imgFileBox img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+#imgFileInputDiv #imgFileBox i {
+  font-size: 700%;
 }
 /* 태그 관련 */
 #tagTextBtnDiv {

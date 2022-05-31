@@ -11,21 +11,24 @@ window.onload = () => {
   // admin인지 확인하기
 };
 
-const itemNameInput = document.querySelector('#itemNameInput');
-const categorySelector = document.querySelector('#categorySelector');
-const companyInput = document.querySelector('#companyInput');
-const summaryInput = document.querySelector('#summaryInput');
-const mainExlainInput = document.querySelector('#mainExlainInput');
-const imgFileInput = document.querySelector('#imgFileInput');
-let imgFileUrl = ``;
-const stockInput = document.querySelector('#stockInput');
-const priceInput = document.querySelector('#priceInput');
-const tagInput = document.querySelector('#tagInput');
-const addTagBtn = document.querySelector('#addTagBtn');
-const tagListDiv = document.querySelector('#tagList');
+// const itemNameInput = document.querySelector('#itemNameInput');
+// const categorySelector = document.querySelector('#categorySelector');
+// const companyInput = document.querySelector('#companyInput');
+// const summaryInput = document.querySelector('#summaryInput');
+// const mainExlainInput = document.querySelector('#mainExlainInput');
+// const imgFileInput = document.querySelector('#imgFileInput');
+// let imgFileUrl = ``;
+// const stockInput = document.querySelector('#stockInput');
+// const priceInput = document.querySelector('#priceInput');
+// const tagInput = document.querySelector('#tagInput');
+// const addTagBtn = document.querySelector('#addTagBtn');
+// const tagListDiv = document.querySelector('#tagList');
 let tags = []; //document.querySelectorAll('.tag-name');
 let file;
-const registerItemBtn = document.querySelector('#registerItemBtn');
+// const queryString = window.location.search;
+const id = new URLSearchParams(window.location.search).get('id');
+console.log(id);
+const categoryMap = { hero: 1, villain: 2 };
 // 요소(element), input 혹은 상수
 await addAllElements();
 await addAllEvents();
@@ -33,7 +36,8 @@ await addAllEvents();
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
   addNavElements('User');
-  addItemInputFormElement();
+  await addItemInputFormElement();
+  await addItemInputOriginElement();
   addFooterElements();
 }
 
@@ -51,24 +55,88 @@ async function addAllEvents() {
     .querySelector('#imgFileInput')
     .addEventListener('change', handleImgFileInput);
 }
+async function addItemInputOriginElement() {
+  const itemNameInput = document.querySelector('#itemNameInput');
+  const categorySelector = document.querySelector('#categorySelector');
+  const companyInput = document.querySelector('#companyInput');
+  const summaryInput = document.querySelector('#summaryInput');
+  const mainExlainInput = document.querySelector('#mainExlainInput');
+  const imgFileBoxDiv = document.querySelector('#imgFileBox');
+  const stockInput = document.querySelector('#stockInput');
+  const priceInput = document.querySelector('#priceInput');
+  const tagListDiv = document.querySelector('#tagList');
+
+  const {
+    itemName,
+    category,
+    manufacturingCompany,
+    summary,
+    mainExplanation,
+    imgUrl,
+    stocks,
+    price,
+    hashTag,
+  } = await getOriginItemInfo();
+  itemNameInput.value = itemName;
+  console.log(categoryMap[category]);
+  categorySelector.selectedIndex = categoryMap[category];
+  companyInput.value = manufacturingCompany;
+  summaryInput.value = summary;
+  mainExlainInput.value = mainExplanation;
+  imgFileBoxDiv.innerHTML = `<img src=${imgUrl} alt="item image"/>`;
+  stockInput.value = stocks;
+  priceInput.value = price;
+  hashTag.forEach((tag) => {
+    tagListDiv.innerHTML += addTagElement(tag);
+  });
+}
+
+async function getOriginItemInfo() {
+  try {
+    const itemInfo = await Api.get(`/api/item/${id}`);
+    return itemInfo;
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
+}
 function handleImgFileInput(e) {
   // e.select();
+  const imgFileInput = document.querySelector('#imgFileInput');
+  const imgFileBoxDiv = document.querySelector('#imgFileBox');
+
   if (imgFileInput.files.length === 0) {
     return alert('이미지 파일이 선택되지 않았습니다.');
   }
   file = imgFileInput.files[0];
+
+  const fileReader = new FileReader();
+  fileReader.readAsDataURL(file);
+  fileReader.onload = (e) => {
+    imgFileBoxDiv.innerHTML = `<img src=${fileReader.result} alt="item image"/>`;
+  };
 }
 function handleAddTagBtn(e) {
   e.preventDefault();
-  tagListDiv.innerHTML += `
-        <div class="tag-name">${tagInput.value}</div>
-    `;
+  const tagListDiv = document.querySelector('#tagList');
+  const tagInput = document.querySelector('#tagInput');
+  tagListDiv.innerHTML += addTagElement(tagInput.value);
   tags = [tagInput.value, ...tags];
   console.log('tag', tags);
   tagInput.value = '';
 }
+function addTagElement(value) {
+  return `<div class="tag-name">${value}</div>`;
+}
 async function handleRegisterItemBtn(e) {
   e.preventDefault();
+  const itemNameInput = document.querySelector('#itemNameInput');
+  const categorySelector = document.querySelector('#categorySelector');
+  const companyInput = document.querySelector('#companyInput');
+  const summaryInput = document.querySelector('#summaryInput');
+  const mainExlainInput = document.querySelector('#mainExlainInput');
+  const stockInput = document.querySelector('#stockInput');
+  const priceInput = document.querySelector('#priceInput');
   console.log(
     categorySelector.selectedIndex,
     categorySelector.options[categorySelector.selectedIndex].value,

@@ -10,10 +10,9 @@ import { addFooterElements } from '../../components/Footer/event.js';
 window.onload = () => {
   // admin인지 확인하기
 };
-
 let tags = []; //document.querySelectorAll('.tag-name');
 let file;
-const registerItemBtn = document.querySelector('#registerItemBtn');
+
 // 요소(element), input 혹은 상수
 await addAllElements();
 await addAllEvents();
@@ -39,13 +38,22 @@ async function addAllEvents() {
     .querySelector('#imgFileInput')
     .addEventListener('change', handleImgFileInput);
 }
+
 function handleImgFileInput(e) {
   // e.select();
   const imgFileInput = document.querySelector('#imgFileInput');
+  const imgFileBoxDiv = document.querySelector('#imgFileBox');
+
   if (imgFileInput.files.length === 0) {
     return alert('이미지 파일이 선택되지 않았습니다.');
   }
   file = imgFileInput.files[0];
+
+  const fileReader = new FileReader();
+  fileReader.readAsDataURL(file);
+  fileReader.onload = (e) => {
+    imgFileBoxDiv.innerHTML = `<img src=${fileReader.result} alt="item image"/>`;
+  };
 }
 function handleAddTagBtn(e) {
   const tagListDiv = document.querySelector('#tagList');

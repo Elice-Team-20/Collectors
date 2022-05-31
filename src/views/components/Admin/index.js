@@ -58,7 +58,8 @@ export const ItemInputForm = () => {
       <!-- 제품 사진 -->
       <div class="field" id="imgFileInputDiv">
         <label for="imgFileInput">제품 사진</label>
-        <div id="imgFileBox"></div>
+        <div id="imgFileBox">
+          <i class="fa-solid fa-image"></i></div>
         <div class="control">
           <input
             type="file"
@@ -102,7 +103,7 @@ export const ItemInputForm = () => {
             class="input"
             id="tagInput"
             type="text"
-            placeholder="300"
+            placeholder="양자역학"
             autocomplete="off"
           />
           <button id="addTagBtn">추가하기</button>
