@@ -59,15 +59,23 @@ authRouter.get('/kakao/finish', async(req, res, next) => {
 
 authRouter.get('/naver', passport.authenticate('naver', { authType: 'reprompt' }));
 
-authRouter.get('/naver/callback', passport.authenticate('naver', {session:false}),
-async (req, res, next) => {
-  try{
-    res.status(200).json({"token": req.user.token});
-  }
-  catch(err){
-    next(err)
-  }
-}
-)
+authRouter.get('/naver/callback', passport.authenticate('naver', {session:false}), (req, res, next) => {
+    try{
+        res.status(200).json({"token": req.user.token});
+    }
+    catch(err){
+        next(err)
+    }
+})
+
+authRouter.get('/google', passport.authenticate('google', { scope: ['profile', 'email']}));
+
+authRouter.get('/google/callback', passport.authenticate('google', { session: false }), (req, res, next) => {
+    try{
+        res.status(200).json({"token": req.user.token});
+    }catch(err){
+        next(err);
+    }
+  });
 
 export { authRouter };
