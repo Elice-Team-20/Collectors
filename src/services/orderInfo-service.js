@@ -1,4 +1,5 @@
 import { orderInfo, userModel, itemModel } from "../db/index";
+import { getDate } from '../utils/get-date';
 
 const checkData = async function(orderId){
   return await orderInfo.findByObjectId(orderId) ? true: false;
@@ -33,8 +34,8 @@ class OrderinfoService {
       temp.orderId = orderInfo[i].id;
 
       const date = new Date(orderInfo[i].createdAt);
-      temp.orderDate = this.getDate(date);
-      console.log(temp.orderDate)
+      temp.orderDate = getDate(date);
+
       const itemList = await this.idToOrderName(orderInfo[i].itemList);
       temp.itemList = itemList;
 
@@ -43,14 +44,6 @@ class OrderinfoService {
       array.push(temp);
     }
     return array;
-  }
-
-  getDate(date){
-    const year = date.getFullYear();
-    const month = ("0" + (1 + date.getMonth())).slice(-2);
-    const day = ("0" + date.getDate()).slice(-2);
-
-    return year + "-" + month + "-" + day;
   }
 
   async idToOrderName(orderList) {

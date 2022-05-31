@@ -68,7 +68,25 @@ class UserService {
     const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
 
     // 2개 프로퍼티를 jwt 토큰에 담음
-    const token = jwt.sign({ userId: user._id, role: user.role }, secretKey);
+    const token = jwt.sign({ userId: user._id, role: user.role, isAdmin: user.isAdmin }, secretKey);
+
+    return { token };
+  }
+
+  async setUserTokenNaver(loginInfo) {
+
+    const { email } = loginInfo;
+    const user = await this.userModel.findByEmail(email);
+    if (!user) {
+      throw new Error(
+        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.'
+      );
+    }
+
+    const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
+
+    const token = jwt.sign({ userId: user._id, role: user.role, isAdmin: user.isAdmin }, secretKey);
+
     return { token };
   }
 
@@ -78,11 +96,14 @@ class UserService {
     return users;
   }
 
+  async getUserByEmail(email) {
+    const user = await this.userModel.findByEmail(email);
+    return user;
+  }
 
   async setOrderInfo(objectId){
     // objectId
     const currentData = await this.userModel.findById({_id: objectId})
-    console.log(currentData.orderinfo)
     return;
   }
 
