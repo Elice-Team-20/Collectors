@@ -15,7 +15,7 @@
     <script defer src="https://kit.fontawesome.com/7630448495.js" crossorigin="anonymous"></script>
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="edit.css" />
-    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../../style.css" />
     <script src="edit.js" type="module" defer></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   </head>
@@ -36,7 +36,7 @@
               <div class="field">
                 <label class="label" for="fullNameInput">이름</label>
                 <div class="control">
-                  <input class="input" id="fullNameInput" type="text" autocomplete="off" />
+                  <input class="input" id="fullNameInput" type="text" autocomplete="off" disabled />
                 </div>
               </div>
               <div class="field">
@@ -48,30 +48,37 @@
               <div class="field">
                 <label class="label" for="newPasswordInput">비밀번호</label>
                 <div class="control">
-                  <input class="input" id="newPasswordInput" type="password" autocomplete="off" placeholder="변경할 비밀번호를 입력해 주세요." />
+                  <input class="input" id="newPasswordInput" type="password" autocomplete="off" placeholder="변경할 비밀번호를 입력해 주세요." disabled />
                 </div>
               </div>
               <div class="field">
                 <label class="label" for="passwordConfirmInput">비밀번호 확인</label>
                 <div class="control">
-                  <input class="input" id="passwordConfirmInput" type="password" autocomplete="off" placeholder="변경할 비밀번호를 한 번 더 입력해 주세요." />
+                  <input
+                    class="input"
+                    id="passwordConfirmInput"
+                    type="password"
+                    autocomplete="off"
+                    placeholder="변경할 비밀번호를 한 번 더 입력해 주세요."
+                    disabled
+                  />
                 </div>
               </div>
               <div class="field">
                 <label class="label" for="addressInput">주소</label>
                 <div class="control">
                   <div class="address-container">
-                    <input class="input" type="text" id="postcode" placeholder="우편 번호" />
+                    <input class="input" type="text" id="postcode" placeholder="우편 번호" disabled />
                     <input id="addressButton" type="button" value="주소 찾기" />
                   </div>
-                  <input class="input" type="text" id="address" placeholder="주소를 입력해 주세요." />
-                  <input class="input" type="text" id="detailAddress" placeholder="상세 주소를 입력해 주세요." />
+                  <input class="input" type="text" id="address" placeholder="주소를 입력해 주세요." disabled />
+                  <input class="input" type="text" id="detailAddress" placeholder="상세 주소를 입력해 주세요." disabled />
                 </div>
               </div>
               <div class="field">
                 <label class="label" for="phoneNumberInput">전화번호</label>
                 <div class="control">
-                  <input class="input" id="phoneNumberInput" type="number" autocomplete="off" placeholder="전화번호를 입력해 주세요." />
+                  <input class="input" id="phoneNumberInput" type="number" autocomplete="off" placeholder="전화번호를 입력해 주세요." disabled />
                 </div>
               </div>
               <button class="button" id="submitButton">저장하기</button>
