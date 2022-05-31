@@ -72,7 +72,6 @@ itemRouter.delete(
     try {
       const { id } = req.params;
       const result = await itemService.deleteItem(id);
-      console.log(result);
       res.json({ status: 'ok', result: `${result.itemName} 삭제` });
     } catch (error) {
       next(error);
@@ -84,49 +83,15 @@ itemRouter.delete(
 // 아이템 수정 - 관리자 권한 필요.
 itemRouter.post(
   '/update/:id',
-  upload.single('file'),
   loginRequired,
   adminRequired,
   async (req, res, next) => {
     try {
-      // 변경할 아이탬 id
       const { id } = req.params;
-      // form data 로 온 입력 데이터
-      const {
-          itemName,
-          category,
-          manufacturingCompany,
-          summary,
-          mainExplanation,
-          stocks,
-          hashTag,
-          price,
-        } = req.body;
-
-        let imgUrl = null
-        if(!req.file?.location){
-          const currentItemData = await itemService.getItembyObId(id)
-          imgUrl = currentItemData.imgUrl
-        }
-        else{
-          imgUrl = req.file.location;
-        }
-      //객체화
-      const updateData = {
-        ...(itemName && { itemName }),
-        ...(category && { category }),
-        ...(manufacturingCompany && {manufacturingCompany}),
-        ...(summary && {summary}),
-        ...(mainExplanation && {mainExplanation}),
-        ...(stocks && {stocks}),
-        ...(price && {price}),
-        ...(hashTag && {hashTag}),
-        ...(imgUrl && {imgUrl})
-      };
-      const result = await itemService.updateItem(id, updateData);
-
+      const info = req.body;
+      const result = await itemService.updateItem(id, info);
       // 추후 헤더 수정
-      res.json({ status: 'ok', result });
+      res.json({ status: 'ok', result: result });
     } catch (error) {
       next(error);
     }
