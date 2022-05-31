@@ -84,13 +84,13 @@ async function purchaseBtnHandler() {
     recipientName: nameInput.value,
     recipientPhone: phoneNumberInput.value,
     shipRequest: requestMsgInput.value,
+    itemList,
   };
   try {
     const user_id = await Api.get('/api/user/id');
     const orderData = {
       userId: user_id,
       orderInfo: shipData,
-      orderList: itemList,
     };
     await Api.post('/api/order/makeOrder', orderData);
 
