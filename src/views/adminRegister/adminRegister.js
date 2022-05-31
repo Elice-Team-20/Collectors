@@ -139,13 +139,15 @@ async function handleRegisterItemBtn(e) {
     //   price: priceInput.value,
     //   hashTag: tags,
     // };
-    const res = await fetch('/api/item', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: formData,
-    }); //await Api.post('/api/item', formData);
+    const res = await Api.postFromData('/api/item', formData);
+
+    // await fetch('/api/item', {
+    //   method: 'POST',
+    //   headers: {
+    //     Authorization: `Bearer ${localStorage.getItem('token')}`,
+    //   },
+    //   body: formData,
+    // }); //await Api.post('/api/item', formData);
     console.log(res);
     alert(`정상적으로 상품이 등록되었습니다.`);
 
