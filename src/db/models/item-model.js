@@ -67,7 +67,6 @@ export class ItemModel {
     try{
       const filter = { _id: itemId };
       const option = { returnOriginal: false };
-      //const item = await Item.findOneAndDelete({_id: itemId}).exec();
       const data = { deleteFlag : true}
       const item = await Item.findOneAndUpdate(filter, data, option)
       return item;
