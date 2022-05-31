@@ -7,7 +7,7 @@ const config = {
     callbackURL: 'http://localhost:5000/api/auth/google/callback'
 }
 
-async function findOrCreateUser({name, email}) {
+async function findOrCreateUser({email, displayName}) {
     const user = await userService.getUserByEmail(email);
     console.log(user)
 
@@ -19,7 +19,7 @@ async function findOrCreateUser({name, email}) {
     // 없을 경우 생성
     const created = await userService.addUser({
         email: email,
-        fullName: name,
+        fullName: displayName,
         password: 'google'
     })
     return created;
@@ -28,14 +28,11 @@ async function findOrCreateUser({name, email}) {
 module.exports = new GoogleStrategy(config,
     async (accessToken, refreshToken, profile, done) => {
         const { email, displayName } = profile;
-        console.log(email, displayName)
         try{
             const user = await findOrCreateUser({email, displayName});
             const token = await userService.setUserTokenNaver(user);
-            console.log(token)
             done(null, token);
         }catch(error){
-            console.log(error);
             done(error);
         }
     }
