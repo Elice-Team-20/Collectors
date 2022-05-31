@@ -1,18 +1,15 @@
 // 아래는 현재 home.html 페이지에서 쓰이는 코드는 아닙니다.
 // 다만, 앞으로 ~.js 파일을 작성할 때 아래의 코드 구조를 참조할 수 있도록,
 // 코드 예시를 남겨 두었습니다.
-import { addCommas } from "/useful-functions.js";
+import { addCommas } from '/useful-functions.js';
 
-import {
-  addNavEventListeners,
-  addNavElements,
-} from "../../components/Nav/event.js";
-import { addFooterElements } from "../../components/Footer/event.js";
+import { addNavEventListeners, addNavElements } from '../../components/Nav/event.js';
+import { addFooterElements } from '../../components/Footer/event.js';
 
 // url에서 id 값 추출해오기
-const ITEMDETAIL = document.querySelector(".item-detail");
+const ITEMDETAIL = document.querySelector('.item-detail');
 const queryString = window.location.search;
-const id = new URLSearchParams(queryString).get("id");
+const id = new URLSearchParams(queryString).get('id');
 
 // navigation, footer 컴포넌트 넣기
 await addAllElements();
@@ -27,18 +24,16 @@ async function addAllElements() {
 
 async function addAllEvents() {
   addNavEventListeners();
-  document
-    .querySelector("#addCartBtn")
-    .addEventListener("click", addCartBtnHandler);
+  document.querySelector('#addCartBtn').addEventListener('click', addCartBtnHandler);
 }
 
 // 카트 추가
 function addCartBtnHandler() {
-  let currentCart = JSON.parse(localStorage.getItem("cart"));
+  let currentCart = JSON.parse(localStorage.getItem('cart'));
   if (!currentCart) currentCart = [];
   currentCart.push(id);
-  console.log("add cart", currentCart);
-  localStorage.setItem("cart", JSON.stringify(currentCart));
+  console.log('add cart', currentCart);
+  localStorage.setItem('cart', JSON.stringify(currentCart));
 }
 
 // 상세 페이지 렌더링 함수
@@ -46,20 +41,10 @@ async function insertItemDetail(id) {
   const response = await fetch(`/api/item/${id}`);
   const details = await response.json();
   console.log(details);
-  const {
-    itemName,
-    category,
-    manufacturingCompany,
-    summary,
-    mainExplanation,
-    imgUrl,
-    stocks,
-    price,
-    hashTag,
-  } = details;
+  const { itemName, category, manufacturingCompany, summary, mainExplanation, imgUrl, stocks, price, hashTag } = details;
   console.log(imgUrl);
   ITEMDETAIL.insertAdjacentHTML(
-    "beforeend",
+    'beforeend',
     `
       <div class="item">
         <div class="item-left">
@@ -84,4 +69,31 @@ async function insertItemDetail(id) {
       </div>
     `
   );
+
+  addRecentItem(itemName, imgUrl);
+}
+
+// 최근 본 상품 추가
+function addRecentItem(itemName, imgUrl) {
+  // 최근 본 상품 로컬 스토리지에 저장할 데이터 구조
+  const recentData = {
+    itemName,
+    imgUrl,
+  };
+
+  // 최근 본 상품이 있는지 확인
+  let recentItemList = JSON.parse(localStorage.getItem('recentItem'));
+
+  // 없으면 새로 생성
+  if (!recentItemList) recentItemList = [];
+
+  // 3개 이상이면 첫 번째 아이템 삭제
+  if (recentItemList.length === 3) recentItemList.shift();
+
+  console.log(recentItemList);
+  // 최근 본 상품 추가
+  recentItemList.push(recentData);
+
+  // 로컬 스토리지에 추가
+  localStorage.setItem('recentItem', JSON.stringify(recentItemList));
 }
