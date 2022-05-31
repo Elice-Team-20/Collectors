@@ -16,7 +16,29 @@ class OrderinfoService {
 
   // 전체 주문 조회
   async getOrderInfo(){
-    return this.orderModel.findAll();
+    let orders = await this.orderModel.findAll();
+    const array = [];
+    for(let i = 0 ; i < orders.length; i++) {
+      const temp = {};
+      temp._id = orders[i]._id;
+
+      const date = new Date(orders[i].createdAt);
+      temp.orderDate = getDate(date);
+
+      temp.itemList = orders[i].itemList;
+      
+      temp.status = orders[i].status;
+
+      temp.shipAddress = orders[i].shipAddress;
+
+      temp.totalCost = orders[i].totalCost;
+
+      temp.recipientName = orders[i].recipientName;
+
+      temp.recipientPhone = orders[i].recipientPhone;
+      array.push(temp);
+    }
+    return array;
   }
 
   // 아이디별 조회
