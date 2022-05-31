@@ -84,13 +84,45 @@ itemRouter.delete(
 // 아이템 수정 - 관리자 권한 필요.
 itemRouter.post(
   '/update/:id',
+  upload.single('file'),
   loginRequired,
   adminRequired,
   async (req, res, next) => {
     try {
+      // 변경할 아이탬 id
       const { id } = req.params;
-      const info = req.body;
-      const result = await itemService.updateItem(id, info);
+      // form data 로 온 입력 데이터
+      const {
+          itemName,
+          category,
+          manufacturingCompany,
+          summary,
+          mainExplanation,
+          stocks,
+          hashTag,
+          price,
+        } = req.body;
+
+      //객체화
+      const updateData = {
+        ...(itemName && { itemName }),
+        ...(category && { category }),
+        ...(manufacturingCompany && {manufacturingCompany}),
+        ...(summary && {summary}),
+        ...(mainExplanation && {mainExplanation}),
+        imgUrl: req.file.location,
+        ...(stocks && {stocks}),
+        ...(price && {price}),
+        ...(hashTag && {hashTag}),
+      };
+
+      const sample = {
+        ...(itemName),
+      }
+
+      console.log(sample)
+
+  //const result = await itemService.updateItem(id, updateData);
       // 추후 헤더 수정
       res.json({ status: 'ok', result: result });
     } catch (error) {
