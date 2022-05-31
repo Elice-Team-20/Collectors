@@ -1,17 +1,15 @@
-// 아래는 현재 home.html 페이지에서 쓰이는 코드는 아닙니다.
-// 다만, 앞으로 ~.js 파일을 작성할 때 아래의 코드 구조를 참조할 수 있도록,
-// 코드 예시를 남겨 두었습니다.
 import * as Api from '/api.js';
-import { randomId, addCommas } from '/useful-functions.js';
+import { selectElement, addCommas } from '/useful-functions.js';
 
 import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
 
-// =====
 // 요소(element), input 혹은 상수
-const quickMenu = document.querySelector('#quick-menu');
-const quickItems = document.querySelector('.quick-items');
-const soldoutContainer = document.querySelector('.soldout-container');
+const quickMenu = selectElement('#quick-menu');
+const quickItems = selectElement('.quick-items');
+const soldoutContainer = selectElement('.soldout-container');
+const categoryButton = selectElement('.category-expand');
+const categoryList = selectElement('.category-list');
 
 userInit();
 addAllElements();
@@ -23,30 +21,28 @@ function addAllElements() {
   addFooterElements();
   addRecentItem();
   addSoldOutItems();
+  addCategoryName();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   addNavEventListeners();
+  categoryButton.addEventListener('click', () => {
+    categoryList.classList.toggle('hidden');
+  });
 }
 
+// 장바구니 생성하기
 function userInit() {
   let cart = JSON.parse(localStorage.getItem('cart'));
-  console.log('cart', cart);
+
   if (!cart) {
     cart = [];
     localStorage.setItem('cart', JSON.stringify([]));
   }
 }
-async function getDataFromApi() {
-  // 예시 URI입니다. 현재 주어진 프로젝트 코드에는 없는 URI입니다.
-  const data = await Api.get('/api/user/data');
-  const random = randomId();
 
-  console.log({ data });
-  console.log({ random });
-}
-
+// 이미지 슬라이더 설정
 const swiper = new Swiper('.swiper', {
   // Optional parameters
   direction: 'horizontal',
@@ -68,6 +64,7 @@ const swiper = new Swiper('.swiper', {
   },
 });
 
+// 퀵 메뉴 설정
 window.onresize = () => {
   let x = window.innerWidth;
   x < 1250 ? (quickMenu.style.display = 'none') : (quickMenu.style.display = 'block');
@@ -99,13 +96,12 @@ function addRecentItem() {
   });
 }
 
+// 매진 임박 추가 기능 구현하기
 async function addSoldOutItems() {
-  const soldoutItems = await fetch(`/api/item/soldOut`, {
-    method: 'GET',
-  });
+  // 매진 임박 상품 가져오기
+  const soldoutItemsData = await Api.get(`/api/item/soldOut`);
 
-  const soldoutItemsData = await soldoutItems.json();
-  console.log(soldoutItemsData);
+  // 매진 임박 상품 추가하기
   soldoutItemsData.forEach(({ _id, itemName, imgUrl, price, stocks }) => {
     const soldoutItemList = `
       <div class="soldout-item">
@@ -120,5 +116,22 @@ async function addSoldOutItems() {
     `;
 
     soldoutContainer.insertAdjacentHTML('beforeend', soldoutItemList);
+  });
+}
+
+// 카테고리 가져오기
+async function getCategoryName() {
+  const categoryData = await Api.get(`/api/category`);
+
+  return categoryData.map(({ name }) => name);
+}
+// 카테고리 메뉴 추가하기
+async function addCategoryName() {
+  const categoryNames = await getCategoryName();
+
+  categoryNames.forEach((name) => {
+    // ! 카테고리 작업 시 href 수정하기
+    const categoryName = `<li class="category-item"><a href="${name}">${name}</a></li>`;
+    categoryList.insertAdjacentHTML('beforeend', categoryName);
   });
 }
