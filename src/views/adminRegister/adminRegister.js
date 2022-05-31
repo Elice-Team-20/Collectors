@@ -15,9 +15,8 @@ const categorySelector = document.querySelector('#categorySelector');
 const companyInput = document.querySelector('#companyInput');
 const summaryInput = document.querySelector('#summaryInput');
 const mainExlainInput = document.querySelector('#mainExlainInput');
-const imgFileInputBtn = document.querySelector('#imgFileInput');
-const tempImgUrl =
-  'https://team20.s3.ap-northeast-2.amazonaws.com/image/c57002d0db7d-11ec-acdc-a7606249704c.jpeg'; // 임시 사용
+const imgFileInput = document.querySelector('#imgFileInput');
+let imgFileUrl = ``;
 const stockInput = document.querySelector('#stockInput');
 const priceInput = document.querySelector('#priceInput');
 const tagInput = document.querySelector('#tagInput');
@@ -41,6 +40,24 @@ function addAllEvents() {
   addNavEventListeners();
   addTagBtn.addEventListener('click', handleAddTagBtn);
   registerItemBtn.addEventListener('click', handleRegisterItemBtn);
+  imgFileInput.addEventListener('change', handleImgFileInput);
+}
+function handleImgFileInput() {
+  if (imgFileInput.files.length === 0) {
+    return alert('이미지 파일이 선택되지 않았습니다.');
+  }
+  // console.log('이미지', imgFileInput.files[0]);
+  // const file = imgFileInput.files[0];
+  // console.log(file);
+  // const fileReader = new FileReader();
+  // fileReader.readAsDataURL(imgFileInput.files[0]);
+  // fileReader.onload = (e) => {
+  //   imgFileUrl = e.target.result;
+  //   document.querySelector(
+  //     '#imgFileBox',
+  //   ).innerHTML = `<img src=${imgFileUrl}/>`;
+  //   console.log(imgFileUrl);
+  // };
 }
 function handleAddTagBtn() {
   tagListDiv.innerHTML += `
@@ -72,6 +89,9 @@ async function handleRegisterItemBtn() {
     return alert('상세 설명이 작성되지 않았습니다.');
   }
   // 제품 사진
+  if (!imgFileUrl) {
+    return alert('이미지가 추가 되지 않았습니다.');
+  }
   if (!stockInput.value) {
     return alert('재고가 작성되지 않았습니다.');
   }
@@ -89,7 +109,7 @@ async function handleRegisterItemBtn() {
       manufacturingCompany: companyInput.value,
       summary: summaryInput.value,
       mainExplanation: mainExlainInput.value,
-      file: tempImgUrl, // 임시
+      file: imgFileUrl, // 임시
       stocks: stockInput.value,
       price: priceInput.value,
       hashTag: tags,
@@ -100,7 +120,7 @@ async function handleRegisterItemBtn() {
     alert(`정상적으로 상품이 등록되었습니다.`);
 
     // 관리자 페이지로 이동
-    // window.location.href = '/admin';
+    window.location.href = '/admin';
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
