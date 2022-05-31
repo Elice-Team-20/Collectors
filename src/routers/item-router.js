@@ -86,7 +86,7 @@ itemRouter.post(
   '/update/:id',
   upload.single('file'),
   loginRequired,
-  //adminRequired,
+  adminRequired,
   async (req, res, next) => {
     try {
       // 변경할 아이탬 id
@@ -103,6 +103,15 @@ itemRouter.post(
           price,
         } = req.body;
 
+        let imgUrl = null
+        if(!req.file?.location){
+          const currentItemData = await itemService.getItembyObId(id)
+          imgUrl = currentItemData.imgUrl
+        }
+        else{
+          imgUrl = req.file.location;
+        }
+        console.log(imgUrl)
       //객체화
       const updateData = {
         ...(itemName && { itemName }),
@@ -110,21 +119,17 @@ itemRouter.post(
         ...(manufacturingCompany && {manufacturingCompany}),
         ...(summary && {summary}),
         ...(mainExplanation && {mainExplanation}),
-        imgUrl: req.file.location,
         ...(stocks && {stocks}),
         ...(price && {price}),
         ...(hashTag && {hashTag}),
+        ...(imgUrl && {imgUrl})
       };
 
-      const sample = {
-        ...(itemName),
-      }
 
-      console.log(sample)
-
+      console.log(updateData)
   //const result = await itemService.updateItem(id, updateData);
       // 추후 헤더 수정
-      res.json({ status: 'ok', result: result });
+      res.json({ status: 'ok', });
     } catch (error) {
       next(error);
     }
