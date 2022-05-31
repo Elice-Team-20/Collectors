@@ -1,13 +1,11 @@
 import { userService } from '../../services';
 import { Strategy as NaverStrategy } from 'passport-naver-v2'
-import bcrypt from 'bcrypt';
 
 
 const config = {
     clientID: process.env.NAVER_ID,
     clientSecret: process.env.NAVER_SECRET,
     callbackURL: 'api/auth/naver/callback'
-
 }
 
 
@@ -18,7 +16,6 @@ async function findOrCreateUser({email, name}){
     if (user) {
         return user;
     }
-    const hashedPassword = await bcrypt.hash('naver', 10);
     // 없을 경우 생성
     const created = await userService.addUser({
         email: email,
