@@ -42,12 +42,12 @@ class ItemService {
     if (items.length == 0) {
       throw new Error('매진임박인 상품이 없습니다.');
     }
-    
+
     if (items.length >= 3) {
         const array = shuffledItems.slice(0,3);
         return array;
     }
-    
+
     // item의 개수가 3개 미만일 경우 바로 아이템 리턴
     return shuffledItems;
   }
@@ -68,13 +68,14 @@ class ItemService {
   // 상품 수정
   async updateItem(itemId, info) {
     const item = await this.itemModel.findById(itemId);
-
     if(!item) {
       throw new Error('등록된 상품이 없습니다.');
     }
 
-    const result = await this.itemModel.update(itemId, info);
-    return result;
+    await this.itemModel.update(itemId, info);
+
+    const resultUpdate = await this.itemModel.findById(itemId);
+    return resultUpdate;
   }
 
 }

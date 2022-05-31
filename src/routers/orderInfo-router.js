@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { orderInfoService, userService } from './../services/index'
-import { loginRequired } from './../middlewares/index'
+import { loginRequired, adminRequired } from './../middlewares/index'
 const orderInfoRouter = Router();
 
 orderInfoRouter.post('/', async(req, res) => {
@@ -38,8 +38,9 @@ orderInfoRouter.post('/', async(req, res) => {
   }
   });
 
-//db 에 등록된 주문 목록 전체를 조회하는 api
-orderInfoRouter.get('/', loginRequired, async(req, res, next) => {
+// db 에 등록된 주문 목록 전체를 조회하는 api
+// 관리자 권한이 필요.
+orderInfoRouter.get('/', loginRequired, adminRequired, async(req, res, next) => {
   try{
     res.json(await orderInfoService.getOrderInfo());
   }
@@ -99,7 +100,7 @@ orderInfoRouter.post('/update', loginRequired, async(req, res, next) => {
   }
 })
 
-// 주문 목록을 지우는 api
+// 회원 전용 : 주문 목록을 지우는 api
 orderInfoRouter.delete('/delete', loginRequired, async(req, res, next) => {
   try{
     const {orderId} = req.body;
@@ -107,6 +108,17 @@ orderInfoRouter.delete('/delete', loginRequired, async(req, res, next) => {
     res.json({ deleteResult });
   }
   catch(error){
+    next(error)
+  }
+})
+
+// 관리자 전용: 주문 전체를 조회할 수 있고, 삭제가 가능.
+orderInfoRouter.delete('/admin/delete', loginRequired, adminRequired, async(req, res, next) => {
+  try{
+    const { orderId } = req.body;
+    const deletedResult = await orderInfoService.deleteInfo(orderId);
+    res.json({ deletedResult });
+  }catch(error){
     next(error)
   }
 })
