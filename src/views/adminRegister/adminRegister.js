@@ -121,10 +121,13 @@ async function handleRegisterItemBtn(e) {
     formData.append('manufacturingCompany', companyInput.value);
     formData.append('summary', summaryInput.value);
     formData.append('mainExplanation', mainExlainInput.value);
-    formData.append('file', mainExlainInput.value); //
+    formData.append('file', file); //
     formData.append('stocks', stockInput.value);
     formData.append('hashTag', tags);
     console.log(formData);
+    for (var value of formData.values()) {
+      console.log(value);
+    }
     // const itemData = {
     //   itemName: itemNameInput.value,
     //   category:
@@ -136,8 +139,14 @@ async function handleRegisterItemBtn(e) {
     //   price: priceInput.value,
     //   hashTag: tags,
     // };
-    // const res = await Api.post('/api/item/', itemData);
-    // console.log(res);
+    const res = await fetch('/api/item', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: formData,
+    }); //await Api.post('/api/item', formData);
+    console.log(res);
     alert(`정상적으로 상품이 등록되었습니다.`);
 
     // 관리자 페이지로 이동
