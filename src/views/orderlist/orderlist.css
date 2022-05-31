@@ -1,5 +1,6 @@
 .order-container {
   width: 95%;
+  height: 300vh;
   margin: 0 auto;
 }
 
@@ -9,15 +10,33 @@
 }
 
 .order-header,
-.order-data {
+.order-list {
   display: grid;
-  grid-template-columns: 100px 3fr 2fr 100px;
+  grid-template-columns: 50px 100px 3fr 2fr 100px;
+  place-content: center;
+  place-items: center;
   text-align: center;
 }
 
-.order-data {
+.order-list {
+  height: 4rem;
   border-top: 1px solid #fff;
-  padding-top: 1rem;
+}
+
+#cancelButton {
+  width: 75%;
+  height: 4vh;
+  border-color: #f01e21;
+  border-radius: 7px;
+  background-color: #f01e21;
+  color: #ffffff;
+  font-weight: bold;
+  text-align: center;
+}
+
+#cancelButton:hover {
+  border-color: #e7484b;
+  background-color: #e7484b;
 }
 
 @media all and (max-width: 768px) {
