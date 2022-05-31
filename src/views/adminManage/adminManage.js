@@ -30,11 +30,11 @@ function addAllEvents() {
 async function addItemListElements() {
   const itemList = await getItemList();
   itemContainerDiv.innerHTML = itemList.reduce(
-    (text, { _id, itemName, imgUrl, category, price, stocks }) => {
+    (text, { _id, itemName, imgUrl, category, price, stocks, deleteFlag }) => {
       return (
         text +
         `
-          <div class="item">
+          <div class="item ${deleteFlag ? 'deleted' : ''}" >
             <a href="/admin/manage/item/?id=${_id}" class="item-content-box">
               <div class="item-image-box">
                 <img
