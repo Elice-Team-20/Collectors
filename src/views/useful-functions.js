@@ -27,3 +27,12 @@ export const convertToNumber = (string) => {
 export const wait = (ms) => {
   return new Promise((r) => setTimeout(r, ms));
 };
+
+// 선택자로 요소 선택하는 함수
+export const selectElement = (selector) => {
+  const element = document.querySelector(selector);
+  if (!element) {
+    throw new Error(`요소를 찾을 수 없습니다. ${selector}`);
+  }
+  return element;
+};

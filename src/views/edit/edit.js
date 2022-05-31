@@ -1,20 +1,22 @@
+import * as Api from '/api.js';
+import { selectElement } from '/useful-functions.js';
+
 import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
 
 // 요소(element), input 혹은 상수
-const token = localStorage.getItem('token');
-const submitButton = document.querySelector('#submitButton');
-const addressButton = document.querySelector('#addressButton');
-const fullNameInput = document.querySelector('#fullNameInput');
-const emailInput = document.querySelector('#emailInput');
-const passwordInput = document.querySelector('#passwordInput');
-const passwordConfirmInput = document.querySelector('#passwordConfirmInput');
-const phoneNumberInput = document.querySelector('#phoneNumberInput');
-
-const postcode = document.querySelector('#postcode');
-const address = document.querySelector('#address');
-const detailAddress = document.querySelector('#detailAddress');
-const extraAddress = document.querySelector('#extraAddress');
+const submitButton = selectElement('#submitButton');
+const addressButton = selectElement('#addressButton');
+const fullNameInput = selectElement('#fullNameInput');
+const emailInput = selectElement('#emailInput');
+const currentPasswordInput = selectElement('#currentPasswordInput');
+const newPasswordInput = selectElement('#newPasswordInput');
+const passwordConfirmInput = selectElement('#passwordConfirmInput');
+const phoneNumberInput = selectElement('#phoneNumberInput');
+const postcode = selectElement('#postcode');
+const address = selectElement('#address');
+const detailAddress = selectElement('#detailAddress');
+const extraAddress = selectElement('#extraAddress');
 
 addAllElements();
 addAllEvents();
@@ -79,19 +81,13 @@ function handleAddress() {
   }).open();
 }
 
+// 유저 데이터 삽입하기
 async function getUserDataToInput() {
   // user 데이터 가져오기
-  const id = await findUserId();
+  const id = await Api.get(`/api/user/id`);
 
   // 유저 데이터 가져오기
-  const response = await fetch(`/api/user/${id}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const userData = await response.json();
+  const userData = await Api.get(`/api/user/${id}`);
 
   // 유저 데이터 가져와서 삽입
   const { fullName, email } = userData;
@@ -102,7 +98,6 @@ async function getUserDataToInput() {
   if (userData.address) {
     const { phoneNumber } = userData;
     const { postalCode, address1, address2 } = userData.address;
-    console.log(phoneNumber, postalCode, address1, address2);
     postcode.value = postalCode;
     address.value = address1;
     detailAddress.value = address2;
@@ -110,30 +105,23 @@ async function getUserDataToInput() {
   }
 }
 
-// 유저 아이디 찾기
-async function findUserId() {
-  const response = await fetch(`/api/user/id`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const userId = await response.json();
-
-  return userId;
-}
-
 // 유저 데이터 수정하기
 async function updateUserData(e) {
-  const currentPassword = prompt('비밀번호를 입력해주세요.');
-
   e.preventDefault();
-  const id = await findUserId();
-  // console.log(id);
-  const newPassword = passwordInput.value;
+  // 유저 아이디 가져오기
+  const id = await Api.get(`/api/user/id`);
+
+  // 현재 비밀번호 확인
+  const currentPassword = currentPasswordInput.value;
+
+  const newPassword = newPasswordInput.value;
   const newPasswordConfirm = passwordConfirmInput.value;
-  console.log(newPassword, newPasswordConfirm);
+
+  if (fullNameInput.value.length < 2) {
+    alert('이름을 2글자 이상 입력해주세요.');
+    return;
+  }
+
   // 비밀번호 확인
   if (newPassword !== newPasswordConfirm) {
     alert('비밀번호가 일치하지 않습니다.');
@@ -144,11 +132,17 @@ async function updateUserData(e) {
     return;
   }
 
+  // 전화번호 확인
+  if (phoneNumberInput.value.length < 10) {
+    alert('전화번호를 정확히 입력해주세요.');
+    return;
+  }
+
   const userData = {
-    currentPassword: currentPassword,
     fullName: fullNameInput.value,
-    password: newPassword,
     phoneNumber: phoneNumberInput.value,
+    currentPassword: currentPassword,
+    password: newPassword,
     address: {
       postalCode: postcode.value,
       address1: address.value,
@@ -156,25 +150,22 @@ async function updateUserData(e) {
     },
   };
 
-  // console.log(userData);
-
   // 유저 데이터 수정하기
-  const response = await fetch(`/api/user/users/${id}`, {
+  const res = await fetch(`/api/user/users/${id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      currentPassword: currentPassword,
     },
     body: JSON.stringify(userData),
   });
 
-  const updatedUser = await response.json();
-  // console.log(updatedUser);
+  if (!res.ok) {
+    const errorContent = await res.json();
+    const { reason } = errorContent;
 
-  if (response.status === 200 || response.status === 304) {
-    alert('회원 정보가 수정되었습니다.');
-    location.href = '/';
-  } else {
-    alert('회원 정보 수정에 실패하였습니다.');
+    alert(reason);
+    throw new Error(reason);
   }
 }
