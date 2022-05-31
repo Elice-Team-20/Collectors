@@ -2,7 +2,7 @@
 // 다만, 앞으로 ~.js 파일을 작성할 때 아래의 코드 구조를 참조할 수 있도록,
 // 코드 예시를 남겨 두었습니다.
 import * as Api from '/api.js';
-import { randomId } from '/useful-functions.js';
+import { randomId, addCommas } from '/useful-functions.js';
 
 import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
@@ -11,6 +11,7 @@ import { addFooterElements } from '../components/Footer/event.js';
 // 요소(element), input 혹은 상수
 const quickMenu = document.querySelector('#quick-menu');
 const quickItems = document.querySelector('.quick-items');
+const soldoutContainer = document.querySelector('.soldout-container');
 
 userInit();
 addAllElements();
@@ -21,6 +22,7 @@ function addAllElements() {
   addNavElements();
   addFooterElements();
   addRecentItem();
+  addSoldOutItems();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -73,8 +75,7 @@ window.onresize = () => {
 
 window.addEventListener('scroll', () => {
   let y = +window.scrollY;
-  console.log(y);
-  y > 250 ? (quickMenu.style.top = y + 250 + 'px') : (quickMenu.style.top = '500px');
+  y > 250 ? (quickMenu.style.top = y + 250 + 'px') : (quickMenu.style.top = '541px');
 });
 
 // 최근 본 상품 추가하기
@@ -95,5 +96,29 @@ function addRecentItem() {
     `;
 
     quickItems.insertAdjacentHTML('beforeend', recentItemList);
+  });
+}
+
+async function addSoldOutItems() {
+  const soldoutItems = await fetch(`/api/item/soldOut`, {
+    method: 'GET',
+  });
+
+  const soldoutItemsData = await soldoutItems.json();
+  console.log(soldoutItemsData);
+  soldoutItemsData.forEach(({ _id, itemName, imgUrl, price, stocks }) => {
+    const soldoutItemList = `
+      <div class="soldout-item">
+        <a href="/item/?id=${_id}">
+          <div class="img-wrap" style="background-image: url(${imgUrl});">
+          </div>
+          <h3>${itemName}</h3>
+          <p>${addCommas(price)}원</p>
+          <p>단 ${stocks}개! 매진 임박</p>
+        </a>
+      </div>
+    `;
+
+    soldoutContainer.insertAdjacentHTML('beforeend', soldoutItemList);
   });
 }
