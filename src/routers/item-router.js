@@ -111,7 +111,6 @@ itemRouter.post(
         else{
           imgUrl = req.file.location;
         }
-        console.log(imgUrl)
       //객체화
       const updateData = {
         ...(itemName && { itemName }),
@@ -124,12 +123,10 @@ itemRouter.post(
         ...(hashTag && {hashTag}),
         ...(imgUrl && {imgUrl})
       };
+      const result = await itemService.updateItem(id, updateData);
 
-
-      console.log(updateData)
-  //const result = await itemService.updateItem(id, updateData);
       // 추후 헤더 수정
-      res.json({ status: 'ok', });
+      res.json({ status: 'ok', result });
     } catch (error) {
       next(error);
     }
