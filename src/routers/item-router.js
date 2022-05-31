@@ -12,13 +12,13 @@ itemRouter.get('/', async (req, res) => {
 
 // 매진임박인 아이템(5개 이하)을 조회하는 라우터
 itemRouter.get('/soldOut', async (req, res, next) => {
-  try{
+  try {
     const items = await itemService.getSoldOutImminentItems();
     res.json(items);
-  }catch(error){
+  } catch (error) {
     next(error);
   }
-})
+});
 
 // s3 에 이미지 업로드후 req 에 링크 넣고 아이템 db에 등록
 itemRouter.post('/', upload.single('file'), async (req, res) => {
