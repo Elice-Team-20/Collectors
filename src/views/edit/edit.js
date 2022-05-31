@@ -7,7 +7,8 @@ const submitButton = document.querySelector('#submitButton');
 const addressButton = document.querySelector('#addressButton');
 const fullNameInput = document.querySelector('#fullNameInput');
 const emailInput = document.querySelector('#emailInput');
-const passwordInput = document.querySelector('#passwordInput');
+const currentPasswordInput = document.querySelector('#currentPasswordInput');
+const newPasswordInput = document.querySelector('#newPasswordInput');
 const passwordConfirmInput = document.querySelector('#passwordConfirmInput');
 const phoneNumberInput = document.querySelector('#phoneNumberInput');
 
@@ -126,14 +127,20 @@ async function findUserId() {
 
 // 유저 데이터 수정하기
 async function updateUserData(e) {
-  const currentPassword = prompt('비밀번호를 입력해주세요.');
-
   e.preventDefault();
+
+  // 현재 비밀번호 확인
+  const currentPassword = currentPasswordInput.value;
+
+  if (!currentPassword) alert('현재 비밀번호를 입력하세요.');
+
+  // id 가져오기
   const id = await findUserId();
-  // console.log(id);
-  const newPassword = passwordInput.value;
+
+  // 새로운 비밀번호 데이터
+  const newPassword = newPasswordInput.value;
   const newPasswordConfirm = passwordConfirmInput.value;
-  console.log(newPassword, newPasswordConfirm);
+
   // 비밀번호 확인
   if (newPassword !== newPasswordConfirm) {
     alert('비밀번호가 일치하지 않습니다.');
@@ -144,6 +151,7 @@ async function updateUserData(e) {
     return;
   }
 
+  // 수정할 유저 데이터
   const userData = {
     currentPassword: currentPassword,
     fullName: fullNameInput.value,
@@ -156,8 +164,6 @@ async function updateUserData(e) {
     },
   };
 
-  // console.log(userData);
-
   // 유저 데이터 수정하기
   const response = await fetch(`/api/user/users/${id}`, {
     method: 'PATCH',
@@ -167,9 +173,6 @@ async function updateUserData(e) {
     },
     body: JSON.stringify(userData),
   });
-
-  const updatedUser = await response.json();
-  // console.log(updatedUser);
 
   if (response.status === 200 || response.status === 304) {
     alert('회원 정보가 수정되었습니다.');
