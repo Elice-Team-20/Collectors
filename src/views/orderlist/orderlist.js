@@ -1,5 +1,5 @@
-import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
-import { addFooterElements } from '../components/Footer/event.js';
+import { addNavEventListeners, addNavElements } from '../../components/Nav/event.js';
+import { addFooterElements } from '../../components/Footer/event.js';
 
 // 요소(element), input 혹은 상수
 const token = localStorage.getItem('token');
