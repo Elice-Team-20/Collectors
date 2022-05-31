@@ -31,6 +31,7 @@ function addAllEvents() {
 
 async function addOrderListElements() {
   const orderList = await getOrderInfo();
+  console.log(orderList.length);
   const itemMap = await getItemInfo(orderList);
   orderListDiv.innerHTML = orderList.reduce(
     (text, { _id, orderDate, itemList, status }) => {
@@ -89,6 +90,17 @@ async function getItemInfo(orderList) {
   }
 }
 
-function handleCancelBtn() {
+async function handleCancelBtn() {
   console.log(`취소 버튼 ${this.name}`);
+  try {
+    const res = await Api.delete('/api/order/admin/delete', '', {
+      orderId: this.name,
+    });
+    alert('상품 삭제가 완료되었습니다.');
+    // refresh
+    window.location.reload();
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
 }
