@@ -123,7 +123,7 @@ async function addSoldOutItems() {
 async function getCategoryName() {
   const categoryData = await Api.get(`/api/category`);
 
-  return categoryData.map(({ name }) => name);
+  return categoryData;
 }
 
 // 카테고리 메뉴 추가하기

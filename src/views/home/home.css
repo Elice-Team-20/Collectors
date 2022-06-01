@@ -87,6 +87,7 @@
 .quick-items {
   border: 1px solid #dddddd;
   border-top: none;
+  opacity: 0.75;
 }
 
 .quick-items li a {
