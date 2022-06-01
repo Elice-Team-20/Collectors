@@ -27,7 +27,12 @@ export const Nav = (isLoggedIn, page) => {
       </div>
 
       <div class="navMenuContainer">
-        <ul id="navMenuList">
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul id="navMenuList" class="hidden">
           ${menu}
         </ul>
       </div>

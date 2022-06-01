@@ -27,4 +27,14 @@ const addNavEventListeners = () => {
   if (logoutMenu) logoutMenu.addEventListener('click', handleLogout);
 };
 
-export { addNavEventListeners, addNavElements, handleLogout, checkUserStatus };
+const handleHamburger = () => {
+  const hamburger = document.querySelector('.hamburger');
+  const navMenu = document.querySelector('#navMenuList');
+
+  hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('hidden');
+    console.log('click');
+  });
+};
+
+export { addNavEventListeners, addNavElements, handleLogout, checkUserStatus, handleHamburger };
