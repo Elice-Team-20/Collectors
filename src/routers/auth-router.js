@@ -43,18 +43,17 @@ authRouter.get('/kakao/finish', async(req, res, next) => {
       //기존회원이면 회원 정보 찾아옴
       user = await kakaoOAuthService.getUserByEmail(email)
     }
-
     //만약 유저정보가 등록도 안되고 db에서 찾는것도 안되면 다음 오류 발생
     if(!user){
       res.status(401).send("유저 정보가 할당이 안됩니다 양식을 확인하세요")
-
-    // 토큰 생성
-    const  token = await kakaoOAuthService.getToken(user)
-    res.status(200).json(token)
     }
-    }catch(err){
-    next(err)
-  }
+    // 토큰 생성
+      const token = await kakaoOAuthService.getToken(user)
+      res.status(200).json(token)
+    }
+    catch(err){
+      next(err)
+    }
 });
 
 authRouter.get('/naver', passport.authenticate('naver', { authType: 'reprompt' }));
