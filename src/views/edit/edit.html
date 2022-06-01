@@ -5,14 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>쇼핑-데모</title>
     <!-- 아이콘 -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/elice-rabbit-favicon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
     <!-- bulma css 관련 -->
     <!-- <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
     /> -->
     <!-- 폰트 어썸: 아이콘 -->
-    <script defer src="https://kit.fontawesome.com/7630448495.js" crossorigin="anonymous"></script>
+    <script
+      defer
+      src="https://kit.fontawesome.com/7630448495.js"
+      crossorigin="anonymous"
+    ></script>
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="edit.css" />
     <link rel="stylesheet" href="../../style.css" />
@@ -36,23 +40,46 @@
               <div class="field">
                 <label class="label" for="fullNameInput">이름</label>
                 <div class="control">
-                  <input class="input" id="fullNameInput" type="text" autocomplete="off" disabled />
+                  <input
+                    class="input"
+                    id="fullNameInput"
+                    type="text"
+                    autocomplete="off"
+                    disabled
+                  />
                 </div>
               </div>
               <div class="field">
-                <label class="label" for="currentPasswordInput">현재 비밀번호</label>
+                <label class="label" for="currentPasswordInput"
+                  >현재 비밀번호</label
+                >
                 <div class="control">
-                  <input class="input" id="currentPasswordInput" type="password" autocomplete="off" placeholder="현재 비밀번호를 입력해 주세요." />
+                  <input
+                    class="input"
+                    id="currentPasswordInput"
+                    type="password"
+                    autocomplete="off"
+                    placeholder="현재 비밀번호를 입력해 주세요."
+                  />
                 </div>
               </div>
               <div class="field">
                 <label class="label" for="newPasswordInput">비밀번호</label>
                 <div class="control">
-                  <input class="input" id="newPasswordInput" type="password" autocomplete="off" placeholder="변경할 비밀번호를 입력해 주세요." disabled />
+                  <input
+                    class="input"
+                    id="newPasswordInput"
+                    type="password"
+                    autocomplete="off"
+                    placeholder="변경할 비밀번호를 입력해 주세요."
+                    disabled
+                  />
                 </div>
               </div>
               <div class="field">
-                <label class="label" for="passwordConfirmInput">비밀번호 확인</label>
+                <label class="label" for="passwordConfirmInput"
+                  >비밀번호 확인</label
+                >
                 <div class="control">
                   <input
                     class="input"
@@ -68,20 +95,52 @@
                 <label class="label" for="addressInput">주소</label>
                 <div class="control">
                   <div class="address-container">
-                    <input class="input" type="text" id="postcode" placeholder="우편 번호" disabled />
-                    <input id="addressButton" type="button" value="주소 찾기" disabled />
+                    <input
+                      class="input"
+                      type="text"
+                      id="postcode"
+                      placeholder="우편 번호"
+                      disabled
+                    />
+                    <input
+                      id="addressButton"
+                      type="button"
+                      value="주소 찾기"
+                      disabled
+                    />
                   </div>
-                  <input class="input" type="text" id="address" placeholder="주소를 입력해 주세요." disabled />
-                  <input class="input" type="text" id="detailAddress" placeholder="상세 주소를 입력해 주세요." disabled />
+                  <input
+                    class="input"
+                    type="text"
+                    id="address"
+                    placeholder="주소를 입력해 주세요."
+                    disabled
+                  />
+                  <input
+                    class="input"
+                    type="text"
+                    id="detailAddress"
+                    placeholder="상세 주소를 입력해 주세요."
+                    disabled
+                  />
                 </div>
               </div>
               <div class="field">
                 <label class="label" for="phoneNumberInput">전화번호</label>
                 <div class="control">
-                  <input class="input" id="phoneNumberInput" type="number" autocomplete="off" placeholder="전화번호를 입력해 주세요." disabled />
+                  <input
+                    class="input"
+                    id="phoneNumberInput"
+                    type="number"
+                    autocomplete="off"
+                    placeholder="전화번호를 입력해 주세요."
+                    disabled
+                  />
                 </div>
               </div>
-              <button class="button" id="submitButton" disabled>저장하기</button>
+              <button class="button" id="submitButton" disabled>
+                저장하기
+              </button>
             </form>
           </div>
         </div>
