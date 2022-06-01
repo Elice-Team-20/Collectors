@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { itemService } from '../services';
+import { itemService, categoryService } from '../services';
 import { adminRequired, loginRequired, upload } from '../middlewares/index';
 
 const itemRouter = Router();
@@ -42,7 +42,7 @@ itemRouter.get('/search', async (req, res, next) => {
 })
 
 // s3 에 이미지 업로드후 req 에 링크 넣고 아이템 db에 등록
-itemRouter.post('/', upload.single('file'), adminRequired, async (req, res) => {
+itemRouter.post('/', upload.single('file'), loginRequired, adminRequired,  async (req, res) => {
   const {
     itemName,
     category,
