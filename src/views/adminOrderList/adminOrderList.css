@@ -14,29 +14,27 @@ section {
 }
 .order-list-box {
   width: 100%;
-  margin-top: 3vh;
 }
-.order-list-box .order-header,
+.order-header,
 .order-data {
   display: grid;
-  grid-template-columns: 4fr 3fr 3fr 3fr 2fr;
+  grid-template-columns: 4fr 3fr 4fr 3fr 2fr;
   align-items: center;
   justify-items: center;
   text-align: center;
 }
 .order-header {
-  height: 3vh;
-  line-height: 3vh;
+  padding: 3vh 1vw;
 }
 .order-list {
-  margin-top: 3%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-top: 3%;
 }
 .order-data {
   margin-bottom: 3vh;
-  padding: 3vw;
+  padding: 3vh 1vw;
 }
 .order-data:hover {
   border: 1px solid #f01e21;

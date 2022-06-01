@@ -7,16 +7,17 @@ import {
   checkUserStatus,
 } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
-import { addOrderNavElements } from '../components/Order/event.js';
+// import { addOrderNavElements } from '../components/Order/event.js';
 
 const orderList = JSON.parse(localStorage.getItem('order'));
-window.onload = () => {
+const isLoggedIn = checkUserStatus();
+window.onload = async () => {
   if (!orderList) {
     alert('주문 정보가 없습니다. 주문 정보를 확인해주세요.');
     window.location.href = '/cart';
     return;
   }
-  if (!checkUserStatus()) {
+  if (!isLoggedIn) {
     alert('비정상적인 접근입니다.');
     window.location.href = '/';
     return;
@@ -42,23 +43,25 @@ const requestMsgTextInputDiv = document.querySelector(
 
 let shipRequest = ``;
 
-addAllElements();
-addAllEvents();
+await addAllElements();
+await addAllEvents();
 
-function addAllElements() {
+async function addAllElements() {
   addNavElements();
   addFooterElements();
-  addOrderNavElements('Order');
-  addUserShipElements(); // 유저 배송지 정보 가져오기
-  addOrderInfoElements(); // 주문 정보 가져오기
+  if (isLoggedIn) await addUserShipElements(); // 유저 배송지 정보 가져오기
+  await addOrderInfoElements(); // 주문 정보 가져오기
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-function addAllEvents() {
+async function addAllEvents() {
   addNavEventListeners();
-  purchaseBtn.addEventListener('click', handlePurchaseBtn);
-  findAddressBtn.addEventListener('click', handleFindAddressBtn);
-  requestMsgInput.addEventListener('change', handleRequestMsgInput);
+  await addInputEventListener();
+}
+async function addInputEventListener() {
+  await purchaseBtn.addEventListener('click', handlePurchaseBtn);
+  await findAddressBtn.addEventListener('click', handleFindAddressBtn);
+  await requestMsgInput.addEventListener('change', handleRequestMsgInput);
 }
 function handleRequestMsgInput() {
   // 요청 사항 핸들러

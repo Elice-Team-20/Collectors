@@ -11,6 +11,7 @@ window.onload = () => {
   // admin인지 확인하기
 };
 let file;
+let tags = [];
 let isImgChanged = false; // 이미지 리소스 낭비 방지
 // const queryString = window.location.search;
 const id = new URLSearchParams(window.location.search).get('id');
@@ -23,7 +24,7 @@ await addAllEvents();
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
   addNavElements('User');
-  await addItemInputFormElement();
+  await addItemInputFormElement('상품 수정하기');
   await addItemInputOriginElement();
   addFooterElements();
 }
@@ -145,10 +146,6 @@ async function handleRegisterItemBtn(e) {
   if (!mainExlainInput.value) {
     return alert('상세 설명이 작성되지 않았습니다.');
   }
-  // 제품 사진
-  // if (!file) {
-  //   return alert('이미지가 추가 되지 않았습니다.');
-  // }
   if (!stockInput.value) {
     return alert('재고가 작성되지 않았습니다.');
   }
@@ -158,7 +155,7 @@ async function handleRegisterItemBtn(e) {
   if (tags.length === 0) {
     return alert('태그를 적어도 하나 추가해주세요.');
   }
-
+  if (!confirm('상품을 수정하시겠습니까?')) return;
   try {
     let formData = new FormData();
     formData.append('itemName', itemNameInput.value);

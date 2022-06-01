@@ -4,5 +4,5 @@ yarn.lock
 .env
 lib
 package-lock.json
-.DSstore
+.DS_Store
 .prettierrc

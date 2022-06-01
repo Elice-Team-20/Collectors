@@ -17,6 +17,10 @@
 }
 
 /* 주문자 정보 */
+.info-wrapper {
+  display: flex;
+  justify-content: center;
+}
 .form {
   display: flex;
   flex-direction: column;
@@ -114,24 +118,11 @@ div.total {
   align-items: flex-end;
 }
 
-#purchase-btn {
-  width: 100%;
-  height: 5vh;
-
-  border-color: #f01e21;
-  border-radius: 7px;
-  background-color: #f01e21;
-
-  font-weight: bold;
-  cursor: pointer;
-}
-
 @media all and (max-width: 768px) {
   div.info-wrapper {
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
   }
-
   div.info-card,
   .form {
     width: 90%;

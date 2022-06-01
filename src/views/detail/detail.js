@@ -3,14 +3,25 @@
 // 코드 예시를 남겨 두었습니다.
 import { addCommas } from '/useful-functions.js';
 
-import { addNavEventListeners, addNavElements } from '../../components/Nav/event.js';
+import {
+  addNavEventListeners,
+  addNavElements,
+} from '../../components/Nav/event.js';
 import { addFooterElements } from '../../components/Footer/event.js';
+import { checkUserStatus } from '../components/Nav/event.js';
 
 // url에서 id 값 추출해오기
-const ITEMDETAIL = document.querySelector('.item-detail');
+// const ITEMDETAIL = document.querySelector('.item-detail');
 const queryString = window.location.search;
 const id = new URLSearchParams(queryString).get('id');
-
+const itemLeftImgDiv = document.querySelector('.item-left');
+const itemNameDiv = document.querySelector('#item-name');
+const itemCompanyDiv = document.querySelector('#item-company');
+const itemPriceDiv = document.querySelector('#item-price');
+const itemExplanationDiv = document.querySelector('#item-explanation');
+const cartBtn = document.querySelector('#addCartBtn');
+const orderBtn = document.querySelector('#orderBtn');
+// console.log(item);
 // navigation, footer 컴포넌트 넣기
 await addAllElements();
 await addAllEvents();
@@ -24,7 +35,20 @@ async function addAllElements() {
 
 async function addAllEvents() {
   addNavEventListeners();
-  document.querySelector('#addCartBtn').addEventListener('click', addCartBtnHandler);
+  cartBtn.addEventListener('click', addCartBtnHandler);
+  orderBtn.addEventListener('click', handleOrderBtn);
+}
+
+function handleOrderBtn() {
+  if (checkUserStatus()) {
+    let order = [[id, 1]]; // 아이템 하나
+    console.log('order', order);
+    localStorage.setItem('order', JSON.stringify(order));
+    window.location.href = '/order';
+  } else {
+    alert('로그인 정보가 없습니다. 로그인 후에 주문이 가능합니다.');
+    window.location.href = '/login';
+  }
 }
 
 // 카트 추가
@@ -34,39 +58,32 @@ function addCartBtnHandler() {
   currentCart.push(id);
   console.log('add cart', currentCart);
   localStorage.setItem('cart', JSON.stringify(currentCart));
+  const goToCart = confirm('장바구니로 이동하시겠습니까?');
+  if (goToCart) {
+    window.location.href = '/cart';
+  }
 }
 
 // 상세 페이지 렌더링 함수
 async function insertItemDetail(id) {
   const response = await fetch(`/api/item/${id}`);
   const details = await response.json();
-  const { itemName, category, manufacturingCompany, summary, mainExplanation, imgUrl, stocks, price, hashTag } = details;
-  ITEMDETAIL.insertAdjacentHTML(
-    'beforeend',
-    `
-      <div class="item">
-        <div class="item-left">
-          <img src="${imgUrl}" alt="item-image" />
-        </div>
-        <div class="item-right">
-          <div class="item-description-box">
-            <div id="item-name">
-              ${itemName}
-            </div>
-            <div class="seperator"></div>
-            <div class="item-contents">
-              <div id="item-company">${manufacturingCompany}</div>
-              <div id="item-price">${addCommas(price)}</div>
-              <div id="item-explanation">${mainExplanation}</div>
-            </div>
-          </div>
-          <div class="item-buttons-box">
-            <button id="addCartBtn">장바구니 추가하기</button>
-            <button id="buyNowBtn">바로 구매하기</button>
-          </div>
-      </div>
-    `
-  );
+  const {
+    itemName,
+    category,
+    manufacturingCompany,
+    summary,
+    mainExplanation,
+    imgUrl,
+    stocks,
+    price,
+    hashTag,
+  } = details;
+  itemLeftImgDiv.innerHTML = `<img src="${imgUrl}" alt="item-image" />`;
+  itemNameDiv.innerText = itemName;
+  itemCompanyDiv.innerText = manufacturingCompany;
+  itemPriceDiv.innerText = price;
+  itemExplanationDiv.innerText = mainExplanation;
 
   addRecentItem(id, itemName, imgUrl);
 }
@@ -81,7 +98,10 @@ function addRecentItem(itemId, itemName, imgUrl) {
   };
 
   // 최근 본 상품이 있는지 확인
-  let recentItemList = JSON.parse(localStorage.getItem('recentItem')) || [];
+  let recentItemList = JSON.parse(localStorage.getItem('recentItem'));
+
+  // 없으면 새로 생성
+  if (!recentItemList) recentItemList = [];
 
   // 동일한 상품이 있으면 추가하지 않음
   let isItemExist = false;

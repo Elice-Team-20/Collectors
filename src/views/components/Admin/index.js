@@ -1,4 +1,4 @@
-export const ItemInputForm = () => {
+export const ItemInputForm = (btnName) => {
   return `
     <form class="item-form" enctype="multipart/form-data">
     <div class="form-sector">
@@ -111,7 +111,7 @@ export const ItemInputForm = () => {
         <div id="tagList"></div>
       </div>
       <!-- 제품 등록하기 버튼 -->
-      <button id="registerItemBtn">제품 등록하기</button>
+      <button id="registerItemBtn">${btnName}</button>
     </div>
   </form>
     `;

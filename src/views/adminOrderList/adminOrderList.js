@@ -92,6 +92,7 @@ async function getItemInfo(orderList) {
 
 async function handleCancelBtn() {
   console.log(`취소 버튼 ${this.name}`);
+  if (!confirm('주문 내역을 삭제하시겠습니까?')) return;
   try {
     const res = await Api.delete('/api/order/admin/delete', '', {
       orderId: this.name,
