@@ -29,7 +29,9 @@ class CategoryService {
   // 전체 카테고리 조회
   async getCategories(){
     const categories = await categoryModel.findAll();
-    return categories;
+    const array = [];
+    categories.forEach(data => array.push(data.name));
+    return array;
   }
 
   async deleteCategory(name) {
