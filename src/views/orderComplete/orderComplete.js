@@ -38,7 +38,7 @@ async function addAllElements() {
 function addAllEvents() {
   addNavEventListeners();
   orderListBtn.addEventListener('click', () => {
-    window.location.href = '/orderlist';
+    window.location.href = '/user/orderlist';
   });
   itemsListBtn.addEventListener('click', () => {
     window.location.href = '/items';
