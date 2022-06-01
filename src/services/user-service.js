@@ -219,6 +219,15 @@ class UserService {
   async getUserByEmail(userEmail){
     return await this.userModel.findByEmail(userEmail)
   }
+
+  async checkPassword(email, inputPassword){
+    const user = await this.userModel.findByEmail(email);
+    if(!user){
+      throw new Error(" 가입 내역이 없는 유저입니다 ")
+    }
+    const DBpassword = user.password;
+    return await bcrypt.compare(inputPassword, DBpassword)
+  }
 }
 
 const userService = new UserService(userModel);

@@ -184,6 +184,19 @@ userRouter.delete('/delete/:userId', async(req, res, next) => {
   }catch(error){
     next(error);
   }
+
+})
+// 비밀번호가 맞는지 확인해주는 라우터
+userRouter.get('/checkPassword/:userEmail', async (req, res, next)=>{
+  try{
+    const { password } = req.body;
+    const { userEmail } = req.params;
+    const result = await userService.checkPassword(userEmail, password);
+    res.status(200).json({res : result})
+  }
+  catch(err){
+    next(err)
+  }
 })
 
 export { userRouter };
