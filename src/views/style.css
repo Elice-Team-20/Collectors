@@ -50,6 +50,66 @@ a {
 .navContainer #navMenuList li {
   margin-left: 5vh;
 }
+
+.navContainer .hamburger {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .navContainer #navMenuList {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+    top: 50px;
+    right: 3rem;
+    z-index: 10001;
+
+    font-weight: bold;
+    font-size: 1.5rem;
+
+    padding: 1rem;
+    opacity: 0.75;
+  }
+
+  .navContainer #navMenuList.hidden {
+    visibility: hidden;
+  }
+  .navContainer #navMenuList li {
+    margin-left: 0;
+    margin-top: 1.25rem;
+  }
+
+  .navContainer .hamburger {
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+  }
+
+  .hamburger span {
+    display: inline-block;
+    position: fixed;
+    width: 30px;
+    min-width: 20px;
+    height: 2px;
+    background-color: #fff;
+  }
+
+  .hamburger span:nth-child(1) {
+    top: 1.25rem;
+    right: 3rem;
+  }
+  .hamburger span:nth-child(2) {
+    top: 2rem;
+    right: 3rem;
+  }
+  .hamburger span:nth-child(3) {
+    top: 2.75rem;
+    right: 3rem;
+  }
+}
+
 /* 
 .navContainer #navMenuList #logoutBtn{
   border-style: none;
