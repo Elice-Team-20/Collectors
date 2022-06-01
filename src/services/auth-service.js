@@ -34,14 +34,14 @@ class KakaoOAuthService{
       // 토큰이 있다면 정보 달라고 요청
       if("access_token" in kakaoTokentRequestJson){
         const { access_token } = kakaoTokentRequestJson;
-        const userReuest = await fetch('https://kapi.kakao.com/v2/user/me', {
+        const userReueslt = await fetch('https://kapi.kakao.com/v2/user/me', {
             headers: {
               Authorization : `Bearer ${access_token}`,
               'Content-type': 'application/json',
             }
           })
-        const userReuestJson = await userReuest.json()
-        return userReuestJson
+        const userReuesltJson = await userReueslt.json()
+        return userReuesltJson
       }
       else{
         throw new Error( "토큰이 없습니다." )
@@ -50,7 +50,7 @@ class KakaoOAuthService{
   // 회원인지 검사 하는 함수
   async checkMember (userInfo) {
     const{email} = userInfo.kakao_account;
-    const getDBEmail = this.userService.getUserByEmail(email);
+    const getDBEmail = await this.userService.getUserByEmail(email);
     return getDBEmail;
   }
 
@@ -61,7 +61,7 @@ class KakaoOAuthService{
     const userData = {
       email: email,
       fullName: nickname,
-      password: Math.floor(Math.random() * 100000000).toString(),
+      password: "kakao",
     }
     return await this.userService.addUser(userData);
   }

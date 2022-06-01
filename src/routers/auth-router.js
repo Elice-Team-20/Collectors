@@ -35,12 +35,14 @@ authRouter.get('/kakao/finish', async(req, res, next) => {
     //회원정보가 db에 없으면
     if(!isthereDB){
       //회원정보 등록
+      console.log(isthereDB)
       user = await kakaoOAuthService.signUp(userInfo);
     }
     //있으면
     else{
       const { email } = userInfo.kakao_account;
       //기존회원이면 회원 정보 찾아옴
+      console.log(`else in : ${email}` )
       user = await kakaoOAuthService.getUserByEmail(email)
     }
 
