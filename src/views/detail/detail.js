@@ -82,7 +82,7 @@ async function insertItemDetail(id) {
   itemLeftImgDiv.innerHTML = `<img src="${imgUrl}" alt="item-image" />`;
   itemNameDiv.innerText = itemName;
   itemCompanyDiv.innerText = manufacturingCompany;
-  itemPriceDiv.innerText = price;
+  itemPriceDiv.innerText = `${addCommas(price)}원`;
   itemExplanationDiv.innerText = mainExplanation;
 
   addRecentItem(id, itemName, imgUrl);

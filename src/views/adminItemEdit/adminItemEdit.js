@@ -16,7 +16,7 @@ let isImgChanged = false; // 이미지 리소스 낭비 방지
 // const queryString = window.location.search;
 const id = new URLSearchParams(window.location.search).get('id');
 console.log(id);
-const categoryMap = { hero: 1, villain: 2 };
+const categoryMap = { 히어로: 1, 빌런: 2 };
 // 요소(element), input 혹은 상수
 await addAllElements();
 await addAllEvents();
@@ -161,7 +161,7 @@ async function handleRegisterItemBtn(e) {
     formData.append('itemName', itemNameInput.value);
     formData.append(
       'category',
-      categorySelector.options[categorySelector.selectedIndex].value,
+      categorySelector.options[categorySelector.selectedIndex].text,
     );
     formData.append('manufacturingCompany', companyInput.value);
     formData.append('summary', summaryInput.value);

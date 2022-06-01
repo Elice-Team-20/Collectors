@@ -32,13 +32,14 @@ async function insertItemElement() {
   });
   const items = await response.json();
   console.log(items);
-  items.item.forEach(({ _id, itemName, summary, imgUrl, price }) => {
-    console.log(_id);
-    // isDeleted = true이면 deleted 클래스 넣기
-    ITEMLIST.insertAdjacentHTML(
-      'beforeend',
-      `
-      <a href="/item/?id=${_id}" >
+  items.item.forEach(
+    ({ _id, itemName, summary, imgUrl, price, deletedFlag }) => {
+      console.log(_id);
+      // isDeleted = true이면 deleted 클래스 넣기
+      ITEMLIST.insertAdjacentHTML(
+        'beforeend',
+        `
+      <a href="/item/?id=${_id}" class="${deletedFlag ? 'deleted' : ''}">
         <div class="item">
           <div class="imgBox">
             <figure>
@@ -57,6 +58,7 @@ async function insertItemElement() {
         </div>
       </a>
     `,
-    );
-  });
+      );
+    },
+  );
 }
