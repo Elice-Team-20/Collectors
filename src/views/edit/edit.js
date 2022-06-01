@@ -1,8 +1,8 @@
 import * as Api from '/api.js';
 import { selectElement } from '/useful-functions.js';
 
-import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
-import { addFooterElements } from '../components/Footer/event.js';
+import { addNavEventListeners, addNavElements } from '../../components/Nav/event.js';
+import { addFooterElements } from '../../components/Footer/event.js';
 
 // 요소(element), input 혹은 상수
 const submitButton = selectElement('#submitButton');
@@ -16,7 +16,6 @@ const phoneNumberInput = selectElement('#phoneNumberInput');
 const postcode = selectElement('#postcode');
 const address = selectElement('#address');
 const detailAddress = selectElement('#detailAddress');
-const extraAddress = selectElement('#extraAddress');
 
 addAllElements();
 addAllEvents();
@@ -26,13 +25,13 @@ function addAllEvents() {
   addNavEventListeners();
   addressButton.addEventListener('click', handleAddress);
   submitButton.addEventListener('click', updateUserData);
+  currentPasswordInput.addEventListener('change', checkCurrentPassword);
 }
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
   addNavElements('Edit');
   addFooterElements();
-
   getUserDataToInput();
 }
 
@@ -41,15 +40,6 @@ function handleAddress() {
     oncomplete: function (data) {
       let addr = ''; // 주소 변수
       let extraAddr = ''; // 참고항목 변수
-
-      //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-      if (data.userSelectedType === 'R') {
-        // 사용자가 도로명 주소를 선택했을 경우
-        addr = data.roadAddress;
-      } else {
-        // 사용자가 지번 주소를 선택했을 경우(J)
-        addr = data.jibunAddress;
-      }
 
       // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
       if (data.userSelectedType === 'R') {
@@ -83,7 +73,7 @@ function handleAddress() {
 
 // 유저 데이터 삽입하기
 async function getUserDataToInput() {
-  // user 데이터 가져오기
+  // user 아이디 가져오기
   const id = await Api.get(`/api/user/id`);
 
   // 유저 데이터 가져오기
@@ -105,8 +95,50 @@ async function getUserDataToInput() {
   }
 }
 
+// 현재 비밀번호 입력 시 수정 가능
+async function checkCurrentPassword() {
+  // 현재 이메일과 입력 비밀번호
+  const currentPassword = currentPasswordInput.value;
+  const userEmail = emailInput.innerHTML;
+
+  // 유저 비밀번호 확인
+  const response = await fetch(`/api/user/checkPassword/${userEmail}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      userEmail: userEmail,
+    },
+    body: JSON.stringify({ password: currentPassword }),
+  });
+
+  const isMatched = response.json();
+
+  // 비밀번호가 일치하지 않을 때
+  if (!isMatched) {
+    alert('현재 비밀번호를 정확히 입력하세요.');
+    return;
+  }
+
+  // 비밀번호가 일치할 때
+  fullNameInput.disabled = false;
+  newPasswordInput.disabled = false;
+  passwordConfirmInput.disabled = false;
+  addressButton.disabled = false;
+  postcode.disabled = false;
+  address.disabled = false;
+  detailAddress.disabled = false;
+  phoneNumberInput.disabled = false;
+  submitButton.disabled = false;
+}
+
 // 유저 데이터 수정하기
 async function updateUserData(e) {
+  // 확인하기
+  const isConfirmed = confirm('정말로 수정하시겠습니까?');
+
+  if (!isConfirmed) return;
+
   e.preventDefault();
   // 유저 아이디 가져오기
   const id = await Api.get(`/api/user/id`);
@@ -122,50 +154,55 @@ async function updateUserData(e) {
     return;
   }
 
-  // 비밀번호 확인
-  if (newPassword !== newPasswordConfirm) {
-    alert('비밀번호가 일치하지 않습니다.');
-    return;
-  }
-  if (newPassword.length < 8) {
-    alert('비밀번호는 8자 이상이어야 합니다.');
-    return;
-  }
-
   // 전화번호 확인
   if (phoneNumberInput.value.length < 10) {
     alert('전화번호를 정확히 입력해주세요.');
     return;
   }
 
-  const userData = {
-    fullName: fullNameInput.value,
-    phoneNumber: phoneNumberInput.value,
-    currentPassword: currentPassword,
-    password: newPassword,
-    address: {
-      postalCode: postcode.value,
-      address1: address.value,
-      address2: detailAddress.value,
-    },
-  };
-
-  // 유저 데이터 수정하기
-  const res = await fetch(`/api/user/users/${id}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+  // 비밀번호 입력 안할 시
+  if (!newPassword) {
+    const userData = {
+      fullName: fullNameInput.value,
+      phoneNumber: phoneNumberInput.value,
       currentPassword: currentPassword,
-    },
-    body: JSON.stringify(userData),
-  });
+      address: {
+        postalCode: postcode.value,
+        address1: address.value,
+        address2: detailAddress.value,
+      },
+    };
 
-  if (!res.ok) {
-    const errorContent = await res.json();
-    const { reason } = errorContent;
+    // 유저 데이터 수정하기
+    await Api.patch(`/api/user/users/${id}`, '', userData);
+  } else {
+    // 비밀번호 입력 시
+    // 비밀번호 확인
+    if (newPassword !== newPasswordConfirm) {
+      alert('비밀번호가 일치하지 않습니다.');
+      return;
+    }
 
-    alert(reason);
-    throw new Error(reason);
+    if (newPassword.length < 8) {
+      alert('비밀번호는 8자 이상이어야 합니다.');
+      return;
+    }
+
+    const userData = {
+      fullName: fullNameInput.value,
+      phoneNumber: phoneNumberInput.value,
+      currentPassword: currentPassword,
+      password: newPassword,
+      address: {
+        postalCode: postcode.value,
+        address1: address.value,
+        address2: detailAddress.value,
+      },
+    };
+
+    // 유저 데이터 수정하기
+    await Api.patch(`/api/user/users/${id}`, '', userData);
   }
+
+  alert('수정되었습니다.');
 }

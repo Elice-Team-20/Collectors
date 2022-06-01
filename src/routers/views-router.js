@@ -13,14 +13,14 @@ viewsRouter.use('/cart', serveStatic('cart'));
 viewsRouter.use('/items', serveStatic('list'));
 viewsRouter.use('/item', serveStatic('detail'));
 viewsRouter.use('/user', serveStatic('user'));
-viewsRouter.use('/edit', serveStatic('edit'));
-viewsRouter.use('/orderlist', serveStatic('orderlist'));
+viewsRouter.use('/user/edit', serveStatic('edit'));
+viewsRouter.use('/user/orderlist', serveStatic('orderlist'));
+viewsRouter.use('/user/resign', serveStatic('resign'));
 viewsRouter.use('/admin', serveStatic('admin'));
 viewsRouter.use('/admin/register', serveStatic('adminRegister'));
 viewsRouter.use('/admin/manage', serveStatic('adminManage'));
 viewsRouter.use('/admin/manage/item', serveStatic('adminItemEdit'));
 viewsRouter.use('/admin/order_list', serveStatic('adminOrderList'));
-viewsRouter.use('/signout', serveStatic('signout'));
 viewsRouter.use('/order', serveStatic('order'));
 viewsRouter.use('/order/complete', serveStatic('orderComplete'));
 
