@@ -81,10 +81,7 @@ function addRecentItem(itemId, itemName, imgUrl) {
   };
 
   // 최근 본 상품이 있는지 확인
-  let recentItemList = JSON.parse(localStorage.getItem('recentItem'));
-
-  // 없으면 새로 생성
-  if (!recentItemList) recentItemList = [];
+  let recentItemList = JSON.parse(localStorage.getItem('recentItem')) || [];
 
   // 동일한 상품이 있으면 추가하지 않음
   let isItemExist = false;

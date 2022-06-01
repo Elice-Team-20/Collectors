@@ -77,7 +77,7 @@ window.addEventListener('scroll', () => {
 
 // 최근 본 상품 추가하기
 function addRecentItem() {
-  let recentItems = JSON.parse(localStorage.getItem('recentItem'));
+  let recentItems = JSON.parse(localStorage.getItem('recentItem')) || [];
 
   if (!recentItems) return;
 
