@@ -8,6 +8,7 @@ import {
   addNavElements,
 } from '../../components/Nav/event.js';
 import { addFooterElements } from '../../components/Footer/event.js';
+import { checkUserStatus } from '../components/Nav/event.js';
 
 // url에서 id 값 추출해오기
 // const ITEMDETAIL = document.querySelector('.item-detail');
@@ -19,7 +20,7 @@ const itemCompanyDiv = document.querySelector('#item-company');
 const itemPriceDiv = document.querySelector('#item-price');
 const itemExplanationDiv = document.querySelector('#item-explanation');
 const cartBtn = document.querySelector('#addCartBtn');
-const orderBtn = document.querySelector('#addCartBtn');
+const orderBtn = document.querySelector('#orderBtn');
 // console.log(item);
 // navigation, footer 컴포넌트 넣기
 await addAllElements();
@@ -35,6 +36,19 @@ async function addAllElements() {
 async function addAllEvents() {
   addNavEventListeners();
   cartBtn.addEventListener('click', addCartBtnHandler);
+  orderBtn.addEventListener('click', handleOrderBtn);
+}
+
+function handleOrderBtn() {
+  if (checkUserStatus()) {
+    let order = [[id, 1]]; // 아이템 하나
+    console.log('order', order);
+    localStorage.setItem('order', JSON.stringify(order));
+    window.location.href = '/order';
+  } else {
+    alert('로그인 정보가 없습니다. 로그인 후에 주문이 가능합니다.');
+    window.location.href = '/login';
+  }
 }
 
 // 카트 추가

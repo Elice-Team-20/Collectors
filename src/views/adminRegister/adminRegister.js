@@ -20,7 +20,7 @@ await addAllEvents();
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
   addNavElements('User');
-  addItemInputFormElement();
+  addItemInputFormElement('상품 등록하기');
   addFooterElements();
 }
 
@@ -101,7 +101,7 @@ async function handleRegisterItemBtn(e) {
   if (tags.length === 0) {
     return alert('태그를 적어도 하나 추가해주세요.');
   }
-
+  if (!confirm('상품을 등록하시겠습니까?')) return;
   try {
     let formData = new FormData();
     formData.append('itemName', itemNameInput.value);

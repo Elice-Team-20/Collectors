@@ -7,11 +7,11 @@ import {
   checkUserStatus,
 } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
-import {
-  addOrderNavElements,
-  addOrderInfoElements,
-} from '../components/Order/event.js';
-import { OrderInfo } from '../components/Order/index.js';
+// import {
+//   addOrderNavElements,
+//   addOrderInfoElements,
+// } from '../components/Order/event.js';
+// import { OrderInfo } from '../components/Order/index.js';
 
 const orderBtn = document.querySelector('#order-btn');
 const cartItenWrapperDiv = document.querySelector('#cart-item-wrapper');
@@ -61,8 +61,7 @@ function addAllElements() {
   addNavElements();
   addFooterElements();
 
-  addOrderNavElements('Cart');
-  // addOrderInfoElements("Cart");
+  // addOrderNavElements('Cart');
 
   addCartItemsElements();
   addOrderInfoElement();
