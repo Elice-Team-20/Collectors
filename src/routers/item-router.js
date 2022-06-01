@@ -10,6 +10,9 @@ itemRouter.get('/', async (req, res) => {
   res.json({ item });
 });
 
+// 페이지 네이션
+itemRouter.get('/page?page')
+
 // 매진임박인 아이템(5개 이하)을 조회하는 라우터
 itemRouter.get('/soldOut', async (req, res, next) => {
   try {
