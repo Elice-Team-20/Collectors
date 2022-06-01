@@ -25,13 +25,13 @@ function addAllEvents() {
   addNavEventListeners();
   addressButton.addEventListener('click', handleAddress);
   submitButton.addEventListener('click', updateUserData);
+  currentPasswordInput.addEventListener('change', checkCurrentPassword);
 }
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
   addNavElements('Edit');
   addFooterElements();
-  currentPasswordInput.addEventListener('change', checkCurrentPassword);
   getUserDataToInput();
 }
 
@@ -102,25 +102,43 @@ async function checkCurrentPassword() {
   const userEmail = emailInput.innerHTML;
 
   // 유저 비밀번호 확인
-  const isMatched = await Api.get(`/api/user/checkPassword/${userEmail}`);
+  const response = await fetch(`/api/user/checkPassword/${userEmail}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      userEmail: userEmail,
+    },
+    body: JSON.stringify({ password: currentPassword }),
+  });
+
+  const isMatched = response.json();
 
   // 비밀번호가 일치하지 않을 때
   if (!isMatched) {
-    alert('비밀번호를 정확히 입력하세요.');
+    alert('현재 비밀번호를 정확히 입력하세요.');
     return;
   }
+
   // 비밀번호가 일치할 때
   fullNameInput.disabled = false;
   newPasswordInput.disabled = false;
   passwordConfirmInput.disabled = false;
-  phoneNumberInput.disabled = false;
+  addressButton.disabled = false;
   postcode.disabled = false;
   address.disabled = false;
   detailAddress.disabled = false;
+  phoneNumberInput.disabled = false;
+  submitButton.disabled = false;
 }
 
 // 유저 데이터 수정하기
 async function updateUserData(e) {
+  // 확인하기
+  const isConfirmed = confirm('정말로 수정하시겠습니까?');
+
+  if (!isConfirmed) return;
+
   e.preventDefault();
   // 유저 아이디 가져오기
   const id = await Api.get(`/api/user/id`);
