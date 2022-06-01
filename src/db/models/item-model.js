@@ -54,13 +54,15 @@ export class ItemModel {
   async searchItems(keyword) {
     // 1. 아이템 이름에 있는지 검색
     // 2. 해쉬태그에 있는지 검색
-    // 3. 요약 설명에 있는지 검색
-    // 4. 메인 설명에 있는지 검색
-    // 아래로 갈수록 관련없는 아이템이 나와야 함.
     // 중복되면 안됨.
     // isDelete가 fasle 이어야 함.
 
     const itemArray = [];
+
+    // 검색 키워드가 없을 경우 빈 배열 반환
+    if (!keyword){
+      return itemArray;
+    }
     
     // 1. 아이템 이름 검색
     const findByName = await Item.find({itemName: {$regex: `.*${keyword}.*`}});
@@ -69,29 +71,12 @@ export class ItemModel {
     });
 
     // 2. 해쉬태그 검색
-    // const findByHashTag = await Item.find({itemName: keyword});
     const findByHashTag = await Item.find({hashTag: {$regex: `.*${keyword}.*`}})
     findByHashTag.forEach(data => {
       if(data.deleteFlag == false) itemArray.push(data)
     });
 
-    // 3. 요약 설명에 있는지 검색
-    const findBySummary = await Item.find({summary: {$regex: `.*${keyword}.*`}});
-    findBySummary.forEach(data => {
-      if(data.deleteFlag == false) itemArray.push(data)
-    });
-
-    // 4. 메인 설명에 있는지
-    const findByMain = await Item.find({summary: {$regex: `.*${keyword}.*`}});
-    findByMain.forEach(data => {
-      if(data.deleteFlag == false) itemArray.push(data)
-    });
-
-    itemArray.push(findByName);
-    itemArray.push(findByHashTag);
-    itemArray.push(findBySummary);
-    itemArray.push(findByMain);
-
+    // lodash 라이브러리 : 중복되는 id를 가지는 요소들 제거
     const result = lodash.uniqBy(itemArray, "id")
 
     return result;
