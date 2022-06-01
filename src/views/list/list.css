@@ -1,8 +1,42 @@
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+/* Search Bar 디자인 */
+#searchBar {
+  display: grid;
+  grid-template-columns: 10fr 1fr;
+  column-gap: 5%;
+
+  width: 75%;
+  height: 5vh;
+
+  margin-top: 2vh;
+}
+#searchBar button i {
+  background-color: #f01e21;
+}
+#searchBar .input {
+  width: 100%;
+  height: 5vh;
+  padding-left: 2%;
+
+  background: #ffffff;
+  border: 1px solid #c5c5c5;
+  box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  outline-style: none;
+
+  color: black;
+}
+/*  */
 .item-list {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
-  padding: 50px 10% 20px;
+  padding: 20px 10%;
 }
 .item-list a.deleted {
   display: none;
