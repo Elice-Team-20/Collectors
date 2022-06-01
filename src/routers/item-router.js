@@ -30,6 +30,17 @@ itemRouter.get('/newItem', async (req, res, next) => {
   }
 })
 
+// 아이템 검색 라우터
+itemRouter.get('/search', async (req, res, next) => {
+  try{
+    const keyword = req.query.query;
+    const items = await itemService.searchItems(keyword);
+    res.json(items);
+  }catch(error){
+    next(error);
+  }
+})
+
 // s3 에 이미지 업로드후 req 에 링크 넣고 아이템 db에 등록
 itemRouter.post('/', upload.single('file'), async (req, res) => {
   const {

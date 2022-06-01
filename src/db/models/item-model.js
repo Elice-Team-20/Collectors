@@ -1,5 +1,6 @@
 import { model } from 'mongoose';
 import { ItemSchema } from '../schemas/item-schema';
+import lodash from 'lodash';
 
 const Item = model('items', ItemSchema);
 
@@ -47,6 +48,53 @@ export class ItemModel {
   async findNewItems() {
     const items = await Item.find({}).sort({ createdAt: -1 }).limit(6);
     return items;
+  }
+  
+  // 디비에서 키워드 검색
+  async searchItems(keyword) {
+    // 1. 아이템 이름에 있는지 검색
+    // 2. 해쉬태그에 있는지 검색
+    // 3. 요약 설명에 있는지 검색
+    // 4. 메인 설명에 있는지 검색
+    // 아래로 갈수록 관련없는 아이템이 나와야 함.
+    // 중복되면 안됨.
+    // isDelete가 fasle 이어야 함.
+
+    const itemArray = [];
+    
+    // 1. 아이템 이름 검색
+    const findByName = await Item.find({itemName: {$regex: `.*${keyword}.*`}});
+    findByName.forEach(data => {
+      if(data.deleteFlag == false) itemArray.push(data)
+    });
+
+    // 2. 해쉬태그 검색
+    // const findByHashTag = await Item.find({itemName: keyword});
+    const findByHashTag = await Item.find({hashTag: {$regex: `.*${keyword}.*`}})
+    findByHashTag.forEach(data => {
+      if(data.deleteFlag == false) itemArray.push(data)
+    });
+
+    // 3. 요약 설명에 있는지 검색
+    const findBySummary = await Item.find({summary: {$regex: `.*${keyword}.*`}});
+    findBySummary.forEach(data => {
+      if(data.deleteFlag == false) itemArray.push(data)
+    });
+
+    // 4. 메인 설명에 있는지
+    const findByMain = await Item.find({summary: {$regex: `.*${keyword}.*`}});
+    findByMain.forEach(data => {
+      if(data.deleteFlag == false) itemArray.push(data)
+    });
+
+    itemArray.push(findByName);
+    itemArray.push(findByHashTag);
+    itemArray.push(findBySummary);
+    itemArray.push(findByMain);
+
+    const result = lodash.uniqBy(itemArray, "id")
+
+    return result;
   }
 
   async create(itemInfo) {
