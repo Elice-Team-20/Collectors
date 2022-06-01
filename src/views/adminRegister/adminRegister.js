@@ -107,7 +107,7 @@ async function handleRegisterItemBtn(e) {
     formData.append('itemName', itemNameInput.value);
     formData.append(
       'category',
-      categorySelector.options[categorySelector.selectedIndex].value,
+      categorySelector.options[categorySelector.selectedIndex].text,
     );
     formData.append('manufacturingCompany', companyInput.value);
     formData.append('summary', summaryInput.value);
@@ -119,7 +119,6 @@ async function handleRegisterItemBtn(e) {
 
     const res = await Api.postFromData('/api/item', formData);
     alert(`정상적으로 상품이 등록되었습니다.`);
-
     // 관리자 페이지로 이동
     window.location.href = '/admin';
   } catch (err) {
