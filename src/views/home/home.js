@@ -125,6 +125,7 @@ async function getCategoryName() {
 
   return categoryData.map(({ name }) => name);
 }
+
 // 카테고리 메뉴 추가하기
 async function addCategoryName() {
   const categoryNames = await getCategoryName();
