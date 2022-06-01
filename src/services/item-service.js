@@ -52,8 +52,15 @@ class ItemService {
     return shuffledItems;
   }
 
+  // 신상품 조회 함수
   async getNewItems() {
     const items = await this.itemModel.findNewItems();
+    return items;
+  }
+
+  // 주어진 키워드로 검색
+  async searchItems(keyword) {
+    const items = await this.itemModel.searchItems(keyword);
     return items;
   }
 
