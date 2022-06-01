@@ -35,28 +35,25 @@ authRouter.get('/kakao/finish', async(req, res, next) => {
     //회원정보가 db에 없으면
     if(!isthereDB){
       //회원정보 등록
-      console.log(isthereDB)
       user = await kakaoOAuthService.signUp(userInfo);
     }
     //있으면
     else{
       const { email } = userInfo.kakao_account;
       //기존회원이면 회원 정보 찾아옴
-      console.log(`else in : ${email}` )
       user = await kakaoOAuthService.getUserByEmail(email)
     }
-
     //만약 유저정보가 등록도 안되고 db에서 찾는것도 안되면 다음 오류 발생
     if(!user){
       res.status(401).send("유저 정보가 할당이 안됩니다 양식을 확인하세요")
-
-    // 토큰 생성
-    const  token = await kakaoOAuthService.getToken(user)
-    res.status(200).json(token)
     }
-    }catch(err){
-    next(err)
-  }
+    // 토큰 생성
+      const token = await kakaoOAuthService.getToken(user)
+      res.status(200).json(token)
+    }
+    catch(err){
+      next(err)
+    }
 });
 
 authRouter.get('/naver', passport.authenticate('naver', { authType: 'reprompt' }));
