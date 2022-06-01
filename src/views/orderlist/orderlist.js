@@ -1,9 +1,12 @@
-import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
-import { addFooterElements } from '../components/Footer/event.js';
+import * as Api from '/api.js';
+import { selectElement } from '/useful-functions.js';
+
+import { addNavEventListeners, addNavElements } from '../../components/Nav/event.js';
+import { addFooterElements } from '../../components/Footer/event.js';
 
 // 요소(element), input 혹은 상수
 const token = localStorage.getItem('token');
-const orderInfo = document.querySelector('.order-info');
+const orderInfo = selectElement('.order-info');
 
 addAllElements();
 addAllEvents();
@@ -22,28 +25,29 @@ function addAllEvents() {
 }
 
 async function getDataToInput() {
-  // 주문 데이터 가져오기
-  const orderInfos = await findOrders();
+  try {
+    // 주문 데이터 가져오기
+    const orderInfos = await findOrders();
 
-  // 주문 데이터 번호
-  let number = 0;
+    // 주문 데이터 번호
+    let number = 0;
 
-  // 주문 데이터 HTML 추가하기
-  orderInfos.forEach(({ orderId, itemList, orderDate, status }) => {
-    // 주문 아이템 데이터
-    const items = itemList
-      .map(({ itemName, count }) => {
-        return `${itemName} / ${count}개`;
-      })
-      .join('<br>');
+    // 주문 데이터 HTML 추가하기
+    orderInfos.forEach(({ orderId, itemList, orderDate, status }) => {
+      // 주문 아이템 데이터
+      const items = itemList
+        .map(({ itemName, count }) => {
+          return `${itemName} / ${count}개`;
+        })
+        .join('<br>');
 
-    // 주문 데이터 번호 추가
-    number += 1;
+      // 주문 데이터 번호 추가
+      number += 1;
 
-    // 주문 데이터 HTML 추가
-    orderInfo.insertAdjacentHTML(
-      'beforeend',
-      `
+      // 주문 데이터 HTML 추가
+      orderInfo.insertAdjacentHTML(
+        'beforeend',
+        `
     <div class="order-list">
       <div class="order-number">${number}</div>
       <div class="order-date">${orderDate}</div>
@@ -52,44 +56,50 @@ async function getDataToInput() {
       <button class="cancel" id="cancelButton" name="${orderId}">주문 취소</button>
     </div>
     `
-    );
-  });
+      );
+    });
 
-  // 주문 취소 버튼 이벤트 추가
-  const cancelButton = document.querySelectorAll('.cancel');
-  cancelButton.forEach((node) => {
-    node.addEventListener('click', handleCancelButton);
-  });
+    // 주문 취소 버튼 이벤트 추가
+    const cancelButton = document.querySelectorAll('.cancel');
+    cancelButton.forEach((node) => {
+      node.addEventListener('click', handleCancelButton);
+    });
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
 }
 
 async function findOrders() {
   // 주문 데이터 가져오기
-  const response = await fetch(`/api/order/list`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const orders = await response.json();
-  return orders;
+  try {
+    const orderDataList = await Api.get(`/api/order/list`);
+    return orderDataList;
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
 }
 
 async function handleCancelButton() {
-  // 주문 취소 시 필요 데이터
-  const id = this.getAttribute('name');
-  const data = JSON.stringify({ orderId: id });
+  try {
+    const isConfirm = confirm('주문을 취소하시겠습니까?');
 
-  // 주문 취소
-  await fetch('/api/order/delete', {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: data,
-  });
+    if (!isConfirm) return;
 
-  // 새로고침
-  window.location.reload();
+    // 주문 취소 시 필요 데이터
+    const id = this.getAttribute('name');
+    const data = { orderId: id };
+
+    // 주문 취소
+    await Api.delete('/api/order/delete', '', data);
+
+    alert('주문 취소가 완료되었습니다.');
+
+    // 새로고침
+    window.location.reload();
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
 }
