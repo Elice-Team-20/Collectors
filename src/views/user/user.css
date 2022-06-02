@@ -6,7 +6,7 @@ section {
 }
 
 #content {
-  width: 60%;
+  width: 40%;
   margin-top: 5vh;
 }
 
@@ -40,11 +40,25 @@ section {
 
   padding-left: 10%;
 
-  font-size: 30px;
+  font-size: 1.875rem;
 }
 
 .menu-container .menu i {
   background-color: #f01e21;
   padding-right: 10%;
   font-size: 45px;
+}
+
+@media screen and (max-width: 768px) {
+  #content {
+    width: 100%;
+  }
+
+  .menu-container .menu {
+    width: 90vw;
+  }
+
+  .menu-container .menu i {
+    font-size: 20px;
+  }
 }
