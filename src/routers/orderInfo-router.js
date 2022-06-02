@@ -123,4 +123,21 @@ orderInfoRouter.delete(
   },
 );
 
+orderInfoRouter.post(
+  '/update/status',
+  loginRequired,
+  adminRequired,
+  async (req, res, next) => {
+    try {
+      const { orderId } = req.body;
+      const updateStateResult = await orderInfoService.updateInfo(orderId, {
+        status: '배송 완료',
+      });
+      return res.status(201).json({ updateStateResult });
+    } catch (er) {
+      next(er);
+    }
+  },
+);
+
 export { orderInfoRouter };
