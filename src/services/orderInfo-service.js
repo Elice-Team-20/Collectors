@@ -157,10 +157,20 @@ class OrderinfoService {
       return deleteResult;
     }
   }
-  async addStok(orderId) {
+  async addStock(orderId) {
     // 현재 아이탬  수량 긁어오기
-    // 들어온 주문정보에서 수량 긁어오기
-    // 수량정보 갱신하기
+    const currentOrder = await this.getOrderInfoById(orderId);
+    const orderItemList = currentOrder.itemList;
+    orderItemList.forEach(async (data) => {
+      // 들어온 주문정보에서 수량 긁어오고 마이너스 계산
+      const itemInfo = await itemService.getItembyObId(data.itemId);
+      const updateStock = itemInfo.stocks + data.count;
+      // 수량정보 갱신하기
+      await itemService.updateItem(
+        { _id: data.itemId },
+        { stocks: updateStock },
+      );
+    });
   }
 }
 // 싱글톤
