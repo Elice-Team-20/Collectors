@@ -1,7 +1,10 @@
 import * as Api from '/api.js';
 import { selectElement } from '/useful-functions.js';
 
-import { addNavEventListeners, addNavElements } from '../../components/Nav/event.js';
+import {
+  addNavEventListeners,
+  addNavElements,
+} from '../../components/Nav/event.js';
 import { addFooterElements } from '../../components/Footer/event.js';
 
 // 요소(element), input 혹은 상수
@@ -44,6 +47,9 @@ async function getDataToInput() {
       // 주문 데이터 번호 추가
       number += 1;
 
+      // 주문 상태 확인
+      let isShipped = status === '배송 완료';
+
       // 주문 데이터 HTML 추가
       orderInfo.insertAdjacentHTML(
         'beforeend',
@@ -52,15 +58,17 @@ async function getDataToInput() {
       <div class="order-number">${number}</div>
       <div class="order-date">${orderDate}</div>
       <div class="order-data">${items}</div>
-      <div class="order-status">${status}</div>
-      <button class="cancel" id="cancelButton" name="${orderId}">주문 취소</button>
+      <div class="order-status ${isShipped ? 'shipped' : ''}">${status}</div>
+      <button class="cancel-btn main-btn" id="cancelButton" name="${orderId}"${
+          isShipped ? 'disabled' : ''
+        }>주문 취소</button>
     </div>
-    `
+    `,
       );
     });
 
     // 주문 취소 버튼 이벤트 추가
-    const cancelButton = document.querySelectorAll('.cancel');
+    const cancelButton = document.querySelectorAll('.cancel-btn');
     cancelButton.forEach((node) => {
       node.addEventListener('click', handleCancelButton);
     });

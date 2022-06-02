@@ -1,6 +1,8 @@
 section {
   display: flex;
   justify-content: center;
+
+  min-height: 90vh;
 }
 
 .order-container {
@@ -42,21 +44,17 @@ section {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-#cancelButton {
-  width: 75%;
-  height: 4vh;
-  border-color: #f01e21;
-  border-radius: 7px;
-  background-color: #f01e21;
-  color: #ffffff;
-  font-weight: bold;
-  text-align: center;
+.order-list .shipped {
+  color: #2cc236;
 }
-
-#cancelButton:hover {
-  border-color: #e7484b;
-  background-color: #e7484b;
+.order-list .main-btn {
+  width: 75%;
+}
+.cancel-btn:disabled,
+.cancel-btn:disabled:hover {
+  background-color: dimgray;
+  border: 1px;
+  color: white;
 }
 
 @media all and (max-width: 768px) {

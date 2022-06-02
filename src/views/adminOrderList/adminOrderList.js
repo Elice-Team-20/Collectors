@@ -33,7 +33,7 @@ async function addAllElements() {
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   addNavEventListeners();
-  document.querySelectorAll('.cancle-btn').forEach((node) => {
+  document.querySelectorAll('.cancel-btn').forEach((node) => {
     node.addEventListener('click', handleCancelBtn);
   });
   document.querySelectorAll('.change-btn').forEach((node) => {
@@ -53,8 +53,7 @@ async function addOrderListElements() {
           return text + `<div>${itemName} / ${count}개</div>`;
         } else return text;
       }, ``);
-      let isShipped = false;
-      if (status === '배송 완료') isShipped = true;
+      let isShipped = status === '배송 완료';
       return (
         text +
         `
@@ -63,14 +62,19 @@ async function addOrderListElements() {
             <div class="order-date">${orderDate}</div>
             <div class="order-name ">${itemsDiv}</div>
             <div class="order-status ${
-              isShipped ? 'shipped' : 'notShipped'
+              isShipped ? 'shipped' : ''
             }">${status}</div>
-            <button class="main-btn change-btn" name="${_id}">
+            <button class="main-btn change-btn" name="${_id}" ${
+          isShipped ? 'disabled' : ''
+        }>
               상태 변경
             </button>
-            <button class="main-btn cancle-btn" name="${_id}">
+            <button class="main-btn cancel-btn" name="${_id}" ${
+          isShipped ? 'disabled' : ''
+        }>
               주문 취소
             </button>
+
           </div>
         `
       );
