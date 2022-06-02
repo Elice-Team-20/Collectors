@@ -20,18 +20,17 @@ window.onload = () => {
     return;
   }
 };
+const id = new URLSearchParams(window.location.search).get('id');
+
 let file;
 let tags = [];
 let isImgChanged = false; // 이미지 리소스 낭비 방지
-let categoryList = await getCategoryItems();
-console.log(categoryList);
-// const queryString = window.location.search;
-const id = new URLSearchParams(window.location.search).get('id');
-console.log(id);
+let categoryList = await getCategoryItems(); // 카테고리 정보 가져오기
+
 const categoryMap = categoryList.reduce((map, val, idx) => {
   map[val] = idx + 1;
   return map;
-}, {});
+}, {}); // 카테고리 인덱스화
 console.log(categoryMap);
 // 요소(element), input 혹은 상수
 await addAllElements();
@@ -97,7 +96,6 @@ async function addItemInputOriginElement() {
   console.log(hashTag[0]);
   hashTag[0].split(',').forEach((tag) => {
     tags.push(tag);
-    // tagListDiv.innerHTML += addTagElement(tag);
   });
   addTagElements(); // 태그 추가
 }

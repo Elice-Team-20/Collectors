@@ -4,7 +4,11 @@ import {
   addNavEventListeners,
   addNavElements,
 } from '../../components/Nav/event.js';
-import { addItemInputFormElement } from '../../components/Admin/event.js';
+import {
+  addItemInputFormElement,
+  addCategoryElements,
+  getCategoryItems,
+} from '../../components/Admin/event.js';
 import { addFooterElements } from '../../components/Footer/event.js';
 import { checkAdmin } from '../../useful-functions.js';
 
@@ -19,7 +23,11 @@ window.onload = () => {
 };
 let tags = []; //document.querySelectorAll('.tag-name');
 let file;
-
+let categoryList = await getCategoryItems(); // 카테고리 정보 가져오기
+const categoryMap = categoryList.reduce((map, val, idx) => {
+  map[val] = idx + 1;
+  return map;
+}, {}); // 카테고리 인덱스화
 // 요소(element), input 혹은 상수
 await addAllElements();
 await addAllEvents();
@@ -27,7 +35,9 @@ await addAllEvents();
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
   addNavElements('User');
-  addItemInputFormElement('상품 등록하기');
+  await addItemInputFormElement('상품 등록하기');
+  await addCategoryElements(categoryList);
+  // await addItemInputOriginElement();
   addFooterElements();
 }
 
@@ -44,10 +54,12 @@ async function addAllEvents() {
   document
     .querySelector('#imgFileInput')
     .addEventListener('change', handleImgFileInput);
+  document
+    .querySelector('#categorySelector')
+    .addEventListener('change', handleCategorySelect);
 }
 
 function handleImgFileInput(e) {
-  // e.select();
   const imgFileInput = document.querySelector('#imgFileInput');
   const imgFileBoxDiv = document.querySelector('#imgFileBox');
 
@@ -61,6 +73,22 @@ function handleImgFileInput(e) {
   fileReader.onload = (e) => {
     imgFileBoxDiv.innerHTML = `<img src=${fileReader.result} alt="item image"/>`;
   };
+}
+function handleCategorySelect() {
+  console.log(document.querySelector('#categoryTextInputDiv'));
+  if (this.selectedIndex === categoryList.length + 1) {
+    document.querySelector('#categoryTextInputDiv').innerHTML = `
+    <input
+      class="input"
+      id="categoryTextInput"
+      type="text"
+      placeholder="직접 추가하기"
+      autocomplete="off"
+    />
+  `;
+  } else {
+    document.querySelector('#categoryTextInputDiv').innerHTML = '';
+  }
 }
 function handleAddTagBtn(e) {
   e.preventDefault();
@@ -79,6 +107,7 @@ function addTagElements() {
   addTagDeleteEvents();
 }
 function addTagElement(value) {
+  //각 tag element 추가 함수
   return `<div class="tag-name">${value}</div>`;
 }
 function addTagDeleteEvents() {
@@ -130,12 +159,20 @@ async function handleRegisterItemBtn(e) {
   }
   if (!confirm('상품을 등록하시겠습니까?')) return;
   try {
+    // 카테고리 추가
+    let categoryName;
+    if (categorySelector.selectedIndex === categoryList.length + 1) {
+      // 직접 추가하기라면
+      categoryName = document.querySelector('#categoryTextInput').value;
+      await Api.post('/api/category', { categoryName }); // 카테고리 새로 생성
+    } else {
+      categoryName =
+        categorySelector.options[categorySelector.selectedIndex].text;
+    }
+    // 아이템 정보
     let formData = new FormData();
     formData.append('itemName', itemNameInput.value);
-    formData.append(
-      'category',
-      categorySelector.options[categorySelector.selectedIndex].text,
-    );
+    formData.append('category', categoryName);
     formData.append('manufacturingCompany', companyInput.value);
     formData.append('summary', summaryInput.value);
     formData.append('mainExplanation', mainExlainInput.value);
