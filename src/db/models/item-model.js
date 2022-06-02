@@ -42,7 +42,7 @@ export class ItemModel {
 
   // stocks가 5개 미만인 아이템 검색
   async findFiveOrLessThanItems() {
-    const items = await Item.find({ stocks: { $lte: 5 } }).exec();
+    const items = await Item.find({ stocks: { $lte: 5, $gt: 0 } }).exec();
     return items;
   }
 
