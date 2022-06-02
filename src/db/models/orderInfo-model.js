@@ -3,67 +3,61 @@ import OrderSchema from '../schemas/orderInfo-schema';
 
 const orderInfoModel = model('orderinfoes', OrderSchema);
 
-export class OrderModel{
+export class OrderModel {
   //r
-  async findByObjectId(objectId){
-    try{
-      const data = await orderInfoModel.findOne({_id: objectId}).exec();
-      if(!data){
-        return new Error({message: "데이터가 없습니다."});
+  async findByObjectId(objectId) {
+    try {
+      const data = await orderInfoModel.findOne({ _id: objectId }).exec();
+      if (!data) {
+        return new Error({ message: '데이터가 없습니다.' });
       }
       return data;
-    }
-    catch(er){
+    } catch (er) {
       return er;
     }
   }
 
-
-  async findAll(){
-    try{
+  async findAll() {
+    try {
       const data = await orderInfoModel.find({});
       return data;
-    }
-    catch(er){
-      console.log("에러 발생 개발자도구를 확인하세요");
+    } catch (er) {
+      console.log('에러 발생 개발자도구를 확인하세요');
       return er;
     }
   }
 
   //c
-  async create(orderinfo){
-    if (!orderinfo){
-      return new Error({message: "입력데이터가 없습니다 "})
+  async create(orderinfo) {
+    if (!orderinfo) {
+      return new Error({ message: '입력데이터가 없습니다 ' });
     }
-    try{
+    try {
       const createResult = await orderInfoModel.create(orderinfo);
       return createResult;
-    }
-    catch(er){
+    } catch (er) {
       return er;
     }
   }
 
-  async updateByObjectId(objectId, updateInfo){
+  async updateByObjectId(objectId, updateInfo) {
     const filter = { _id: objectId };
     const returnOption = { returnOriginal: false };
 
-    try{
-      await orderInfoModel.updateOne(filter, updateInfo,returnOption );
-      return await orderInfoModel.findOne(filter)
-    }
-    catch (er){
+    try {
+      await orderInfoModel.updateOne(filter, updateInfo, returnOption);
+      return await orderInfoModel.findOne(filter);
+    } catch (er) {
       return er;
     }
   }
 
   //D
-  async deleteByObjectId(objectId){
-    try{
-      const delResult = await orderInfoModel.deleteOne({ _id: objectId});
+  async deleteByObjectId(objectId) {
+    try {
+      const delResult = await orderInfoModel.deleteOne({ _id: objectId });
       return delResult;
-    }
-    catch(er){
+    } catch (er) {
       return er;
     }
   }

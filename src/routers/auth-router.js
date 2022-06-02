@@ -48,9 +48,7 @@ authRouter.get('/kakao/finish', async (req, res, next) => {
     }
     // 토큰 생성
     const token = await kakaoOAuthService.getToken(user);
-    // res.status(200).json(token);
-    res.cookie('token', token);
-    res.redirect('/');
+    res.status(200).json(token);
   } catch (err) {
     next(err);
   }
@@ -58,7 +56,7 @@ authRouter.get('/kakao/finish', async (req, res, next) => {
 
 authRouter.get(
   '/naver',
-  passport.authenticate('naver', { authType: 'reprompt' }),
+  passport.authenticate('naver', { authType: 'reprompt' })
 );
 
 authRouter.get(
@@ -66,18 +64,19 @@ authRouter.get(
   passport.authenticate('naver', { session: false }),
   (req, res, next) => {
     try {
+      // res.status(200).json({"token": req.user.token});
       const token = req.user.token;
       res.cookie('token', token);
       res.redirect('/');
     } catch (err) {
       next(err);
     }
-  },
+  }
 );
 
 authRouter.get(
   '/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }),
+  passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
 authRouter.get(
@@ -85,14 +84,14 @@ authRouter.get(
   passport.authenticate('google', { session: false }),
   (req, res, next) => {
     try {
-      // res.status(200).json({ token: req.user.token });
+      // res.status(200).json({"token": req.user.token});
       const token = req.user.token;
       res.cookie('token', token);
       res.redirect('/');
     } catch (err) {
       next(err);
     }
-  },
+  }
 );
 
 export { authRouter };
