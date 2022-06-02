@@ -3,13 +3,13 @@ import { selectElement, addCommas } from '/useful-functions.js';
 
 import { addNavEventListeners, addNavElements, handleHamburger } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
+import { addCategoryMenuElement, addCategoryMenuEventListeners } from '../components/Category/event.js';
 
 // 요소(element), input 혹은 상수
 const quickMenu = selectElement('#quick-menu');
+const category = selectElement('#category');
 const quickItems = selectElement('.quick-items');
 const soldoutContainer = selectElement('.soldout-container');
-const categoryButton = selectElement('.category-expand');
-const categoryList = selectElement('.category-list');
 
 userInit();
 addAllElements();
@@ -19,18 +19,16 @@ addAllEvents();
 function addAllElements() {
   addNavElements();
   addFooterElements();
+  addCategoryMenuElement(category);
   addRecentItem();
   addSoldOutItems();
-  addCategoryName();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   addNavEventListeners();
+  addCategoryMenuEventListeners();
   handleHamburger();
-  categoryButton.addEventListener('click', () => {
-    categoryList.classList.toggle('hidden');
-  });
 }
 
 // 장바구니 생성하기
@@ -108,23 +106,5 @@ async function addSoldOutItems() {
     `;
 
     soldoutContainer.insertAdjacentHTML('beforeend', soldoutItemList);
-  });
-}
-
-// 카테고리 가져오기
-async function getCategoryName() {
-  const categoryData = await Api.get(`/api/category`);
-
-  return categoryData;
-}
-
-// 카테고리 메뉴 추가하기
-async function addCategoryName() {
-  const categoryNames = await getCategoryName();
-
-  categoryNames.forEach((name) => {
-    // ! 카테고리 작업 시 href 수정하기
-    const categoryName = `<li class="category-item"><a href="items?category=${name}">${name}</a></li>`;
-    categoryList.insertAdjacentHTML('beforeend', categoryName);
   });
 }
