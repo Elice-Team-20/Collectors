@@ -1,10 +1,20 @@
 import * as Api from '/api.js';
 import { selectElement, addCommas } from '/useful-functions.js';
 
-import { addNavEventListeners, addNavElements, handleHamburger } from '../components/Nav/event.js';
+import {
+  addNavEventListeners,
+  addNavElements,
+  handleHamburger,
+} from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
-import { addCategoryMenuElement, addCategoryMenuEventListeners } from '../components/Category/event.js';
-import { addQuickMenuElement, addQuickMenuEventListeners } from '../components/QuickMenu/event.js';
+import {
+  addCategoryMenuElement,
+  addCategoryMenuEventListeners,
+} from '../components/Category/event.js';
+import {
+  addQuickMenuElement,
+  addQuickMenuEventListeners,
+} from '../components/QuickMenu/event.js';
 
 // 요소(element), input 혹은 상수
 const quickMenu = selectElement('#quick-menu');
@@ -12,11 +22,11 @@ const category = selectElement('#category');
 const soldoutContainer = selectElement('.soldout-container');
 
 userInit();
-addAllElements();
-addAllEvents();
+await addAllElements();
+await addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-function addAllElements() {
+async function addAllElements() {
   addNavElements();
   addFooterElements();
   addCategoryMenuElement(category);
@@ -25,7 +35,7 @@ function addAllElements() {
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-function addAllEvents() {
+async function addAllEvents() {
   addNavEventListeners();
   addCategoryMenuEventListeners();
   addQuickMenuEventListeners(quickMenu);
@@ -33,13 +43,15 @@ function addAllEvents() {
 }
 
 // 장바구니 생성하기
-function userInit() {
+async function userInit() {
   let cart = JSON.parse(localStorage.getItem('cart'));
 
   if (!cart) {
     cart = [];
     localStorage.setItem('cart', JSON.stringify([]));
   }
+
+  setToken();
 }
 
 // 이미지 슬라이더 설정
@@ -80,4 +92,13 @@ async function addSoldOutItems() {
 
     soldoutContainer.insertAdjacentHTML('beforeend', soldoutItemList);
   });
+}
+
+async function setToken() {
+  console.log(document.cookie);
+  const token = document.cookie.split('=')[1];
+  console.log(token);
+  if (token) {
+    localStorage.setItem('token', token);
+  }
 }
