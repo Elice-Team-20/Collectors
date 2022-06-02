@@ -59,10 +59,16 @@ async function initializsItems() {
 }
 async function insertItemElement() {
   let filteredItems = items;
+  // 카테고리 내에서의 검색 결과 반영
   if (searchedItems.length !== 0) {
     filteredItems = items.filter(({ _id }) => {
       return searchedItems.some((val) => val === _id);
     });
+  }
+  if (filteredItems.length === 0) {
+    // 카테고리 내 검색 결과가 없을 경우 알림
+    alert('검색된 상품이 없습니다.');
+    filteredItems = items; // 원래 검색 결과 보여주기
   }
   searchedItems = []; // 빈객체로 초기화
   itemList.innerHTML = '';
@@ -117,7 +123,7 @@ async function handleSearchBtn(e) {
   const searchBarInput = document.querySelector('#searchBarInput');
 
   if (searchBarInput.value) {
-    searchedItems = await getSearchItmes(searchBarInput.value);
+    searchedItems = await getSearchItems(searchBarInput.value);
   } else {
     // 검색창에 아무것도 없으면
     initializsItems();
@@ -126,13 +132,17 @@ async function handleSearchBtn(e) {
   searchBarInput.value = '';
 }
 
-async function getSearchItmes(value) {
+async function getSearchItems(value) {
   try {
     const result = await Api.get(`/api/item/search?query=${value}`);
     // const data = result.json();
     console.log(result);
+    if (result.length === 0) {
+      alert('검색된 상품이 없습니다.');
+    }
     // console.log(data);
     const resultToId = result.map(({ _id }) => _id);
+
     return resultToId;
   } catch (err) {
     console.error(err.stack);
