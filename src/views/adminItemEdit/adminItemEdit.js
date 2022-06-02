@@ -6,7 +6,7 @@ import {
 } from '../../../components/Nav/event.js';
 import { addItemInputFormElement } from '../../../components/Admin/event.js';
 import { addFooterElements } from '../../../components/Footer/event.js';
-import { checkAdmin } from '../../useful-functions.js';
+import { checkAdmin } from '../../../useful-functions.js';
 
 window.onload = () => {
   // admin인지 확인하기
