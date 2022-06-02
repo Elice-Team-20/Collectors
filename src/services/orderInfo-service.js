@@ -1,5 +1,6 @@
 import { orderInfo, userModel, itemModel } from "../db/index";
 import { getDate } from '../utils/get-date';
+import { itemService } from './index'
 
 const checkData = async function(orderId){
   return await orderInfo.findByObjectId(orderId) ? true: false;
@@ -26,7 +27,7 @@ class OrderinfoService {
       temp.orderDate = getDate(date);
 
       temp.itemList = orders[i].itemList;
-      
+
       temp.status = orders[i].status;
 
       temp.shipAddress = orders[i].shipAddress;
@@ -50,7 +51,6 @@ class OrderinfoService {
 
   async getOrderList(orderInfo){
     const array = [];
-    console.log(orderInfo)
     for(let i = 0 ; i < orderInfo.length; i++){
       const temp = {};
       temp.orderId = orderInfo[i].id;
@@ -82,9 +82,9 @@ class OrderinfoService {
   // 2. 받은 정보를 기반으로 유져 정보 변경(최신화)
   async connectOrderAndInfo(userId, orderInfo){
     try{
-     // const order = await this.orderModel.findByObjectId(id);
+      // const order = await this.orderModel.findByObjectId(id);
 
-     // 새로운 주문 정보를 만듦
+      // 새로운 주문 정보를 만듦
       const newOrderInfo = await this.orderModel.create(orderInfo)
       // 주문 정보로 부터 아이디 획득
       const orderId = newOrderInfo._id.toString()
@@ -110,11 +110,32 @@ class OrderinfoService {
           phoneNumber
        }
      });
+           // 아이탬 업데이트
+    //1 주문 정보에서 아이탬 추출 ()
+    const itemList = createdOrder.itemList
+
+    itemList.forEach(async(e) => {
+      try{
+        const currItem = await itemService.getItembyObId(e.itemId);
+        const inputItemCount = e.count;
+        const changeStock = currItem.stocks - inputItemCount;
+        if(changeStock < 0){
+          return;
+          // 에러처리 여쭤보기 return new Error  쓰면 에러거르지만 서버 가 멈춰버립니다ㅜ
+        }
+        const updateReturn = await itemService.updateItem({ _id:e.itemId },{ stocks: changeStock} )
+      }
+      catch(er){
+        throw new Error(er)
+      }
+    })
+
+  //2 아이탬 stock 줄이기  (0이하 처리)
      const populateRes = await this.userModel.getUserAndPopulate(userId);
       return populateRes;
     }
     catch(er){
-      return er
+      throw new Error(`${er} 에러 발생`)
     };
 
   };
