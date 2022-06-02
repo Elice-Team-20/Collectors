@@ -22,7 +22,7 @@ class CategoryService {
       return category;
     } else {
       throw new Error(
-        '카테고리가 이미 존재합니다. 다른 카테고리를 추가해주세요.'
+        '카테고리가 이미 존재합니다. 다른 카테고리를 추가해주세요.',
       );
     }
   }

@@ -50,7 +50,7 @@ categoryRouter.post('/:oldName', async (req, res, next) => {
 
     const updatedCategory = await categoryService.updateCategory(
       oldName,
-      newCategoryName
+      newCategoryName,
     );
     res.status(201).json(updatedCategory);
   } catch (error) {

@@ -15,7 +15,7 @@ const OrderSchema = new Schema(
         },
         {
           _id: false,
-        }
+        },
       ),
       required: true,
     },
@@ -43,7 +43,7 @@ const OrderSchema = new Schema(
   {
     collection: 'orderinfoes',
     timestamps: true,
-  }
+  },
 );
 
 export default OrderSchema;

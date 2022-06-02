@@ -57,7 +57,7 @@ authRouter.get('/kakao/finish', async (req, res, next) => {
 
 authRouter.get(
   '/naver',
-  passport.authenticate('naver', { authType: 'reprompt' })
+  passport.authenticate('naver', { authType: 'reprompt' }),
 );
 
 authRouter.get(
@@ -72,12 +72,12 @@ authRouter.get(
     } catch (err) {
       next(err);
     }
-  }
+  },
 );
 
 authRouter.get(
   '/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
+  passport.authenticate('google', { scope: ['profile', 'email'] }),
 );
 
 authRouter.get(
@@ -92,7 +92,7 @@ authRouter.get(
     } catch (err) {
       next(err);
     }
-  }
+  },
 );
 
 export { authRouter };

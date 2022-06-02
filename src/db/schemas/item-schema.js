@@ -51,7 +51,7 @@ const ItemSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export { ItemSchema };

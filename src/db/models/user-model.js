@@ -49,7 +49,7 @@ export class UserModel {
       //https://mongoosejs.com/docs/tutorials/findoneandupdate.html
       await User.findOneAndUpdate(
         { _id: id },
-        { $addToSet: { orderInfo: orderInfo } }
+        { $addToSet: { orderInfo: orderInfo } },
       );
       return await User.findOne({ _id: id });
     } catch (er) {
