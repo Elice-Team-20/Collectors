@@ -1,7 +1,10 @@
 import * as Api from '/api.js';
 import { selectElement } from '/useful-functions.js';
 
-import { addNavEventListeners, addNavElements } from '../../components/Nav/event.js';
+import {
+  addNavEventListeners,
+  addNavElements,
+} from '../../components/Nav/event.js';
 import { addFooterElements } from '../../components/Footer/event.js';
 
 // 요소(element), input 혹은 상수
@@ -23,7 +26,9 @@ addAllEvents();
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   window.onload = () => {
-    alert('회원 정보를 수정하시려면 현재 비밀번호를 입력하세요.');
+    alert(
+      '회원 정보를 수정하시려면 현재 비밀번호를 입력하세요.\n소셜 로그인의 경우 해당 SNS 이름을 영어로 작성해주세요. \n예) naver, google, kakao',
+    );
   };
   addNavEventListeners();
   addressButton.addEventListener('click', handleAddress);

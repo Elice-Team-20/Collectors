@@ -20,7 +20,7 @@ const addCategoryMenuElement = (category) => {
     const categoryNames = await getCategoryName();
 
     categoryNames.forEach((name) => {
-      const categoryName = `<li class="category-item"><a href="items?category=${name}">${name}</a></li>`;
+      const categoryName = `<li class="category-item"><a href="/items?category=${name}">${name}</a></li>`;
       categoryList.insertAdjacentHTML('beforeend', categoryName);
     });
   }

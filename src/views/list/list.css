@@ -79,13 +79,41 @@ div.imgBox {
 }
 
 @media all and (max-width: 768px) {
-  section.item-list {
+  .item-list {
     grid-template-columns: 1fr;
+  }
+
+  .item {
+    width: 200px;
+    height: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .imgBox {
+    width: 200px;
+    height: 200px;
+  }
+
+  #itemImage {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  #itemName {
+    font-size: 1.25em;
+  }
+
+  #summary,
+  #price {
+    font-size: 0.75em;
   }
 }
 
 @media all and (min-width: 768px) and (max-width: 1100px) {
-  section.item-list {
+  .item-list {
     grid-template-columns: 1fr 1fr;
   }
 }
