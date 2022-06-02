@@ -127,6 +127,58 @@ a {
   border-style: none;
 } */
 
+/* 카테고리 style */
+#category {
+  height: 5vh;
+  width: 80vw;
+  position: sticky;
+  top: 0;
+  z-index: 10000;
+  margin: 0 auto;
+}
+
+#category:hover {
+  border: 1px solid #f01e21;
+}
+
+.category-expand {
+  height: 4vh;
+  width: 100%;
+  font-weight: bold;
+  text-align: center;
+  line-height: 2.5rem;
+}
+
+.category-expand:hover {
+  color: #f01e21;
+}
+
+.category-list {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr;
+  margin: 1vh auto;
+  opacity: 0.85;
+}
+
+.category-list.hidden {
+  display: none;
+}
+
+.category-item {
+  width: 100%;
+  height: 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  line-height: 2rem;
+}
+
+.category-item:hover {
+  color: #f01e21;
+}
+
 /* section style */
 section {
   padding-bottom: 100px; /* footer의 height값과 동일 하단에 있게 하기 위함 */
