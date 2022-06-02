@@ -7,14 +7,14 @@ const itemRouter = Router();
 // 아이탬을 생성하는 라우터
 itemRouter.get('/', async (req, res) => {
   const item = await itemService.getItems();
-  res.json(item);
+  res.status(200).json(item);
 });
 
 // 매진임박인 아이템(5개 이하)을 조회하는 라우터
 itemRouter.get('/soldOut', async (req, res, next) => {
   try {
     const items = await itemService.getSoldOutImminentItems();
-    res.json(items);
+    res.status(200).json(items);
   } catch (error) {
     next(error);
   }
@@ -24,7 +24,7 @@ itemRouter.get('/soldOut', async (req, res, next) => {
 itemRouter.get('/newItem', async (req, res, next) => {
   try {
     const items = await itemService.getNewItems();
-    res.json(items);
+    res.status(200).json(items);
   } catch (error) {
     next(error);
   }
@@ -35,7 +35,7 @@ itemRouter.get('/search', async (req, res, next) => {
   try {
     const keyword = req.query.query;
     const items = await itemService.searchItems(keyword);
-    res.json(items);
+    res.status(200).json(items);
   } catch (error) {
     next(error);
   }
@@ -86,7 +86,7 @@ itemRouter.get('/:id', async (req, res) => {
 itemRouter.get('/category/:category', async (req, res) => {
   const { category } = req.params;
   const itemData = await itemService.getItemsByCategory(category);
-  res.json(itemData);
+  res.status(200).json(itemData);
 });
 
 // DELETE api/item/delete/:id

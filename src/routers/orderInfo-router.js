@@ -54,17 +54,14 @@ orderInfoRouter.get(
 // api/order/list
 // 로그인한 유저의 주문내역을 반환
 orderInfoRouter.get('/list', loginRequired, async (req, res, next) => {
-  try{
+  try {
     const userId = req.currentUserId;
     const userInfo = await userService.getUser(userId);
     const result = await orderInfoService.getOrderList(userInfo.orderInfo);
     res.status(200).json(result);
-  }
-  catch(err){
+  } catch (err) {
     next(err);
   }
-
-
 });
 
 // 주문id 로 주문을 조회하는 api
@@ -81,7 +78,9 @@ orderInfoRouter.get('/:id', loginRequired, async (req, res, next) => {
 orderInfoRouter.post('/makeOrder', loginRequired, async (req, res, next) => {
   try {
     const { userId, orderInfo } = req.body;
-    res.status(200).json(await orderInfoService.connectOrderAndInfo(userId, orderInfo));
+    res
+      .status(200)
+      .json(await orderInfoService.connectOrderAndInfo(userId, orderInfo));
   } catch (error) {
     next(error);
   }
@@ -102,7 +101,7 @@ orderInfoRouter.delete('/delete', loginRequired, async (req, res, next) => {
   try {
     const { orderId } = req.body;
     const deleteResult = await orderInfoService.deleteInfo(orderId);
-    res.json({ deleteResult });
+    res.status(200).json({ deleteResult });
   } catch (error) {
     next(error);
   }
@@ -117,7 +116,7 @@ orderInfoRouter.delete(
     try {
       const { orderId } = req.body;
       const deletedResult = await orderInfoService.deleteInfo(orderId);
-      res.json({ deletedResult });
+      res.status(200).json({ deletedResult });
     } catch (error) {
       next(error);
     }
