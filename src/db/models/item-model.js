@@ -71,26 +71,21 @@ export class ItemModel {
     const findByName = await Item.find({
       itemName: { $regex: `.*${keyword}.*` },
     });
-    findByName.forEach((data) => {
-      if (data.deleteFlag == false) itemArray.push(data);
-    });
+
+    itemArray.push(...findByName);
 
     // 2. 해쉬태그 검색
     const findByHashTag = await Item.find({
       hashTag: { $regex: `.*${keyword}.*` },
     });
-    findByHashTag.forEach((data) => {
-      if (data.deleteFlag == false) itemArray.push(data);
-    });
 
-    // // 3. 요약에 키워드 있는지 검색
-    // const findBySummary = await Item.find({summary: {$regex: `.*${keyword}.*`}})
-    // findBySummary.forEach(data => {
-    //   if(data.deleteFlag == false) itemArray.push(data)
-    // });
+    itemArray.push(...findByHashTag);
 
     // lodash 라이브러리 : 중복되는 id를 가지는 요소들 제거
-    const result = lodash.uniqBy(itemArray, 'id');
+    // deleteFlag가 true인 것만 필터링
+    const result = lodash
+      .uniqBy(itemArray, 'id')
+      .filter((data) => !data.deleteFlag);
 
     return result;
   }
