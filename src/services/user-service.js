@@ -198,6 +198,13 @@ class UserService {
     return user;
   }
 
+  async isAdmin(userId){
+    const id = await this.getUser(userId);
+    const isAdmin = id.isAdmin;
+
+    return isAdmin;
+  }
+
   async getUserAddressInOrder(userId){
         // 주문 목록이 할당된게 없으면
         let user = await this.userModel.findById(userId);

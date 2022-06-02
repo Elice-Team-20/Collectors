@@ -84,6 +84,18 @@ userRouter.get('/id', loginRequired, async function(req, res, next) {
   }
 })
 
+// 관리자인지 검사
+userRouter.get('/isAdmin', loginRequired, async function(req, res, next) {
+  try{
+    const id = req.currentUserId;
+    const result = await userService.isAdmin(id);
+    
+    res.status(200).json({"result": result});
+  }catch(error){
+    next(error);
+  }
+})
+
 // 유저아이디 에 맞는 유저 정보 가져옴 만약 주문 정보 가 있으면 주문정보도 보여주는 api
 userRouter.get('/:userId', loginRequired, async (req, res, next) => {
   try{
