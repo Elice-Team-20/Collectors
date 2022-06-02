@@ -48,7 +48,8 @@ authRouter.get('/kakao/finish', async (req, res, next) => {
     }
     // 토큰 생성
     const token = await kakaoOAuthService.getToken(user);
-    res.status(200).json(token);
+    res.cookie('token', token);
+    res.redirect('/');
   } catch (err) {
     next(err);
   }
