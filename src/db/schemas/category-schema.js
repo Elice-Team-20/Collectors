@@ -1,12 +1,15 @@
 import { Schema } from 'mongoose';
 
-const CategorySchema = new Schema({
-  name: {
-    type: String,
-    required: true,
+const CategorySchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
   }
-},{
-  timestamps: true,
-})
+);
 
 export { CategorySchema };

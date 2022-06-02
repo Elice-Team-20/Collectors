@@ -47,7 +47,7 @@ async function handleSubmit(e) {
 
   if (!isEmailValid || !isPasswordValid) {
     return alert(
-      '비밀번호가 4글자 이상인지, 이메일 형태가 맞는지 확인해 주세요.',
+      '비밀번호가 4글자 이상인지, 이메일 형태가 맞는지 확인해 주세요.'
     );
   }
 
@@ -109,17 +109,18 @@ async function handleKakaoBtn() {
   //   window.open(url);
   // } catch (err) {}
 }
-async function handleGoogleBtn() {
+async function handleGoogleBtn(e) {
   try {
-    const result = await Api.get('/api/auth/naver');
-    const token = result.token;
+    e.preventDefault();
+    // const result = await Api.get('/api/auth/naver');
+    // const token = result.token;
 
-    localStorage.setItem('token', token);
+    // localStorage.setItem('token', token);
 
-    console.log(result);
-    alert(`정상적으로 로그인되었습니다.`);
+    // console.log(result);
+    // alert(`정상적으로 로그인되었습니다.`);
 
-    window.location.href = '/';
+    window.location.href = '/api/auth/google';
   } catch (err) {
     console.log(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);

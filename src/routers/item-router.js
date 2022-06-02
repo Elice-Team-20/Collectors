@@ -22,52 +22,58 @@ itemRouter.get('/soldOut', async (req, res, next) => {
 
 // 신상품인 아이템 조회하는 라우터
 itemRouter.get('/newItem', async (req, res, next) => {
-  try{
+  try {
     const items = await itemService.getNewItems();
     res.json(items);
-  }catch(error){
+  } catch (error) {
     next(error);
   }
-})
+});
 
 // 아이템 검색 라우터
 itemRouter.get('/search', async (req, res, next) => {
-  try{
+  try {
     const keyword = req.query.query;
     const items = await itemService.searchItems(keyword);
     res.json(items);
-  }catch(error){
+  } catch (error) {
     next(error);
   }
-})
+});
 
 // s3 에 이미지 업로드후 req 에 링크 넣고 아이템 db에 등록
-itemRouter.post('/', upload.single('file'), loginRequired, adminRequired,  async (req, res) => {
-  const {
-    itemName,
-    category,
-    manufacturingCompany,
-    summary,
-    mainExplanation,
-    stocks,
-    hashTag,
-    price,
-  } = req.body;
+itemRouter.post(
+  '/',
+  upload.single('file'),
+  loginRequired,
+  adminRequired,
+  async (req, res) => {
+    const {
+      itemName,
+      category,
+      manufacturingCompany,
+      summary,
+      mainExplanation,
+      stocks,
+      hashTag,
+      price,
+    } = req.body;
 
-  const formData = {
-    itemName,
-    category,
-    manufacturingCompany,
-    summary,
-    mainExplanation,
-    imgUrl: req.file.location,
-    stocks,
-    price,
-    hashTag,
-  };
-  const resultData = await itemService.addItem(formData);
-  res.json({ status: 'ok', sucsess: resultData });
-});
+    const formData = {
+      itemName,
+      category,
+      manufacturingCompany,
+      summary,
+      mainExplanation,
+      imgUrl: req.file.location,
+      stocks,
+      price,
+      hashTag,
+    };
+    const resultData = await itemService.addItem(formData);
+    res.json({ status: 'ok', sucsess: resultData });
+  }
+);
 
 itemRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
@@ -98,7 +104,7 @@ itemRouter.delete(
     } catch (error) {
       next(error);
     }
-  },
+  }
 );
 
 // POST /api/update/:id
@@ -114,35 +120,34 @@ itemRouter.post(
       const { id } = req.params;
       // form data 로 온 입력 데이터
       const {
-          itemName,
-          category,
-          manufacturingCompany,
-          summary,
-          mainExplanation,
-          stocks,
-          hashTag,
-          price,
-        } = req.body;
+        itemName,
+        category,
+        manufacturingCompany,
+        summary,
+        mainExplanation,
+        stocks,
+        hashTag,
+        price,
+      } = req.body;
 
-        let imgUrl = null
-        if(!req.file?.location){
-          const currentItemData = await itemService.getItembyObId(id)
-          imgUrl = currentItemData.imgUrl
-        }
-        else{
-          imgUrl = req.file.location;
-        }
+      let imgUrl = null;
+      if (!req.file?.location) {
+        const currentItemData = await itemService.getItembyObId(id);
+        imgUrl = currentItemData.imgUrl;
+      } else {
+        imgUrl = req.file.location;
+      }
       //객체화
       const updateData = {
         ...(itemName && { itemName }),
         ...(category && { category }),
-        ...(manufacturingCompany && {manufacturingCompany}),
-        ...(summary && {summary}),
-        ...(mainExplanation && {mainExplanation}),
-        ...(stocks && {stocks}),
-        ...(price && {price}),
-        ...(hashTag && {hashTag}),
-        ...(imgUrl && {imgUrl})
+        ...(manufacturingCompany && { manufacturingCompany }),
+        ...(summary && { summary }),
+        ...(mainExplanation && { mainExplanation }),
+        ...(stocks && { stocks }),
+        ...(price && { price }),
+        ...(hashTag && { hashTag }),
+        ...(imgUrl && { imgUrl }),
       };
       const result = await itemService.updateItem(id, updateData);
 
@@ -151,7 +156,7 @@ itemRouter.post(
     } catch (error) {
       next(error);
     }
-  },
+  }
 );
 
 export { itemRouter };
