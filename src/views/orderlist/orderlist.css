@@ -1,26 +1,46 @@
+section {
+  display: flex;
+  justify-content: center;
+}
+
 .order-container {
-  width: 95%;
-  height: 300vh;
-  margin: 0 auto;
+  width: 80%;
+  margin: 5vh auto 0;
 }
 
 .order-title {
-  border-bottom: 1px solid white;
-  margin: 20px 0;
+  height: 50px;
+  line-height: 50px;
+  font-size: 30px;
 }
 
 .order-header,
 .order-list {
   display: grid;
-  grid-template-columns: 50px 100px 3fr 2fr 100px;
+  grid-template-columns: 1fr 2fr 5fr 2fr 2fr;
   place-content: center;
   place-items: center;
   text-align: center;
 }
 
+.order-header {
+  padding: 3vh 1vw;
+}
+
 .order-list {
-  height: 6rem;
-  border-top: 1px solid #fff;
+  height: 20vh;
+}
+
+.order-list:hover {
+  border: 1px solid #f01e21;
+}
+
+.order-list > div {
+  padding: 3vh 1vw;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #cancelButton {
@@ -52,10 +72,10 @@
   }
 
   .order-list {
-    height: 15rem;
+    height: 25vh;
     display: grid;
     grid-template-columns: 1fr 2fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 2fr 1fr;
     place-content: center;
     place-items: center;
     text-align: center;
@@ -63,20 +83,5 @@
 
   .order-number {
     display: none;
-  }
-}
-
-@media all and (min-width: 768px) and (max-width: 1100px) {
-  .order-header > h3 {
-    font-size: 1.25rem;
-    font-weight: normal;
-  }
-
-  .order-list {
-    display: grid;
-    grid-template-columns: 50px 100px 3fr 2fr 100px;
-    place-content: center;
-    place-items: center;
-    text-align: center;
   }
 }

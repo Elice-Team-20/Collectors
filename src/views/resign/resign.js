@@ -20,6 +20,9 @@ async function addAllElements() {
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
+  window.onload = () => {
+    alert('소셜 로그인의 경우 해당 SNS 이름을 영어로 작성해주세요. \n예) naver, google, kakao');
+  };
   addNavEventListeners();
   submitButton.addEventListener('click', handleSubmit);
 }

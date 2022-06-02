@@ -22,6 +22,9 @@ addAllEvents();
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
+  window.onload = () => {
+    alert('회원 정보를 수정하시려면 현재 비밀번호를 입력하세요.');
+  };
   addNavEventListeners();
   addressButton.addEventListener('click', handleAddress);
   submitButton.addEventListener('click', updateUserData);
