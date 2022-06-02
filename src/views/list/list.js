@@ -131,6 +131,9 @@ async function getSearchItmes(value) {
     const result = await Api.get(`/api/item/search?query=${value}`);
     // const data = result.json();
     console.log(result);
+    if (result.length === 0) {
+      alert('검색된 상품이 없습니다.');
+    }
     // console.log(data);
     const resultToId = result.map(({ _id }) => _id);
     return resultToId;
