@@ -9,7 +9,7 @@ const CategorySchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export { CategorySchema };

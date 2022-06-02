@@ -43,7 +43,7 @@ class CategoryModel {
       {
         name: oldCategoryName,
       },
-      form
+      form,
     );
     return updatedCategory;
   }

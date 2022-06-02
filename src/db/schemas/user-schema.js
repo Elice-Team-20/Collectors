@@ -30,7 +30,7 @@ const UserSchema = new Schema(
         },
         {
           _id: false,
-        }
+        },
       ),
       required: false,
     },
@@ -53,7 +53,7 @@ const UserSchema = new Schema(
   {
     collection: 'users',
     timestamps: true,
-  }
+  },
 );
 
 export { UserSchema };

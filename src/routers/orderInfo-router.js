@@ -48,7 +48,7 @@ orderInfoRouter.get(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 // api/order/list
@@ -120,7 +120,7 @@ orderInfoRouter.delete(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 export { orderInfoRouter };
