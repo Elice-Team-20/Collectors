@@ -27,6 +27,9 @@ div.items {
   width: 65%;
   padding: 10px;
 }
+.cart-item .deleted {
+  display: none;
+}
 /* 선택 메뉴 */
 div.select {
   display: flex;
