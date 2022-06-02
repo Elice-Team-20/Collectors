@@ -4,11 +4,11 @@ import { selectElement, addCommas } from '/useful-functions.js';
 import { addNavEventListeners, addNavElements, handleHamburger } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
 import { addCategoryMenuElement, addCategoryMenuEventListeners } from '../components/Category/event.js';
+import { addQuickMenuElement, addQuickMenuEventListeners } from '../components/QuickMenu/event.js';
 
 // 요소(element), input 혹은 상수
 const quickMenu = selectElement('#quick-menu');
 const category = selectElement('#category');
-const quickItems = selectElement('.quick-items');
 const soldoutContainer = selectElement('.soldout-container');
 
 userInit();
@@ -20,7 +20,7 @@ function addAllElements() {
   addNavElements();
   addFooterElements();
   addCategoryMenuElement(category);
-  addRecentItem();
+  addQuickMenuElement(quickMenu);
   addSoldOutItems();
 }
 
@@ -28,6 +28,7 @@ function addAllElements() {
 function addAllEvents() {
   addNavEventListeners();
   addCategoryMenuEventListeners();
+  addQuickMenuEventListeners(quickMenu);
   handleHamburger();
 }
 
@@ -57,34 +58,6 @@ const swiper = new Swiper('.swiper', {
     prevEl: '.swiper-button-prev',
   },
 });
-
-// 퀵 메뉴 설정
-window.addEventListener('scroll', () => {
-  let y = +window.scrollY;
-  console.log(y);
-  y > 300 ? (quickMenu.style.top = y + 300 + 'px') : (quickMenu.style.top = '95vh');
-});
-
-// 최근 본 상품 추가하기
-function addRecentItem() {
-  let recentItems = JSON.parse(localStorage.getItem('recentItem')) || [];
-
-  if (!recentItems) return;
-
-  // 추가하기
-  recentItems.forEach(({ itemId, itemName, imgUrl }) => {
-    const recentItemList = `
-      <li class="recent-item">
-        <a href="/item/?id=${itemId}">
-          <img src="${imgUrl}" alt="${itemName}">
-          <p>${itemName}</p>
-        </a>
-      </li>
-    `;
-
-    quickItems.insertAdjacentHTML('beforeend', recentItemList);
-  });
-}
 
 // 매진 임박 추가 기능 구현하기
 async function addSoldOutItems() {
