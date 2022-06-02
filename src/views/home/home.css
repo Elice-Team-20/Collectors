@@ -27,7 +27,13 @@
 }
 
 #items {
-  height: 400vh;
+  height: 100%;
+}
+
+#items .seperator {
+  width: 40%;
+  margin: 0 auto;
+  opacity: 0.5;
 }
 
 .soldout-container,
@@ -35,7 +41,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 1rem;
-  margin: 50px auto 0;
+  margin: 50px auto 50px;
   width: 90%;
   place-content: center;
   place-items: center;
@@ -78,6 +84,11 @@
 .new-item p:last-child {
   color: #f01e21;
   font-weight: bold;
+}
+
+.home-item:hover {
+  transform: translateY(-1vh);
+  transition: transform 0.5s;
 }
 
 @media screen and (max-width: 768px) {
