@@ -3,6 +3,7 @@ import * as Api from '/api.js';
 import {
   addNavEventListeners,
   addNavElements,
+  handleHamburger,
 } from '../../components/Nav/event.js';
 import { addFooterElements } from '../../components/Footer/event.js';
 import { checkAdmin } from '../../useful-functions.js';
@@ -33,6 +34,7 @@ async function addAllElements() {
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   addNavEventListeners();
+  handleHamburger();
   document.querySelectorAll('.cancel-btn').forEach((node) => {
     node.addEventListener('click', handleCancelBtn);
   });

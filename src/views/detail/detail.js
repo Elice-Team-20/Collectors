@@ -6,9 +6,10 @@ import { addCommas } from '/useful-functions.js';
 import {
   addNavEventListeners,
   addNavElements,
-} from '../../components/Nav/event.js';
+  checkUserStatus,
+  handleHamburger,
+} from '../components/Nav/event.js';
 import { addFooterElements } from '../../components/Footer/event.js';
-import { checkUserStatus } from '../components/Nav/event.js';
 
 // url에서 id 값 추출해오기
 // const ITEMDETAIL = document.querySelector('.item-detail');
@@ -35,6 +36,7 @@ async function addAllElements() {
 
 async function addAllEvents() {
   addNavEventListeners();
+  handleHamburger();
   cartBtn.addEventListener('click', addCartBtnHandler);
   orderBtn.addEventListener('click', handleOrderBtn);
 }

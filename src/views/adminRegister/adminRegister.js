@@ -3,6 +3,7 @@ import * as Api from '/api.js';
 import {
   addNavEventListeners,
   addNavElements,
+  handleHamburger,
 } from '../../components/Nav/event.js';
 import {
   addItemInputFormElement,
@@ -44,6 +45,7 @@ async function addAllElements() {
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllEvents() {
   addNavEventListeners();
+  handleHamburger();
   //   console.log(document.querySelector('#addTagBtn'));
   document
     .querySelector('#addTagBtn')

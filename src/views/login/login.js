@@ -4,6 +4,7 @@ import { validateEmail } from '/useful-functions.js';
 import {
   addNavEventListeners,
   addNavElements,
+  handleHamburger,
 } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
 
@@ -28,6 +29,7 @@ async function addAllElements() {
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   addNavEventListeners();
+  handleHamburger();
   submitButton.addEventListener('click', handleSubmit);
   naverBtn.addEventListener('click', handleNaverBtn);
   kakaoBtn.addEventListener('click', handleKakaoBtn);
@@ -47,7 +49,7 @@ async function handleSubmit(e) {
 
   if (!isEmailValid || !isPasswordValid) {
     return alert(
-      '비밀번호가 4글자 이상인지, 이메일 형태가 맞는지 확인해 주세요.'
+      '비밀번호가 4글자 이상인지, 이메일 형태가 맞는지 확인해 주세요.',
     );
   }
 
