@@ -20,7 +20,7 @@ export class ItemModel {
 
   async find() {
     try {
-      const item = await Item.find({}).exec();
+      const item = await Item.find({}).sort({ updatedAt: -1 }).exec();
       return item;
     } catch (er) {
       console.log('모델 에러 발생 개발자도구를 확인하세요');
@@ -31,7 +31,7 @@ export class ItemModel {
   // 카테고리별 상품 검색
   async findByCategory(category) {
     try {
-      const items = await Item.find({ category: category }).exec();
+      const items = await Item.find({ category: category }).sort({ updatedAt: -1 }).exec();
       return items;
     } catch (er) {
       return er;
@@ -54,6 +54,7 @@ export class ItemModel {
   async searchItems(keyword) {
     // 1. 아이템 이름에 있는지 검색
     // 2. 해쉬태그에 있는지 검색
+    // 3. 요약 설명에 있는지 검색
     // 중복되면 안됨.
     // isDelete가 fasle 이어야 함.
 
@@ -75,6 +76,12 @@ export class ItemModel {
     findByHashTag.forEach(data => {
       if(data.deleteFlag == false) itemArray.push(data)
     });
+
+    // // 3. 요약에 키워드 있는지 검색
+    // const findBySummary = await Item.find({summary: {$regex: `.*${keyword}.*`}})
+    // findBySummary.forEach(data => {
+    //   if(data.deleteFlag == false) itemArray.push(data)
+    // });
 
     // lodash 라이브러리 : 중복되는 id를 가지는 요소들 제거
     const result = lodash.uniqBy(itemArray, "id")
