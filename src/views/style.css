@@ -7,6 +7,7 @@ a {
   text-decoration: none;
   box-sizing: border-box;
   list-style: none;
+  scroll-behavior: smooth;
 }
 
 #wrap {
@@ -267,8 +268,6 @@ section {
 footer {
   width: 100vw;
   height: 75px; /* 내용물에 따라 알맞는 값 설정 */
-  bottom: 0px;
-  position: absolute;
 }
 
 .footer {
