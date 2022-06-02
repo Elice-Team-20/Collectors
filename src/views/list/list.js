@@ -12,10 +12,11 @@ import { addSearchBarElement } from '../components/SearchBar/event.js';
 // GET / api/item/?id= ...
 
 const ITEMLIST = document.querySelector('.item-list');
-const searchBarInput = document.querySelector('#searchBarInput');
-// const searchBarBtn = document.querySelector('#searchBarBtn');
+const queryString = window.location.search;
+const category = new URLSearchParams(queryString).get('category');
 
-let items = []; // 빈 객체로 시작
+let items = []; // 전체 or 카테고리 아이템 담을 객체
+let searchedItems = []; // 검색된 거 담을 객체
 
 await initializsItems(); // 처음엔 전체 목록
 await addAllElements();
@@ -37,20 +38,24 @@ function addAllEvents() {
     .addEventListener('click', handleSearchBtn);
 }
 async function initializsItems() {
-  items = await getAllItems();
+  console.log(category);
+  if (!category) items = await getAllItems();
+  else items = await getCategoryItems();
+  console.log('init', items);
 }
 async function insertItemElement() {
-  // const response = await fetch(`/api/item`, {
-  //   method: 'GET',
-  //   headers: { 'Content-Type': 'application/json' },
-  // });
-  // const items = await response.json();
-  console.log(items);
+  let filteredItems = items;
+  if (searchedItems.length !== 0) {
+    filteredItems = items.filter(({ _id }) => {
+      return searchedItems.some((val) => val === _id);
+    });
+  }
+  searchedItems = []; // 빈객체로 초기화
   ITEMLIST.innerHTML = '';
-  items.forEach(({ _id, itemName, summary, imgUrl, price, deletedFlag }) => {
-    console.log(_id);
-    // isDeleted = true이면 deleted 클래스 넣기
-    ITEMLIST.innerHTML += `
+  filteredItems.forEach(
+    ({ _id, itemName, summary, imgUrl, price, deletedFlag }) => {
+      // isDeleted = true이면 deleted 클래스 넣기
+      ITEMLIST.innerHTML += `
       <a href="/item/?id=${_id}" class="${deletedFlag ? 'deleted' : ''}">
         <div class="item">
           <div class="imgBox">
@@ -70,7 +75,8 @@ async function insertItemElement() {
         </div>
       </a>
     `;
-  });
+    },
+  );
 }
 
 async function getAllItems() {
@@ -82,14 +88,27 @@ async function getAllItems() {
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
+async function getCategoryItems() {
+  try {
+    const result = await Api.get(`/api/item/category/${category}`);
+    return result;
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
+}
 async function handleSearchBtn(e) {
   e.preventDefault();
   const searchBarInput = document.querySelector('#searchBarInput');
 
-  // console.log(searchBarInput, searchBarInput.value);
-  items = await getSearchItmes(searchBarInput.value);
+  if (searchBarInput.value) {
+    searchedItems = await getSearchItmes(searchBarInput.value);
+  } else {
+    // 검색창에 아무것도 없으면
+    initializsItems();
+  }
   insertItemElement();
-  searchBarInput.value();
+  searchBarInput.value = '';
 }
 
 async function getSearchItmes(value) {
@@ -98,7 +117,8 @@ async function getSearchItmes(value) {
     // const data = result.json();
     console.log(result);
     // console.log(data);
-    return result;
+    const resultToId = result.map(({ _id }) => _id);
+    return resultToId;
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);

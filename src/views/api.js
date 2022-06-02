@@ -4,9 +4,12 @@ async function get(endpoint, params = '') {
   const apiUrl = `${endpoint}${p}`;
   console.log(`%cGET 요청: ${apiUrl} `, 'color: #a25cd1;');
 
-  const res = await fetch(apiUrl);
-
-  console.log('apit', res);
+  const res = await fetch(apiUrl, {
+    // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
 
   // 응답 코드가 4XX 계열일 때 (400, 403 등)
   if (!res.ok) {

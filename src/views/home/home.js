@@ -1,7 +1,11 @@
 import * as Api from '/api.js';
 import { selectElement, addCommas } from '/useful-functions.js';
 
-import { addNavEventListeners, addNavElements, handleHamburger } from '../components/Nav/event.js';
+import {
+  addNavEventListeners,
+  addNavElements,
+  handleHamburger,
+} from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
 
 // 요소(element), input 혹은 상수
@@ -68,12 +72,16 @@ const swiper = new Swiper('.swiper', {
 // 퀵 메뉴 설정
 window.onresize = () => {
   let x = window.innerWidth;
-  x < 1250 ? (quickMenu.style.display = 'none') : (quickMenu.style.display = 'block');
+  x < 1250
+    ? (quickMenu.style.display = 'none')
+    : (quickMenu.style.display = 'block');
 };
 
 window.addEventListener('scroll', () => {
   let y = +window.scrollY;
-  y > 250 ? (quickMenu.style.top = y + 250 + 'px') : (quickMenu.style.top = '541px');
+  y > 250
+    ? (quickMenu.style.top = y + 250 + 'px')
+    : (quickMenu.style.top = '541px');
 });
 
 // 최근 본 상품 추가하기
@@ -133,7 +141,7 @@ async function addCategoryName() {
 
   categoryNames.forEach((name) => {
     // ! 카테고리 작업 시 href 수정하기
-    const categoryName = `<li class="category-item"><a href="${name}">${name}</a></li>`;
+    const categoryName = `<li class="category-item"><a href="items?category=${name}">${name}</a></li>`;
     categoryList.insertAdjacentHTML('beforeend', categoryName);
   });
 }
