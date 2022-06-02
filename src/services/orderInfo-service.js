@@ -121,8 +121,9 @@ class OrderinfoService {
         const changeStock = currItem.stocks - inputItemCount;
         if(changeStock < 0){
           return;
+          // 에러처리 여쭤보기 return new Error  쓰면 에러거르지만 서버 가 멈춰버립니다ㅜ
         }
-        const updateReturn = await itemService.updateItem({_id:e.itemId},{ stocks: changeStock} )
+        const updateReturn = await itemService.updateItem({ _id:e.itemId },{ stocks: changeStock} )
       }
       catch(er){
         throw new Error(er)

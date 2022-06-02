@@ -49,7 +49,7 @@ export class ItemModel {
     const items = await Item.find({}).sort({ createdAt: -1 }).limit(6);
     return items;
   }
-  
+
   // 디비에서 키워드 검색
   async searchItems(keyword) {
     // 1. 아이템 이름에 있는지 검색
@@ -63,7 +63,7 @@ export class ItemModel {
     if (!keyword){
       return itemArray;
     }
-    
+
     // 1. 아이템 이름 검색
     const findByName = await Item.find({itemName: {$regex: `.*${keyword}.*`}});
     findByName.forEach(data => {
@@ -83,7 +83,6 @@ export class ItemModel {
   }
 
   async create(itemInfo) {
-    console.log(itemInfo);
     try {
       const item = await Item.create(itemInfo);
       return item;
@@ -107,7 +106,6 @@ export class ItemModel {
   }
 
   async update(itemId, newInfo) {
-    console.log(itemId, newInfo);
     try {
       const updatedItem = await Item.updateOne({ _id: itemId }, newInfo).exec();
       return updatedItem;
