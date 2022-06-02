@@ -65,12 +65,19 @@ async function addOrderListElements() {
             <div class="order-status ${
               isShipped ? 'shipped' : 'notShipped'
             }">${status}</div>
-            <button class="main-btn change-btn" name="${_id}">
-              상태 변경
-            </button>
-            <button class="main-btn cancle-btn" name="${_id}">
-              주문 취소
-            </button>
+            ${
+              isShipped
+                ? ``
+                : `
+                  <button class="main-btn change-btn" name="${_id}">
+                    상태 변경
+                  </button>
+                  <button class="main-btn cancle-btn" name="${_id}">
+                    주문 취소
+                  </button>
+                  `
+            }
+            
           </div>
         `
       );
