@@ -73,54 +73,15 @@ async function handleSubmit(e) {
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
-async function handleNaverBtn(e) {
-  try {
-    e.preventDefault();
-
-    // const result = await Api.get('/api/auth/naver');
-    // const token = result.token;
-
-    // localStorage.setItem('token', token);
-
-    // console.log(result);
-    // alert(`정상적으로 로그인되었습니다.`);
-
-    window.location.href = '/api/auth/naver';
-  } catch (err) {
-    console.log(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
-  }
+function handleNaverBtn(e) {
+  e.preventDefault();
+  window.location.href = '/api/auth/naver';
 }
-async function handleKakaoBtn() {
-  try {
-    const result = await Api.get('/api/auth/kakao/start');
-    const token = result.token;
-    localStorage.setItem('token', token);
-    console.log(result);
-    alert(`정상적으로 로그인되었습니다.`);
-    window.location.href = '/';
-  } catch (err) {
-    console.log(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
-  }
-  // try {
-  //   const url = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-  //   window.open(url);
-  // } catch (err) {}
+async function handleKakaoBtn(e) {
+  e.preventDefault();
+  window.location.href = '/api/auth/kakao/start';
 }
-async function handleGoogleBtn() {
-  try {
-    const result = await Api.get('/api/auth/naver');
-    const token = result.token;
-
-    localStorage.setItem('token', token);
-
-    console.log(result);
-    alert(`정상적으로 로그인되었습니다.`);
-
-    window.location.href = '/';
-  } catch (err) {
-    console.log(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
-  }
+async function handleGoogleBtn(e) {
+  e.preventDefault();
+  window.location.href = '/api/auth/google';
 }
