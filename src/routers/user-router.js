@@ -115,7 +115,7 @@ userRouter.patch(
       const address = req.body;
       const { userId } = req.params;
       const result = await userService.noPasswordUpdateAddress(userId, address);
-      res.json(result);
+      res.status(201).json(result);
     } catch (err) {
       next(err);
     }
@@ -174,7 +174,7 @@ userRouter.patch(
       );
 
       // 업데이트 이후의 유저 데이터를 프론트에 보내 줌
-      res.status(200).json(updatedUserInfo);
+      res.status(201).json(updatedUserInfo);
     } catch (error) {
       next(error);
     }

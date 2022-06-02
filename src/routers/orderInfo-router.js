@@ -30,7 +30,7 @@ orderInfoRouter.post('/', async (req, res) => {
       shipRequest: shipRequest,
     };
 
-    res.json(await orderInfoService.addOrderInfo(inputOrderData));
+    res.status(201).json(await orderInfoService.addOrderInfo(inputOrderData));
   } catch (error) {
     next(error);
   }
@@ -44,7 +44,7 @@ orderInfoRouter.get(
   adminRequired,
   async (req, res, next) => {
     try {
-      res.json(await orderInfoService.getOrderInfo());
+      res.status(200).json(await orderInfoService.getOrderInfo());
     } catch (error) {
       next(error);
     }
@@ -53,20 +53,25 @@ orderInfoRouter.get(
 
 // api/order/list
 // 로그인한 유저의 주문내역을 반환
-orderInfoRouter.get('/list', loginRequired, async (req, res) => {
-  const userId = req.currentUserId;
-  const userInfo = await userService.getUser(userId);
+orderInfoRouter.get('/list', loginRequired, async (req, res, next) => {
+  try{
+    const userId = req.currentUserId;
+    const userInfo = await userService.getUser(userId);
+    const result = await orderInfoService.getOrderList(userInfo.orderInfo);
+    res.status(200).json(result);
+  }
+  catch(err){
+    next(err);
+  }
 
-  const result = await orderInfoService.getOrderList(userInfo.orderInfo);
 
-  res.json(result);
 });
 
 // 주문id 로 주문을 조회하는 api
 orderInfoRouter.get('/:id', loginRequired, async (req, res, next) => {
   try {
     const { id } = req.params;
-    res.json(await orderInfoService.getOrderInfoById(id));
+    res.status(200).json(await orderInfoService.getOrderInfoById(id));
   } catch (error) {
     next(error);
   }
@@ -76,7 +81,7 @@ orderInfoRouter.get('/:id', loginRequired, async (req, res, next) => {
 orderInfoRouter.post('/makeOrder', loginRequired, async (req, res, next) => {
   try {
     const { userId, orderInfo } = req.body;
-    res.json(await orderInfoService.connectOrderAndInfo(userId, orderInfo));
+    res.status(200).json(await orderInfoService.connectOrderAndInfo(userId, orderInfo));
   } catch (error) {
     next(error);
   }

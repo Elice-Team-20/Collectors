@@ -78,7 +78,7 @@ itemRouter.post(
 itemRouter.get('/:id', async (req, res) => {
   const { id } = req.params;
   const itemData = await itemService.getItembyObId(id);
-  res.json(itemData);
+  res.status(200).json(itemData);
 });
 
 // GET api/item/category/:category
@@ -150,9 +150,7 @@ itemRouter.post(
         ...(imgUrl && { imgUrl }),
       };
       const result = await itemService.updateItem(id, updateData);
-
-      // 추후 헤더 수정
-      res.json({ status: 'ok', result });
+      res.status(200).json({ status: 'ok', result });
     } catch (error) {
       next(error);
     }
