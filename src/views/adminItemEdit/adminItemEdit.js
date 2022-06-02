@@ -80,10 +80,12 @@ async function addItemInputOriginElement() {
   imgFileBoxDiv.innerHTML = `<img src=${imgUrl} alt="item image"/>`;
   stockInput.value = stocks;
   priceInput.value = price;
-  hashTag.forEach((tag) => {
+  console.log(hashTag[0]);
+  hashTag[0].split(',').forEach((tag) => {
     tags.push(tag);
-    tagListDiv.innerHTML += addTagElement(tag);
+    // tagListDiv.innerHTML += addTagElement(tag);
   });
+  addTagElements(); // 태그 추가
 }
 
 async function getOriginItemInfo() {
@@ -111,18 +113,42 @@ function handleImgFileInput(e) {
     imgFileBoxDiv.innerHTML = `<img src=${fileReader.result} alt="item image"/>`;
   };
 }
+
 function handleAddTagBtn(e) {
+  // 태그 추가
   e.preventDefault();
-  const tagListDiv = document.querySelector('#tagList');
   const tagInput = document.querySelector('#tagInput');
-  tagListDiv.innerHTML += addTagElement(tagInput.value);
   tags = [tagInput.value, ...tags];
-  console.log('tag', tags);
+  addTagElements();
   tagInput.value = '';
 }
+function addTagElements() {
+  // tagElement 모두 추가
+  const tagListDiv = document.querySelector('#tagList');
+
+  tagListDiv.innerHTML = tags.reduce((text, tag) => {
+    return text + addTagElement(tag);
+  }, ``);
+  // tagListDiv.innerHTML += addTagElement(tagInput.value);
+  addTagDeleteEvents();
+}
 function addTagElement(value) {
+  //각 tag element 추가
   return `<div class="tag-name">${value}</div>`;
 }
+function addTagDeleteEvents() {
+  // 태그 삭제 이벤튼
+  document.querySelectorAll('.tag-name').forEach((node) => {
+    node.addEventListener('click', handleTagDeleteEvent);
+  });
+}
+function handleTagDeleteEvent() {
+  console.log('tag clicked', this.innerText);
+  tags = tags.filter((value) => value !== this.innerText);
+  addTagElements();
+  console.log('after', tags);
+}
+
 async function handleRegisterItemBtn(e) {
   e.preventDefault();
   const itemNameInput = document.querySelector('#itemNameInput');

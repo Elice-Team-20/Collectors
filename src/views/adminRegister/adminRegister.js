@@ -63,14 +63,34 @@ function handleImgFileInput(e) {
   };
 }
 function handleAddTagBtn(e) {
-  const tagListDiv = document.querySelector('#tagList');
-  const tagInput = document.querySelector('#tagInput');
   e.preventDefault();
-  tagListDiv.innerHTML += `
-        <div class="tag-name">${tagInput.value}</div>
-    `;
+  const tagInput = document.querySelector('#tagInput');
   tags = [tagInput.value, ...tags];
+  addTagElements();
   tagInput.value = '';
+}
+function addTagElements() {
+  const tagListDiv = document.querySelector('#tagList');
+
+  tagListDiv.innerHTML = tags.reduce((text, tag) => {
+    return text + addTagElement(tag);
+  }, ``);
+  // tagListDiv.innerHTML += addTagElement(tagInput.value);
+  addTagDeleteEvents();
+}
+function addTagElement(value) {
+  return `<div class="tag-name">${value}</div>`;
+}
+function addTagDeleteEvents() {
+  document.querySelectorAll('.tag-name').forEach((node) => {
+    node.addEventListener('click', handleTagDeleteEvent);
+  });
+}
+function handleTagDeleteEvent() {
+  console.log('tag clicked', this.innerText);
+  tags = tags.filter((value) => value !== this.innerText);
+  addTagElements();
+  console.log('after', tags);
 }
 async function handleRegisterItemBtn(e) {
   e.preventDefault();
