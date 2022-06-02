@@ -29,6 +29,7 @@ function addAllEvents() {
 }
 async function addItemListElements() {
   const itemList = await getItemList();
+  console.log(itemList);
   itemContainerDiv.innerHTML = itemList.reduce(
     (text, { _id, itemName, imgUrl, category, price, stocks, deleteFlag }) => {
       return (
@@ -64,7 +65,7 @@ async function getItemList() {
   try {
     const itemList = await Api.get('/api/item');
     console.log(itemList);
-    return itemList.item;
+    return itemList;
   } catch (err) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
