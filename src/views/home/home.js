@@ -1,5 +1,9 @@
 import * as Api from '/api.js';
-import { selectElement, addCommas } from '/useful-functions.js';
+import {
+  selectElement,
+  addCommas,
+  removeExpiredItem,
+} from '/useful-functions.js';
 
 import {
   addNavEventListeners,
@@ -20,6 +24,10 @@ import {
 const quickMenu = selectElement('#quick-menu');
 const category = selectElement('#category');
 const soldoutContainer = selectElement('.soldout-container');
+
+window.onload = () => {
+  removeExpiredItem();
+};
 
 userInit();
 await addAllElements();

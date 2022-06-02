@@ -90,11 +90,16 @@ async function insertItemDetail(id) {
 
 // 최근 본 상품 추가
 function addRecentItem(itemId, itemName, imgUrl) {
+  // 만료 기한 설정
+  const expireDate = 1000 * 10;
+  //1000 * 60 * 60 * 24; // 24시간
+
   // 최근 본 상품 로컬 스토리지에 저장할 데이터 구조
   const recentData = {
     itemId,
     itemName,
     imgUrl,
+    expire: new Date().getTime() + expireDate,
   };
 
   // 최근 본 상품이 있는지 확인

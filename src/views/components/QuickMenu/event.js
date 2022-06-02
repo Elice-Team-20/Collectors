@@ -35,8 +35,9 @@ const addQuickMenuEventListeners = (quickMenu) => {
   // 퀵 메뉴 설정
   window.addEventListener('scroll', () => {
     let y = +window.scrollY;
-    console.log(y);
-    y > 300 ? (quickMenu.style.top = y + 300 + 'px') : (quickMenu.style.top = '95vh');
+    y > 300
+      ? (quickMenu.style.top = y + 300 + 'px')
+      : (quickMenu.style.top = '95vh');
   });
 };
 
