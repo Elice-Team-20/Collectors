@@ -7,7 +7,7 @@ const itemRouter = Router();
 // 아이탬을 생성하는 라우터
 itemRouter.get('/', async (req, res) => {
   const item = await itemService.getItems();
-  res.json({ item });
+  res.json(item);
 });
 
 // 매진임박인 아이템(5개 이하)을 조회하는 라우터
