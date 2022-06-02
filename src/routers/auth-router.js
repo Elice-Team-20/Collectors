@@ -21,7 +21,7 @@ authRouter.get('/kakao/finish', async (req, res, next) => {
       client_id: REST_API_KEY,
       client_secret: KAKAO_CLIENT_SECRET,
       grant_type: 'authorization_code',
-      redirect_uri: 'http://localhost:5000/api/auth/kakao/finish',
+      redirect_uri: 'http://34.64.229.219:5000/api/auth/kakao/finish',
       code: req.query.code,
     };
 
