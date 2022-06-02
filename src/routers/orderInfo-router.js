@@ -73,11 +73,6 @@ orderInfoRouter.get('/:id', loginRequired, async(req, res, next) => {
 })
 
 
-orderInfoRouter.get('/:id', loginRequired, async(req, res) => {
-  const {id} = req.params;
-  res.json(await orderInfoService.getOrderInfoById(id));
-})
-
 // 결제를 누르면 주문 목록이 해당 유저에게 할당시키는 api
 orderInfoRouter.post('/makeOrder',loginRequired, async(req, res, next) => {
   try{
