@@ -4,7 +4,7 @@ import { selectElement } from '/useful-functions.js';
 import {
   addNavEventListeners,
   addNavElements,
-  handleLogout,
+  handleHamburger,
 } from '../../components/Nav/event.js';
 import { addFooterElements } from '../../components/Footer/event.js';
 
@@ -30,6 +30,7 @@ function addAllEvents() {
     );
   };
   addNavEventListeners();
+  handleHamburger();
   submitButton.addEventListener('click', handleSubmit);
 }
 

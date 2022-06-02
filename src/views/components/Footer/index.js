@@ -8,9 +8,9 @@ export const Footer = () => `
     Made by Team 20
   </div>
   <div class="footer-social">
-    <a href="/"><i class="fa-brands fa-instagram"></i></a>
-    <a href="/"><i class="fa-brands fa-facebook"></i></a>
-    <a href="/"><i class="fa-brands fa-google"></i></a>
+    <a href="https://www.instagram.com/marvelkorea/"><i class="fa-brands fa-instagram"></i></a>
+    <a href="https://www.facebook.com/marvel.kr/"><i class="fa-brands fa-facebook"></i></a>
+    <a href="https://www.google.com/search?q=%EB%A7%88%EB%B8%94+%EC%BD%9C%EB%A0%89%ED%84%B0&sxsrf=ALiCzsaGzrbyPjdz8tx8fgTDQ46z8iV0YQ%3A1654179702991&ei=dseYYqaJPJSFmAX-2rOQCw&ved=0ahUKEwimnN3M-474AhWUAqYKHX7tDLIQ4dUDCA4&uact=5&oq=%EB%A7%88%EB%B8%94+%EC%BD%9C%EB%A0%89%ED%84%B0&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEIAEMggIABAeEA8QBzIGCAAQHhAHMggIABAeEA8QCDoHCCMQsAMQJzoHCAAQRxCwAzoHCCMQsAIQJzoHCC4Q1AIQDToECAAQDToGCAAQDRAKOggIABAeEAgQBzoKCAAQHhAPEAgQB0oECEEYAEoECEYYAFCNBVj0DmD-EWgCcAF4AIABfogBwgWSAQMwLjaYAQCgAQHIAQrAAQE&sclient=gws-wiz"><i class="fa-brands fa-google"></i></a>
   </div>
 </div>
 `;

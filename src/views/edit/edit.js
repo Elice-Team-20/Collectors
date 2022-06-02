@@ -4,6 +4,7 @@ import { selectElement } from '/useful-functions.js';
 import {
   addNavEventListeners,
   addNavElements,
+  handleHamburger,
 } from '../../components/Nav/event.js';
 import { addFooterElements } from '../../components/Footer/event.js';
 
@@ -31,6 +32,7 @@ function addAllEvents() {
     );
   };
   addNavEventListeners();
+  handleHamburger();
   addressButton.addEventListener('click', handleAddress);
   submitButton.addEventListener('click', updateUserData);
   currentPasswordInput.addEventListener('change', checkCurrentPassword);

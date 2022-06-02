@@ -4,6 +4,7 @@ import {
   addNavEventListeners,
   addNavElements,
   checkUserStatus,
+  handleHamburger,
 } from '../../components/Nav/event.js';
 import { addFooterElements } from '../../components/Footer/event.js';
 // import {
@@ -37,6 +38,7 @@ async function addAllElements() {
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   addNavEventListeners();
+  handleHamburger();
   orderListBtn.addEventListener('click', () => {
     window.location.href = '/user/orderlist';
   });

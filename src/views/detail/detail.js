@@ -1,26 +1,24 @@
-// 아래는 현재 home.html 페이지에서 쓰이는 코드는 아닙니다.
-// 다만, 앞으로 ~.js 파일을 작성할 때 아래의 코드 구조를 참조할 수 있도록,
-// 코드 예시를 남겨 두었습니다.
-import { addCommas } from '/useful-functions.js';
+import { addCommas, selectElement } from '/useful-functions.js';
 
 import {
   addNavEventListeners,
   addNavElements,
-} from '../../components/Nav/event.js';
+  checkUserStatus,
+  handleHamburger,
+} from '../components/Nav/event.js';
+
 import { addFooterElements } from '../../components/Footer/event.js';
-import { checkUserStatus } from '../components/Nav/event.js';
 
 // url에서 id 값 추출해오기
-// const ITEMDETAIL = document.querySelector('.item-detail');
 const queryString = window.location.search;
 const id = new URLSearchParams(queryString).get('id');
-const itemLeftImgDiv = document.querySelector('.item-left');
-const itemNameDiv = document.querySelector('#item-name');
-const itemCompanyDiv = document.querySelector('#item-company');
-const itemPriceDiv = document.querySelector('#item-price');
-const itemExplanationDiv = document.querySelector('#item-explanation');
-const cartBtn = document.querySelector('#addCartBtn');
-const orderBtn = document.querySelector('#orderBtn');
+const itemLeftImgDiv = selectElement('.item-left');
+const itemNameDiv = selectElement('#item-name');
+const itemCompanyDiv = selectElement('#item-company');
+const itemPriceDiv = selectElement('#item-price');
+const itemExplanationDiv = selectElement('#item-explanation');
+const cartBtn = selectElement('#addCartBtn');
+const orderBtn = selectElement('#orderBtn');
 // console.log(item);
 // navigation, footer 컴포넌트 넣기
 await addAllElements();
@@ -35,6 +33,7 @@ async function addAllElements() {
 
 async function addAllEvents() {
   addNavEventListeners();
+  handleHamburger();
   cartBtn.addEventListener('click', addCartBtnHandler);
   orderBtn.addEventListener('click', handleOrderBtn);
 }
@@ -86,6 +85,35 @@ async function insertItemDetail(id) {
   itemExplanationDiv.innerText = mainExplanation;
 
   addRecentItem(id, itemName, imgUrl);
+  addTagElements(hashTag);
+
+  if (stocks <= 5) {
+    addStockNumber();
+  }
+}
+
+function addStockNumber() {
+  const stockDiv = selectElement('#stock');
+  stockDiv.innerHTML = `
+  <i class="fa-regular fa-bell"></i>
+  매진 임박 상품
+  `;
+}
+
+// 태그 추가하기
+function addTagElements(tags) {
+  tags = tags[0].split(',');
+  console.log('tags', tags);
+
+  const tagListDiv = selectElement('#tagList');
+
+  tagListDiv.innerHTML = tags.reduce((text, tag) => {
+    return text + addTagElement(tag);
+  }, ``);
+}
+
+function addTagElement(value) {
+  return `<div class="tag-name">#${value}</div>`;
 }
 
 // 최근 본 상품 추가

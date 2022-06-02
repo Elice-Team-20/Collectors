@@ -5,6 +5,7 @@ import {
   addNavEventListeners,
   addNavElements,
   checkUserStatus,
+  handleHamburger,
 } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
 
@@ -61,6 +62,7 @@ function addAllElements() {
 
 async function addAllEvents() {
   addNavEventListeners();
+  handleHamburger();
   orderBtn.addEventListener('click', orderBtnHandler);
 
   addCartEventListeners();
