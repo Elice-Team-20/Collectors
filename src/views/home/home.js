@@ -60,7 +60,8 @@ async function userInit() {
   }
   document.cookie.split(',').forEach((el) => {
     let [key, value] = el.split('=');
-    if (value.charAt(0) == 'j') {
+    // 잘못된 토큰이 올경우 대비 jwt 는 무조건 e로시작
+    if (value !== undefined && value.charAt(0) === 'j') {
       const temp = value.split('%22');
 
       value = temp[3];
