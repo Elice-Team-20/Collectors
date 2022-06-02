@@ -4,7 +4,8 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
 const config = {
   clientID: process.env.GOOGLE_ID,
   clientSecret: process.env.GOOGLE_SECRETKEY,
-  callbackURL: 'http://localhost:5000/api/auth/google/callback',
+  callbackURL:
+    'http://kdt-sw2-seoul-team20.elicecoding.com/api/auth/google/callback',
 };
 
 async function findOrCreateUser({ email, displayName }) {
@@ -36,5 +37,5 @@ module.exports = new GoogleStrategy(
     } catch (error) {
       done(error);
     }
-  }
+  },
 );
