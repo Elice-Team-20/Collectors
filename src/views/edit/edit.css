@@ -1,9 +1,15 @@
 .edit-container {
-  width: 95%;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90vw;
+  margin: 2vh auto 0;
+  max-height: calc(90vh - 100px);
 }
 
 .edit-title {
+  width: 50vw;
   border-bottom: 1px solid white;
   margin: 20px 0;
   display: flex;
@@ -14,12 +20,11 @@
   margin-right: 0.5rem;
 }
 
-.edit-user-form-container {
+/* .edit-user-form-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* height: 70vh; */
-}
+} */
 
 .edit-user-form-box {
   display: flex;
@@ -27,8 +32,8 @@
   align-items: center;
   justify-content: space-evenly;
 
-  width: 30rem;
-  height: 70%;
+  width: 50vw;
+  height: 100%;
 }
 
 .edit-user-form-box .field {
@@ -42,7 +47,7 @@
 }
 
 .edit-user-form-box .field .input {
-  width: 98%;
+  width: 100%;
   height: 4vh;
   padding-left: 2%;
 
@@ -84,7 +89,38 @@
 }
 
 .address-container {
-  width: 98%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 768px) {
+  .edit {
+    max-height: calc(90vh - 100px);
+  }
+
+  .edit-container {
+    width: 100vw;
+  }
+
+  .edit-title {
+    width: 100%;
+  }
+
+  .edit-user-form-box {
+    width: 100%;
+  }
+
+  .edit-user-form-box .field {
+    width: 100%;
+  }
+
+  .edit-user-form-box .field .input {
+    width: 100%;
+  }
+
+  .edit-user-form-box .button,
+  #addressButton {
+    width: 50%;
+  }
 }
