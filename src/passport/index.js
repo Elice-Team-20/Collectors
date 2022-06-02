@@ -3,8 +3,8 @@ import naver from './strategies/naver';
 import google from './strategies/google';
 
 function initialize() {
-    passport.use(naver);
-    passport.use(google);
+  passport.use(naver);
+  passport.use(google);
 }
 
-export { initialize }
+export { initialize };

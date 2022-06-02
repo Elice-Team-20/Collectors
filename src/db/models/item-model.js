@@ -31,7 +31,9 @@ export class ItemModel {
   // 카테고리별 상품 검색
   async findByCategory(category) {
     try {
-      const items = await Item.find({ category: category }).sort({ updatedAt: -1 }).exec();
+      const items = await Item.find({ category: category })
+        .sort({ updatedAt: -1 })
+        .exec();
       return items;
     } catch (er) {
       return er;
@@ -40,7 +42,7 @@ export class ItemModel {
 
   // stocks가 5개 미만인 아이템 검색
   async findFiveOrLessThanItems() {
-    const items = await Item.find({ stocks: { $lte: 5 } }).exec();
+    const items = await Item.find({ stocks: { $lte: 5, $gt: 0 } }).exec();
     return items;
   }
 
@@ -61,30 +63,29 @@ export class ItemModel {
     const itemArray = [];
 
     // 검색 키워드가 없을 경우 빈 배열 반환
-    if (!keyword){
+    if (!keyword) {
       return itemArray;
     }
 
     // 1. 아이템 이름 검색
-    const findByName = await Item.find({itemName: {$regex: `.*${keyword}.*`}});
-    findByName.forEach(data => {
-      if(data.deleteFlag == false) itemArray.push(data)
+    const findByName = await Item.find({
+      itemName: { $regex: `.*${keyword}.*` },
     });
+
+    itemArray.push(...findByName);
 
     // 2. 해쉬태그 검색
-    const findByHashTag = await Item.find({hashTag: {$regex: `.*${keyword}.*`}})
-    findByHashTag.forEach(data => {
-      if(data.deleteFlag == false) itemArray.push(data)
+    const findByHashTag = await Item.find({
+      hashTag: { $regex: `.*${keyword}.*` },
     });
 
-    // // 3. 요약에 키워드 있는지 검색
-    // const findBySummary = await Item.find({summary: {$regex: `.*${keyword}.*`}})
-    // findBySummary.forEach(data => {
-    //   if(data.deleteFlag == false) itemArray.push(data)
-    // });
+    itemArray.push(...findByHashTag);
 
     // lodash 라이브러리 : 중복되는 id를 가지는 요소들 제거
-    const result = lodash.uniqBy(itemArray, "id")
+    // deleteFlag가 true인 것만 필터링
+    const result = lodash
+      .uniqBy(itemArray, 'id')
+      .filter((data) => !data.deleteFlag);
 
     return result;
   }

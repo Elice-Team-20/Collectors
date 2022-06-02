@@ -75,49 +75,52 @@ userRouter.get('/userlist', loginRequired, async function (req, res, next) {
 });
 
 // user 아이디를 반환하는 api
-userRouter.get('/id', loginRequired, async function(req, res, next) {
-  try{
+userRouter.get('/id', loginRequired, async function (req, res, next) {
+  try {
     const id = req.currentUserId;
     res.status(200).json(id);
-  }catch(error){
+  } catch (error) {
     next(error);
   }
-})
+});
 
 // 관리자인지 검사
-userRouter.get('/isAdmin', loginRequired, async function(req, res, next) {
-  try{
+userRouter.get('/isAdmin', loginRequired, async function (req, res, next) {
+  try {
     const id = req.currentUserId;
     const result = await userService.isAdmin(id);
-    
-    res.status(200).json({"result": result});
-  }catch(error){
+
+    res.status(200).json({ result: result });
+  } catch (error) {
     next(error);
   }
-})
+});
 
 // 유저아이디 에 맞는 유저 정보 가져옴 만약 주문 정보 가 있으면 주문정보도 보여주는 api
 userRouter.get('/:userId', loginRequired, async (req, res, next) => {
-  try{
-    const {userId} = req.params;
+  try {
+    const { userId } = req.params;
     const user = await userService.getUser(userId);
     res.status(200).json(user);
-  }catch(error){
+  } catch (error) {
     next(error);
   }
-})
+});
 
-userRouter.patch('/users/:userId/address', loginRequired, async(req, res, next) =>{
-  try{
-    const  address  = req.body;
-    const { userId } = req.params;
-    const result = await userService.noPasswordUpdateAddress(userId, address)
-    res.json(result)
+userRouter.patch(
+  '/users/:userId/address',
+  loginRequired,
+  async (req, res, next) => {
+    try {
+      const address = req.body;
+      const { userId } = req.params;
+      const result = await userService.noPasswordUpdateAddress(userId, address);
+      res.json(result);
+    } catch (err) {
+      next(err);
+    }
   }
-  catch(err){
-    next(err)
-  }
-})
+);
 
 // 사용자 정보 수정
 // (예를 들어 /api/users/abc12345 로 요청하면 req.params.userId는 'abc12345' 문자열로 됨)
@@ -179,36 +182,32 @@ userRouter.patch(
 );
 
 // loginRequired 체크하고 유저 정보를 제거하는 api
-userRouter.delete('/delete/:userId', async(req, res, next) => {
-  try{
+userRouter.delete('/delete/:userId', async (req, res, next) => {
+  try {
     const { userId } = req.params;
     const { password } = req.body;
 
-    if(!password){
+    if (!password) {
       throw new Error('회원 탈퇴를 위해서는 비밀번호 입력이 필요합니다.');
     }
 
     const result = await userService.deleteUser(userId, password);
 
-    res.status(200).json({"result": "정상적으로 회원 정보가 삭제되었습니다."});
-
-
-  }catch(error){
+    res.status(200).json({ result: '정상적으로 회원 정보가 삭제되었습니다.' });
+  } catch (error) {
     next(error);
   }
-
-})
+});
 // 비밀번호가 맞는지 확인해주는 라우터
-userRouter.post('/checkPassword/:userEmail', async (req, res, next)=>{
-  try{
+userRouter.post('/checkPassword/:userEmail', async (req, res, next) => {
+  try {
     const { password } = req.body;
     const { userEmail } = req.params;
     const result = await userService.checkPassword(userEmail, password);
-    res.status(200).json({res : result})
+    res.status(200).json({ res: result });
+  } catch (err) {
+    next(err);
   }
-  catch(err){
-    next(err)
-  }
-})
+});
 
 export { userRouter };
