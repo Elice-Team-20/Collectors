@@ -17,7 +17,7 @@ class KakaoOAuthService {
   // 카카오 토큰 요청 url 작성 함수
   makeUrlKakaoToken() {
     const REST_API_KEY = process.env.KAKAO_KEY;
-    const REDIRECT_URI = 'http://localhost:5000/api/auth/kakao/finish';
+    const REDIRECT_URI = 'http://34.64.229.219:5000/api/auth/kakao/finish';
     const url = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     return url;
   }
