@@ -168,10 +168,11 @@ class OrderinfoService {
       const itemInfo = await itemService.getItembyObId(data.itemId);
       const updateStock = itemInfo.stocks + data.count;
       // 수량정보 갱신하기
-      await itemService.updateItem(
+      const result = await itemService.updateItem(
         { _id: data.itemId },
         { stocks: updateStock },
       );
+      console.log(result);
     });
   }
 }

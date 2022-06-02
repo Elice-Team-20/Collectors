@@ -100,6 +100,7 @@ orderInfoRouter.post('/update', loginRequired, async (req, res, next) => {
 orderInfoRouter.delete('/delete', loginRequired, async (req, res, next) => {
   try {
     const { orderId } = req.body;
+    await orderInfoService.addStock(orderId);
     const deleteResult = await orderInfoService.deleteInfo(orderId);
     res.status(200).json({ deleteResult });
   } catch (error) {
@@ -117,7 +118,6 @@ orderInfoRouter.delete(
       const { orderId } = req.body;
       await orderInfoService.addStock(orderId);
       const deletedResult = await orderInfoService.deleteInfo(orderId);
-      deletedResult = await orderInfoService.getOrderInfoById(orderId);
       res.status(200).json({ deletedResult });
     } catch (error) {
       next(error);
