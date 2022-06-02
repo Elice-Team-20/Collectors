@@ -15,6 +15,7 @@ import { addFooterElements } from '../components/Footer/event.js';
 import {
   addCategoryMenuElement,
   addCategoryMenuEventListeners,
+  addCategoryName,
 } from '../components/Category/event.js';
 import {
   addQuickMenuElement,
@@ -45,6 +46,7 @@ async function addAllElements() {
   addNavElements();
   addFooterElements();
   addCategoryMenuElement(categorySection);
+  addCategoryName(category);
   addQuickMenuElement(quickMenu);
   addSearchBarElement();
   insertItemElement();

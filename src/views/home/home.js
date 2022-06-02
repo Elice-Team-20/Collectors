@@ -24,6 +24,7 @@ import {
 const quickMenu = selectElement('#quick-menu');
 const category = selectElement('#category');
 const soldoutContainer = selectElement('.soldout-container');
+const newItemsContainer = selectElement('.newItems-container');
 
 window.onload = () => {
   removeExpiredItem();
@@ -40,6 +41,7 @@ async function addAllElements() {
   addCategoryMenuElement(category);
   addQuickMenuElement(quickMenu);
   addSoldOutItems();
+  addNewItems();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -91,7 +93,7 @@ async function addSoldOutItems() {
   // 매진 임박 상품 추가하기
   soldoutItemsData.forEach(({ _id, itemName, imgUrl, price, stocks }) => {
     const soldoutItemList = `
-      <div class="soldout-item">
+      <div class="soldout-item home-item">
         <a href="/item/?id=${_id}">
           <div class="img-wrap" style="background-image: url(${imgUrl});">
           </div>
@@ -103,5 +105,28 @@ async function addSoldOutItems() {
     `;
 
     soldoutContainer.insertAdjacentHTML('beforeend', soldoutItemList);
+  });
+}
+
+// 신상품 추가 기능 구현하기
+async function addNewItems() {
+  // 신상품 가져오기
+  const newItemsData = await Api.get(`/api/item/newItem`);
+
+  // 신상품 상품 추가하기
+  newItemsData.forEach(({ _id, itemName, imgUrl, price, summary }) => {
+    const newItemList = `
+      <div class="new-item home-item">
+        <a href="/item/?id=${_id}">
+          <div class="img-wrap" style="background-image: url(${imgUrl});">
+          </div>
+          <h3>${itemName}</h3>
+          <p>${summary}</p>
+          <p>${addCommas(price)}원</p>
+        </a>
+      </div>
+    `;
+
+    newItemsContainer.insertAdjacentHTML('beforeend', newItemList);
   });
 }
