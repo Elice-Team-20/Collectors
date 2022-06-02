@@ -91,15 +91,16 @@ async function handleNaverBtn(e) {
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
-async function handleKakaoBtn() {
+async function handleKakaoBtn(e) {
   try {
-    const result = window.open('/api/auth/kakao/start');
-    console.log(result);
-    const token = result.token;
-    localStorage.setItem('token', token);
-    console.log(result);
-    alert(`정상적으로 로그인되었습니다.`);
-    window.location.href = '/';
+    e.preventDefault();
+    // const result = window.open('/api/auth/kakao/start');
+    // console.log(result);
+    // const token = result.token;
+    // localStorage.setItem('token', token);
+    // console.log(result);
+    // alert(`정상적으로 로그인되었습니다.`);
+    window.location.href = '/api/auth/kakao/start';
   } catch (err) {
     console.log(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
