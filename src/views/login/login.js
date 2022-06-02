@@ -93,7 +93,8 @@ async function handleNaverBtn(e) {
 }
 async function handleKakaoBtn() {
   try {
-    const result = await Api.get('/api/auth/kakao/start');
+    const result = window.open('/api/auth/kakao/start');
+    console.log(result)
     const token = result.token;
     localStorage.setItem('token', token);
     console.log(result);
