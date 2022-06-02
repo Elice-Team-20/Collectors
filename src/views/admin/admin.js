@@ -3,9 +3,15 @@ import {
   addNavElements,
 } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
+import { checkAdmin } from '../useful-functions.js';
 
 window.onload = () => {
   // admin인지 확인하기
+  if (!checkAdmin()) {
+    alert('관리자 권한이 없습니다.');
+    window.location.href = '/';
+    return;
+  }
 };
 const registerItemsBtn = document.querySelector('#registerItemsBtn');
 const manageItemsBtn = document.querySelector('#manageItemsBtn');
@@ -34,6 +40,6 @@ function addBtnEvents() {
     window.location.href = '/admin/manage';
   });
   orderListBtn.addEventListener('click', () => {
-    window.location.href = '/admin/order_list';
+    window.location.href = '/admin/orderlist';
   });
 }

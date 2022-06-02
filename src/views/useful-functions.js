@@ -8,7 +8,7 @@ export const validateEmail = (email) => {
   return String(email)
     .toLowerCase()
     .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     );
 };
 
@@ -35,4 +35,10 @@ export const selectElement = (selector) => {
     throw new Error(`요소를 찾을 수 없습니다. ${selector}`);
   }
   return element;
+};
+
+// 관리자 확인 함수
+export const checkAdmin = () => {
+  const isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
+  return isAdmin;
 };
