@@ -61,10 +61,10 @@ async function userInit() {
     localStorage.setItem('cart', JSON.stringify([]));
   }
 
-  console.log(document.cookie);
   document.cookie.split(',').forEach((el) => {
     let [key, value] = el.split('=');
     if (key === 'token') localStorage.setItem('token', value);
+    console.log(document.cookie);
   });
 }
 
