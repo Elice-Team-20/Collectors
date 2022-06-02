@@ -6,12 +6,14 @@ import { addNavEventListeners, addNavElements } from '../components/Nav/event.js
 
 import { addFooterElements } from '../components/Footer/event.js';
 import { addCategoryMenuElement, addCategoryMenuEventListeners } from '../components/Category/event.js';
+import { addQuickMenuElement, addQuickMenuEventListeners } from '../components/QuickMenu/event.js';
 import { addSearchBarElement } from '../components/SearchBar/event.js';
 
 // GET / api/item/?id= ...
 
 const itemList = selectElement('.item-list');
 const categorySection = selectElement('#category');
+const quickMenu = selectElement('#quick-menu');
 const queryString = window.location.search;
 const category = new URLSearchParams(queryString).get('category');
 
@@ -26,6 +28,7 @@ async function addAllElements() {
   addNavElements();
   addFooterElements();
   addCategoryMenuElement(categorySection);
+  addQuickMenuElement(quickMenu);
   addSearchBarElement();
   insertItemElement();
 }
@@ -34,6 +37,7 @@ async function addAllElements() {
 function addAllEvents() {
   addNavEventListeners();
   addCategoryMenuEventListeners();
+  addQuickMenuEventListeners(quickMenu);
   document.querySelector('#searchBarBtn').addEventListener('click', handleSearchBtn);
 }
 async function initializsItems() {
