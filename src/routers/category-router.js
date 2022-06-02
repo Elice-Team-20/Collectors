@@ -9,7 +9,7 @@ const categoryRouter = Router();
 categoryRouter.get('/', async (req, res, next) => {
   try {
     const categories = await categoryService.getCategories();
-    res.json(categories);
+    res.status(200).json(categories);
   } catch (error) {
     next(error);
   }
@@ -23,7 +23,7 @@ categoryRouter.post('/', async (req, res, next) => {
     const { categoryName } = req.body;
     const newCategory = await categoryService.addCategory(categoryName);
 
-    res.json(newCategory);
+    res.status(201).json(newCategory);
   } catch (error) {
     next(error);
   }
@@ -35,7 +35,7 @@ categoryRouter.delete('/', async (req, res, next) => {
   try {
     const { categoryName } = req.body;
     const deletedCategory = await categoryService.deleteCategory(categoryName);
-    res.json(deletedCategory);
+    res.status(200).json(deletedCategory);
   } catch (error) {
     next(error);
   }
@@ -52,7 +52,7 @@ categoryRouter.post('/:oldName', async (req, res, next) => {
       oldName,
       newCategoryName
     );
-    res.json(updatedCategory);
+    res.status(201).json(updatedCategory);
   } catch (error) {
     next(error);
   }

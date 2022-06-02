@@ -9,7 +9,7 @@ authRouter.get('/kakao/start', (req, res, next) => {
   const url = kakaoOAuthService.makeUrlKakaoToken();
 
   //카카오에 등록된 redirect 로 이동
-  res.redirect(url);
+  res.status(200).redirect(url);
 });
 
 // 토큰인증을 받기 + 유저정보 요청/받기 + jwt 토큰 res 에 생성
@@ -44,7 +44,7 @@ authRouter.get('/kakao/finish', async (req, res, next) => {
     }
     //만약 유저정보가 등록도 안되고 db에서 찾는것도 안되면 다음 오류 발생
     if (!user) {
-      res.status(401).send('유저 정보가 할당이 안됩니다 양식을 확인하세요');
+      res.status(400).send('유저 정보가 할당이 안됩니다 양식을 확인하세요');
     }
     // 토큰 생성
     const token = await kakaoOAuthService.getToken(user);
