@@ -1,6 +1,10 @@
 import * as Api from '/api.js';
 
-import { addCommas, selectElement } from '/useful-functions.js';
+import {
+  addCommas,
+  selectElement,
+  removeExpiredItem,
+} from '/useful-functions.js';
 
 import {
   addNavEventListeners,
@@ -28,6 +32,10 @@ const category = new URLSearchParams(queryString).get('category');
 
 let items = []; // 전체 or 카테고리 아이템 담을 객체
 let searchedItems = []; // 검색된 거 담을 객체
+
+window.onload = () => {
+  removeExpiredItem();
+};
 
 await initializsItems(); // 처음엔 전체 목록
 await addAllElements();

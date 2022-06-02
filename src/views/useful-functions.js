@@ -42,3 +42,17 @@ export const checkAdmin = () => {
   const isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
   return isAdmin;
 };
+
+// 만료된 상품 제거
+export const removeExpiredItem = () => {
+  let recentItems = JSON.parse(localStorage.getItem('recentItem')) || [];
+
+  // 만료 기한이 지난 상품 제거
+  recentItems.forEach(({ expire }, index) => {
+    if (expire < new Date().getTime()) {
+      recentItems.splice(index, 1);
+    }
+  });
+
+  localStorage.setItem('recentItem', JSON.stringify(recentItems));
+};
