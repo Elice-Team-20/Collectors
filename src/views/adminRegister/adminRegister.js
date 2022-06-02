@@ -6,9 +6,16 @@ import {
 } from '../../components/Nav/event.js';
 import { addItemInputFormElement } from '../../components/Admin/event.js';
 import { addFooterElements } from '../../components/Footer/event.js';
+import { checkAdmin } from '../../useful-functions.js';
 
 window.onload = () => {
   // admin인지 확인하기
+  console.log('check', checkAdmin());
+  if (!checkAdmin()) {
+    alert('관리자 권한이 없습니다.');
+    window.location.href = '/';
+    return;
+  }
 };
 let tags = []; //document.querySelectorAll('.tag-name');
 let file;
