@@ -21,9 +21,9 @@ export const ItemInputForm = (btnName) => {
         <div class="control">
           <select id="categorySelector">
             <option selected disabled>카테고리를 선택해주세요.</option>
-            <option value="hero">히어로</option>
-            <option value="villain">빌런</option>
+            
           </select>
+          <div id="categoryTextInputDiv"></div>
         </div>
       </div>
       <!-- 제조사 -->

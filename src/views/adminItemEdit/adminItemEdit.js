@@ -4,7 +4,11 @@ import {
   addNavEventListeners,
   addNavElements,
 } from '../../../components/Nav/event.js';
-import { addItemInputFormElement } from '../../../components/Admin/event.js';
+import {
+  addItemInputFormElement,
+  addCategoryElements,
+  getCategoryItems,
+} from '../../../components/Admin/event.js';
 import { addFooterElements } from '../../../components/Footer/event.js';
 import { checkAdmin } from '../../../useful-functions.js';
 
@@ -19,10 +23,16 @@ window.onload = () => {
 let file;
 let tags = [];
 let isImgChanged = false; // 이미지 리소스 낭비 방지
+let categoryList = await getCategoryItems();
+console.log(categoryList);
 // const queryString = window.location.search;
 const id = new URLSearchParams(window.location.search).get('id');
 console.log(id);
-const categoryMap = { 히어로: 1, 빌런: 2 };
+const categoryMap = categoryList.reduce((map, val, idx) => {
+  map[val] = idx + 1;
+  return map;
+}, {});
+console.log(categoryMap);
 // 요소(element), input 혹은 상수
 await addAllElements();
 await addAllEvents();
@@ -31,6 +41,7 @@ await addAllEvents();
 async function addAllElements() {
   addNavElements('User');
   await addItemInputFormElement('상품 수정하기');
+  await addCategoryElements(categoryList);
   await addItemInputOriginElement();
   addFooterElements();
 }
@@ -48,6 +59,9 @@ async function addAllEvents() {
   document
     .querySelector('#imgFileInput')
     .addEventListener('change', handleImgFileInput);
+  document
+    .querySelector('#categorySelector')
+    .addEventListener('change', handleCategorySelect);
 }
 async function addItemInputOriginElement() {
   const itemNameInput = document.querySelector('#itemNameInput');
@@ -89,6 +103,7 @@ async function addItemInputOriginElement() {
 }
 
 async function getOriginItemInfo() {
+  // 기존 아이템 정보 불러오기
   try {
     const itemInfo = await Api.get(`/api/item/${id}`);
     return itemInfo;
@@ -98,7 +113,7 @@ async function getOriginItemInfo() {
   }
 }
 function handleImgFileInput(e) {
-  // e.select();
+  // 이미지 선택 핸들 함수
   const imgFileInput = document.querySelector('#imgFileInput');
   const imgFileBoxDiv = document.querySelector('#imgFileBox');
 
@@ -115,7 +130,7 @@ function handleImgFileInput(e) {
 }
 
 function handleAddTagBtn(e) {
-  // 태그 추가
+  // 태그 추가 핸들 함수
   e.preventDefault();
   const tagInput = document.querySelector('#tagInput');
   tags = [tagInput.value, ...tags];
@@ -123,7 +138,7 @@ function handleAddTagBtn(e) {
   tagInput.value = '';
 }
 function addTagElements() {
-  // tagElement 모두 추가
+  // tagElement 모두 추가 함수
   const tagListDiv = document.querySelector('#tagList');
 
   tagListDiv.innerHTML = tags.reduce((text, tag) => {
@@ -133,23 +148,40 @@ function addTagElements() {
   addTagDeleteEvents();
 }
 function addTagElement(value) {
-  //각 tag element 추가
+  //각 tag element 추가 함수
   return `<div class="tag-name">${value}</div>`;
 }
 function addTagDeleteEvents() {
-  // 태그 삭제 이벤튼
+  // 태그 삭제 이벤트 생성 함수
   document.querySelectorAll('.tag-name').forEach((node) => {
     node.addEventListener('click', handleTagDeleteEvent);
   });
 }
 function handleTagDeleteEvent() {
+  // 태그 삭제 이벤트 함수
   console.log('tag clicked', this.innerText);
   tags = tags.filter((value) => value !== this.innerText);
   addTagElements();
   console.log('after', tags);
 }
-
+function handleCategorySelect() {
+  console.log(document.querySelector('#categoryTextInputDiv'));
+  if (this.selectedIndex === categoryList.length + 1) {
+    document.querySelector('#categoryTextInputDiv').innerHTML = `
+    <input
+      class="input"
+      id="categoryTextInput"
+      type="text"
+      placeholder="직접 추가하기"
+      autocomplete="off"
+    />
+  `;
+  } else {
+    document.querySelector('#categoryTextInputDiv').innerHTML = '';
+  }
+}
 async function handleRegisterItemBtn(e) {
+  // 상품 수정하기 버튼 핸들 함수
   e.preventDefault();
   const itemNameInput = document.querySelector('#itemNameInput');
   const categorySelector = document.querySelector('#categorySelector');
@@ -188,13 +220,23 @@ async function handleRegisterItemBtn(e) {
     return alert('태그를 적어도 하나 추가해주세요.');
   }
   if (!confirm('상품을 수정하시겠습니까?')) return;
+
   try {
+    // 카테고리 추가
+    let categoryName;
+    if (categorySelector.selectedIndex === categoryList.length + 1) {
+      // 직접 추가하기라면
+      categoryName = document.querySelector('#categoryTextInput').value;
+      await Api.post('/api/category', { categoryName }); // 카테고리 새로 생성
+    } else {
+      categoryName =
+        categorySelector.options[categorySelector.selectedIndex].text;
+    }
+    console.log(categoryName);
+    // 아이템 정보
     let formData = new FormData();
     formData.append('itemName', itemNameInput.value);
-    formData.append(
-      'category',
-      categorySelector.options[categorySelector.selectedIndex].text,
-    );
+    formData.append('category', categoryName);
     formData.append('manufacturingCompany', companyInput.value);
     formData.append('summary', summaryInput.value);
     formData.append('mainExplanation', mainExlainInput.value);

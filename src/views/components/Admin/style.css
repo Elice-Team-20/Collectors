@@ -63,6 +63,14 @@ textarea {
   display: block;
   margin-bottom: 3%;
 }
+/* 카테고리 추가 */
+#categoryTextInputDiv {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  /* row-gap: 5%; */
+  margin-top: 3%;
+}
 /* 이미지 파일 불러오기 */
 #imgFileInputDiv .control input {
   margin-top: 3%;
