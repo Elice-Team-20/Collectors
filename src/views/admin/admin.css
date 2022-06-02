@@ -2,8 +2,9 @@ section {
   display: flex;
   justify-content: center;
 
-  height: 90vh;
+  height: 85vh;
 }
+
 #content {
   width: 60%;
   margin-top: 5vh;
