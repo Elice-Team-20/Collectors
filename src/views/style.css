@@ -25,6 +25,12 @@ a {
 }
 
 /* Nav Style */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 10001;
+}
+
 .navContainer {
   padding: 0 3vw;
   height: 10vh;
@@ -129,9 +135,9 @@ a {
 #category {
   height: 5vh;
   width: 100vw;
-  position: sticky;
-  top: 0;
-  z-index: 10000;
+  position: fixed;
+  top: 10vh;
+  z-index: 10002;
   margin: 0 auto;
 }
 
@@ -235,8 +241,8 @@ a {
 
 /* section style */
 section {
+  margin-top: 5vh; /* 상단 공백 */
   padding-bottom: 100px; /* footer의 height값과 동일 하단에 있게 하기 위함 */
-  /* border: 1px slateblue solid; */
 }
 
 /* button */

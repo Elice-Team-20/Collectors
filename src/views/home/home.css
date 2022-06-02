@@ -91,7 +91,7 @@
   transition: transform 0.5s;
 }
 
-@media screen and (max-width: 768px) {
+@media all and (max-width: 768px) {
   #quick-menu {
     display: none;
   }
