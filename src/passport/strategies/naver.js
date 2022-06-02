@@ -36,5 +36,5 @@ module.exports = new NaverStrategy(
       console.log(error);
       done(error);
     }
-  }
+  },
 );
