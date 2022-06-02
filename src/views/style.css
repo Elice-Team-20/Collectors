@@ -14,11 +14,9 @@ a {
   position: relative;
   width: 100%;
 }
-
-.deleted {
+/* .deleted {
   display: none;
-}
-
+} */
 /* 구분자 */
 .seperator {
   width: 100%;
