@@ -46,11 +46,18 @@ section {
 .order-data .shipped {
   color: #2cc236;
 }
-.order-data .notShipped {
-  color: #f01e21;
-}
 .order-data .main-btn {
   width: 80%;
+}
+.order-data .main-btn:disabled {
+  background-color: dimgray;
+  border: 1px;
+  color: white;
+}
+.order-data .main-btn:disabled:hover {
+  background-color: dimgray;
+  border: 1px;
+  color: white;
 }
 .order-data .change-btn {
   background-color: #2cc236;
