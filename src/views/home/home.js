@@ -1,7 +1,7 @@
 import * as Api from '/api.js';
 import { selectElement, addCommas } from '/useful-functions.js';
 
-import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
+import { addNavEventListeners, addNavElements, handleHamburger } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
 
 // 요소(element), input 혹은 상수
@@ -27,6 +27,7 @@ function addAllElements() {
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   addNavEventListeners();
+  handleHamburger();
   categoryButton.addEventListener('click', () => {
     categoryList.classList.toggle('hidden');
   });
@@ -123,7 +124,7 @@ async function addSoldOutItems() {
 async function getCategoryName() {
   const categoryData = await Api.get(`/api/category`);
 
-  return categoryData.map(({ name }) => name);
+  return categoryData;
 }
 
 // 카테고리 메뉴 추가하기
