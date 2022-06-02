@@ -33,8 +33,11 @@ async function addAllElements() {
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   addNavEventListeners();
-  document.querySelectorAll('.cancel-btn').forEach((node) => {
+  document.querySelectorAll('.cancle-btn').forEach((node) => {
     node.addEventListener('click', handleCancelBtn);
+  });
+  document.querySelectorAll('.change-btn').forEach((node) => {
+    node.addEventListener('click', handleChangeBtn);
   });
 }
 
@@ -50,15 +53,22 @@ async function addOrderListElements() {
           return text + `<div>${itemName} / ${count}개</div>`;
         } else return text;
       }, ``);
+      let isShipped = false;
+      if (status === '배송 완료') isShipped = true;
       return (
         text +
         `
           <div class="order-data">
             <div class="order-id">${_id}</div>
             <div class="order-date">${orderDate}</div>
-            <div class="order-name">${itemsDiv}</div>
-            <div class="order-status">${status}</div>
-            <button class="cancel-btn" id="cancelButton" name="${_id}">
+            <div class="order-name ">${itemsDiv}</div>
+            <div class="order-status ${
+              isShipped ? 'shipped' : 'notShipped'
+            }">${status}</div>
+            <button class="main-btn change-btn" name="${_id}">
+              상태 변경
+            </button>
+            <button class="main-btn cancle-btn" name="${_id}">
               주문 취소
             </button>
           </div>
@@ -98,7 +108,19 @@ async function getItemInfo(orderList) {
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
-
+async function handleChangeBtn() {
+  if (!confirm('주문 상태를 배송 완료로 변경하시겠습니까?')) return;
+  try {
+    const res = await Api.post('/api/order/update/status', {
+      orderId: this.name,
+    });
+    alert('주문 상태가 변경되었습니다.');
+    window.location.reload();
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
+}
 async function handleCancelBtn() {
   console.log(`취소 버튼 ${this.name}`);
   if (!confirm('주문 내역을 삭제하시겠습니까?')) return;
