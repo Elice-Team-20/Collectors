@@ -1,5 +1,9 @@
+import * as Api from '/api.js';
 import { selectElement, addCommas } from '/useful-functions.js';
-import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
+import {
+  addNavEventListeners,
+  addNavElements,
+} from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
 
 // 요소(element), input 혹은 상수
@@ -7,6 +11,14 @@ const orderListBtn = selectElement('#orderListBtn');
 const editUserInfoBtn = selectElement('#editUserInfoBtn');
 const resignBtn = selectElement('#resignBtn');
 const adminBtn = selectElement('#adminBtn');
+
+window.onload = async () => {
+  const { result } = await Api.get(`/api/user/isAdmin`);
+
+  if (!result) {
+    adminBtn.style.display = 'none';
+  }
+};
 
 addAllElements();
 addAllEvents();

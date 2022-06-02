@@ -65,12 +65,12 @@ async function insertItemElement() {
     });
   }
   searchedItems = []; // 빈객체로 초기화
-  ITEMLIST.innerHTML = '';
+  itemList.innerHTML = '';
   filteredItems.forEach(
     ({ _id, itemName, summary, imgUrl, price, deleteFlag }) => {
       // isDeleted = true이면 deleted 클래스 넣기
       if (deleteFlag) return;
-      ITEMLIST.innerHTML += `
+      itemList.innerHTML += `
       <a href="/item/?id=${_id}">
         <div class="item">
           <div class="imgBox">
