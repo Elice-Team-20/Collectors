@@ -7,13 +7,19 @@ import {
   handleHamburger,
 } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
+import {
+  addCategoryMenuElement,
+  addCategoryMenuEventListeners,
+} from '../components/Category/event.js';
+import {
+  addQuickMenuElement,
+  addQuickMenuEventListeners,
+} from '../components/QuickMenu/event.js';
 
 // 요소(element), input 혹은 상수
 const quickMenu = selectElement('#quick-menu');
-const quickItems = selectElement('.quick-items');
+const category = selectElement('#category');
 const soldoutContainer = selectElement('.soldout-container');
-const categoryButton = selectElement('.category-expand');
-const categoryList = selectElement('.category-list');
 
 userInit();
 await addAllElements();
@@ -23,18 +29,17 @@ await addAllEvents();
 async function addAllElements() {
   addNavElements();
   addFooterElements();
-  addRecentItem();
+  addCategoryMenuElement(category);
+  addQuickMenuElement(quickMenu);
   addSoldOutItems();
-  addCategoryName();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllEvents() {
   addNavEventListeners();
+  addCategoryMenuEventListeners();
+  addQuickMenuEventListeners(quickMenu);
   handleHamburger();
-  categoryButton.addEventListener('click', () => {
-    categoryList.classList.toggle('hidden');
-  });
 }
 
 // 장바구니 생성하기
@@ -59,53 +64,12 @@ const swiper = new Swiper('.swiper', {
   },
   pauseOnMouseEnter: true,
 
-  // If we need pagination
-  pagination: {
-    el: '.swiper-pagination',
-  },
-
   // Navigation arrows
   navigation: {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
   },
 });
-
-// 퀵 메뉴 설정
-window.onresize = () => {
-  let x = window.innerWidth;
-  x < 1250
-    ? (quickMenu.style.display = 'none')
-    : (quickMenu.style.display = 'block');
-};
-
-window.addEventListener('scroll', () => {
-  let y = +window.scrollY;
-  y > 250
-    ? (quickMenu.style.top = y + 250 + 'px')
-    : (quickMenu.style.top = '541px');
-});
-
-// 최근 본 상품 추가하기
-function addRecentItem() {
-  let recentItems = JSON.parse(localStorage.getItem('recentItem')) || [];
-
-  if (!recentItems) return;
-
-  // 추가하기
-  recentItems.forEach(({ itemId, itemName, imgUrl }) => {
-    const recentItemList = `
-      <li class="recent-item">
-        <a href="/item/?id=${itemId}">
-          <img src="${imgUrl}" alt="${itemName}">
-          <p>${itemName}</p>
-        </a>
-      </li>
-    `;
-
-    quickItems.insertAdjacentHTML('beforeend', recentItemList);
-  });
-}
 
 // 매진 임박 추가 기능 구현하기
 async function addSoldOutItems() {
@@ -130,28 +94,10 @@ async function addSoldOutItems() {
   });
 }
 
-// 카테고리 가져오기
-async function getCategoryName() {
-  const categoryData = await Api.get(`/api/category`);
-
-  return categoryData;
-}
-
-// 카테고리 메뉴 추가하기
-async function addCategoryName() {
-  const categoryNames = await getCategoryName();
-
-  categoryNames.forEach((name) => {
-    // ! 카테고리 작업 시 href 수정하기
-    const categoryName = `<li class="category-item"><a href="items?category=${name}">${name}</a></li>`;
-    categoryList.insertAdjacentHTML('beforeend', categoryName);
-  });
-}
-
 async function setToken() {
   console.log(document.cookie);
   const token = document.cookie.split('=')[1];
-  console.log(token)
+  console.log(token);
   if (token) {
     localStorage.setItem('token', token);
   }

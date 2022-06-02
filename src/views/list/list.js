@@ -1,17 +1,19 @@
 import * as Api from '/api.js';
 
-import { addCommas } from '/useful-functions.js';
+import { addCommas, selectElement } from '/useful-functions.js';
 
-import {
-  addNavEventListeners,
-  addNavElements,
-} from '../components/Nav/event.js';
+import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
+
 import { addFooterElements } from '../components/Footer/event.js';
+import { addCategoryMenuElement, addCategoryMenuEventListeners } from '../components/Category/event.js';
+import { addQuickMenuElement, addQuickMenuEventListeners } from '../components/QuickMenu/event.js';
 import { addSearchBarElement } from '../components/SearchBar/event.js';
 
 // GET / api/item/?id= ...
 
-const ITEMLIST = document.querySelector('.item-list');
+const itemList = selectElement('.item-list');
+const categorySection = selectElement('#category');
+const quickMenu = selectElement('#quick-menu');
 const queryString = window.location.search;
 const category = new URLSearchParams(queryString).get('category');
 
@@ -25,17 +27,18 @@ await addAllEvents();
 async function addAllElements() {
   addNavElements();
   addFooterElements();
+  addCategoryMenuElement(categorySection);
+  addQuickMenuElement(quickMenu);
   addSearchBarElement();
-
   insertItemElement();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   addNavEventListeners();
-  document
-    .querySelector('#searchBarBtn')
-    .addEventListener('click', handleSearchBtn);
+  addCategoryMenuEventListeners();
+  addQuickMenuEventListeners(quickMenu);
+  document.querySelector('#searchBarBtn').addEventListener('click', handleSearchBtn);
 }
 async function initializsItems() {
   console.log(category);
@@ -51,11 +54,10 @@ async function insertItemElement() {
     });
   }
   searchedItems = []; // 빈객체로 초기화
-  ITEMLIST.innerHTML = '';
-  filteredItems.forEach(
-    ({ _id, itemName, summary, imgUrl, price, deletedFlag }) => {
-      // isDeleted = true이면 deleted 클래스 넣기
-      ITEMLIST.innerHTML += `
+  itemList.innerHTML = '';
+  filteredItems.forEach(({ _id, itemName, summary, imgUrl, price, deletedFlag }) => {
+    // isDeleted = true이면 deleted 클래스 넣기
+    itemList.innerHTML += `
       <a href="/item/?id=${_id}" class="${deletedFlag ? 'deleted' : ''}">
         <div class="item">
           <div class="imgBox">
@@ -75,8 +77,7 @@ async function insertItemElement() {
         </div>
       </a>
     `;
-    },
-  );
+  });
 }
 
 async function getAllItems() {
