@@ -16,11 +16,11 @@ const categoryButton = selectElement('.category-expand');
 const categoryList = selectElement('.category-list');
 
 userInit();
-addAllElements();
-addAllEvents();
+await addAllElements();
+await addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-function addAllElements() {
+async function addAllElements() {
   addNavElements();
   addFooterElements();
   addRecentItem();
@@ -29,7 +29,7 @@ function addAllElements() {
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-function addAllEvents() {
+async function addAllEvents() {
   addNavEventListeners();
   handleHamburger();
   categoryButton.addEventListener('click', () => {
@@ -38,13 +38,15 @@ function addAllEvents() {
 }
 
 // 장바구니 생성하기
-function userInit() {
+async function userInit() {
   let cart = JSON.parse(localStorage.getItem('cart'));
 
   if (!cart) {
     cart = [];
     localStorage.setItem('cart', JSON.stringify([]));
   }
+
+  setToken();
 }
 
 // 이미지 슬라이더 설정
@@ -144,4 +146,13 @@ async function addCategoryName() {
     const categoryName = `<li class="category-item"><a href="items?category=${name}">${name}</a></li>`;
     categoryList.insertAdjacentHTML('beforeend', categoryName);
   });
+}
+
+async function setToken() {
+  console.log(document.cookie);
+  const token = document.cookie.split('=')[1];
+  console.log(token)
+  if (token) {
+    localStorage.setItem('token', token);
+  }
 }
