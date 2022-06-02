@@ -157,6 +157,11 @@ class OrderinfoService {
       return deleteResult;
     }
   }
+  async addStok(orderId) {
+    // 현재 아이탬  수량 긁어오기
+    // 들어온 주문정보에서 수량 긁어오기
+    // 수량정보 갱신하기
+  }
 }
 // 싱글톤
 const orderInfoService = new OrderinfoService(orderInfo, userModel);
