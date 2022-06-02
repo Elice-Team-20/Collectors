@@ -1,50 +1,3 @@
-#category {
-  height: 2.5rem;
-  width: 100%;
-  border: 1px solid #f01e21;
-  position: sticky;
-  top: 0;
-  z-index: 10000;
-}
-
-.category-expand {
-  height: 2.5rem;
-  width: 100%;
-  font-weight: bold;
-  text-align: center;
-  line-height: 2.5rem;
-}
-
-.category-expand:hover {
-  color: #f01e21;
-}
-
-.category-list {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-rows: 1fr;
-  margin: 0 auto;
-  opacity: 0.75;
-}
-
-.category-list.hidden {
-  display: none;
-}
-
-.category-item {
-  width: 100%;
-  height: 2rem;
-  font-size: 1rem;
-  font-weight: bold;
-  text-align: center;
-  line-height: 2rem;
-}
-
-.category-item:hover {
-  color: #f01e21;
-}
-
 .swiper {
   width: 100%;
 }
@@ -56,11 +9,16 @@
 .swiper-button-next,
 .swiper-button-prev {
   color: #f01e21;
-  width: 3rem;
-  height: 3rem;
+  width: 5vw;
+  height: 5vw;
+  font-size: 2vw;
   border-radius: 50%;
-  /* background-color: #fff; */
-  /* opacity: 0.5; */
+  opacity: 0.25;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  opacity: 1;
 }
 
 .swiper-button-next::after,
@@ -68,59 +26,8 @@
   display: none;
 }
 
-#quick-menu {
-  width: 80px;
-  position: absolute;
-  z-index: 10000;
-  top: 541px;
-  right: 20px;
-  transition: top 0.75s ease;
-}
-
-#quick-menu .quick-image a {
-  display: block;
-  width: 80px;
-  height: 80px;
-  margin-bottom: 7px;
-}
-
-.quick-items {
-  border: 1px solid #dddddd;
-  border-top: none;
-  opacity: 0.75;
-}
-
-.quick-items li a {
-  font-size: 12px;
-  letter-spacing: -0.3px;
-  line-height: 16px;
-  text-align: center;
-
-  height: 29px;
-  width: 78px;
-  border-top: 1px solid #dddddd;
-  padding-top: 5px;
-
-  background-color: transparent;
-
-  display: block;
-  cursor: pointer;
-}
-
-.recent-item {
-  height: 5rem;
-}
-
-.recent-item img {
-  width: 50px;
-  height: 50px;
-}
-
-.recent-item p {
-  width: 100%;
-  height: 1rem;
-  font-size: 0.5rem;
-  overflow: hidden;
+#items {
+  height: 300vh;
 }
 
 .soldout-container {
@@ -160,6 +67,12 @@
   font-weight: bold;
 
   animation: color 0.75s linear infinite;
+}
+
+@media screen and (max-width: 768px) {
+  #quick-menu {
+    display: none;
+  }
 }
 
 @keyframes color {

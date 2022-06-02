@@ -60,7 +60,10 @@ authRouter.get('/naver', passport.authenticate('naver', { authType: 'reprompt' }
 
 authRouter.get('/naver/callback', passport.authenticate('naver', {session:false}), (req, res, next) => {
     try{
-        res.status(200).json({"token": req.user.token});
+        // res.status(200).json({"token": req.user.token});
+        const token = req.user.token;
+        res.cookie('token', token);
+        res.redirect('/');
     }
     catch(err){
         next(err)

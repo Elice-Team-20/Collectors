@@ -75,15 +75,17 @@ async function handleSubmit(e) {
 }
 async function handleNaverBtn(e) {
   try {
-    const result = await Api.get('/api/auth/naver');
-    const token = result.token;
+    e.preventDefault();
 
-    localStorage.setItem('token', token);
+    // const result = await Api.get('/api/auth/naver');
+    // const token = result.token;
 
-    console.log(result);
-    alert(`정상적으로 로그인되었습니다.`);
+    // localStorage.setItem('token', token);
 
-    window.location.href = '/';
+    // console.log(result);
+    // alert(`정상적으로 로그인되었습니다.`);
+
+    window.location.href = '/api/auth/naver';
   } catch (err) {
     console.log(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
