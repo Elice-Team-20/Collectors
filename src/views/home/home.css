@@ -58,8 +58,12 @@
 
 .soldout-item h3,
 .soldout-item p {
+  width: 25vw;
   text-align: center;
   margin-bottom: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .soldout-item p:last-child {
@@ -72,6 +76,20 @@
 @media screen and (max-width: 768px) {
   #quick-menu {
     display: none;
+  }
+
+  .soldout-container h2 {
+    font-size: 1.25em;
+    font-weight: bold;
+  }
+
+  .soldout-item h3 {
+    font-size: 1em;
+    font-weight: bold;
+  }
+
+  .soldout-item p {
+    font-size: 0.75em;
   }
 }
 

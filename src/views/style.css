@@ -128,7 +128,7 @@ a {
 /* 카테고리 style */
 #category {
   height: 5vh;
-  width: 80vw;
+  width: 100vw;
   position: sticky;
   top: 0;
   z-index: 10000;
