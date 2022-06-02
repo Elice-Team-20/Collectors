@@ -120,11 +120,9 @@ class OrderinfoService {
         const inputItemCount = e.count;
         const changeStock = currItem.stocks - inputItemCount;
         if(changeStock < 0){
-          console.err('주문한 아이탬이 재고보다 많습니다');
           return;
         }
         const updateReturn = await itemService.updateItem({_id:e.itemId},{ stocks: changeStock} )
-        console.log(updateReturn)
       }
       catch(er){
         throw new Error(er)
