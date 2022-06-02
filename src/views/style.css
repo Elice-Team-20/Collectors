@@ -60,6 +60,11 @@ a {
 
 .navContainer .hamburger {
   display: none;
+  position: absolute;
+  top: 2.5vh;
+  right: 5vw;
+  width: 5vh;
+  height: 5vh;
 }
 
 @media screen and (max-width: 768px) {
@@ -68,52 +73,52 @@ a {
     flex-direction: column;
 
     position: absolute;
-    top: 50px;
-    right: 3rem;
+    top: 7vh;
+    right: 5vw;
     z-index: 10001;
 
     font-weight: bold;
     font-size: 1.5rem;
 
-    padding: 1rem;
+    padding: 5vw;
     opacity: 0.75;
   }
 
   .navContainer #navMenuList.hidden {
     visibility: hidden;
   }
+
   .navContainer #navMenuList li {
-    margin-left: 0;
-    margin-top: 1.25rem;
+    margin: 3vw;
+    font-size: 0.75em;
+    text-align: center;
   }
 
   .navContainer .hamburger {
     display: block;
-    width: 30px;
-    height: 30px;
-    margin-right: 20px;
   }
 
   .hamburger span {
     display: inline-block;
     position: fixed;
-    width: 30px;
-    min-width: 20px;
+    width: 5vh;
     height: 2px;
     background-color: #fff;
   }
 
   .hamburger span:nth-child(1) {
-    top: 1.25rem;
-    right: 3rem;
+    top: 3vh;
+    right: 5vw;
   }
+
   .hamburger span:nth-child(2) {
-    top: 2rem;
-    right: 3rem;
+    top: 5vh;
+    right: 5vw;
   }
+
   .hamburger span:nth-child(3) {
-    top: 2.75rem;
-    right: 3rem;
+    top: 7vh;
+    right: 5vw;
   }
 }
 

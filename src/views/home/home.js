@@ -53,11 +53,6 @@ const swiper = new Swiper('.swiper', {
   },
   pauseOnMouseEnter: true,
 
-  // If we need pagination
-  pagination: {
-    el: '.swiper-pagination',
-  },
-
   // Navigation arrows
   navigation: {
     nextEl: '.swiper-button-next',

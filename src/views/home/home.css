@@ -56,11 +56,16 @@
 .swiper-button-next,
 .swiper-button-prev {
   color: #f01e21;
-  width: 3rem;
-  height: 3rem;
+  width: 5vw;
+  height: 5vw;
+  font-size: 2vw;
   border-radius: 50%;
-  /* background-color: #fff; */
-  /* opacity: 0.5; */
+  opacity: 0.25;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  opacity: 1;
 }
 
 .swiper-button-next::after,
@@ -72,7 +77,6 @@
   width: 80px;
   position: absolute;
   z-index: 10000;
-  top: 541px;
   right: 20px;
   transition: top 0.75s ease;
 }
@@ -160,6 +164,12 @@
   font-weight: bold;
 
   animation: color 0.75s linear infinite;
+}
+
+@media screen and (max-width: 768px) {
+  #quick-menu {
+    display: none;
+  }
 }
 
 @keyframes color {
