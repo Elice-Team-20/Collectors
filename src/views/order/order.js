@@ -7,7 +7,6 @@ import {
   checkUserStatus,
 } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
-// import { addOrderNavElements } from '../components/Order/event.js';
 
 const orderList = JSON.parse(localStorage.getItem('order'));
 const isLoggedIn = checkUserStatus();

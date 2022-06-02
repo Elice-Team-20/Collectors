@@ -9,41 +9,66 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
 
-  width: 30rem;
-  height: 70%;
+  width: 40%;
+  height: 80%;
 }
 
-.register-user-form-box .field{
+.register-user-form-box .field {
   width: 100%;
 }
 
-.register-user-form-box .field .label{
+.register-user-form-box .field .label {
   display: block;
   margin-bottom: 10px;
 }
 
-.register-user-form-box .field .input{
-  width:98%;
-  height:5vh;
+.register-user-form-box .field .input {
+  width: 100%;
+  height: 5vh;
   padding-left: 2%;
 
-  background: #FFFFFF;
-  border: 1px solid #C5C5C5;
+  background: #ffffff;
+  border: 1px solid #c5c5c5;
   box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   outline-style: none;
 
-  color:black;
+  color: black;
 }
 
 .register-user-form-box .field .input:focus {
   border: 0.5px solid #e7484b;
-  box-shadow: 0 0 0 0.125em #F01E21;
+  box-shadow: 0 0 0 0.125em #f01e21;
 }
 
-.register-user-form-box .button {
+/* button {
+  width: 100%;
+} */
+#socialLoginBtnBox {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 3%;
+  width: 100%;
+  height: 5vh;
+}
+.social-btn {
+  border-radius: 10px;
+  height: 100%;
+  border-style: none;
+}
+#socialLoginBtnBox #naverBtn {
+  background-color: #03c75a;
+}
+#socialLoginBtnBox #kakaoBtn {
+  background-color: #fee500;
+  color: #000000;
+}
+#socialLoginBtnBox #googleBtn {
+  background-color: #4285f4;
+}
+/* .register-user-form-box .button {
   width:100%;
   height:5vh;
 
@@ -57,4 +82,4 @@
 .register-user-form-box .button:hover{
   border-color: #e7484b;
   background-color: #e7484b;
-}
+} */
