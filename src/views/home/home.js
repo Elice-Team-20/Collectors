@@ -1,11 +1,7 @@
 import * as Api from '/api.js';
 import { selectElement, addCommas } from '/useful-functions.js';
 
-import {
-  addNavEventListeners,
-  addNavElements,
-  handleHamburger,
-} from '../components/Nav/event.js';
+import { addNavEventListeners, addNavElements, handleHamburger } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
 
 // 요소(element), input 혹은 상수
@@ -65,18 +61,10 @@ const swiper = new Swiper('.swiper', {
 });
 
 // 퀵 메뉴 설정
-window.onresize = () => {
-  let x = window.innerWidth;
-  x < 1250
-    ? (quickMenu.style.display = 'none')
-    : (quickMenu.style.display = 'block');
-};
-
 window.addEventListener('scroll', () => {
   let y = +window.scrollY;
-  y > 250
-    ? (quickMenu.style.top = y + 250 + 'px')
-    : (quickMenu.style.top = '541px');
+  console.log(y);
+  y > 300 ? (quickMenu.style.top = y + 300 + 'px') : (quickMenu.style.top = '95vh');
 });
 
 // 최근 본 상품 추가하기

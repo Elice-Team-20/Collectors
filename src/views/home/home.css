@@ -73,10 +73,15 @@
   display: none;
 }
 
+#items {
+  height: 300vh;
+}
+
 #quick-menu {
   width: 80px;
   position: absolute;
   z-index: 10000;
+  top: 95vh;
   right: 20px;
   transition: top 0.75s ease;
 }
