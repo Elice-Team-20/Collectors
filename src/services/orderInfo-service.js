@@ -157,6 +157,8 @@ class OrderinfoService {
       return deleteResult;
     }
   }
+
+  // 취소한 갯수만큼 아이탬 수량 증가하는 함수
   async addStock(orderId) {
     // 현재 아이탬  수량 긁어오기
     const currentOrder = await this.getOrderInfoById(orderId);
