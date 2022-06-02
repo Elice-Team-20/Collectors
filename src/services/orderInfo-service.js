@@ -157,6 +157,23 @@ class OrderinfoService {
       return deleteResult;
     }
   }
+
+  // 취소한 갯수만큼 아이탬 수량 증가하는 함수
+  async addStock(orderId) {
+    // 현재 아이탬  수량 긁어오기
+    const currentOrder = await this.getOrderInfoById(orderId);
+    const orderItemList = currentOrder.itemList;
+    orderItemList.forEach(async (data) => {
+      // 들어온 주문정보에서 수량 긁어오고 마이너스 계산
+      const itemInfo = await itemService.getItembyObId(data.itemId);
+      const updateStock = itemInfo.stocks + data.count;
+      // 수량정보 갱신하기
+      await itemService.updateItem(
+        { _id: data.itemId },
+        { stocks: updateStock },
+      );
+    });
+  }
 }
 // 싱글톤
 const orderInfoService = new OrderinfoService(orderInfo, userModel);

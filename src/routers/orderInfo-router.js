@@ -115,7 +115,9 @@ orderInfoRouter.delete(
   async (req, res, next) => {
     try {
       const { orderId } = req.body;
+      await orderInfoService.addStock(orderId);
       const deletedResult = await orderInfoService.deleteInfo(orderId);
+      deletedResult = await orderInfoService.getOrderInfoById(orderId);
       res.status(200).json({ deletedResult });
     } catch (error) {
       next(error);
