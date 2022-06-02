@@ -2,11 +2,20 @@ import * as Api from '/api.js';
 
 import { addCommas, selectElement } from '/useful-functions.js';
 
-import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
+import {
+  addNavEventListeners,
+  addNavElements,
+} from '../components/Nav/event.js';
 
 import { addFooterElements } from '../components/Footer/event.js';
-import { addCategoryMenuElement, addCategoryMenuEventListeners } from '../components/Category/event.js';
-import { addQuickMenuElement, addQuickMenuEventListeners } from '../components/QuickMenu/event.js';
+import {
+  addCategoryMenuElement,
+  addCategoryMenuEventListeners,
+} from '../components/Category/event.js';
+import {
+  addQuickMenuElement,
+  addQuickMenuEventListeners,
+} from '../components/QuickMenu/event.js';
 import { addSearchBarElement } from '../components/SearchBar/event.js';
 
 // GET / api/item/?id= ...
@@ -38,7 +47,9 @@ function addAllEvents() {
   addNavEventListeners();
   addCategoryMenuEventListeners();
   addQuickMenuEventListeners(quickMenu);
-  document.querySelector('#searchBarBtn').addEventListener('click', handleSearchBtn);
+  document
+    .querySelector('#searchBarBtn')
+    .addEventListener('click', handleSearchBtn);
 }
 async function initializsItems() {
   console.log(category);
@@ -54,11 +65,13 @@ async function insertItemElement() {
     });
   }
   searchedItems = []; // 빈객체로 초기화
-  itemList.innerHTML = '';
-  filteredItems.forEach(({ _id, itemName, summary, imgUrl, price, deletedFlag }) => {
-    // isDeleted = true이면 deleted 클래스 넣기
-    itemList.innerHTML += `
-      <a href="/item/?id=${_id}" class="${deletedFlag ? 'deleted' : ''}">
+  ITEMLIST.innerHTML = '';
+  filteredItems.forEach(
+    ({ _id, itemName, summary, imgUrl, price, deleteFlag }) => {
+      // isDeleted = true이면 deleted 클래스 넣기
+      if (deleteFlag) return;
+      ITEMLIST.innerHTML += `
+      <a href="/item/?id=${_id}">
         <div class="item">
           <div class="imgBox">
             <figure>
@@ -77,7 +90,8 @@ async function insertItemElement() {
         </div>
       </a>
     `;
-  });
+    },
+  );
 }
 
 async function getAllItems() {
