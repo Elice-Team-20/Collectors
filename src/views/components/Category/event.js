@@ -35,4 +35,18 @@ const addCategoryMenuEventListeners = () => {
   });
 };
 
-export { addCategoryMenuElement, addCategoryMenuEventListeners };
+// 카테고리 이름 추가
+const addCategoryName = (category) => {
+  const categoryButton = document.querySelector('.category-expand');
+
+  if (!category) categoryButton.innerHTML = '전체 상품 보기';
+  else categoryButton.innerHTML = category;
+
+  categoryButton.style.fontSize = '2em';
+};
+
+export {
+  addCategoryMenuElement,
+  addCategoryMenuEventListeners,
+  addCategoryName,
+};
