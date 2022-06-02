@@ -7,22 +7,16 @@ import {
   checkUserStatus,
 } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
-// import {
-//   addOrderNavElements,
-//   addOrderInfoElements,
-// } from '../components/Order/event.js';
-// import { OrderInfo } from '../components/Order/index.js';
 
 const orderBtn = document.querySelector('#order-btn');
 const cartItenWrapperDiv = document.querySelector('#cart-item-wrapper');
 
 let cart = cartInit(); //JSON.parse(localStorage.getItem('cart'));
 let itemMap = makeCartItemMap(cart); // 카트 Map 만들기, id - 개수 구조
-console.log(itemMap);
+
 // let items = Object.entries(itemMap);
 let checkedItems = makeCheckedItemMap(itemMap); // check된 상품들
 let infos = await getCartItemsInfos(itemMap);
-console.log(checkedItems);
 
 // 카트 아이템들 자료구조
 // 카트 init
@@ -37,9 +31,7 @@ function cartInit() {
 // 카트 아이템 관리 map
 function makeCartItemMap(cart) {
   return cart.reduce((map, item) => {
-    // console.log(item, map[item]);
     if (!map[item]) {
-      // console.log("map init", item);
       map[item] = 0;
     }
     map[item] += 1;
@@ -78,8 +70,8 @@ async function addAllEvents() {
 function addCartItemsElements() {
   cartItenWrapperDiv.innerHTML = Object.keys(itemMap).reduce((elements, id) => {
     if (itemMap[id] != 0) {
-      const { imgUrl, itemName, price } = infos[id];
-      console.log('addItem checkbox', checkedItems[id]);
+      const { imgUrl, itemName, price, deleteFlag } = infos[id];
+      if (deleteFlag) return elements;
       return (
         elements +
         `
