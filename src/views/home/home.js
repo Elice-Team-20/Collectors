@@ -52,11 +52,14 @@ async function userInit() {
   }
 
   console.log(document.cookie);
-  const token = document.cookie.split('=')[1];
   document.cookie.split(',').forEach((el) => {
     let [key, value] = el.split('=');
     if (key === 'token') localStorage.setItem('token', value);
   });
+  var date = new Date();
+  date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
+  document.cookie =
+    'token' + '=' + 'fakecookie' + ';expires=' + date.toUTCString() + ';path=/';
 }
 
 // 이미지 슬라이더 설정
