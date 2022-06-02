@@ -11,6 +11,7 @@ const handleLogout = () => {
   const token = localStorage.getItem('token');
   if (token) {
     localStorage.removeItem('token');
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     window.location.href = '/';
   } else {
     alert('token이 없는 상태입니다.');
@@ -37,4 +38,10 @@ const handleHamburger = () => {
   });
 };
 
-export { addNavEventListeners, addNavElements, handleLogout, checkUserStatus, handleHamburger };
+export {
+  addNavEventListeners,
+  addNavElements,
+  handleLogout,
+  checkUserStatus,
+  handleHamburger,
+};
