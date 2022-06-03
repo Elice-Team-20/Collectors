@@ -13,7 +13,7 @@ export const QuickMenu = () => `
       <a href="https://www.cjlogistics.com/ko/tool/parcel/tracking">배송 조회</a>
     </li>
     <li>
-      <a href="#">이용 약관</a>
+      <a href="/home/terms">이용 약관</a>
     </li>
     <li>
       <a href="#">최근 본 상품</a>

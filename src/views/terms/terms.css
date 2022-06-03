@@ -1,0 +1,9 @@
+#items {
+  width: 60%;
+  height: 80vh;
+  margin: 0 auto;
+}
+
+#items > * {
+  margin-bottom: 2vh;
+}
