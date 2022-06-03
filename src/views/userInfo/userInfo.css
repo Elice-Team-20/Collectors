@@ -61,7 +61,7 @@
   align-items: center;
   justify-content: space-evenly;
 
-  width: 30vw;
+  width: 50%;
   height: 100%;
 }
 
@@ -90,29 +90,31 @@
   border: 0;
 }
 
-.address-container {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-
 @media screen and (max-width: 768px) {
-  .info {
-    max-height: calc(90vh - 100px);
-  }
-
   .info-container {
-    width: 100vw;
+    width: 90%;
     display: flex;
     flex-direction: column;
   }
 
   .info-title {
-    width: 100%;
+    width: 80%;
+  }
+
+  #magic,
+  #weapon,
+  #esp,
+  #int {
+    width: 50vw;
+  }
+
+  .user-stat {
+    display: flex;
+    flex-direction: column;
   }
 
   .user-info-form-box {
-    width: 100%;
+    width: 50vw;
   }
 
   .user-info-form-box .field {
@@ -124,6 +126,6 @@
   }
 
   .user-info-form-box .button {
-    width: 50%;
+    width: 100%;
   }
 }
