@@ -196,7 +196,8 @@
 
   #addCartBtn,
   #orderBtn {
-    width: 60%;
+    font-size: 1.25em;
+    width: 90%;
     height: 50%;
     margin-bottom: 1vh;
   }
