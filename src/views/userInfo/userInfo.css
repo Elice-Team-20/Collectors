@@ -30,7 +30,8 @@
 }
 
 #user-tier img {
-  width: 100%;
+  width: 30vh;
+  height: 30vh;
   position: absolute;
   top: 0;
   opacity: 0.25;

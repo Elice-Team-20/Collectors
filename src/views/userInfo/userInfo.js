@@ -43,10 +43,8 @@ async function getUserDataToInput() {
   // 유저 데이터 가져오기
   const userData = await Api.get(`/api/user/${id}`);
   const tier = await Api.get(`/api/user/role`);
-  console.log(tier);
 
   // 티어별 이미지 교체
-
   if (tier === '피터 파커') {
     userTierImage.src = '/user-tier-1.png';
   } else if (tier === '닥터 스트레인지') {
@@ -88,8 +86,7 @@ async function getUserDataToInput() {
       }
     },
   });
-  tierBar.text.style.fontSize = '2.5em';
-  tierBar.text.style.color = '#f01e21';
+  tierBar.text.style.display = 'none';
 
   tierBar.animate(1.0);
 
