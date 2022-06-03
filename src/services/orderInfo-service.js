@@ -211,44 +211,49 @@ class OrderinfoService {
     });
   }
 
-  async addStat(orderId, userId) {
+  async addStat(orderId) {
     try {
       const order = await orderInfo.findByObjectId(orderId);
+      const userId = await userService.findByOrderId(orderId);
+      console.log(userId);
       const itemList = order.itemList;
-      console.log(order);
-      await Promise.all([
-        itemList.forEach(async (e) => {
-          const itemData = await itemService.getItembyObId(e.itemId);
-          const userInfo = await userService.getUser(userId);
-          const count = e.count;
-          let updateData;
-          console.log('item Data ' + itemData.category);
-          if (itemData.category === '장비') {
-            updateData = {
-              equipment: parseInt(count + userInfo.stat.equipment),
-            };
-          } else if (itemData.category === '초능력') {
-            updateData = { magic: parseInt(count + userInfo.stat.magic) };
-          } else if (itemData.category === '마법') {
-            updateData = {
-              intelligence: parseInt(count + userInfo.stat.intelligence),
-            };
-          } else if (itemData.category === '지능') {
-            updateData = { psychic: parseInt(count + userInfo.stat.psychic) };
-          } else {
-            updateData = false;
-          }
-          console.log('updateData' + updateData);
-          if (updateData) {
-            const insertData = { stat: updateData };
-            const updateResult = await userService.updateUserInfo(
-              userId,
-              insertData,
-            );
-            console.log(updateResult);
-          }
-        }),
-      ]);
+
+      const temp = {};
+      itemList.forEach(async (e) => {
+        const itemData = await itemService.getItembyObId(e.itemId);
+        const userInfo = await userService.getUser(userId);
+
+        const count = e.count;
+        console.log(userInfo);
+
+        let updateData = userInfo.stat;
+        let flag = true;
+
+        if (itemData.category === '장비') {
+          updateData.equipment = parseInt(count + userInfo.stat.equipment);
+          flag = false;
+        } else if (itemData.category === '초능력') {
+          updateData.psychic = parseInt(count + userInfo.stat.psychic);
+          flag = false;
+        } else if (itemData.category === '마법') {
+          updateData.magic = parseInt(count + userInfo.stat.magic);
+          flag = false;
+        } else if (itemData.category === '지능') {
+          updateData.intelligence = parseInt(
+            count + userInfo.stat.intelligence,
+          );
+          flag = false;
+        }
+        if (flag == false) {
+          const insertData = { stat: updateData };
+          const updateResult = await userService.updateUserInfo(
+            userId,
+            insertData,
+          );
+          console.log(updateResult);
+        }
+      });
+
       return { succsess: 'ok' };
     } catch (er) {
       return er;

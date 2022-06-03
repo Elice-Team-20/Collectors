@@ -14,7 +14,6 @@ const editUserInfoBtn = selectElement('#editUserInfoBtn');
 const resignBtn = selectElement('#resignBtn');
 
 let isAdmin;
-console.log(isAdmin);
 
 window.onload = async () => {
   if (!checkUserStatus()) {
@@ -29,7 +28,6 @@ await addAllEvents();
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
   addNavElements('User');
-  console.log(isAdmin);
   if (isAdmin) await addAdminMenuElements();
   addFooterElements();
 }

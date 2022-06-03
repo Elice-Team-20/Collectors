@@ -44,7 +44,7 @@ let peterBar = new ProgressBar.Line('#peter-parker', {
     autoStyleContainer: false,
   },
   step: (state, bar) => {
-    bar.setText(Math.round(bar.value() * 200) + ' 만원');
+    bar.setText(Math.round(bar.value() * 500) + ' 만원');
   },
 });
 
@@ -69,7 +69,7 @@ let DoctorStrangeBar = new ProgressBar.Line('#doctor-strange', {
     autoStyleContainer: false,
   },
   step: (state, bar) => {
-    bar.setText(Math.round(bar.value() * 200) + ' 만원');
+    bar.setText(Math.round(bar.value() * 500) + ' 만원');
   },
 });
 
@@ -94,7 +94,7 @@ let ironManBar = new ProgressBar.Line('#iron-man', {
     autoStyleContainer: false,
   },
   step: (state, bar) => {
-    bar.setText(Math.round(bar.value() * 200) + ' 만원');
+    bar.setText(Math.round(bar.value() * 500) + ' 만원');
   },
 });
 
@@ -119,11 +119,11 @@ let blackPantherBar = new ProgressBar.Line('#black-panther', {
     autoStyleContainer: false,
   },
   step: (state, bar) => {
-    bar.setText(Math.round(bar.value() * 200) + ' 만원');
+    bar.setText(Math.round(bar.value() * 500) + ' 만원');
   },
 });
 
-peterBar.animate(0.05);
-DoctorStrangeBar.animate(0.25);
-ironManBar.animate(0.8);
-blackPantherBar.animate(1.5);
+peterBar.animate(0.0);
+DoctorStrangeBar.animate(0.1);
+ironManBar.animate(0.4);
+blackPantherBar.animate(1.0);

@@ -37,7 +37,6 @@ function addAllEvents() {
 }
 async function addItemListElements() {
   const itemList = await getItemList();
-  console.log(itemList);
   itemContainerDiv.innerHTML = itemList.reduce(
     (text, { _id, itemName, imgUrl, category, price, stocks, deleteFlag }) => {
       return (
@@ -72,7 +71,6 @@ async function addItemListElements() {
 async function getItemList() {
   try {
     const itemList = await Api.get('/api/item');
-    console.log(itemList);
     return itemList;
   } catch (err) {
     console.error(err.stack);
@@ -81,14 +79,12 @@ async function getItemList() {
 }
 
 function addItemDelBtnEventListeners() {
-  console.log(document.querySelectorAll('.item-delete-btn'));
   document.querySelectorAll('.item-delete-btn').forEach((node) => {
     node.addEventListener('click', handleItemDelBtn);
   });
 }
 
 async function handleItemDelBtn() {
-  console.log(this.name);
   try {
     await Api.delete('/api/item/delete', this.name);
     alert('상품이 정상적으로 삭제 되었습니다.');

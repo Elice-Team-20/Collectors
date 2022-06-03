@@ -94,7 +94,7 @@ async function checkCurrentPassword() {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
       userEmail: userEmail,
     },
-    body: JSON.stringify({ password: currentPassword }),
+    body: JSON.stringify(),
   });
 
   const isMatched = response.json();

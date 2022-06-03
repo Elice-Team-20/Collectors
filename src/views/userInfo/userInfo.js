@@ -23,7 +23,8 @@ addAllEvents();
 function addAllEvents() {
   addNavEventListeners();
   handleHamburger();
-  submitButton.addEventListener('click', () => {
+  submitButton.addEventListener('click', (e) => {
+    e.preventDefault();
     window.location.href = '/user/edit';
   });
 }
@@ -49,7 +50,7 @@ async function getUserDataToInput() {
     userTierImage.src = '/user-tier-1.png';
   } else if (tier === '닥터 스트레인지') {
     userTierImage.src = '/user-tier-2.png';
-  } else if (tier === '아이언 맨') {
+  } else if (tier === '토니 스타크') {
     userTierImage.src = '/user-tier-3.png';
   } else if (tier === '블랙 팬서') {
     userTierImage.src = '/user-tier-4.png';
@@ -92,8 +93,10 @@ async function getUserDataToInput() {
 
   // 유저 스탯 삽입
   const { equipment, magic, intelligence, psychic } = userData.stat;
-  console.log(equipment, magic, intelligence, psychic);
+
   // 유저 스탯 프로그래스 바 추가하기
+
+  // 마법 스탯 프로그래스 바 추가
   let magicStat = new ProgressBar.Line('#magic', {
     strokeWidth: 4,
     easing: 'easeInOut',
@@ -119,6 +122,7 @@ async function getUserDataToInput() {
     },
   });
 
+  // 장비 스탯 프로그래스 바 추가
   let equipmentStat = new ProgressBar.Line('#equipment', {
     strokeWidth: 4,
     easing: 'easeInOut',
@@ -144,6 +148,7 @@ async function getUserDataToInput() {
     },
   });
 
+  // 초능력 스탯 프로그래스 바 추가
   let psychicStat = new ProgressBar.Line('#psychic', {
     strokeWidth: 4,
     easing: 'easeInOut',
@@ -169,6 +174,7 @@ async function getUserDataToInput() {
     },
   });
 
+  // 지능 스탯 프로그래스 바 추가
   let intelligenceStat = new ProgressBar.Line('#intelligence', {
     strokeWidth: 4,
     easing: 'easeInOut',
@@ -194,6 +200,7 @@ async function getUserDataToInput() {
     },
   });
 
+  // 애니메이션 추가
   magicStat.animate(magic / 100 || 0);
   equipmentStat.animate(equipment / 100 || 0);
   psychicStat.animate(psychic / 100 || 0);

@@ -9,8 +9,9 @@ import {
 } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
 
-const orderList = JSON.parse(localStorage.getItem('order'));
-let cart = JSON.parse(localStorage.getItem('cart')); // 주문 후 수정될 예정
+const orderData = JSON.parse(localStorage.getItem('orderData'));
+const orderList = orderData.list;
+let cart = JSON.parse(localStorage.getItem('cart'));
 const isLoggedIn = checkUserStatus();
 window.onload = async () => {
   if (!orderList) {
@@ -50,8 +51,8 @@ await addAllEvents();
 async function addAllElements() {
   addNavElements();
   addFooterElements();
-  if (isLoggedIn) await addUserShipElements(); // 유저 배송지 정보 가져오기
-  await addOrderInfoElements(); // 주문 정보 가져오기
+  if (isLoggedIn) await addUserShipElements();
+  await addOrderInfoElements();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -125,7 +126,6 @@ async function handlePurchaseBtn() {
 
     localStorage.removeItem('order');
     cart = cart.filter((id) => !orderList.some(([key, val]) => key === id));
-    console.log('order after ', cart);
     localStorage.setItem('cart', JSON.stringify(cart));
     localStorage.setItem('orderInfo', JSON.stringify(orderInfo));
 
@@ -171,31 +171,30 @@ async function getUserShipInfos() {
 }
 async function addOrderInfoElements() {
   const orderItemsDiv = document.querySelector('#orderItems');
-  const itemTotalPriceDiv = document.querySelector('#itemTotalPrice');
+  const originalTotalPriceDiv = document.querySelector('#originItemTotalPrice');
+  const discountTotalPriceDiv = document.querySelector(
+    '#discountItemTotalPrice',
+  );
   const shipFeeDiv = document.querySelector('#shipFee');
   const totalPriceDiv = document.querySelector('#totalPrice');
 
   const { orderItemsText, totalItemPrice, shipFee } = await getOrderItemInfos();
 
   orderItemsDiv.innerHTML = orderItemsText;
-  itemTotalPriceDiv.innerHTML = `${addCommas(totalItemPrice)}원`;
+  originalTotalPriceDiv.innerHTML = `${addCommas(orderData.originalPrice)}원`;
+  discountTotalPriceDiv.innerHTML = `${addCommas(totalItemPrice)}원`;
   shipFeeDiv.innerHTML = `${addCommas(shipFee)}원`;
   totalPriceDiv.innerHTML = `${addCommas(totalItemPrice + shipFee)}원`;
 }
 
 async function getOrderItemInfos() {
   let orderItemsText = ``;
-  let totalItemPrice = 0;
+  let totalItemPrice = orderData.finalOrderPrice;
   try {
     for (let i = 0; i < orderList.length; i++) {
-      const [id, num] = orderList[i];
-      const info = await Api.get(`/api/item/${id}`);
-      // const info = await response.json();
-      const { itemName, price } = info;
+      const [id, num, itemName] = orderList[i];
       orderItemsText += `<div>${itemName} / ${num}개</div>`;
-      totalItemPrice += Number(price) * num;
     }
-
     let shipFee = totalItemPrice > shipFreeMinPrice ? 0 : 3000;
     orderInfo = {
       totalCost: totalItemPrice + shipFee,
@@ -204,10 +203,9 @@ async function getOrderItemInfos() {
     return { orderItemsText, totalItemPrice, shipFee };
   } catch (err) {
     console.error(err.stack);
-    console.log(err);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
 window.onunload = () => {
-  localStorage.removeItem('order');
+  localStorage.removeItem('orderData');
 };

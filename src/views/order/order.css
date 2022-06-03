@@ -110,7 +110,10 @@ div.order-list #orderItems {
 div.order-list #orderItems > div {
   margin-top: 4px;
 }
-
+.data #originItemTotalPrice {
+  text-decoration: line-through;
+  color: dimgray;
+}
 div.total {
   font-size: 1.25rem;
   font-weight: bold;

@@ -16,22 +16,17 @@ window.onload = () => {
     return;
   }
 };
-window.onload = () => {
-  // admin인지 확인하기
-};
 const orderListDiv = document.querySelector('.order-list');
-// 요소(element), input 혹은 상수
+
 await addAllElements();
 await addAllEvents();
 
-// html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
   addNavElements('User');
   addFooterElements();
   await addOrderListElements();
 }
 
-// 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   addNavEventListeners();
   handleHamburger();
@@ -44,8 +39,8 @@ function addAllEvents() {
 }
 
 async function addOrderListElements() {
+  // 주문 내역 엘리먼트 함수
   const orderList = await getOrderInfo();
-  console.log(orderList.length);
   const itemMap = await getItemInfo(orderList);
   orderListDiv.innerHTML = orderList.reduce(
     (text, { _id, orderDate, itemList, status }) => {
@@ -86,6 +81,7 @@ async function addOrderListElements() {
 }
 
 async function getOrderInfo() {
+  // 주문 내역 DB 가져오기..
   try {
     const orderList = await Api.get('/api/order');
     return orderList;
@@ -96,6 +92,7 @@ async function getOrderInfo() {
 }
 
 async function getItemInfo(orderList) {
+  // 상품 정보 가져오기
   try {
     let itemInfoMap = {};
     for (let i = 0; i < orderList.length; i++) {
@@ -115,11 +112,17 @@ async function getItemInfo(orderList) {
   }
 }
 async function handleChangeBtn() {
+  // 배송 상태 변경 버튼
   if (!confirm('주문 상태를 배송 완료로 변경하시겠습니까?')) return;
   try {
-    const res = await Api.post('/api/order/update/status', {
+    await Api.post('/api/order/stat/update', {
       orderId: this.name,
     });
+    await Api.post('/api/order/update/status', {
+      orderId: this.name,
+    });
+    // const userId = await Api.get('/api/user/id');
+
     alert('주문 상태가 변경되었습니다.');
     window.location.reload();
   } catch (err) {
@@ -128,14 +131,13 @@ async function handleChangeBtn() {
   }
 }
 async function handleCancelBtn() {
-  console.log(`취소 버튼 ${this.name}`);
+  // 주문 취소 버튼
   if (!confirm('주문 내역을 삭제하시겠습니까?')) return;
   try {
     const res = await Api.delete('/api/order/admin/delete', '', {
       orderId: this.name,
     });
     alert('상품 삭제가 완료되었습니다.');
-    // refresh
     window.location.reload();
   } catch (err) {
     console.error(err.stack);
