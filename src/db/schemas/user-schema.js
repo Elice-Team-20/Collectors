@@ -56,7 +56,7 @@ const UserSchema = new Schema(
     },
     //stat{name: , count}
     stat: {
-      weapon: {
+      equipment: {
         type: Number,
         default: 0,
       },

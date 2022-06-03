@@ -150,5 +150,18 @@ orderInfoRouter.post(
     }
   },
 );
+orderInfoRouter.post(
+  '/stat/update',
+  loginRequired,
+  adminRequired,
+  async (req, res, next) => {
+    try {
+      const { orderId, userId } = req.body;
+      res.json(await orderInfoService.deleteAndAddStat(orderId, userId));
+    } catch (er) {
+      next(er);
+    }
+  },
+);
 
 export { orderInfoRouter };
