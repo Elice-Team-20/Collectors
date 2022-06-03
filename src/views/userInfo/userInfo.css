@@ -1,0 +1,131 @@
+.info-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.info-title {
+  grid-column: span 2;
+  width: 80vw;
+  align-items: baseline;
+  margin: 0 auto;
+}
+
+.user-tier-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  place-content: center;
+  place-items: center;
+  width: 100%;
+}
+
+#user-tier {
+  position: relative;
+  width: 30vh;
+  height: 30vh;
+  margin: 20px;
+}
+
+#user-tier img {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  opacity: 0.25;
+  border-radius: 50%;
+}
+
+#magic,
+#weapon,
+#esp,
+#int {
+  margin: 2vh auto;
+  width: 30vw;
+  height: 2vh;
+  position: relative;
+}
+
+.user-info-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.user-info-form-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+  width: 50%;
+  height: 100%;
+}
+
+.user-info-form-box .field {
+  width: 100%;
+  margin-bottom: 1%;
+}
+
+.user-info-form-box .field .label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.user-info-form-box .field .input {
+  margin-bottom: 0.5rem;
+}
+
+.main-btn:disabled {
+  background-color: dimgray;
+  border: 0;
+}
+
+.main-btn:disabled:hover {
+  background-color: dimgray;
+  border: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .info-container {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info-title {
+    width: 80%;
+  }
+
+  #magic,
+  #weapon,
+  #esp,
+  #int {
+    width: 50vw;
+  }
+
+  .user-stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .user-info-form-box {
+    width: 50vw;
+  }
+
+  .user-info-form-box .field {
+    width: 100%;
+  }
+
+  .user-info-form-box .field .input {
+    width: 100%;
+  }
+
+  .user-info-form-box .button {
+    width: 100%;
+  }
+}

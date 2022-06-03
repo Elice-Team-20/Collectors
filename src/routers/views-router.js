@@ -13,6 +13,7 @@ viewsRouter.use('/cart', serveStatic('cart'));
 viewsRouter.use('/items', serveStatic('list'));
 viewsRouter.use('/item', serveStatic('detail'));
 viewsRouter.use('/user', serveStatic('user'));
+viewsRouter.use('/user/info', serveStatic('userInfo'));
 viewsRouter.use('/user/edit', serveStatic('edit'));
 viewsRouter.use('/user/orderlist', serveStatic('orderlist'));
 viewsRouter.use('/user/resign', serveStatic('resign'));

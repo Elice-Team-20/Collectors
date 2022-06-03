@@ -90,7 +90,19 @@ userRouter.get('/isAdmin', loginRequired, async function (req, res, next) {
     const id = req.currentUserId;
     const result = await userService.isAdmin(id);
 
-    res.status(200).json({ result: result });
+    res.status(200).json({ result });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 유저의 등급 리턴
+userRouter.get('/role', loginRequired, async (req, res, next) => {
+  try {
+    const id = req.currentUserId;
+    const result = await userService.getUserRole(id);
+
+    res.status(200).json(result);
   } catch (error) {
     next(error);
   }

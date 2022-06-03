@@ -64,7 +64,7 @@ function addBtnEvents() {
     window.location.href = '/user/orderlist';
   });
   editUserInfoBtn.addEventListener('click', () => {
-    window.location.href = '/user/edit';
+    window.location.href = '/user/info';
   });
   resignBtn.addEventListener('click', () => {
     window.location.href = '/user/resign';

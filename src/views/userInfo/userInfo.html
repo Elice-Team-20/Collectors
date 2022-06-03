@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="title" content="Collector's" />
+    <meta
+      name="description"
+      content="당신이 원하는 모든 능력을 찾아 우주 최강이 되어보세요!"
+    />
+    <meta property="og:title" content="Collector's" />
+    <meta
+      property="og:description"
+      content="당신이 원하는 모든 능력을 찾아 우주 최강이 되어보세요!"
+    />
+    <meta
+      property="og:image"
+      content="https://team20.s3.ap-northeast-2.amazonaws.com/image/06797180db33-11ec-b729-b56803da2900.jpeg"
+    />
+    <meta property="og:url" content="홈페이지 url" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="홈페이지 url" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:url" content="홈페이지 url" />
+    <meta name="twitter:title" content="Collector's" />
+    <meta
+      name="twitter:description"
+      content="당신이 원하는 모든 능력을 찾아 우주 최강이 되어보세요!"
+    />
+    <meta
+      name="twitter:image"
+      content="https://team20.s3.ap-northeast-2.amazonaws.com/image/06797180db33-11ec-b729-b56803da2900.jpeg"
+    />
+    <meta
+      name="keywords"
+      content="마블, 초능력, 쇼핑몰, 무기, 히어로, 빌런, 능력, 마법"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collector's User Information</title>
+
+    <!-- 아이콘 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+
+    <!-- 폰트 어썸: 아이콘 -->
+    <script
+      defer
+      src="https://kit.fontawesome.com/7630448495.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Progressbar.js -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.1.0/progressbar.min.js"
+      integrity="sha512-EZhmSl/hiKyEHklogkakFnSYa5mWsLmTC4ZfvVzhqYNLPbXKAXsjUYRf2O9OlzQN33H0xBVfGSEIUeqt9astHQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:400,300,600,800,900"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="userInfo.css" />
+    <link rel="stylesheet" href="../../style.css" />
+    <script src="userInfo.js" type="module" defer></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  </head>
+  <body>
+    <div id="wrap">
+      <!-- 헤더 -->
+      <nav></nav>
+      <!-- 계정 관리 메뉴 -->
+      <section class="info">
+        <div class="info-container">
+          <div class="info-title">
+            <h2>회원 정보</h2>
+            <div class="seperator"></div>
+          </div>
+
+          <div class="user-tier-container">
+            <div class="user-tier">
+              <div class="user-tier-img-box">
+                <div id="user-tier">
+                  <img
+                    src="https://team20.s3.ap-northeast-2.amazonaws.com/image/06797180db33-11ec-b729-b56803da2900.jpeg"
+                    alt="user-tier-img"
+                  />
+                </div>
+              </div>
+              <div class="user-tier-info">
+                <h3 id="user-tier-name"></h3>
+                <p id="user-tier-point"></p>
+              </div>
+            </div>
+
+            <div class="user-stats">
+              <div class="user-stat">
+                <div class="user-stat-title">
+                  <h4>마법</h4>
+                </div>
+                <div class="user-stat-bar">
+                  <div id="magic"></div>
+                </div>
+              </div>
+              <div class="user-stat">
+                <div class="user-stat-title">
+                  <h4>무기</h4>
+                </div>
+                <div class="user-stat-bar">
+                  <div id="weapon"></div>
+                </div>
+              </div>
+              <div class="user-stat">
+                <div class="user-stat-title">
+                  <h4>초능력</h4>
+                </div>
+                <div class="user-stat-bar">
+                  <div id="esp"></div>
+                </div>
+              </div>
+              <div class="user-stat">
+                <div class="user-stat-title">
+                  <h4>지능</h4>
+                </div>
+                <div class="user-stat-bar">
+                  <div id="int"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="user-info-form-container">
+            <form class="user-info-form-box" id="userInfoForm">
+              <div class="field">
+                <label class="label" for="fullNameInput">이름</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    id="fullNameInput"
+                    type="text"
+                    autocomplete="off"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="field">
+                <label class="label" for="userTierInput">회원 등급</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    id="userTierInput"
+                    type="text"
+                    autocomplete="off"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="field">
+                <label class="label" for="emailInput">이메일</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    id="emailInput"
+                    type="text"
+                    autocomplete="off"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="field">
+                <label class="label" for="phoneNumberInput">전화번호</label>
+                <div class="control">
+                  <input
+                    class="input"
+                    id="phoneNumberInput"
+                    type="number"
+                    autocomplete="off"
+                    disabled
+                  />
+                </div>
+              </div>
+              <button class="button main-btn" id="submitButton">
+                회원 정보 수정하러 가기
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+      <footer></footer>
+    </div>
+  </body>
+</html>
