@@ -208,7 +208,7 @@ function handleOrderBtn() {
       return alert('주문할 상품이 없습니다. 상품 선택을 해주세요.');
     }
     console.log('order', order, 'cart', cart);
-    localStorage.setItem('cart', JSON.stringify(cart)); // 삭제된 아이템 삭제
+    // localStorage.setItem('cart', JSON.stringify(cart)); // 삭제된 아이템 삭제
     localStorage.setItem('order', JSON.stringify(order));
     window.location.href = '/order';
   } else {
@@ -341,3 +341,8 @@ function handleDeleteItemBtn(e) {
   addCartEventListeners();
   addOrderInfoElement();
 }
+
+window.onunload = () => {
+  // 삭제된 아이템 카트에서 제외
+  localStorage.setItem('cart', JSON.stringify(cart));
+};
