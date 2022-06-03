@@ -211,17 +211,18 @@ class OrderinfoService {
     });
   }
 
-  async deleteAndAddStat(orderId, userId) {
+  async addStat(orderId, userId) {
     try {
       const order = await orderInfo.findByObjectId(orderId);
       const itemList = order.itemList;
+      console.log(order);
       await Promise.all([
         itemList.forEach(async (e) => {
           const itemData = await itemService.getItembyObId(e.itemId);
           const userInfo = await userService.getUser(userId);
           const count = e.count;
           let updateData;
-
+          console.log('item Data ' + itemData.category);
           if (itemData.category === '장비') {
             updateData = {
               equipment: parseInt(count + userInfo.stat.equipment),
@@ -237,12 +238,14 @@ class OrderinfoService {
           } else {
             updateData = false;
           }
+          console.log('updateData' + updateData);
           if (updateData) {
             const insertData = { stat: updateData };
             const updateResult = await userService.updateUserInfo(
               userId,
               insertData,
             );
+            console.log(updateResult);
           }
         }),
       ]);

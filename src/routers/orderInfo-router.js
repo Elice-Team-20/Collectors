@@ -164,7 +164,7 @@ orderInfoRouter.post(
   async (req, res, next) => {
     try {
       const { orderId, userId } = req.body;
-      res.json(await orderInfoService.deleteAndAddStat(orderId, userId));
+      res.json(await orderInfoService.addStat(orderId, userId));
     } catch (er) {
       next(er);
     }
