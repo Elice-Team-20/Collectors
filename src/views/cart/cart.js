@@ -414,6 +414,8 @@ function handleNumberMinusBtn(e) {
 
 function handleDeleteItemBtn(e) {
   console.log('delete');
+  checkedItems[this.name] = false;
+  console.log('삭제 후 check 빼기', this.name, checkedItems[this.name]);
   cart = cart.filter((id) => id !== this.name);
   console.log(cart);
   localStorage.setItem('cart', JSON.stringify(cart));

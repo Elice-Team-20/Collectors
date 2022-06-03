@@ -33,9 +33,9 @@ const discountRateMap = {
 async function userInit() {
   if (!isLoggedIn) {
     // 로그인 정보가 없다면
-    alert(
-      '당신은 호크 아이(비회원)입니다. 가입하시면 할인을 받을 수 있습니다.',
-    );
+    // alert(
+    //   '당신은 호크 아이(비회원)입니다. 가입하시면 할인을 받을 수 있습니다.',
+    // );
     return '호크 아이';
   }
   try {
