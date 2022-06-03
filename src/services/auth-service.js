@@ -62,7 +62,7 @@ class KakaoOAuthService {
 
   //회원 우리db에 등록 하는 함수
   async signUp(userInfo) {
-    const { email, profile } = userInfo.kakao_account;
+    let { email, profile } = userInfo.kakao_account;
     const { nickname } = profile;
     const userData = {
       email: email,
