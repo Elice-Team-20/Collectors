@@ -215,11 +215,9 @@ class OrderinfoService {
     try {
       const order = await orderInfo.findByObjectId(orderId);
       const itemList = order.itemList;
-      console.log(order);
       await Promise.all([
         itemList.forEach(async (e) => {
           const itemData = await itemService.getItembyObId(e.itemId);
-          console.log(itemData);
           const userId = await userService.findByOrderId(orderId);
           const userInfo = await userService.getUser(userId);
           const count = e.count;
@@ -231,10 +229,6 @@ class OrderinfoService {
           } else if (itemData.category === '초능력') {
             updateData = { psychic: parseInt(count + userInfo.stat.psychic) };
           } else if (itemData.category === '마법') {
-            console.log(
-              'userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr  ',
-              userInfo.stat,
-            );
             updateData = {
               magic: parseInt(count + userInfo.stat.magic),
             };
@@ -247,12 +241,11 @@ class OrderinfoService {
           }
           if (updateData) {
             const insertData = { stat: updateData };
-            console.log(insertData);
             const updateResult = await userService.updateUserInfo(
               userId,
               insertData,
             );
-            console.log(updateResult);
+            //console.log(updateResult);
           }
         }),
       ]);
