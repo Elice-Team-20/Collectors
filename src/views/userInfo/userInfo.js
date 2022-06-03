@@ -92,7 +92,7 @@ async function getUserDataToInput() {
 
   // 유저 스탯 삽입
   const { equipment, magic, intelligence, psychic } = userData.stat;
-
+  console.log(equipment, magic, intelligence, psychic);
   // 유저 스탯 프로그래스 바 추가하기
   let magicStat = new ProgressBar.Line('#magic', {
     strokeWidth: 4,
