@@ -119,7 +119,7 @@ function addCartItemsElements() {
         console.log(cart);
         itemMap[id] = finalStock;
       }
-      let isOne = itemMap[id] === 1; // 현재 최고 수량이라면 disabled 하기 위함
+      let isOne = itemMap[id] <= 1; // 현재 최고 수량이라면 disabled 하기 위함
       console.log(itemName, itemMap[id], avaiableStocksMap[id]);
 
       return (
