@@ -1,8 +1,9 @@
 import { ForecastService } from 'aws-sdk';
 import { isElement } from 'lodash';
 import { orderInfo, userModel, itemModel } from '../db/index';
-import { getDate } from '../utils/get-date';
+import { getDate, setRole } from '../utils';
 import { itemService } from './index';
+import { userService } from './user-service';
 
 const checkData = async function (orderId) {
   return (await orderInfo.findByObjectId(orderId)) ? true : false;
@@ -18,10 +19,14 @@ class OrderinfoService {
   }
 
   // 전체 주문 조회
+  // 필요한 데이터만 전달하도록 필터링 역할을 하는 함수입니다.
+  // 이 부분을 효율적으로 보완하고 싶은데, 좋은 방법 있다면 알려주시면 감사하겠습니다.
   async getOrderInfo() {
     let orders = await this.orderModel.findAll();
     const array = [];
-    for (let i = 0; i < orders.length; i++) {
+
+    // orderList가 최신순으로 보이도록 작성
+    for (let i = orders.length - 1; i >= 0; i--) {
       const temp = {};
       temp._id = orders[i]._id;
 
@@ -51,13 +56,17 @@ class OrderinfoService {
     }
   }
 
+  // 이 부분도 마찬가지로 필요한 데이터만 전달하도록 필터링하는 함수입니다.
+  // 개선점을 찾아주시면 감사하겠습니다..!
   async getOrderList(orderInfo) {
     const array = [];
-    for (let i = 0; i < orderInfo.length; i++) {
+    for (let i = orderInfo.length - 1; i >= 0; i--) {
       const temp = {};
       temp.orderId = orderInfo[i].id;
 
       const date = new Date(orderInfo[i].createdAt);
+
+      // getDate : 2022-06-01T10:32:44.903+00:00 형식의 날짜 데이터를 YYYY-MM-DD로 변경하는 함수
       temp.orderDate = getDate(date);
 
       const itemList = await this.idToOrderName(orderInfo[i].itemList);
@@ -70,6 +79,7 @@ class OrderinfoService {
     return array;
   }
 
+  // id로 저장된 부분을 이름으로 치환
   async idToOrderName(orderList) {
     const array = [];
 
@@ -114,15 +124,21 @@ class OrderinfoService {
         },
       });
       const itemList = createdOrder.itemList;
-
       itemList.forEach(async (e) => {
-        const currItem = await itemService.getItembyObId(e.itemId);
-        const inputItemCount = e.count;
-        const changeStock = currItem.stocks - inputItemCount;
-        const updateReturn = await itemService.updateItem(
-          { _id: e.itemId },
-          { stocks: changeStock },
-        );
+        try {
+          const currItem = await itemService.getItembyObId(e.itemId);
+          const inputItemCount = e.count;
+          const changeStock = currItem.stocks - inputItemCount;
+          if (changeStock < 0) {
+            return;
+          }
+          const updateReturn = await itemService.updateItem(
+            { _id: e.itemId },
+            { stocks: changeStock },
+          );
+        } catch (er) {
+          throw new Error(er);
+        }
       });
       const populateRes = await this.userModel.getUserAndPopulate(userId);
       return populateRes;
@@ -150,15 +166,28 @@ class OrderinfoService {
     } catch (er) {
       return er;
     }
-
-    //console.log(flag);
   }
 
+  // 배송이 완료되면 상태를 '배송 완료'로 바꾸고 누적cost를 업데이트
   async updateInfo(orderId, info) {
-    const order = await this.orderModel.findByObjectId(orderId);
     if (checkData(orderId)) {
-      const result = await this.orderModel.updateByObjectId(orderId, info);
-      return result;
+      const order = await this.orderModel.findByObjectId(orderId);
+      const user = await userService.findByOrderId(orderId);
+      const updateCost = order.totalCost + user.accumulatedTotalCost;
+
+      // update된 cost 비용으로 role 설정
+      const newRole = setRole(updateCost);
+
+      const updatedOrder = await this.orderModel.updateByObjectId(
+        orderId,
+        info,
+      );
+      const updatedUser = await userService.updateUserInfo(user.id, {
+        accumulatedTotalCost: updateCost,
+        role: newRole,
+      });
+
+      return updatedOrder;
     }
     return new Error('등록된 상품이 없습니다.');
   }
@@ -186,7 +215,6 @@ class OrderinfoService {
         { _id: data.itemId },
         { stocks: updateStock },
       );
-      console.log(result);
     });
   }
 }

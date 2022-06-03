@@ -21,7 +21,10 @@ authRouter.get('/kakao/finish', async (req, res, next) => {
       client_id: REST_API_KEY,
       client_secret: KAKAO_CLIENT_SECRET,
       grant_type: 'authorization_code',
+
       redirect_uri: 'http://localhost:5000/api/auth/kakao/finish',
+      // redirect_uri:
+      //   'http://kdt-sw2-seoul-team20.elicecoding.com/api/auth/kakao/finish',
       code: req.query.code,
     };
 
@@ -65,7 +68,6 @@ authRouter.get(
   passport.authenticate('naver', { session: false }),
   (req, res, next) => {
     try {
-      // res.status(200).json({"token": req.user.token});
       const token = req.user.token;
       res.cookie('token', token);
       res.redirect('/');
@@ -85,7 +87,6 @@ authRouter.get(
   passport.authenticate('google', { session: false }),
   (req, res, next) => {
     try {
-      // res.status(200).json({"token": req.user.token});
       const token = req.user.token;
       res.cookie('token', token);
       res.redirect('/');

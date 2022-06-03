@@ -20,7 +20,9 @@ export class ItemModel {
 
   async find() {
     try {
-      const item = await Item.find({}).sort({ updatedAt: -1 }).exec();
+      const item = await Item.find({ deleteFlag: false })
+        .sort({ updatedAt: -1 })
+        .exec();
       return item;
     } catch (er) {
       console.log('모델 에러 발생 개발자도구를 확인하세요');
@@ -42,13 +44,18 @@ export class ItemModel {
 
   // stocks가 5개 미만인 아이템 검색
   async findFiveOrLessThanItems() {
-    const items = await Item.find({ stocks: { $lte: 5, $gt: 0 } }).exec();
+    const items = await Item.find({
+      $and: [{ deleteFlag: false }, { stocks: { $lte: 5, $gt: 0 } }],
+    }).exec();
     return items;
   }
 
   // 최근에 등록된 6개의 아이템 검색
   async findNewItems() {
-    const items = await Item.find({}).sort({ createdAt: -1 }).limit(6);
+    const items = await Item.find({ deleteFlag: false })
+      .sort({ createdAt: -1 })
+      .limit(6);
+    console.log(items);
     return items;
   }
 

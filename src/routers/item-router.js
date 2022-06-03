@@ -72,7 +72,7 @@ itemRouter.post(
     };
     const resultData = await itemService.addItem(formData);
     res.json({ status: 'ok', sucsess: resultData });
-  },
+  }
 );
 
 itemRouter.get('/:id', async (req, res) => {
@@ -99,12 +99,11 @@ itemRouter.delete(
     try {
       const { id } = req.params;
       const result = await itemService.deleteItem(id);
-      console.log(result);
       res.json({ status: 'ok', result: `${result.itemName} 삭제` });
     } catch (error) {
       next(error);
     }
-  },
+  }
 );
 
 // POST /api/update/:id
@@ -154,7 +153,7 @@ itemRouter.post(
     } catch (error) {
       next(error);
     }
-  },
+  }
 );
 
 export { itemRouter };

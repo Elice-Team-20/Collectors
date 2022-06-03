@@ -238,6 +238,16 @@ class UserService {
     const DBpassword = user.password;
     return await bcrypt.compare(inputPassword, DBpassword);
   }
+
+  async findByOrderId(orderId) {
+    const user = await this.userModel.findByOrderId(orderId);
+    return user;
+  }
+
+  async updateUserInfo(userId, update) {
+    const user = await this.userModel.update({ userId, update });
+    return user;
+  }
 }
 
 const userService = new UserService(userModel);
