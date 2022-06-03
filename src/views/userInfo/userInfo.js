@@ -50,7 +50,7 @@ async function getUserDataToInput() {
     userTierImage.src = '/user-tier-1.png';
   } else if (tier === '닥터 스트레인지') {
     userTierImage.src = '/user-tier-2.png';
-  } else if (tier === '아이언 맨') {
+  } else if (tier === '토니 스타크') {
     userTierImage.src = '/user-tier-3.png';
   } else if (tier === '블랙 팬서') {
     userTierImage.src = '/user-tier-4.png';
@@ -93,7 +93,8 @@ async function getUserDataToInput() {
 
   // 유저 스탯 삽입
   const { equipment, magic, intelligence, psychic } = userData.stat;
-  console.log(equipment, magic, intelligence, psychic);
+  console.log(userData.stat);
+  console.log('e', equipment, 'm', magic, 'i', intelligence, 'p', psychic);
   // 유저 스탯 프로그래스 바 추가하기
   let magicStat = new ProgressBar.Line('#magic', {
     strokeWidth: 4,
