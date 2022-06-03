@@ -15,7 +15,6 @@ import { checkAdmin } from '../../useful-functions.js';
 
 window.onload = () => {
   // admin인지 확인하기
-  console.log('check', checkAdmin());
   if (!checkAdmin()) {
     alert('관리자 권한이 없습니다.');
     window.location.href = '/';
@@ -33,20 +32,16 @@ const categoryMap = categoryList.reduce((map, val, idx) => {
 await addAllElements();
 await addAllEvents();
 
-// html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllElements() {
   addNavElements('User');
   await addItemInputFormElement('상품 등록하기');
   await addCategoryElements(categoryList);
-  // await addItemInputOriginElement();
   addFooterElements();
 }
 
-// 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 async function addAllEvents() {
   addNavEventListeners();
   handleHamburger();
-  //   console.log(document.querySelector('#addTagBtn'));
   document
     .querySelector('#addTagBtn')
     .addEventListener('click', handleAddTagBtn);
@@ -62,6 +57,7 @@ async function addAllEvents() {
 }
 
 function handleImgFileInput(e) {
+  // 이미지 업로드 관련 함수
   const imgFileInput = document.querySelector('#imgFileInput');
   const imgFileBoxDiv = document.querySelector('#imgFileBox');
 
@@ -77,8 +73,9 @@ function handleImgFileInput(e) {
   };
 }
 function handleCategorySelect() {
-  console.log(document.querySelector('#categoryTextInputDiv'));
+  // 카테고리 처리 함수
   if (this.selectedIndex === categoryList.length + 1) {
+    // 카테고리 직접 추가하기 옵션
     document.querySelector('#categoryTextInputDiv').innerHTML = `
     <input
       class="input"
@@ -89,10 +86,12 @@ function handleCategorySelect() {
     />
   `;
   } else {
+    // 그 외 옵션
     document.querySelector('#categoryTextInputDiv').innerHTML = '';
   }
 }
 function handleAddTagBtn(e) {
+  // 태그 추가 버튼 함수
   e.preventDefault();
   const tagInput = document.querySelector('#tagInput');
   tags = [tagInput.value, ...tags];
@@ -100,30 +99,31 @@ function handleAddTagBtn(e) {
   tagInput.value = '';
 }
 function addTagElements() {
+  // 태그 엘리먼트 추가 함수
   const tagListDiv = document.querySelector('#tagList');
 
   tagListDiv.innerHTML = tags.reduce((text, tag) => {
     return text + addTagElement(tag);
   }, ``);
-  // tagListDiv.innerHTML += addTagElement(tagInput.value);
   addTagDeleteEvents();
 }
 function addTagElement(value) {
-  //각 tag element 추가 함수
+  // 태그 엘리먼트 반환 함수
   return `<div class="tag-name">${value}</div>`;
 }
 function addTagDeleteEvents() {
+  // 태그 삭제 이벤트 할당 함수
   document.querySelectorAll('.tag-name').forEach((node) => {
     node.addEventListener('click', handleTagDeleteEvent);
   });
 }
 function handleTagDeleteEvent() {
-  console.log('tag clicked', this.innerText);
+  // 태그 삭제 이벤트 처리 함수
   tags = tags.filter((value) => value !== this.innerText);
   addTagElements();
-  console.log('after', tags);
 }
 async function handleRegisterItemBtn(e) {
+  // 상품 등록 버튼 처리 함수
   e.preventDefault();
   const itemNameInput = document.querySelector('#itemNameInput');
   const categorySelector = document.querySelector('#categorySelector');

@@ -47,17 +47,6 @@
 }
 
 .edit-user-form-box .field .input {
-  /* width: 100%;
-  height: 4vh;
-  padding-left: 2%;
-
-  background: #ffffff;
-  border: 1px solid #c5c5c5;
-  box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  outline-style: none;
-
-  color: black; */
   margin-bottom: 0.5rem;
 }
 .main-btn:disabled {
@@ -71,23 +60,6 @@
 #addressButton {
   width: 30%;
 }
-/* .edit-user-form-box .button,
-#addressButton {
-  width: 30%;
-  height: 4vh;
-  border-color: #f01e21;
-  border-radius: 7px;
-  background-color: #f01e21;
-  color: #ffffff;
-  font-weight: bold;
-  text-align: center;
-}
-
-.edit-user-form-box .button:hover,
-#addressButton:hover {
-  border-color: #e7484b;
-  background-color: #e7484b;
-} */
 
 #postcode {
   width: 40%;

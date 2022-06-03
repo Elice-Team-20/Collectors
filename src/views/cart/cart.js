@@ -16,7 +16,6 @@ const shipFreeMinPrice = 50000;
 let cart = cartInit(); // cart token 가져오기
 const isLoggedIn = checkUserStatus();
 let userRole = await userInit(); // 사용자 티어 가져오기
-console.log(userRole);
 let itemMap = makeCartItemMap(cart); // 카트 Map 만들기, id - 개수 구조
 let checkedItems = makeCheckedItemMap(itemMap); // check된 상품들
 let infos = await getCartItemsInfos(itemMap);
@@ -36,6 +35,7 @@ let originalPrice = 0;
 function cartInit() {
   // cart token 가져오기
   let cart = JSON.parse(localStorage.getItem('cart'));
+  // 없으면 cart 토큰 생성
   if (!cart) {
     cart = [];
     localStorage.setItem('cart', JSON.stringify([]));
@@ -43,6 +43,7 @@ function cartInit() {
   return cart;
 }
 async function userInit() {
+  // 사용자 로그인 정보 및 티어 초기화 함수
   if (!isLoggedIn) {
     // 로그인 정보가 없다면
     alert(
@@ -59,7 +60,7 @@ async function userInit() {
   }
 }
 function makeCartItemMap(cart) {
-  // 카트 아이템 관리 map
+  // 카트 아이템 관리 map : id - 개수 구조
   return cart.reduce((map, item) => {
     if (item.deleteFlag) return map; // 삭제된 아이템 제외
     if (!map[item]) {
@@ -98,14 +99,13 @@ async function addAllEvents() {
   addCartEventListeners();
 }
 function alertStockNotAvailable() {
+  // 수량 부족 경고창
   alert('상품 중 수량이 부족한 것이 있어 조절하였습니다.');
 }
 // elements 추가 부분
 function addCartItemsElements() {
-  console.log(itemMap);
   deletedItems = [];
   cartItenWrapperDiv.innerHTML = Object.keys(itemMap).reduce((elements, id) => {
-    console.log(infos[id]);
     if (!infos[id]) {
       deletedItems = [...deletedItems, id];
       return elements;
@@ -125,11 +125,12 @@ function addCartItemsElements() {
         checkedItems[id] = false; // 체크 해제
         deletedItems = [...deletedItems, id]; // 장바구니에서 구매 불가한 것 제외. api 처리가 필요해보임.
       }
+      // 최종 표시할 수량이 현재 재고와 동일 시 flag
       let isLimit = finalStock === avaiableStocksMap[id];
       if (isLimit) {
+        // 최종 표시할 수량이 현재 재고와 동일 시
         let count = 0;
         let until = itemMap[id] - avaiableStocksMap[id];
-        console.log('until', until);
         cart.filter((val) => {
           if (count < until && val === id) {
             count += 1;
@@ -137,12 +138,9 @@ function addCartItemsElements() {
           }
           return true;
         });
-        console.log(cart);
-        itemMap[id] = finalStock;
+        itemMap[id] = finalStock; // 최종 개수를 현재 재고로 변경
       }
       let isOne = itemMap[id] === 1; // 현재 최고 수량이라면 disabled 하기 위함
-      console.log(itemName, itemMap[id], avaiableStocksMap[id]);
-      console.log();
       return (
         elements +
         `
@@ -188,11 +186,8 @@ function addCartItemsElements() {
 
 function alertDeletedItems() {
   // 삭제된 아이템이 있을 경우 확인 후 최초 한번 알림
-  console.log(deletedItems);
   if (deletedItems.length !== 0) {
-    console.log(deletedItems);
     cart = cart.filter((id) => !deletedItems.some((val) => val === id));
-    console.log(cart);
     alert('장바구니에 있던 상품 중 품절된 것이 있습니다.');
   }
 }
@@ -204,7 +199,6 @@ async function getCartItemsInfos(itemMap) {
     for (let i = 0; i < items.length; i++) {
       const [_id, num] = items[i];
       const info = await Api.get(`/api/item/${_id}`);
-      console.log(info);
       if (!info.deleteFlag) {
         infos[_id] = info; // 삭제된 아이템이 아닐 경우에만 넣기
       } else checkedItems[_id] = false;
@@ -221,12 +215,10 @@ function addOrderInfoElement() {
   // infos를 통해 가격 체크
   let nums = 0;
   let totalPrice = 0;
-  console.log(infos);
   Object.entries(checkedItems).forEach(([id, checked]) => {
     if (checked) {
       const num = itemMap[id];
       const { price } = infos[id];
-      console.log('order card', id, num, price);
       nums += Number(num);
       totalPrice += Number(price * num);
     }
@@ -273,7 +265,6 @@ function addOrderInfoElement() {
 function handleOrderBtn() {
   if (isLoggedIn) {
     let list = Object.keys(checkedItems).reduce((arr, id) => {
-      console.log(checkedItems[id]);
       if (checkedItems[id]) {
         arr.push([id, itemMap[id], infos[id].itemName]);
       }
@@ -284,7 +275,6 @@ function handleOrderBtn() {
       window.location.href = '/items';
       return;
     }
-    console.log('order', list, 'cart', cart);
     const data = {
       list,
       originalPrice,
@@ -322,10 +312,8 @@ function addCartEventListeners() {
   });
 }
 function handleAllCheckbox(e) {
-  console.log(this.checked);
-  console.log('cheklist', checkedItems);
+  // 전체 체크 박스 이벤트 함수
   const itemCheckBox = document.querySelectorAll('.item-select-checkbox');
-  console.log(itemCheckBox);
   if (this.checked) {
     Object.keys(checkedItems).forEach((id) => {
       checkedItems[id] = true;
@@ -344,7 +332,7 @@ function handleAllCheckbox(e) {
   addOrderInfoElement();
 }
 function handleDeleteAllBtn() {
-  console.log('cart', cart);
+  // 전체 삭제 버튼 이벤트 함수
   if (cart.length !== 0) {
     Object.keys(checkedItems).forEach((id) => {
       if (checkedItems[id]) {
@@ -352,7 +340,6 @@ function handleDeleteAllBtn() {
         cart = cart.filter((cartId) => cartId !== id);
       }
     });
-    console.log('after', cart);
     localStorage.setItem('cart', JSON.stringify(cart));
     addCartItemsElements();
     addCartEventListeners();
@@ -362,14 +349,12 @@ function handleDeleteAllBtn() {
   }
 }
 function handleItemCheckbox(e) {
-  console.log('check', this.checked);
-  console.log('check', this.name);
+  // 각 아이템 별 체크 박스 이벤트 함수
   if (this.checked) {
     checkedItems[this.name] = true;
   } else {
     checkedItems[this.name] = false;
   }
-  console.log(checkedItems);
   // 전체 선택 체크박스 관리
   document.querySelector('#allSelectCheckbox').checked = Object.values(
     checkedItems,
@@ -377,7 +362,7 @@ function handleItemCheckbox(e) {
   addOrderInfoElement();
 }
 function handleNumberPlusBtn(e) {
-  // 수량 늘리기 버튼
+  // + 수량 늘리기 버튼
   cart.push(this.name);
   localStorage.setItem('cart', JSON.stringify(cart));
   itemMap[this.name] += 1;
@@ -391,7 +376,7 @@ function handleNumberPlusBtn(e) {
   }
 }
 function handleNumberMinusBtn(e) {
-  // 수량 줄이기 버튼
+  // - 수량 줄이기 버튼
   if (itemMap[this.name] > 1) {
     cart.splice(
       cart.findIndex((val) => val === this.name),
@@ -413,13 +398,10 @@ function handleNumberMinusBtn(e) {
 }
 
 function handleDeleteItemBtn(e) {
-  console.log('delete');
+  // 각 아이템별 삭제 버튼 이벤트 함수
   checkedItems[this.name] = false;
-  console.log('삭제 후 check 빼기', this.name, checkedItems[this.name]);
   cart = cart.filter((id) => id !== this.name);
-  console.log(cart);
   localStorage.setItem('cart', JSON.stringify(cart));
-  console.log('after', cart);
   itemMap[this.name] = 0;
   addCartItemsElements();
   addCartEventListeners();
