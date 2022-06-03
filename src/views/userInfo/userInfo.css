@@ -30,17 +30,18 @@
 }
 
 #user-tier img {
-  width: 100%;
+  width: 30vh;
+  height: 30vh;
   position: absolute;
   top: 0;
-  opacity: 0.25;
+  opacity: 0.5;
   border-radius: 50%;
 }
 
 #magic,
-#weapon,
-#esp,
-#int {
+#equipment,
+#psychic,
+#intelligence {
   margin: 2vh auto;
   width: 30vw;
   height: 2vh;
