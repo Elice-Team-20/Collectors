@@ -18,9 +18,13 @@ class OrderinfoService {
   }
 
   // 전체 주문 조회
+  // 필요한 데이터만 전달하도록 필터링 역할을 하는 함수입니다.
+  // 이 부분을 효율적으로 보완하고 싶은데, 좋은 방법 있다면 알려주시면 감사하겠습니다.
   async getOrderInfo() {
     let orders = await this.orderModel.findAll();
     const array = [];
+
+    // orderList가 최신순으로 보이도록 작성
     for (let i = orders.length - 1; i >= 0; i--) {
       const temp = {};
       temp._id = orders[i]._id;
@@ -51,6 +55,8 @@ class OrderinfoService {
     }
   }
 
+  // 이 부분도 마찬가지로 필요한 데이터만 전달하도록 필터링하는 함수입니다.
+  // 개선점을 찾아주시면 감사하겠습니다..!
   async getOrderList(orderInfo) {
     const array = [];
     for (let i = orderInfo.length - 1; i >= 0; i--) {
@@ -58,6 +64,8 @@ class OrderinfoService {
       temp.orderId = orderInfo[i].id;
 
       const date = new Date(orderInfo[i].createdAt);
+
+      // getDate : 2022-06-01T10:32:44.903+00:00 형식의 날짜 데이터를 YYYY-MM-DD로 변경하는 함수
       temp.orderDate = getDate(date);
 
       const itemList = await this.idToOrderName(orderInfo[i].itemList);
@@ -70,6 +78,7 @@ class OrderinfoService {
     return array;
   }
 
+  // id로 저장된 부분을 이름으로 치환
   async idToOrderName(orderList) {
     const array = [];
 
