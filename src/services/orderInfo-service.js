@@ -116,13 +116,20 @@ class OrderinfoService {
       const itemList = createdOrder.itemList;
 
       itemList.forEach(async (e) => {
-        const currItem = await itemService.getItembyObId(e.itemId);
-        const inputItemCount = e.count;
-        const changeStock = currItem.stocks - inputItemCount;
-        const updateReturn = await itemService.updateItem(
-          { _id: e.itemId },
-          { stocks: changeStock },
-        );
+        try {
+          const currItem = await itemService.getItembyObId(e.itemId);
+          const inputItemCount = e.count;
+          const changeStock = currItem.stocks - inputItemCount;
+          if (changeStock < 0) {
+            return;
+          }
+          const updateReturn = await itemService.updateItem(
+            { _id: e.itemId },
+            { stocks: changeStock },
+          );
+        } catch (er) {
+          throw new Error(er);
+        }
       });
       const populateRes = await this.userModel.getUserAndPopulate(userId);
       return populateRes;
@@ -186,7 +193,6 @@ class OrderinfoService {
         { _id: data.itemId },
         { stocks: updateStock },
       );
-      console.log(result);
     });
   }
 }
