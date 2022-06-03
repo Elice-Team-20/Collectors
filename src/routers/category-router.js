@@ -32,7 +32,7 @@ categoryRouter.post(
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 // DELETE api/category
@@ -45,13 +45,13 @@ categoryRouter.delete(
     try {
       const { categoryName } = req.body;
       const deletedCategory = await categoryService.deleteCategory(
-        categoryName
+        categoryName,
       );
       res.status(200).json(deletedCategory);
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 // POST api/category/:name
@@ -67,13 +67,13 @@ categoryRouter.post(
 
       const updatedCategory = await categoryService.updateCategory(
         oldName,
-        newCategoryName
+        newCategoryName,
       );
       res.status(201).json(updatedCategory);
     } catch (error) {
       next(error);
     }
-  }
+  },
 );
 
 export { categoryRouter };
