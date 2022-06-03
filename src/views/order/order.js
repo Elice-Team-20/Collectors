@@ -9,7 +9,9 @@ import {
 } from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
 
-const orderList = JSON.parse(localStorage.getItem('order'));
+const orderData = JSON.parse(localStorage.getItem('orderData'));
+const orderList = orderData.list;
+console.log(orderList);
 let cart = JSON.parse(localStorage.getItem('cart')); // 주문 후 수정될 예정
 const isLoggedIn = checkUserStatus();
 window.onload = async () => {
@@ -171,31 +173,30 @@ async function getUserShipInfos() {
 }
 async function addOrderInfoElements() {
   const orderItemsDiv = document.querySelector('#orderItems');
-  const itemTotalPriceDiv = document.querySelector('#itemTotalPrice');
+  const originalTotalPriceDiv = document.querySelector('#originItemTotalPrice'); // 원가
+  const discountTotalPriceDiv = document.querySelector(
+    '#discountItemTotalPrice',
+  ); // 할인가
   const shipFeeDiv = document.querySelector('#shipFee');
-  const totalPriceDiv = document.querySelector('#totalPrice');
+  const totalPriceDiv = document.querySelector('#totalPrice'); // 최종 가격
 
   const { orderItemsText, totalItemPrice, shipFee } = await getOrderItemInfos();
 
   orderItemsDiv.innerHTML = orderItemsText;
-  itemTotalPriceDiv.innerHTML = `${addCommas(totalItemPrice)}원`;
+  originalTotalPriceDiv.innerHTML = `${addCommas(orderData.originalPrice)}원`;
+  discountTotalPriceDiv.innerHTML = `${addCommas(totalItemPrice)}원`;
   shipFeeDiv.innerHTML = `${addCommas(shipFee)}원`;
   totalPriceDiv.innerHTML = `${addCommas(totalItemPrice + shipFee)}원`;
 }
 
 async function getOrderItemInfos() {
   let orderItemsText = ``;
-  let totalItemPrice = 0;
+  let totalItemPrice = orderData.finalOrderPrice; // 할인된 가격을 최종 가격
   try {
     for (let i = 0; i < orderList.length; i++) {
-      const [id, num] = orderList[i];
-      const info = await Api.get(`/api/item/${id}`);
-      // const info = await response.json();
-      const { itemName, price } = info;
+      const [id, num, itemName] = orderList[i];
       orderItemsText += `<div>${itemName} / ${num}개</div>`;
-      totalItemPrice += Number(price) * num;
     }
-
     let shipFee = totalItemPrice > shipFreeMinPrice ? 0 : 3000;
     orderInfo = {
       totalCost: totalItemPrice + shipFee,
@@ -209,5 +210,5 @@ async function getOrderItemInfos() {
   }
 }
 window.onunload = () => {
-  localStorage.removeItem('order');
+  localStorage.removeItem('orderData');
 };
