@@ -1,8 +1,16 @@
+section {
+  display: flex;
+  justify-content: center;
+
+  height: 90vh;
+}
+
 .signout-form-container {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 85vh;
+  max-height: calc(90vh - 100px);
 }
 
 .signout-form-box {
@@ -11,18 +19,21 @@
   align-items: center;
   justify-content: space-evenly;
 
-  width: 30rem;
-  height: 40%;
+  width: 50vw;
 }
+
 .signout-form-box .field {
   width: 100%;
 }
+
 .signout-form-box .field .label {
   display: block;
-  margin-bottom: 10px;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
 }
+
 .signout-form-box .field .input {
-  width: 98%;
+  /* width: 100%;
   height: 5vh;
   padding-left: 2%;
 
@@ -32,12 +43,15 @@
   border-radius: 10px;
   outline-style: none;
 
-  color: black;
+  color: black; */
+  margin-bottom: 1rem;
 }
-.signout-form-box .field .input:focus {
+
+/* .signout-form-box .field .input:focus {
   border: 0.5px solid #e7484b;
   box-shadow: 0 0 0 0.125em #f01e21;
 }
+
 .signout-form-box .button {
   width: 100%;
   height: 5vh;
@@ -47,8 +61,21 @@
   background-color: #f01e21;
 
   font-weight: bold;
-}
+} */
+
 .signout-form-box .button:hover {
   border-color: #e7484b;
   background-color: #e7484b;
+}
+
+@media screen and (max-width: 768px) {
+  .signout-form-container {
+    height: 100vh;
+    max-height: calc(90vh - 100px);
+  }
+
+  .signout-form-box {
+    width: 90vw;
+    height: 90vh;
+  }
 }

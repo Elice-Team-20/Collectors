@@ -2,30 +2,58 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>쇼핑-데모</title>
-    <!-- 아이콘 -->
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/elice-rabbit-favicon.png"
+    <meta name="title" content="Collector's" />
+    <meta
+      name="description"
+      content="당신이 원하는 모든 능력을 찾아 우주 최강이 되어보세요!"
     />
-    <!-- bulma css 관련 -->
-    <!-- <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    /> -->
+    <meta property="og:title" content="Collector's" />
+    <meta
+      property="og:description"
+      content="당신이 원하는 모든 능력을 찾아 우주 최강이 되어보세요!"
+    />
+    <meta
+      property="og:image"
+      content="https://team20.s3.ap-northeast-2.amazonaws.com/image/2e32c500e182-11ec-83b6-a91808427d79.png"
+    />
+    <meta property="og:url" content="홈페이지 url" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="홈페이지 url" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:url" content="홈페이지 url" />
+    <meta name="twitter:title" content="Collector's" />
+    <meta
+      name="twitter:description"
+      content="당신이 원하는 모든 능력을 찾아 우주 최강이 되어보세요!"
+    />
+    <meta
+      name="twitter:image"
+      content="https://team20.s3.ap-northeast-2.amazonaws.com/image/2e32c500e182-11ec-83b6-a91808427d79.png"
+    />
+    <meta
+      name="keywords"
+      content="마블, 초능력, 쇼핑몰, 무기, 히어로, 빌런, 능력, 마법"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collector's Resister</title>
+
+    <!-- 아이콘 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+
     <!-- 폰트 어썸: 아이콘 -->
     <script
       defer
       src="https://kit.fontawesome.com/7630448495.js"
       crossorigin="anonymous"
     ></script>
+
     <!-- 구글 OAuth -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+
     <!-- 카카오 OAuth -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="register.css" />
     <link rel="stylesheet" href="../style.css" />
@@ -37,65 +65,70 @@
       <nav></nav>
       <!-- 회원가입 폼(Form) -->
       <section>
-        <div class="register-user-form-container">
-          <form class="register-user-form-box" id="registerUserForm">
-            <div class="field">
-              <label class="label" for="fullNameInput">이름</label>
-              <div class="control">
-                <input
-                  class="input"
-                  id="fullNameInput"
-                  type="text"
-                  placeholder="유재석"
-                  autocomplete="off"
-                />
-              </div>
+        <form class="register-user-form-box" id="registerUserForm">
+          <div class="field">
+            <label class="label" for="fullNameInput">이름</label>
+            <div class="control">
+              <input
+                class="input"
+                id="fullNameInput"
+                type="text"
+                placeholder="피터 파커"
+                autocomplete="off"
+              />
             </div>
+          </div>
 
-            <div class="field">
-              <label class="label" for="emailInput">이메일</label>
-              <div class="control">
-                <input
-                  class="input"
-                  id="emailInput"
-                  type="email"
-                  placeholder="abc@example.com"
-                  autocomplete="off"
-                />
-              </div>
+          <div class="field">
+            <label class="label" for="emailInput">이메일</label>
+            <div class="control">
+              <input
+                class="input"
+                id="emailInput"
+                type="email"
+                placeholder="abc@example.com"
+                autocomplete="off"
+              />
             </div>
+          </div>
 
-            <div class="field">
-              <label class="label" for="passwordInput">비밀번호</label>
-              <div class="control">
-                <input
-                  class="input"
-                  id="passwordInput"
-                  type="password"
-                  placeholder="********"
-                  autocomplete="off"
-                />
-              </div>
+          <div class="field">
+            <label class="label" for="passwordInput">비밀번호</label>
+            <div class="control">
+              <input
+                class="input"
+                id="passwordInput"
+                type="password"
+                placeholder="********"
+                autocomplete="off"
+              />
             </div>
+          </div>
 
-            <div class="field">
-              <label class="label" for="passwordConfirmInput"
-                >비밀번호 확인</label
-              >
-              <div class="control">
-                <input
-                  class="input"
-                  id="passwordConfirmInput"
-                  type="password"
-                  placeholder="********"
-                  autocomplete="off"
-                />
-              </div>
+          <div class="field">
+            <label class="label" for="passwordConfirmInput"
+              >비밀번호 확인</label
+            >
+            <div class="control">
+              <input
+                class="input"
+                id="passwordConfirmInput"
+                type="password"
+                placeholder="********"
+                autocomplete="off"
+              />
             </div>
+          </div>
 
-            <button class="button" id="submitButton">회원가입하기</button>
-          </form>
-        </div>
+          <button class="button main-btn" id="submitButton">
+            회원가입하기
+          </button>
+          <div id="socialLoginBtnBox">
+            <button class="social-btn" id="naverBtn">네이버로 시작하기</button>
+            <button class="social-btn" id="kakaoBtn">카카오로 시작하기</button>
+            <button class="social-btn" id="googleBtn">구글로 시작하기</button>
+          </div>
+        </form>
       </section>
       <footer></footer>
     </div>

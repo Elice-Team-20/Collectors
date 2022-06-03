@@ -17,18 +17,21 @@
 }
 
 /* 주문자 정보 */
+.info-wrapper {
+  display: flex;
+  justify-content: center;
+}
 .form {
   display: flex;
   flex-direction: column;
 
   width: 65%;
-  height: 40%;
-  padding: 10px;
+  padding: 5px;
 }
 #user-info-form {
   display: grid;
   flex-direction: column;
-  grid-template-rows: 1fr 1fr 3fr 1fr;
+  grid-template-rows: 1fr 1fr 3fr 2fr;
 }
 #user-info-form .field {
   display: grid;
@@ -68,6 +71,12 @@ select {
   border-radius: 5px;
   color: black;
   background-color: #d9d9d9;
+}
+#user-info-form #requestMsgInputDiv .control {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 /* 결제 정보 */
 .info-card {
@@ -109,24 +118,11 @@ div.total {
   align-items: flex-end;
 }
 
-#purchase-btn {
-  width: 100%;
-  height: 5vh;
-
-  border-color: #f01e21;
-  border-radius: 7px;
-  background-color: #f01e21;
-
-  font-weight: bold;
-  cursor: pointer;
-}
-
 @media all and (max-width: 768px) {
   div.info-wrapper {
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
   }
-
   div.info-card,
   .form {
     width: 90%;

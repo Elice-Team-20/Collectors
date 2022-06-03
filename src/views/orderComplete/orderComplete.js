@@ -4,12 +4,9 @@ import {
   addNavEventListeners,
   addNavElements,
   checkUserStatus,
+  handleHamburger,
 } from '../../components/Nav/event.js';
 import { addFooterElements } from '../../components/Footer/event.js';
-import {
-  addOrderNavElements,
-  addOrderInfoElements,
-} from '../../components/Order/event.js';
 
 const orderInfo = JSON.parse(localStorage.getItem('orderInfo'));
 window.onload = () => {
@@ -29,7 +26,7 @@ async function addAllElements() {
   addNavElements();
   addFooterElements();
 
-  addOrderNavElements();
+  // addOrderNavElements();
   addOrderFinishedInfoElments();
   // addOrderInfoElements();
 }
@@ -37,7 +34,10 @@ async function addAllElements() {
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
 function addAllEvents() {
   addNavEventListeners();
-  orderListBtn.addEventListener('click', () => {});
+  handleHamburger();
+  orderListBtn.addEventListener('click', () => {
+    window.location.href = '/user/orderlist';
+  });
   itemsListBtn.addEventListener('click', () => {
     window.location.href = '/items';
   });

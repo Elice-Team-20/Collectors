@@ -1,46 +1,84 @@
-// 아래는 현재 home.html 페이지에서 쓰이는 코드는 아닙니다.
-// 다만, 앞으로 ~.js 파일을 작성할 때 아래의 코드 구조를 참조할 수 있도록,
-// 코드 예시를 남겨 두었습니다.
 import * as Api from '/api.js';
-import { randomId } from '/useful-functions.js';
+import {
+  selectElement,
+  addCommas,
+  removeExpiredItem,
+} from '/useful-functions.js';
 
-import { addNavEventListeners, addNavElements } from '../components/Nav/event.js';
+import {
+  addNavEventListeners,
+  addNavElements,
+  handleHamburger,
+} from '../components/Nav/event.js';
 import { addFooterElements } from '../components/Footer/event.js';
+import {
+  addCategoryMenuElement,
+  addCategoryMenuEventListeners,
+} from '../components/Category/event.js';
+import {
+  addQuickMenuElement,
+  addQuickMenuEventListeners,
+  handleTopButton,
+} from '../components/QuickMenu/event.js';
 
-// =====
 // 요소(element), input 혹은 상수
+const quickMenu = selectElement('#quick-menu');
+const category = selectElement('#category');
+const soldoutContainer = selectElement('.soldout-container');
+const newItemsContainer = selectElement('.newItems-container');
+const priceItemsContainer = selectElement('.priceItems-container');
+
+window.onload = () => {
+  removeExpiredItem();
+};
 userInit();
-addAllElements();
-addAllEvents();
+await addAllElements();
+await addAllEvents();
 
 // html에 요소를 추가하는 함수들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-function addAllElements() {
+async function addAllElements() {
   addNavElements();
   addFooterElements();
+  addCategoryMenuElement(category);
+  addQuickMenuElement(quickMenu);
+  addSoldOutItems();
+  addNewItems();
+  addPriceItems();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
-function addAllEvents() {
+async function addAllEvents() {
   addNavEventListeners();
+  addCategoryMenuEventListeners();
+  addQuickMenuEventListeners(quickMenu);
+  handleHamburger();
+  handleTopButton();
 }
 
-function userInit() {
+// 장바구니 생성하기
+async function userInit() {
   let cart = JSON.parse(localStorage.getItem('cart'));
-  console.log('cart', cart);
   if (!cart) {
-    car = [];
+    cart = [];
     localStorage.setItem('cart', JSON.stringify([]));
   }
-}
-async function getDataFromApi() {
-  // 예시 URI입니다. 현재 주어진 프로젝트 코드에는 없는 URI입니다.
-  const data = await Api.get('/api/user/data');
-  const random = randomId();
+  console.log(document.cookie);
+  document.cookie.split(/,|; /).forEach((el, idx) => {
+    console.log(el);
+    let [key, value] = el.split('=');
+    console.log(idx, key, value);
+    // 잘못된 토큰이 올경우 대비 jwt 는 무조건 e로시작
+    if (value !== undefined && value.charAt(0) === 'j') {
+      const temp = value.split('%22');
 
-  console.log({ data });
-  console.log({ random });
+      value = temp[3];
+      localStorage.setItem('token', value);
+    }
+    if (key === 'token') localStorage.setItem('token', value);
+  });
 }
 
+// 이미지 슬라이더 설정
 const swiper = new Swiper('.swiper', {
   // Optional parameters
   direction: 'horizontal',
@@ -50,11 +88,6 @@ const swiper = new Swiper('.swiper', {
   },
   pauseOnMouseEnter: true,
 
-  // If we need pagination
-  pagination: {
-    el: '.swiper-pagination',
-  },
-
   // Navigation arrows
   navigation: {
     nextEl: '.swiper-button-next',
@@ -62,27 +95,96 @@ const swiper = new Swiper('.swiper', {
   },
 });
 
-const quickMenu = document.querySelector('#quick-menu');
+// 매진 임박 추가 기능 구현하기
+async function addSoldOutItems() {
+  // 매진 임박 상품 가져오기
+  const soldoutItemsData = await Api.get(`/api/item/soldOut`);
 
-window.onresize = () => {
-  let x = window.innerWidth;
-  x < 1250 ? (quickMenu.style.display = 'none') : (quickMenu.style.display = 'block');
-};
+  // 매진 임박 상품 추가하기
+  soldoutItemsData.forEach(
+    ({ _id, itemName, imgUrl, price, stocks, deleteFlag }) => {
+      if (deleteFlag) return; // 삭제된 아이템 제외
 
-window.addEventListener('scroll', () => {
-  let y = +window.scrollY;
-  console.log(y);
-  y > 250 ? (quickMenu.style.top = y + 250 + 'px') : (quickMenu.style.top = '500px');
-});
+      const soldoutItemList = `
+      <div class="soldout-item home-item">
+        <a href="/item/?id=${_id}">
+          <div class="img-wrap" style="background-image: url(${imgUrl});">
+          </div>
+          <h3>${itemName}</h3>
+          <p>${addCommas(price)}원</p>
+          <p>단 ${stocks}개! 매진 임박</p>
+        </a>
+      </div>
+    `;
 
-const scrollTop = document.querySelector('.scrollTop');
+      soldoutContainer.insertAdjacentHTML('beforeend', soldoutItemList);
+    },
+  );
+}
 
-window.addEventListener('scroll', () => {
-  let y = window.pageYOffset;
-  // console.log(y)
-  if (y > 700) {
-    scrollTop.style.bottom = 15 + 'px';
-  } else {
-    scrollTop.style.bottom = -58 + 'px';
+// 신상품 추가 기능 구현하기
+async function addNewItems() {
+  // 신상품 가져오기
+  const newItemsData = await Api.get(`/api/item/newItem`);
+
+  // 신상품 상품 추가하기
+  newItemsData.forEach(
+    ({ _id, itemName, imgUrl, price, summary, deleteFlag }) => {
+      if (deleteFlag) return; // 삭제된 아이템 제외
+
+      const newItemList = `
+      <div class="new-item home-item">
+        <a href="/item/?id=${_id}">
+          <div class="img-wrap" style="background-image: url(${imgUrl});">
+          </div>
+          <h3>${itemName}</h3>
+          <p>${summary}</p>
+          <p>${addCommas(price)}원</p>
+        </a>
+      </div>
+    `;
+
+      newItemsContainer.insertAdjacentHTML('beforeend', newItemList);
+    },
+  );
+}
+
+// 1만원 이하 상품 추가 기능 구현하기
+async function addPriceItems() {
+  // 1만원 이하 가져오기
+  let ItemsData = await getAllItems();
+
+  ItemsData = ItemsData.filter(({ price }) => {
+    return price < 10000;
+  }).slice(0, 3);
+
+  // 1만원 이하 상품 추가하기
+  ItemsData.forEach(({ _id, itemName, imgUrl, price, summary, deleteFlag }) => {
+    if (deleteFlag) return;
+
+    const ItemList = `
+      <div class="recommand-item home-item">
+        <a href="/item/?id=${_id}">
+          <div class="img-wrap" style="background-image: url(${imgUrl});">
+          </div>
+          <h3>${itemName}</h3>
+          <p>${summary}</p>
+          <p>${addCommas(price)}원</p>
+        </a>
+      </div>
+    `;
+
+    priceItemsContainer.insertAdjacentHTML('beforeend', ItemList);
+  });
+}
+
+async function getAllItems() {
+  // 전체 상품 가져오기
+  try {
+    const result = await Api.get(`/api/item`);
+    return result;
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
-});
+}

@@ -2,30 +2,58 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>쇼핑-데모</title>
-    <!-- 아이콘 -->
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/elice-rabbit-favicon.png"
+    <meta name="title" content="Collector's" />
+    <meta
+      name="description"
+      content="당신이 원하는 모든 능력을 찾아 우주 최강이 되어보세요!"
     />
-    <!-- bulma css 관련 -->
-    <!-- <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    /> -->
+    <meta property="og:title" content="Collector's" />
+    <meta
+      property="og:description"
+      content="당신이 원하는 모든 능력을 찾아 우주 최강이 되어보세요!"
+    />
+    <meta
+      property="og:image"
+      content="https://team20.s3.ap-northeast-2.amazonaws.com/image/2e32c500e182-11ec-83b6-a91808427d79.png"
+    />
+    <meta property="og:url" content="홈페이지 url" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="홈페이지 url" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:url" content="홈페이지 url" />
+    <meta name="twitter:title" content="Collector's" />
+    <meta
+      name="twitter:description"
+      content="당신이 원하는 모든 능력을 찾아 우주 최강이 되어보세요!"
+    />
+    <meta
+      name="twitter:image"
+      content="https://team20.s3.ap-northeast-2.amazonaws.com/image/2e32c500e182-11ec-83b6-a91808427d79.png"
+    />
+    <meta
+      name="keywords"
+      content="마블, 초능력, 쇼핑몰, 무기, 히어로, 빌런, 능력, 마법"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Collector's Order Complete</title>
+
+    <!-- 아이콘 -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png" />
+
     <!-- 폰트 어썸: 아이콘 -->
     <script
       defer
       src="https://kit.fontawesome.com/7630448495.js"
       crossorigin="anonymous"
     ></script>
+
     <!-- 구글 OAuth -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+
     <!-- 카카오 OAuth -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
     <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="orderComplete.css" />
     <link rel="stylesheet" href="../../style.css" />
@@ -38,6 +66,11 @@
       <nav></nav>
       <section class="cart">
         <div class="cart-wrap">
+          <div class="order-status">
+            <p id="cart">장바구니</p>
+            <p id="order">> 주문 결제</p>
+            <p id="complete">> 주문 완료</p>
+          </div>
           <div class="info-wrapper">
             <div class="info-card">
               <div class="info-name">주문이 완료되었습니다!</div>
@@ -52,10 +85,10 @@
                 <div>총 결제 금액</div>
                 <div id="totalPrice">원</div>
               </div>
-              <button class="button" id="order-list-page-btn">
+              <button class="button main-btn" id="order-list-page-btn">
                 주문 내역 가기
               </button>
-              <button class="button" id="items-list-page-btn">
+              <button class="button main-btn" id="items-list-page-btn">
                 쇼핑 계속하기
               </button>
             </div>

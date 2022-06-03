@@ -1,29 +1,69 @@
+section {
+  display: flex;
+  justify-content: center;
+
+  min-height: 90vh;
+}
+
 .order-container {
-  width: 95%;
-  margin: 0 auto;
+  width: 80%;
+  margin: 5vh auto 0;
 }
 
 .order-title {
-  border-bottom: 1px solid white;
-  margin: 20px 0;
+  height: 50px;
+  line-height: 50px;
+  font-size: 30px;
 }
 
 .order-header,
-.order-data {
+.order-list {
   display: grid;
-  grid-template-columns: 100px 3fr 2fr 100px;
+  grid-template-columns: 1fr 2fr 5fr 2fr 2fr;
+  place-content: center;
+  place-items: center;
   text-align: center;
 }
 
-.order-data {
-  border-top: 1px solid #fff;
-  padding-top: 1rem;
+.order-header {
+  padding: 3vh 1vw;
+  margin-bottom: 1vh;
+}
+
+.order-list {
+  height: 20vh;
+  margin: 0.25vh;
+}
+
+.order-list:hover {
+  border: 1px solid #f01e21;
+}
+
+.order-list > div {
+  padding: 3vh 1vw;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.order-list .shipped {
+  color: #2cc236;
+}
+.order-list .main-btn {
+  width: 75%;
+}
+.cancel-btn:disabled,
+.cancel-btn:disabled:hover {
+  background-color: dimgray;
+  border: 1px;
+  color: white;
 }
 
 @media all and (max-width: 768px) {
   .order-header {
-    display: flex;
-    flex-direction: column;
+    grid-template-columns: 1fr 2fr;
+    height: 5rem;
+    gap: 0.5rem;
   }
 
   .order-header > h3 {
@@ -31,7 +71,17 @@
     font-weight: normal;
   }
 
-  .order-data {
-    grid-template-columns: 1fr;
+  .order-list {
+    height: 25vh;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 2fr 1fr;
+    place-content: center;
+    place-items: center;
+    text-align: center;
+  }
+
+  .order-number {
+    display: none;
   }
 }

@@ -1,11 +1,16 @@
 .edit-container {
-  width: 95%;
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90vw;
+  /* max-height: calc(90vh - 100px); */
 }
 
 .edit-title {
+  width: 50vw;
   border-bottom: 1px solid white;
-  margin: 20px 0;
+  margin-bottom: 20px;
   display: flex;
   align-items: baseline;
 }
@@ -14,12 +19,11 @@
   margin-right: 0.5rem;
 }
 
-.edit-user-form-container {
+/* .edit-user-form-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* height: 70vh; */
-}
+} */
 
 .edit-user-form-box {
   display: flex;
@@ -27,12 +31,13 @@
   align-items: center;
   justify-content: space-evenly;
 
-  width: 30rem;
-  height: 70%;
+  width: 50vw;
+  height: 100%;
 }
 
 .edit-user-form-box .field {
   width: 100%;
+  margin-bottom: 1%;
 }
 
 .edit-user-form-box .field .label {
@@ -42,7 +47,7 @@
 }
 
 .edit-user-form-box .field .input {
-  width: 98%;
+  /* width: 100%;
   height: 4vh;
   padding-left: 2%;
 
@@ -52,16 +57,21 @@
   border-radius: 10px;
   outline-style: none;
 
-  color: black;
+  color: black; */
   margin-bottom: 0.5rem;
 }
-
-.edit-user-form-box .field .input:focus {
-  border: 0.5px solid #e7484b;
-  box-shadow: 0 0 0 0.125em #f01e21;
+.main-btn:disabled {
+  background-color: dimgray;
+  border: 0;
 }
-
-.edit-user-form-box .button,
+.main-btn:disabled:hover {
+  background-color: dimgray;
+  border: 0;
+}
+#addressButton {
+  width: 30%;
+}
+/* .edit-user-form-box .button,
 #addressButton {
   width: 30%;
   height: 4vh;
@@ -77,14 +87,45 @@
 #addressButton:hover {
   border-color: #e7484b;
   background-color: #e7484b;
-}
+} */
 
 #postcode {
   width: 40%;
 }
 
 .address-container {
-  width: 98%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 768px) {
+  .edit {
+    max-height: calc(90vh - 100px);
+  }
+
+  .edit-container {
+    width: 100vw;
+  }
+
+  .edit-title {
+    width: 100%;
+  }
+
+  .edit-user-form-box {
+    width: 100%;
+  }
+
+  .edit-user-form-box .field {
+    width: 100%;
+  }
+
+  .edit-user-form-box .field .input {
+    width: 100%;
+  }
+
+  .edit-user-form-box .button,
+  #addressButton {
+    width: 50%;
+  }
 }

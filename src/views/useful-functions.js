@@ -8,7 +8,7 @@ export const validateEmail = (email) => {
   return String(email)
     .toLowerCase()
     .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     );
 };
 
@@ -26,4 +26,33 @@ export const convertToNumber = (string) => {
 // ms만큼 기다리게 함.
 export const wait = (ms) => {
   return new Promise((r) => setTimeout(r, ms));
+};
+
+// 선택자로 요소 선택하는 함수
+export const selectElement = (selector) => {
+  const element = document.querySelector(selector);
+  if (!element) {
+    throw new Error(`요소를 찾을 수 없습니다. ${selector}`);
+  }
+  return element;
+};
+
+// 관리자 확인 함수
+export const checkAdmin = () => {
+  const isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
+  return isAdmin;
+};
+
+// 만료된 상품 제거
+export const removeExpiredItem = () => {
+  let recentItems = JSON.parse(localStorage.getItem('recentItem')) || [];
+
+  // 만료 기한이 지난 상품 제거
+  recentItems.forEach(({ expire }, index) => {
+    if (expire < new Date().getTime()) {
+      recentItems.splice(index, 1);
+    }
+  });
+
+  localStorage.setItem('recentItem', JSON.stringify(recentItems));
 };

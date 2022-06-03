@@ -1,11 +1,52 @@
-section.item-list {
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Search Bar 디자인 */
+#searchBar {
+  display: grid;
+  grid-template-columns: 10fr 1fr;
+  column-gap: 5%;
+
+  width: 75%;
+  height: 5vh;
+
+  margin-top: 2vh;
+}
+
+#searchBar button i {
+  background-color: #f01e21;
+}
+
+#searchBar .input {
+  width: 100%;
+  height: 5vh;
+  padding-left: 2%;
+
+  background: #ffffff;
+  border: 1px solid #c5c5c5;
+  box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  outline-style: none;
+
+  color: black;
+}
+
+.item-list {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
-  padding: 50px 10% 20px;
+  padding: 20px 10%;
 }
 
-div.item {
+.item-list a.deleted {
+  display: none;
+}
+
+.item {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,7 +55,12 @@ div.item {
   height: 500px;
 }
 
-div.imgBox {
+.item:hover {
+  transform: translateY(-1vh);
+  transition: all 0.5s ease;
+}
+
+.imgBox {
   width: 300px;
   height: 300px;
   margin-bottom: 1rem;
@@ -29,8 +75,25 @@ div.imgBox {
 #itemName {
   font-size: 1.5em;
   margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
 }
-
+#itemName i {
+  color: #f01e21;
+  font-size: 1.25em;
+  animation: ringing 1s ease-in-out infinite;
+}
+@keyframes ringing {
+  0% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(10deg);
+  }
+}
 #summary {
   width: 100%;
   font-size: 0.8rem;
@@ -42,13 +105,35 @@ div.imgBox {
 }
 
 @media all and (max-width: 768px) {
-  section.item-list {
+  .item-list {
     grid-template-columns: 1fr;
   }
-}
 
-@media all and (min-width: 768px) and (max-width: 1100px) {
-  section.item-list {
-    grid-template-columns: 1fr 1fr;
+  .item {
+    width: 200px;
+    height: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .imgBox {
+    width: 200px;
+    height: 200px;
+  }
+
+  #itemImage {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  #itemName {
+    font-size: 1.25em;
+  }
+
+  #summary,
+  #price {
+    font-size: 0.75em;
   }
 }
