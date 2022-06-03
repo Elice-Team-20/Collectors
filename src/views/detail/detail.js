@@ -32,10 +32,6 @@ const discountRateMap = {
 };
 async function userInit() {
   if (!isLoggedIn) {
-    // 로그인 정보가 없다면
-    // alert(
-    //   '당신은 호크 아이(비회원)입니다. 가입하시면 할인을 받을 수 있습니다.',
-    // );
     return '호크 아이';
   }
   try {
@@ -46,8 +42,6 @@ async function userInit() {
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
-// console.log(item);
-// navigation, footer 컴포넌트 넣기
 await addAllElements();
 await addAllEvents();
 
@@ -73,7 +67,6 @@ function handleOrderBtn() {
       originalPrice: totalPrice,
       finalOrderPrice: totalPrice * discountRateMap[userRole],
     };
-    console.log('orderData', orderData);
     localStorage.setItem('orderData', JSON.stringify(orderData));
     window.location.href = '/order';
   } else {
@@ -87,7 +80,6 @@ function addCartBtnHandler() {
   let currentCart = JSON.parse(localStorage.getItem('cart'));
   if (!currentCart) currentCart = [];
   currentCart.push(id);
-  console.log('add cart', currentCart);
   localStorage.setItem('cart', JSON.stringify(currentCart));
   const goToCart = confirm('장바구니로 이동하시겠습니까?');
   if (goToCart) {
@@ -135,7 +127,6 @@ function addStockNumber() {
 // 태그 추가하기
 function addTagElements(tags) {
   tags = tags[0].split(',');
-  console.log('tags', tags);
 
   const tagListDiv = selectElement('#tagList');
 

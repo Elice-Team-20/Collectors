@@ -50,7 +50,6 @@ async function addAllElements() {
 async function addAllEvents() {
   addNavEventListeners();
   handleHamburger();
-  //   console.log(document.querySelector('#addTagBtn'));
   document
     .querySelector('#addTagBtn')
     .addEventListener('click', handleAddTagBtn);
@@ -87,7 +86,6 @@ async function addItemInputOriginElement() {
     hashTag,
   } = await getOriginItemInfo();
   itemNameInput.value = itemName;
-  console.log(categoryMap[category]);
   categorySelector.selectedIndex = categoryMap[category];
   companyInput.value = manufacturingCompany;
   summaryInput.value = summary;
@@ -95,7 +93,6 @@ async function addItemInputOriginElement() {
   imgFileBoxDiv.innerHTML = `<img src=${imgUrl} alt="item image"/>`;
   stockInput.value = stocks;
   priceInput.value = price;
-  console.log(hashTag[0]);
   hashTag[0].split(',').forEach((tag) => {
     tags.push(tag);
   });
@@ -159,13 +156,10 @@ function addTagDeleteEvents() {
 }
 function handleTagDeleteEvent() {
   // 태그 삭제 이벤트 함수
-  console.log('tag clicked', this.innerText);
   tags = tags.filter((value) => value !== this.innerText);
   addTagElements();
-  console.log('after', tags);
 }
 function handleCategorySelect() {
-  console.log(document.querySelector('#categoryTextInputDiv'));
   if (this.selectedIndex === categoryList.length + 1) {
     document.querySelector('#categoryTextInputDiv').innerHTML = `
     <input
@@ -190,11 +184,6 @@ async function handleRegisterItemBtn(e) {
   const mainExlainInput = document.querySelector('#mainExlainInput');
   const stockInput = document.querySelector('#stockInput');
   const priceInput = document.querySelector('#priceInput');
-  console.log(
-    categorySelector.selectedIndex,
-    categorySelector.options[categorySelector.selectedIndex].value,
-  );
-  console.log('등록 버튼');
   if (!itemNameInput.value) {
     return alert('제품 이름이 작성되지 않았습니다.');
   }
@@ -232,7 +221,6 @@ async function handleRegisterItemBtn(e) {
       categoryName =
         categorySelector.options[categorySelector.selectedIndex].text;
     }
-    console.log(categoryName);
     // 아이템 정보
     let formData = new FormData();
     formData.append('itemName', itemNameInput.value);
@@ -247,7 +235,6 @@ async function handleRegisterItemBtn(e) {
 
     const res = await Api.postFromData(`/api/item/update/${id}`, formData);
     alert(`정상적으로 상품이 수정되었습니다.`);
-    // console.log(res);
     // 목록 페이지
     window.location.href = '/admin/manage';
   } catch (err) {

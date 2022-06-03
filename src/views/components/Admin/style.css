@@ -64,7 +64,6 @@ textarea {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  /* row-gap: 5%; */
   margin-top: 3%;
 }
 /* 이미지 파일 불러오기 */
@@ -106,7 +105,6 @@ textarea {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  /* row-gap: 5%; */
   margin-top: 3%;
 }
 #tagList .tag-name {

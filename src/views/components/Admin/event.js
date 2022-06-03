@@ -9,8 +9,6 @@ const addItemInputFormElement = async (btnName) => {
 };
 const addCategoryElements = async (categoryList) => {
   const categorySelector = document.querySelector('#categorySelector');
-  console.log(categorySelector);
-  // categoryList = await getCategoryItems();
   categorySelector.insertAdjacentHTML(
     'beforeend',
     categoryList.reduce((text, categoryName) => {
@@ -26,7 +24,6 @@ const addCategoryElements = async (categoryList) => {
 const getCategoryItems = async () => {
   try {
     const result = await Api.get('/api/category');
-    console.log(result);
     return result;
   } catch (err) {
     console.error(err.stack);
