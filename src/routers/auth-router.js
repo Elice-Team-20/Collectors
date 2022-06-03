@@ -31,6 +31,7 @@ authRouter.get('/kakao/finish', async (req, res, next) => {
     // 유저 정보 요청
     const userInfo = await kakaoOAuthService.requestUser(config);
     // 우리 db에 있는지 확인
+    console.log(userInfo);
     const isthereDB = await kakaoOAuthService.checkMember(userInfo);
     let user = null;
 
