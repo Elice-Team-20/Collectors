@@ -4,9 +4,6 @@ section {
   justify-content: center;
   height: 90vh;
 }
-.container {
-}
-
 .item {
   display: flex;
   flex-direction: row;
