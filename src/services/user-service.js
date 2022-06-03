@@ -193,12 +193,18 @@ class UserService {
 
   async getUser(userId) {
     // 주문 목록이 할당된게 없으면
-    const user = await this.userModel.findById(userId);
-    if (user.orderInfo.length !== 0) {
-      // 1개라도 있으면 populate 사용해서 보여준다.
-      return await this.userModel.getUserAndPopulate(userId);
+    try {
+      const user = await this.userModel.findById(userId);
+      if (user.orderInfo.length !== 0) {
+        console.log('innnnnnnnUser', userId);
+        // 1개라도 있으면 populate 사용해서 보여준다.
+        return await this.userModel.getUserAndPopulate(userId);
+      }
+      console.log('getUserrrrrrrrrrrrrrrrrrrr', userId);
+      return user;
+    } catch (er) {
+      return er;
     }
-    return user;
   }
 
   async isAdmin(userId) {
