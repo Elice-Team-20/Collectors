@@ -22,9 +22,9 @@ authRouter.get('/kakao/finish', async (req, res, next) => {
       client_secret: KAKAO_CLIENT_SECRET,
       grant_type: 'authorization_code',
 
-      redirect_uri: 'http://localhost:5000/api/auth/kakao/finish',
-      // redirect_uri:
-      //   'http://kdt-sw2-seoul-team20.elicecoding.com/api/auth/kakao/finish',
+      // redirect_uri: 'http://localhost:5000/api/auth/kakao/finish',
+      redirect_uri:
+        'http://kdt-sw2-seoul-team20.elicecoding.com/api/auth/kakao/finish',
       code: req.query.code,
     };
 
