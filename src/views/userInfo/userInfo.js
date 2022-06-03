@@ -23,7 +23,8 @@ addAllEvents();
 function addAllEvents() {
   addNavEventListeners();
   handleHamburger();
-  submitButton.addEventListener('click', () => {
+  submitButton.addEventListener('click', (e) => {
+    e.preventDefault();
     window.location.href = '/user/edit';
   });
 }
