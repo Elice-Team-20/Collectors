@@ -1,0 +1,148 @@
+#user-tier {
+  position: relative;
+  width: 30vh;
+  height: 30vh;
+  margin: 20px;
+}
+
+#user-tier img {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  opacity: 0.25;
+  border-radius: 50%;
+}
+
+/* ---- */
+
+.edit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90vw;
+  /* max-height: calc(90vh - 100px); */
+}
+
+.edit-title {
+  width: 50vw;
+  border-bottom: 1px solid hsla(0, 0%, 100%, 0.25);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: baseline;
+}
+
+.edit-title > h2 {
+  margin-right: 0.5rem;
+}
+
+/* .edit-user-form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+.edit-user-form-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+
+  width: 50vw;
+  height: 100%;
+}
+
+.edit-user-form-box .field {
+  width: 100%;
+  margin-bottom: 1%;
+}
+
+.edit-user-form-box .field .label {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.edit-user-form-box .field .input {
+  /* width: 100%;
+  height: 4vh;
+  padding-left: 2%;
+
+  background: #ffffff;
+  border: 1px solid #c5c5c5;
+  box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  outline-style: none;
+
+  color: black; */
+  margin-bottom: 0.5rem;
+}
+.main-btn:disabled {
+  background-color: dimgray;
+  border: 0;
+}
+.main-btn:disabled:hover {
+  background-color: dimgray;
+  border: 0;
+}
+#addressButton {
+  width: 30%;
+}
+/* .edit-user-form-box .button,
+#addressButton {
+  width: 30%;
+  height: 4vh;
+  border-color: #f01e21;
+  border-radius: 7px;
+  background-color: #f01e21;
+  color: #ffffff;
+  font-weight: bold;
+  text-align: center;
+}
+
+.edit-user-form-box .button:hover,
+#addressButton:hover {
+  border-color: #e7484b;
+  background-color: #e7484b;
+} */
+
+#postcode {
+  width: 40%;
+}
+
+.address-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 768px) {
+  .edit {
+    max-height: calc(90vh - 100px);
+  }
+
+  .edit-container {
+    width: 100vw;
+  }
+
+  .edit-title {
+    width: 100%;
+  }
+
+  .edit-user-form-box {
+    width: 100%;
+  }
+
+  .edit-user-form-box .field {
+    width: 100%;
+  }
+
+  .edit-user-form-box .field .input {
+    width: 100%;
+  }
+
+  .edit-user-form-box .button,
+  #addressButton {
+    width: 50%;
+  }
+}
