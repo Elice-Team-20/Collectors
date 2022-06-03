@@ -9,19 +9,22 @@
 
 .wrap {
   display: grid;
-  height: 40vh;
   grid-template-columns: repeat(2, 1fr);
   place-content: center;
   place-items: center;
+}
+
+.wrap > p {
+  margin-bottom: 2vh;
 }
 
 #peter-parker,
 #doctor-strange,
 #iron-man,
 #black-panther {
-  margin: 2vh auto;
-  width: 30vw;
-  height: 3vh;
+  margin: 4vh auto;
+  width: 45vw;
+  height: 1.5vh;
   position: relative;
 }
 
