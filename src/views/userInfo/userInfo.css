@@ -38,9 +38,9 @@
 }
 
 #magic,
-#weapon,
-#esp,
-#int {
+#equipment,
+#psychic,
+#intelligence {
   margin: 2vh auto;
   width: 30vw;
   height: 2vh;
