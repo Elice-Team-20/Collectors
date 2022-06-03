@@ -51,7 +51,7 @@ async function getUserDataToInput() {
 }
 
 // 원형 프로그래스 바 삽입하기
-let bar = new ProgressBar.Circle('#user-tier', {
+let tierBar = new ProgressBar.Circle('#user-tier', {
   color: '#f01e21',
   strokeWidth: 4,
   trailWidth: 1,
@@ -75,7 +75,113 @@ let bar = new ProgressBar.Circle('#user-tier', {
     }
   },
 });
-bar.text.style.fontSize = '2em';
-bar.text.style.backgroundColor = '#fff';
+tierBar.text.style.fontSize = '2em';
+tierBar.text.style.backgroundColor = '#fff';
 
-bar.animate(1.0);
+tierBar.animate(1.0);
+
+// 유저 스탯 프로그래스 바 추가하기
+let magic = new ProgressBar.Line('#magic', {
+  strokeWidth: 4,
+  easing: 'easeInOut',
+  duration: 2000,
+  color: '#FFEA82',
+  trailColor: '#eee',
+  trailWidth: 1,
+  svgStyle: { width: '100%', height: '100%' },
+  text: {
+    style: {
+      color: '#999',
+      position: 'absolute',
+      right: '0',
+      top: '-3.5vh',
+      padding: 0,
+      margin: 0,
+      transform: null,
+    },
+    autoStyleContainer: false,
+  },
+  step: (state, bar) => {
+    bar.setText(Math.round(bar.value() * 100) + '%');
+  },
+});
+
+let weapon = new ProgressBar.Line('#weapon', {
+  strokeWidth: 4,
+  easing: 'easeInOut',
+  duration: 2000,
+  color: 'yellow',
+  trailColor: '#eee',
+  trailWidth: 1,
+  svgStyle: { width: '100%', height: '100%' },
+  text: {
+    style: {
+      color: '#999',
+      position: 'absolute',
+      right: '0',
+      top: '-3.5vh',
+      padding: 0,
+      margin: 0,
+      transform: null,
+    },
+    autoStyleContainer: false,
+  },
+  step: (state, bar) => {
+    bar.setText(Math.round(bar.value() * 100) + '%');
+  },
+});
+
+let esp = new ProgressBar.Line('#esp', {
+  strokeWidth: 4,
+  easing: 'easeInOut',
+  duration: 2000,
+  color: 'red',
+  trailColor: '#eee',
+  trailWidth: 1,
+  svgStyle: { width: '100%', height: '100%' },
+  text: {
+    style: {
+      color: '#999',
+      position: 'absolute',
+      right: '0',
+      top: '-3.5vh',
+      padding: 0,
+      margin: 0,
+      transform: null,
+    },
+    autoStyleContainer: false,
+  },
+  step: (state, bar) => {
+    bar.setText(Math.round(bar.value() * 100) + '%');
+  },
+});
+
+let int = new ProgressBar.Line('#int', {
+  strokeWidth: 4,
+  easing: 'easeInOut',
+  duration: 2000,
+  color: '#fff',
+  trailColor: '#eee',
+  trailWidth: 1,
+  svgStyle: { width: '100%', height: '100%' },
+  text: {
+    style: {
+      color: '#999',
+      position: 'absolute',
+      right: '0',
+      top: '-3.5vh',
+      padding: 0,
+      margin: 0,
+      transform: null,
+    },
+    autoStyleContainer: false,
+  },
+  step: (state, bar) => {
+    bar.setText(Math.round(bar.value() * 100) + '%');
+  },
+});
+
+magic.animate(0.05);
+weapon.animate(0.25);
+esp.animate(0.8);
+int.animate(1.0);
