@@ -211,14 +211,14 @@ class OrderinfoService {
     });
   }
 
-  async addStat(orderId, userId) {
+  async addStat(orderId) {
     try {
       const order = await orderInfo.findByObjectId(orderId);
       const itemList = order.itemList;
-      console.log(order);
       await Promise.all([
         itemList.forEach(async (e) => {
           const itemData = await itemService.getItembyObId(e.itemId);
+          const userId = await userService.findByOrderId(orderId);
           const userInfo = await userService.getUser(userId);
           const count = e.count;
           let updateData;
@@ -245,7 +245,7 @@ class OrderinfoService {
               userId,
               insertData,
             );
-            console.log(updateResult);
+            //console.log(updateResult);
           }
         }),
       ]);
