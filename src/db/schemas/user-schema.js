@@ -54,6 +54,25 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    //stat{name: , count}
+    stat: {
+      weapon: {
+        type: Number,
+        default: 0,
+      },
+      magic: {
+        type: Number,
+        default: 0,
+      },
+      intelligence: {
+        type: Number,
+        default: 0,
+      },
+      psychic: {
+        type: Number,
+        default: 0,
+      },
+    },
   },
   {
     collection: 'users',
