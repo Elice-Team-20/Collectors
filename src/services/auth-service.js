@@ -18,9 +18,9 @@ class KakaoOAuthService {
   makeUrlKakaoToken() {
     const REST_API_KEY = process.env.KAKAO_KEY;
 
-    const REDIRECT_URI = 'http://localhost:5000/api/auth/kakao/finish';
-    // const REDIRECT_URI =
-    //   'http://kdt-sw2-seoul-team20.elicecoding.com/api/auth/kakao/finish';
+    //const REDIRECT_URI = 'http://localhost:5000/api/auth/kakao/finish';
+    const REDIRECT_URI =
+      'http://kdt-sw2-seoul-team20.elicecoding.com/api/auth/kakao/finish';
     const url = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     return url;
   }
