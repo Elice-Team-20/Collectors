@@ -1,9 +1,55 @@
 #items {
   width: 60%;
-  height: 80vh;
   margin: 0 auto;
 }
 
 #items > * {
   margin-bottom: 2vh;
+}
+
+.wrap {
+  display: grid;
+  height: 40vh;
+  grid-template-columns: repeat(2, 1fr);
+  place-content: center;
+  place-items: center;
+}
+
+#peter-parker,
+#doctor-strange,
+#iron-man,
+#black-panther {
+  margin: 2vh auto;
+  width: 30vw;
+  height: 3vh;
+  position: relative;
+}
+
+@media all and (max-width: 768px) {
+  #items {
+    width: 95vw;
+    height: 100%;
+  }
+
+  .wrap {
+    display: flex;
+    height: 40vh;
+    flex-direction: column;
+    gap: 2vh;
+    border: 1px solid white;
+  }
+
+  .wrap > p {
+    border-bottom: 1px solid white;
+  }
+
+  #peter-parker,
+  #doctor-strange,
+  #iron-man,
+  #black-panther {
+    margin: 2em auto;
+    width: 70vw;
+    height: 1vh;
+    position: relative;
+  }
 }
