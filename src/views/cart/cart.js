@@ -11,14 +11,17 @@ import { addFooterElements } from '../components/Footer/event.js';
 
 const orderBtn = document.querySelector('#order-btn');
 const cartItenWrapperDiv = document.querySelector('#cart-item-wrapper');
+const shipFreeMinPrice = 50000;
 
 let cart = cartInit(); //JSON.parse(localStorage.getItem('cart'));
+console.log(cart);
 let itemMap = makeCartItemMap(cart); // 카트 Map 만들기, id - 개수 구조
-
+console.log(itemMap);
 // let items = Object.entries(itemMap);
 let checkedItems = makeCheckedItemMap(itemMap); // check된 상품들
 let infos = await getCartItemsInfos(itemMap);
-
+// let hasDeletedItems = false;
+let deletedItems = [];
 // 카트 아이템들 자료구조
 // 카트 init
 function cartInit() {
@@ -32,6 +35,7 @@ function cartInit() {
 // 카트 아이템 관리 map
 function makeCartItemMap(cart) {
   return cart.reduce((map, item) => {
+    if (item.deleteFlag) return map; // 삭제된 아이템 제외
     if (!map[item]) {
       map[item] = 0;
     }
@@ -57,27 +61,36 @@ function addAllElements() {
   // addOrderNavElements('Cart');
 
   addCartItemsElements();
+  alertDeletedItems();
   addOrderInfoElement();
 }
 
 async function addAllEvents() {
   addNavEventListeners();
   handleHamburger();
-  orderBtn.addEventListener('click', orderBtnHandler);
+  orderBtn.addEventListener('click', handleOrderBtn);
 
   addCartEventListeners();
 }
 
 // elements 추가 부분
 function addCartItemsElements() {
+  console.log(itemMap);
+  deletedItems = [];
   cartItenWrapperDiv.innerHTML = Object.keys(itemMap).reduce((elements, id) => {
-    if (itemMap[id] != 0) {
+    console.log(infos[id]);
+    if (!infos[id]) {
+      deletedItems = [...deletedItems, id];
+      return elements;
+    }
+    if (itemMap[id] != 0 && infos[id] != undefined) {
       const { imgUrl, itemName, price, deleteFlag } = infos[id];
       if (deleteFlag) return elements;
+      let isOne = itemMap[id] === 1;
       return (
         elements +
         `
-          <div class="cart-item" id="item-${id}">
+          <div class="cart-item ${deleteFlag ? 'deleted' : ''}" id="item-${id}">
             <input type="checkbox" class="item-select-checkbox" name="${id}" ${
           checkedItems[id] ? 'checked' : ''
         }/>
@@ -91,7 +104,9 @@ function addCartItemsElements() {
             <div class="item-name"><a href="/item/?id=${id}">${itemName}</a></div>
             <div class="item-price">${addCommas(price)}원</div>
             <div class="item-number-box">
-              <button class="item-number-btn item-number-minus-btn" id="minBtn${id}"name="${id}">
+              <button class="item-number-btn item-number-minus-btn" id="minBtn${id}"name="${id}" ${
+          isOne ? 'disabled' : ''
+        }>
                 <i class="fa-solid fa-circle-minus"></i>
               </button>
               <div>${itemMap[id]}</div>
@@ -110,8 +125,18 @@ function addCartItemsElements() {
       return elements;
     }
   }, ``);
+  // 삭제된 아이템이 있을 경우
 }
-
+function alertDeletedItems() {
+  // 삭제된 아이템이 있을 경우 확인 후 최초 한번 알림
+  console.log(deletedItems);
+  if (deletedItems.length !== 0) {
+    console.log(deletedItems);
+    cart = cart.filter((id) => !deletedItems.some((val) => val === id));
+    console.log(cart);
+    alert('장바구니에 있던 상품 중 품절된 것이 있습니다.');
+  }
+}
 // DB에서 item 정보가져오기
 async function getCartItemsInfos(itemMap) {
   let infos = {};
@@ -120,7 +145,10 @@ async function getCartItemsInfos(itemMap) {
     for (let i = 0; i < items.length; i++) {
       const [_id, num] = items[i];
       const info = await Api.get(`/api/item/${_id}`);
-      infos[_id] = info;
+      console.log(info);
+      if (!info.deleteFlag) {
+        infos[_id] = info; // 삭제된 아이템이 아닐 경우에만 넣기
+      } else checkedItems[_id] = false;
     }
     return infos;
   } catch (err) {
@@ -134,7 +162,6 @@ function addOrderInfoElement() {
   // infos를 통해 가격 체크
   let nums = 0;
   let totalPrice = 0;
-  let shipFee = 3000;
   console.log(infos);
   Object.entries(checkedItems).forEach(([id, checked]) => {
     if (checked) {
@@ -145,6 +172,7 @@ function addOrderInfoElement() {
       totalPrice += Number(price * num);
     }
   });
+  let shipFee = totalPrice > shipFreeMinPrice ? 0 : 3000;
   // let orderInfoDiv = document.querySelector('.order-info');
   document.querySelector('.order-info').innerHTML = `
     <div class="data">
@@ -166,8 +194,8 @@ function addOrderInfoElement() {
   `;
 }
 
-// event 처리 부분
-function orderBtnHandler() {
+// 주문하기 버튼
+function handleOrderBtn() {
   if (checkUserStatus()) {
     let order = Object.keys(checkedItems).reduce((arr, id) => {
       console.log(checkedItems[id]);
@@ -176,7 +204,11 @@ function orderBtnHandler() {
       }
       return arr;
     }, []);
-    console.log('order', order);
+    if (order.length === 0) {
+      return alert('주문할 상품이 없습니다. 상품 선택을 해주세요.');
+    }
+    console.log('order', order, 'cart', cart);
+    // localStorage.setItem('cart', JSON.stringify(cart)); // 삭제된 아이템 삭제
     localStorage.setItem('order', JSON.stringify(order));
     window.location.href = '/order';
   } else {
@@ -231,6 +263,7 @@ function handleAllCheckbox(e) {
   }
   addOrderInfoElement();
 }
+function checkStock() {}
 function handleDeleteAllBtn() {
   console.log('cart', cart);
   if (cart.length !== 0) {
@@ -308,3 +341,8 @@ function handleDeleteItemBtn(e) {
   addCartEventListeners();
   addOrderInfoElement();
 }
+
+window.onunload = () => {
+  // 삭제된 아이템 카트에서 제외
+  localStorage.setItem('cart', JSON.stringify(cart));
+};

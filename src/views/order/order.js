@@ -10,6 +10,7 @@ import {
 import { addFooterElements } from '../components/Footer/event.js';
 
 const orderList = JSON.parse(localStorage.getItem('order'));
+let cart = JSON.parse(localStorage.getItem('cart')); // 주문 후 수정될 예정
 const isLoggedIn = checkUserStatus();
 window.onload = async () => {
   if (!orderList) {
@@ -123,6 +124,9 @@ async function handlePurchaseBtn() {
     await Api.post('/api/order/makeOrder', orderData);
 
     localStorage.removeItem('order');
+    cart = cart.filter((id) => !orderList.some(([key, val]) => key === id));
+    console.log('order after ', cart);
+    localStorage.setItem('cart', JSON.stringify(cart));
     localStorage.setItem('orderInfo', JSON.stringify(orderInfo));
 
     alert(`정상적으로 주문이 완료되었습니다.`);
