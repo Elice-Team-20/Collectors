@@ -90,14 +90,10 @@ class OrderinfoService {
 
   // 1. 받은 정보를 기반으로 주문 정보를 만듦
   // 2. 받은 정보를 기반으로 유져 정보 변경(최신화)
-  async connectOrderAndDecreaseStock(userId, orderInfo) {
+  async connectOrderAndDecreaseStock(userId, orderId) {
     try {
-      // const order = await this.orderModel.findByObjectId(id);
-
-      // 새로운 주문 정보를 만듦
-      const newOrderInfo = await this.orderModel.create(orderInfo);
-      // 주문 정보로 부터 아이디 획득
-      const orderId = newOrderInfo._id.toString();
+      //const order = await this.orderModel.findByObjectId(id);
+      //const orderId = order._id;
       // 주문 정보를 조회해서 데이터 가져옴 ( 정보를  매개변수로 받은걸 그대로 쓸수 있지만
       // db에 number 와 String 차이처럼 저장되는게 다를수도 모른다는 생각을 했습니다)
       const DBorderData = await this.orderModel.findByObjectId({
@@ -147,10 +143,9 @@ class OrderinfoService {
 
   async checkStock(orderInfo) {
     try {
-      const newOrderInfo = await this.orderModel.create(orderInfo);
-      const orderId = newOrderInfo._id.toString();
-      const createdOrder = await this.orderModel.findByObjectId(orderId);
-      const itemList = createdOrder.itemList;
+      //const orderId = newOrderInfo._id.toString();
+      //const createdOrder = await this.orderModel.findByObjectId(orderId);
+      const itemList = orderInfo.itemList;
       const boolList = await Promise.all(
         itemList.map(async (e) => {
           const currItem = await itemService.getItembyObId(e.itemId);
@@ -188,46 +183,6 @@ class OrderinfoService {
       return updatedOrder;
     }
     return new Error('등록된 상품이 없습니다.');
-  }
-  async deleteAndAddStat(orderId, userId) {
-    try {
-      const order = await orderInfo.findByObjectId(orderId);
-      const itemList = order.itemList;
-      await Promise.all([
-        itemList.forEach(async (e) => {
-          const itemData = await itemService.getItembyObId(e.itemId);
-          const userInfo = await userService.getUser(userId);
-          const count = e.count;
-          let updateData;
-
-          if (itemData.category === '장비') {
-            updateData = {
-              equipment: parseInt(count + userInfo.stat.equipment),
-            };
-          } else if (itemData.category === '초능력') {
-            updateData = { magic: parseInt(count + userInfo.stat.magic) };
-          } else if (itemData.category === '마법') {
-            updateData = {
-              intelligence: parseInt(count + userInfo.stat.intelligence),
-            };
-          } else if (itemData.category === '지능') {
-            updateData = { psychic: parseInt(count + userInfo.stat.psychic) };
-          } else {
-            updateData = false;
-          }
-          if (updateData) {
-            const insertData = { stat: updateData };
-            const updateResult = await userService.updateUserInfo(
-              userId,
-              insertData,
-            );
-          }
-        }),
-      ]);
-      return { succsess: 'ok' };
-    } catch (er) {
-      return er;
-    }
   }
 
   async deleteInfo(orderId) {
