@@ -90,6 +90,7 @@ async function insertItemElement() {
     ({ _id, itemName, summary, imgUrl, price, deleteFlag, stocks }) => {
       // isDeleted = true이면 deleted 클래스 넣기
       if (deleteFlag) return;
+      if (stocks === 0) return;
       const aboutStock =
         stocks <= 5 ? `<i class="fa-regular fa-bell"></i>` : ''; // 주문 임박 아이콘
       console.log('about stock', aboutStock, stocks);

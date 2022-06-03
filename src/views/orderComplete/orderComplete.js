@@ -7,10 +7,6 @@ import {
   handleHamburger,
 } from '../../components/Nav/event.js';
 import { addFooterElements } from '../../components/Footer/event.js';
-// import {
-//   addOrderNavElements,
-//   addOrderInfoElements,
-// } from '../../components/Order/event.js';
 
 const orderInfo = JSON.parse(localStorage.getItem('orderInfo'));
 window.onload = () => {
