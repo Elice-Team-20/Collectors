@@ -241,7 +241,9 @@ function handleOrderBtn() {
       return arr;
     }, []);
     if (order.length === 0) {
-      return alert('주문할 상품이 없습니다. 상품 선택을 해주세요.');
+      alert('주문할 상품이 없습니다. 상품 선택을 해주세요.');
+      window.location.href = '/items';
+      return;
     }
     console.log('order', order, 'cart', cart);
     localStorage.setItem('order', JSON.stringify(order));
