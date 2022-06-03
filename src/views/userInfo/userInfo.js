@@ -50,7 +50,7 @@ async function getUserDataToInput() {
   phoneNumberInput.value = phoneNumber;
 }
 
-// 프로그래스 바 삽입하기
+// 원형 프로그래스 바 삽입하기
 let bar = new ProgressBar.Circle('#user-tier', {
   color: '#f01e21',
   strokeWidth: 4,
@@ -58,7 +58,7 @@ let bar = new ProgressBar.Circle('#user-tier', {
   easing: 'easeInOut',
   duration: 2000,
   text: {
-    autoStyleContainer: false,
+    autoStyleContainer: true,
   },
   from: { color: '#f01e21', width: 4 },
   to: { color: '#f01e21', width: 4 },
