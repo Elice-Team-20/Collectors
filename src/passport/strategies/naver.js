@@ -4,8 +4,10 @@ import { Strategy as NaverStrategy } from 'passport-naver-v2';
 const config = {
   clientID: process.env.NAVER_ID,
   clientSecret: process.env.NAVER_SECRET,
-  callbackURL:
-    'http://kdt-sw2-seoul-team20.elicecoding.com/api/auth/naver/callback',
+
+  callbackURL: 'api/auth/naver/callback',
+  // callbackURL:
+  //   'http://kdt-sw2-seoul-team20.elicecoding.com/api/auth/naver/callback',
 };
 
 async function findOrCreateUser({ email, name }) {
