@@ -72,7 +72,7 @@ itemRouter.post(
     };
     const resultData = await itemService.addItem(formData);
     res.json({ status: 'ok', sucsess: resultData });
-  },
+  }
 );
 
 itemRouter.get('/:id', async (req, res) => {
@@ -103,7 +103,7 @@ itemRouter.delete(
     } catch (error) {
       next(error);
     }
-  },
+  }
 );
 
 // POST /api/update/:id
@@ -153,7 +153,7 @@ itemRouter.post(
     } catch (error) {
       next(error);
     }
-  },
+  }
 );
 
 export { itemRouter };
