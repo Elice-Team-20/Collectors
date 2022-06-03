@@ -5,9 +5,9 @@ const config = {
   clientID: process.env.GOOGLE_ID,
   clientSecret: process.env.GOOGLE_SECRETKEY,
 
-  callbackURL: 'http://localhost:5000/api/auth/google/callback',
-  // callbackURL:
-  //   'http://kdt-sw2-seoul-team20.elicecoding.com/api/auth/google/callback',
+  //callbackURL: 'http://localhost:5000/api/auth/google/callback',
+  callbackURL:
+    'http://kdt-sw2-seoul-team20.elicecoding.com/api/auth/google/callback',
 };
 
 async function findOrCreateUser({ email, displayName }) {
