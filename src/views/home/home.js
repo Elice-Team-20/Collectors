@@ -98,8 +98,11 @@ async function addSoldOutItems() {
   const soldoutItemsData = await Api.get(`/api/item/soldOut`);
 
   // 매진 임박 상품 추가하기
-  soldoutItemsData.forEach(({ _id, itemName, imgUrl, price, stocks }) => {
-    const soldoutItemList = `
+  soldoutItemsData.forEach(
+    ({ _id, itemName, imgUrl, price, stocks, deleteFlag }) => {
+      if (deleteFlag) return; // 삭제된 아이템 제외
+
+      const soldoutItemList = `
       <div class="soldout-item home-item">
         <a href="/item/?id=${_id}">
           <div class="img-wrap" style="background-image: url(${imgUrl});">
@@ -111,8 +114,9 @@ async function addSoldOutItems() {
       </div>
     `;
 
-    soldoutContainer.insertAdjacentHTML('beforeend', soldoutItemList);
-  });
+      soldoutContainer.insertAdjacentHTML('beforeend', soldoutItemList);
+    },
+  );
 }
 
 // 신상품 추가 기능 구현하기
@@ -121,8 +125,11 @@ async function addNewItems() {
   const newItemsData = await Api.get(`/api/item/newItem`);
 
   // 신상품 상품 추가하기
-  newItemsData.forEach(({ _id, itemName, imgUrl, price, summary }) => {
-    const newItemList = `
+  newItemsData.forEach(
+    ({ _id, itemName, imgUrl, price, summary, deleteFlag }) => {
+      if (deleteFlag) return; // 삭제된 아이템 제외
+
+      const newItemList = `
       <div class="new-item home-item">
         <a href="/item/?id=${_id}">
           <div class="img-wrap" style="background-image: url(${imgUrl});">
@@ -134,8 +141,9 @@ async function addNewItems() {
       </div>
     `;
 
-    newItemsContainer.insertAdjacentHTML('beforeend', newItemList);
-  });
+      newItemsContainer.insertAdjacentHTML('beforeend', newItemList);
+    },
+  );
 }
 
 // 1만원 이하 상품 추가 기능 구현하기
@@ -148,7 +156,9 @@ async function addPriceItems() {
   }).slice(0, 3);
 
   // 1만원 이하 상품 추가하기
-  ItemsData.forEach(({ _id, itemName, imgUrl, price, summary }) => {
+  ItemsData.forEach(({ _id, itemName, imgUrl, price, summary, deleteFlag }) => {
+    if (deleteFlag) return;
+
     const ItemList = `
       <div class="recommand-item home-item">
         <a href="/item/?id=${_id}">
