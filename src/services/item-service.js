@@ -37,11 +37,13 @@ class ItemService {
   async getSoldOutImminentItems() {
     const items = await this.itemModel.findFiveOrLessThanItems();
     let shuffledItems = shuffle(items);
-    // 만약 item의 개수가 3개 이상이라면, 랜덤으로 3개를 골라서 돌려줌
+
+    // 매진임박 상품 없을 때 에러처리
     if (items.length == 0) {
       throw new Error('매진임박인 상품이 없습니다.');
     }
 
+    // 만약 item의 개수가 3개 이상이라면, 랜덤으로 3개를 골라서 돌려줌
     if (items.length >= 3) {
       const array = shuffledItems.slice(0, 3);
       return array;

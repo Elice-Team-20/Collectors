@@ -21,7 +21,7 @@ class OrderinfoService {
   async getOrderInfo() {
     let orders = await this.orderModel.findAll();
     const array = [];
-    for (let i = 0; i < orders.length; i++) {
+    for (let i = orders.length - 1; i >= 0; i--) {
       const temp = {};
       temp._id = orders[i]._id;
 
@@ -53,7 +53,7 @@ class OrderinfoService {
 
   async getOrderList(orderInfo) {
     const array = [];
-    for (let i = 0; i < orderInfo.length; i++) {
+    for (let i = orderInfo.length - 1; i >= 0; i--) {
       const temp = {};
       temp.orderId = orderInfo[i].id;
 
@@ -114,6 +114,8 @@ class OrderinfoService {
         },
       });
       const itemList = createdOrder.itemList;
+
+      console.log(itemList);
 
       itemList.forEach(async (e) => {
         try {
