@@ -135,7 +135,8 @@ async function handlePurchaseBtn() {
     window.location.href = '/order/complete';
   } catch (err) {
     console.error(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요.\n${err.message}`);
+    window.location.href = '/cart';
   }
 }
 
@@ -203,6 +204,7 @@ async function getOrderItemInfos() {
     return { orderItemsText, totalItemPrice, shipFee };
   } catch (err) {
     console.error(err.stack);
+    console.log(err);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
