@@ -117,8 +117,13 @@ async function getItemInfo(orderList) {
 async function handleChangeBtn() {
   if (!confirm('주문 상태를 배송 완료로 변경하시겠습니까?')) return;
   try {
-    const res = await Api.post('/api/order/update/status', {
+    await Api.post('/api/order/update/status', {
       orderId: this.name,
+    });
+    const userId = await Api.get('/api/user/id');
+    await Api.post('/api/order/stat/update', {
+      orderId: this.name,
+      userId,
     });
     alert('주문 상태가 변경되었습니다.');
     window.location.reload();
