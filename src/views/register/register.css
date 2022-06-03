@@ -30,7 +30,7 @@ section {
   margin-bottom: 10px;
 }
 
-.register-user-form-box .field .input {
+/* .register-user-form-box .field .input {
   width: 100%;
   height: 5vh;
   padding-left: 2%;
@@ -47,7 +47,7 @@ section {
 .register-user-form-box .field .input:focus {
   border: 0.5px solid #e7484b;
   box-shadow: 0 0 0 0.125em #f01e21;
-}
+} */
 
 /* button {
   width: 100%;
