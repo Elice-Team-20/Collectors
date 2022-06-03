@@ -1,5 +1,3 @@
-import { ForecastService } from 'aws-sdk';
-import { isElement } from 'lodash';
 import { orderInfo, userModel, itemModel } from '../db/index';
 import { getDate, setRole } from '../utils';
 import { itemService } from './index';
@@ -190,6 +188,46 @@ class OrderinfoService {
       return updatedOrder;
     }
     return new Error('등록된 상품이 없습니다.');
+  }
+  async deleteAndAddStat(orderId, userId) {
+    try {
+      const order = await orderInfo.findByObjectId(orderId);
+      const itemList = order.itemList;
+      await Promise.all([
+        itemList.forEach(async (e) => {
+          const itemData = await itemService.getItembyObId(e.itemId);
+          const userInfo = await userService.getUser(userId);
+          const count = e.count;
+          let updateData;
+
+          if (itemData.category === '장비') {
+            updateData = {
+              equipment: parseInt(count + userInfo.stat.equipment),
+            };
+          } else if (itemData.category === '초능력') {
+            updateData = { magic: parseInt(count + userInfo.stat.magic) };
+          } else if (itemData.category === '마법') {
+            updateData = {
+              intelligence: parseInt(count + userInfo.stat.intelligence),
+            };
+          } else if (itemData.category === '지능') {
+            updateData = { psychic: parseInt(count + userInfo.stat.psychic) };
+          } else {
+            updateData = false;
+          }
+          if (updateData) {
+            const insertData = { stat: updateData };
+            const updateResult = await userService.updateUserInfo(
+              userId,
+              insertData,
+            );
+          }
+        }),
+      ]);
+      return { succsess: 'ok' };
+    } catch (er) {
+      return er;
+    }
   }
 
   async deleteInfo(orderId) {
