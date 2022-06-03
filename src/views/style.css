@@ -224,6 +224,22 @@ nav {
   cursor: pointer;
 }
 
+.top {
+  font-size: 2.5em;
+  position: fixed;
+  /* bottom: 0.75em; */
+  right: 2.5em;
+  opacity: 0.5;
+  border-radius: 50%;
+  overflow: hidden;
+
+  transition: all 0.75s;
+}
+
+.top:hover {
+  opacity: 1;
+}
+
 .recent-item {
   height: 5rem;
 }

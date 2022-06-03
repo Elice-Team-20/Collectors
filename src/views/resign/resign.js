@@ -38,6 +38,10 @@ function addAllEvents() {
 async function handleSubmit(e) {
   e.preventDefault();
 
+  const confirm = window.confirm('정말로 탈퇴하시겠습니까?');
+
+  if (!confirm) return;
+
   // 유저 id 가져오기
   const userId = await findUserId();
   const password = passwordInput.value;
@@ -45,6 +49,8 @@ async function handleSubmit(e) {
   // 회원 탈퇴(삭제 요청)
   await Api.delete(`/api/user/delete/${userId}`, '', { password: password });
 
+  localStorage.removeItem('token');
+  alert('회원 탈퇴가 완료되었습니다.');
   window.location.href = '/';
 }
 

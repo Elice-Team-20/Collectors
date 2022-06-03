@@ -41,4 +41,21 @@ const addQuickMenuEventListeners = (quickMenu) => {
   });
 };
 
-export { addQuickMenuElement, addQuickMenuEventListeners };
+const handleTopButton = () => {
+  const topButton = selectElement('.top');
+
+  window.addEventListener('scroll', () => {
+    let y = window.pageYOffset;
+    if (y > 300) {
+      topButton.style.bottom = 1 + 'em';
+    } else {
+      topButton.style.bottom = -1 + 'em';
+    }
+  });
+
+  topButton.addEventListener('click', () => {
+    window.scrollTo(0, 0);
+  });
+};
+
+export { addQuickMenuElement, addQuickMenuEventListeners, handleTopButton };

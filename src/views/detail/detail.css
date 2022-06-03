@@ -117,29 +117,26 @@
   justify-content: space-between;
 }
 
-button {
+#addCartBtn,
+#orderBtn {
   width: 15vw;
-  height: 100%;
+  height: 5vh;
+
+  border-radius: 7px;
 
   font-size: 1.2em;
   font-weight: bold;
 }
 
 #addCartBtn {
-  height: 5vh;
-
   border-color: #d9d9d9;
-  border-radius: 7px;
   background-color: #d9d9d9;
 
   color: black;
 }
 
 #orderBtn {
-  height: 5vh;
-
   border-color: #f01e21;
-  border-radius: 7px;
   background-color: #f01e21;
 }
 
@@ -171,6 +168,13 @@ button {
     width: 80%;
     height: 100%;
     margin-bottom: 3vh;
+  }
+
+  .item-description-box #stock {
+    position: relative;
+    font-size: 1em;
+    height: 10%;
+    margin-bottom: 1vh;
   }
 
   #item-name {
