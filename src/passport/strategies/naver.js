@@ -33,7 +33,6 @@ module.exports = new NaverStrategy(
       const token = await userService.setUserTokenNaver(user);
       done(null, token);
     } catch (error) {
-      console.log(error);
       done(error);
     }
   },

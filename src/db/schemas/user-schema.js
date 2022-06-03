@@ -36,8 +36,13 @@ const UserSchema = new Schema(
     },
     role: {
       type: String,
-      required: false,
-      default: 'basic-user',
+      required: true,
+      default: '피터 파커',
+    },
+    accumulatedTotalCost: {
+      type: Number,
+      required: true,
+      default: 0,
     },
     orderInfo: [
       {

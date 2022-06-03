@@ -16,6 +16,12 @@ export class UserModel {
     return user;
   }
 
+  // orderId로 찾기
+  async findByOrderId(orderId) {
+    const user = await User.findOne({ orderInfo: orderId });
+    return user;
+  }
+
   // 유저 생성
   async create(userInfo) {
     const createdNewUser = await User.create(userInfo);
