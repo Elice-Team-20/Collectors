@@ -26,6 +26,7 @@ const quickMenu = selectElement('#quick-menu');
 const category = selectElement('#category');
 const soldoutContainer = selectElement('.soldout-container');
 const newItemsContainer = selectElement('.newItems-container');
+const priceItemsContainer = selectElement('.priceItems-container');
 
 window.onload = () => {
   removeExpiredItem();
@@ -42,6 +43,7 @@ async function addAllElements() {
   addQuickMenuElement(quickMenu);
   addSoldOutItems();
   addNewItems();
+  addPriceItems();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -134,4 +136,42 @@ async function addNewItems() {
 
     newItemsContainer.insertAdjacentHTML('beforeend', newItemList);
   });
+}
+
+// 1만원 이하 상품 추가 기능 구현하기
+async function addPriceItems() {
+  // 1만원 이하 가져오기
+  let ItemsData = await getAllItems();
+
+  ItemsData = ItemsData.filter(({ price }) => {
+    return price < 10000;
+  }).slice(0, 3);
+
+  // 1만원 이하 상품 추가하기
+  ItemsData.forEach(({ _id, itemName, imgUrl, price, summary }) => {
+    const ItemList = `
+      <div class="recommand-item home-item">
+        <a href="/item/?id=${_id}">
+          <div class="img-wrap" style="background-image: url(${imgUrl});">
+          </div>
+          <h3>${itemName}</h3>
+          <p>${summary}</p>
+          <p>${addCommas(price)}원</p>
+        </a>
+      </div>
+    `;
+
+    priceItemsContainer.insertAdjacentHTML('beforeend', ItemList);
+  });
+}
+
+async function getAllItems() {
+  // 전체 상품 가져오기
+  try {
+    const result = await Api.get(`/api/item`);
+    return result;
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
 }
