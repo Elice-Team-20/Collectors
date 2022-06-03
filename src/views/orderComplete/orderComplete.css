@@ -1,4 +1,7 @@
-/* 겅텅 */
+.section {
+  min-width: 90vh;
+}
+/* 공텅 */
 .seperator {
   width: 100%;
   height: 0px;
