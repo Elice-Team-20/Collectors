@@ -222,23 +222,23 @@ class OrderinfoService {
           const userInfo = await userService.getUser(userId);
           const count = e.count;
           let updateData;
-          console.log('item Data ' + itemData.category);
           if (itemData.category === '장비') {
             updateData = {
               equipment: parseInt(count + userInfo.stat.equipment),
             };
           } else if (itemData.category === '초능력') {
-            updateData = { magic: parseInt(count + userInfo.stat.magic) };
+            updateData = { psychic: parseInt(count + userInfo.stat.psychic) };
           } else if (itemData.category === '마법') {
+            updateData = {
+              magic: parseInt(count + userInfo.stat.magic),
+            };
+          } else if (itemData.category === '지능') {
             updateData = {
               intelligence: parseInt(count + userInfo.stat.intelligence),
             };
-          } else if (itemData.category === '지능') {
-            updateData = { psychic: parseInt(count + userInfo.stat.psychic) };
           } else {
             updateData = false;
           }
-          console.log('updateData' + updateData);
           if (updateData) {
             const insertData = { stat: updateData };
             const updateResult = await userService.updateUserInfo(
