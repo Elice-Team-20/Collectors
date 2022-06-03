@@ -11,8 +11,7 @@ import { addFooterElements } from '../components/Footer/event.js';
 
 const orderData = JSON.parse(localStorage.getItem('orderData'));
 const orderList = orderData.list;
-console.log(orderList);
-let cart = JSON.parse(localStorage.getItem('cart')); // 주문 후 수정될 예정
+let cart = JSON.parse(localStorage.getItem('cart'));
 const isLoggedIn = checkUserStatus();
 window.onload = async () => {
   if (!orderList) {
@@ -52,8 +51,8 @@ await addAllEvents();
 async function addAllElements() {
   addNavElements();
   addFooterElements();
-  if (isLoggedIn) await addUserShipElements(); // 유저 배송지 정보 가져오기
-  await addOrderInfoElements(); // 주문 정보 가져오기
+  if (isLoggedIn) await addUserShipElements();
+  await addOrderInfoElements();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -127,7 +126,6 @@ async function handlePurchaseBtn() {
 
     localStorage.removeItem('order');
     cart = cart.filter((id) => !orderList.some(([key, val]) => key === id));
-    console.log('order after ', cart);
     localStorage.setItem('cart', JSON.stringify(cart));
     localStorage.setItem('orderInfo', JSON.stringify(orderInfo));
 
@@ -173,12 +171,12 @@ async function getUserShipInfos() {
 }
 async function addOrderInfoElements() {
   const orderItemsDiv = document.querySelector('#orderItems');
-  const originalTotalPriceDiv = document.querySelector('#originItemTotalPrice'); // 원가
+  const originalTotalPriceDiv = document.querySelector('#originItemTotalPrice');
   const discountTotalPriceDiv = document.querySelector(
     '#discountItemTotalPrice',
-  ); // 할인가
+  );
   const shipFeeDiv = document.querySelector('#shipFee');
-  const totalPriceDiv = document.querySelector('#totalPrice'); // 최종 가격
+  const totalPriceDiv = document.querySelector('#totalPrice');
 
   const { orderItemsText, totalItemPrice, shipFee } = await getOrderItemInfos();
 
@@ -191,7 +189,7 @@ async function addOrderInfoElements() {
 
 async function getOrderItemInfos() {
   let orderItemsText = ``;
-  let totalItemPrice = orderData.finalOrderPrice; // 할인된 가격을 최종 가격
+  let totalItemPrice = orderData.finalOrderPrice;
   try {
     for (let i = 0; i < orderList.length; i++) {
       const [id, num, itemName] = orderList[i];
@@ -205,7 +203,6 @@ async function getOrderItemInfos() {
     return { orderItemsText, totalItemPrice, shipFee };
   } catch (err) {
     console.error(err.stack);
-    console.log(err);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }

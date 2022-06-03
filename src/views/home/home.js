@@ -1,4 +1,5 @@
 import * as Api from '/api.js';
+
 import {
   selectElement,
   addCommas,
@@ -10,11 +11,14 @@ import {
   addNavElements,
   handleHamburger,
 } from '../components/Nav/event.js';
+
 import { addFooterElements } from '../components/Footer/event.js';
+
 import {
   addCategoryMenuElement,
   addCategoryMenuEventListeners,
 } from '../components/Category/event.js';
+
 import {
   addQuickMenuElement,
   addQuickMenuEventListeners,
@@ -28,9 +32,11 @@ const soldoutContainer = selectElement('.soldout-container');
 const newItemsContainer = selectElement('.newItems-container');
 const priceItemsContainer = selectElement('.priceItems-container');
 
+// 만료된 최근 본 상품 제거
 window.onload = () => {
   removeExpiredItem();
 };
+
 userInit();
 await addAllElements();
 await addAllEvents();
@@ -58,37 +64,35 @@ async function addAllEvents() {
 // 장바구니 생성하기
 async function userInit() {
   let cart = JSON.parse(localStorage.getItem('cart'));
+
   if (!cart) {
     cart = [];
     localStorage.setItem('cart', JSON.stringify([]));
   }
-  console.log(document.cookie);
+
   document.cookie.split(/,|; /).forEach((el, idx) => {
-    console.log(el);
     let [key, value] = el.split('=');
-    console.log(idx, key, value);
-    // 잘못된 토큰이 올경우 대비 jwt 는 무조건 e로시작
+
+    // 잘못된 토큰이 올 경우 대비 (jwt 는 무조건 e로 시작)
     if (value !== undefined && value.charAt(0) === 'j') {
       const temp = value.split('%22');
 
       value = temp[3];
       localStorage.setItem('token', value);
     }
+
     if (key === 'token') localStorage.setItem('token', value);
   });
 }
 
 // 이미지 슬라이더 설정
 const swiper = new Swiper('.swiper', {
-  // Optional parameters
   direction: 'horizontal',
   loop: true,
   autoplay: {
     delay: 3000,
   },
   pauseOnMouseEnter: true,
-
-  // Navigation arrows
   navigation: {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
@@ -160,7 +164,7 @@ async function addPriceItems() {
 
   // 1만원 이하 상품 추가하기
   ItemsData.forEach(({ _id, itemName, imgUrl, price, summary, deleteFlag }) => {
-    if (deleteFlag) return;
+    if (deleteFlag) return; // 삭제된 아이템 제외
 
     const ItemList = `
       <div class="recommand-item home-item">
