@@ -44,7 +44,12 @@ async function getUserDataToInput() {
   // 유저 데이터 가져오기
   const userData = await Api.get(`/api/user/${id}`);
   const tier = await Api.get(`/api/user/role`);
-
+  const mininmalCost = {
+    '피터 파커': 501000,
+    '닥터 스트레인지': 1001000,
+    '토니 스타크': 2001000,
+    '블랙 팬서': 5000000,
+  };
   // 티어별 이미지 교체
   if (tier === '피터 파커') {
     userTierImage.src = '/user-tier-1.png';
@@ -57,7 +62,7 @@ async function getUserDataToInput() {
   }
 
   // 유저 데이터 가져와서 삽입
-  const { fullName, email, phoneNumber } = userData;
+  const { fullName, email, phoneNumber, accumulatedTotalCost } = userData;
   fullNameInput.value = fullName;
   userTierInput.value = tier;
   emailInput.value = email;
@@ -79,7 +84,7 @@ async function getUserDataToInput() {
       circle.path.setAttribute('stroke', state.color);
       circle.path.setAttribute('stroke-width', state.width);
 
-      let value = Math.round(circle.value() * 100);
+      let value = Math.round(circle.value() * mininmalCost[tier]);
       if (value === 0) {
         circle.setText('');
       } else {
@@ -89,7 +94,7 @@ async function getUserDataToInput() {
   });
   tierBar.text.style.display = 'none';
 
-  tierBar.animate(1.0);
+  tierBar.animate(accumulatedTotalCost / mininmalCost[tier]);
 
   // 유저 스탯 삽입
   const { equipment, magic, intelligence, psychic } = userData.stat;
