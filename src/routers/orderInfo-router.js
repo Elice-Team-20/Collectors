@@ -78,9 +78,18 @@ orderInfoRouter.get('/:id', loginRequired, async (req, res, next) => {
 orderInfoRouter.post('/makeOrder', loginRequired, async (req, res, next) => {
   try {
     const { userId, orderInfo } = req.body;
-    res
-      .status(200)
-      .json(await orderInfoService.connectOrderAndInfo(userId, orderInfo));
+
+    const isSoldOutList = await orderInfoService.checkStock(orderInfo);
+    isSoldOutList.forEach((e) => {
+      if (e) {
+        throw new Error('주문한 수량이 재고 보다 많습니다');
+      }
+    });
+    const resUpdate = await orderInfoService.connectOrderAndDecreaseStock(
+      userId,
+      orderInfo,
+    );
+    res.status(200).json(resUpdate);
   } catch (error) {
     next(error);
   }
