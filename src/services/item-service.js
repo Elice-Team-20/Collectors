@@ -1,5 +1,5 @@
 import { itemModel } from '../db';
-import { shuffle } from '../utils/shuffle-array';
+import { shuffle } from '../utils';
 
 class ItemService {
   constructor(itemModel) {

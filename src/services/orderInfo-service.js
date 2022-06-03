@@ -1,7 +1,7 @@
 import { ForecastService } from 'aws-sdk';
 import { isElement } from 'lodash';
 import { orderInfo, userModel, itemModel } from '../db/index';
-import { getDate } from '../utils/get-date';
+import { getDate, setRole } from '../utils';
 import { itemService } from './index';
 import { userService } from './user-service';
 
@@ -154,12 +154,16 @@ class OrderinfoService {
       const user = await userService.findByOrderId(orderId);
       const updateCost = order.totalCost + user.accumulatedTotalCost;
 
+      // update된 cost 비용으로 role 설정
+      const newRole = setRole(updateCost);
+
       const updatedOrder = await this.orderModel.updateByObjectId(
         orderId,
         info,
       );
       const updatedUser = await userService.updateUserInfo(user.id, {
         accumulatedTotalCost: updateCost,
+        role: newRole,
       });
 
       return updatedOrder;
