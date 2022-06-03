@@ -62,8 +62,11 @@ async function userInit() {
     cart = [];
     localStorage.setItem('cart', JSON.stringify([]));
   }
-  document.cookie.split(',').forEach((el) => {
+  console.log(document.cookie);
+  document.cookie.split(/,|; /).forEach((el, idx) => {
+    console.log(el);
     let [key, value] = el.split('=');
+    console.log(idx, key, value);
     // 잘못된 토큰이 올경우 대비 jwt 는 무조건 e로시작
     if (value !== undefined && value.charAt(0) === 'j') {
       const temp = value.split('%22');

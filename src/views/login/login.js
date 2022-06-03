@@ -66,8 +66,6 @@ async function handleSubmit(e) {
 
     alert(`정상적으로 로그인되었습니다.`);
 
-    // 로그인 성공
-
     // 기본 페이지로 이동
     window.location.href = '/';
   } catch (err) {
@@ -75,57 +73,15 @@ async function handleSubmit(e) {
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
-async function handleNaverBtn(e) {
-  try {
-    e.preventDefault();
-
-    // const result = await Api.get('/api/auth/naver');
-    // const token = result.token;
-
-    // localStorage.setItem('token', token);
-
-    // console.log(result);
-    // alert(`정상적으로 로그인되었습니다.`);
-
-    window.location.href = '/api/auth/naver';
-  } catch (err) {
-    console.log(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
-  }
+function handleNaverBtn(e) {
+  e.preventDefault();
+  window.location.href = '/api/auth/naver';
 }
-async function handleKakaoBtn(e) {
-  try {
-    e.preventDefault();
-    // const result = window.open('/api/auth/kakao/start');
-    // console.log(result);
-    // const token = result.token;
-    // localStorage.setItem('token', token);
-    // console.log(result);
-    // alert(`정상적으로 로그인되었습니다.`);
-    window.location.href = '/api/auth/kakao/start';
-  } catch (err) {
-    console.log(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
-  }
-  // try {
-  //   const url = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-  //   window.open(url);
-  // } catch (err) {}
+function handleKakaoBtn(e) {
+  e.preventDefault();
+  window.location.href = '/api/auth/kakao/start';
 }
-async function handleGoogleBtn(e) {
-  try {
-    e.preventDefault();
-    // const result = await Api.get('/api/auth/naver');
-    // const token = result.token;
-
-    // localStorage.setItem('token', token);
-
-    // console.log(result);
-    // alert(`정상적으로 로그인되었습니다.`);
-
-    window.location.href = '/api/auth/google';
-  } catch (err) {
-    console.log(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
-  }
+function handleGoogleBtn(e) {
+  e.preventDefault();
+  window.location.href = '/api/auth/google';
 }
