@@ -18,6 +18,7 @@ import {
 import {
   addQuickMenuElement,
   addQuickMenuEventListeners,
+  handleTopButton,
 } from '../components/QuickMenu/event.js';
 
 // 요소(element), input 혹은 상수
@@ -50,6 +51,7 @@ async function addAllEvents() {
   addCategoryMenuEventListeners();
   addQuickMenuEventListeners(quickMenu);
   handleHamburger();
+  handleTopButton();
 }
 
 // 장바구니 생성하기

@@ -21,6 +21,7 @@ import {
 import {
   addQuickMenuElement,
   addQuickMenuEventListeners,
+  handleTopButton,
 } from '../components/QuickMenu/event.js';
 import { addSearchBarElement } from '../components/SearchBar/event.js';
 
@@ -59,6 +60,7 @@ function addAllEvents() {
   handleHamburger();
   addCategoryMenuEventListeners();
   addQuickMenuEventListeners(quickMenu);
+  handleTopButton();
   document
     .querySelector('#searchBarBtn')
     .addEventListener('click', handleSearchBtn);
