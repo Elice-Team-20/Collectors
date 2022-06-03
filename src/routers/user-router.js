@@ -205,6 +205,7 @@ userRouter.delete('/delete/:userId', async (req, res, next) => {
 
     const result = await userService.deleteUser(userId, password);
 
+    res.cookie('token', '', { maxAge: 0 });
     res.status(200).json({ result: '정상적으로 회원 정보가 삭제되었습니다.' });
   } catch (error) {
     next(error);

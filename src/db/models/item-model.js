@@ -55,7 +55,6 @@ export class ItemModel {
     const items = await Item.find({ deleteFlag: false })
       .sort({ createdAt: -1 })
       .limit(6);
-    console.log(items);
     return items;
   }
 
