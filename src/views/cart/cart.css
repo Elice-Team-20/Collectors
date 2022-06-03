@@ -81,20 +81,20 @@ div.select > * {
   justify-content: space-between;
 
   place-self: center center;
-  width: 50%;
+  width: 40%;
+  max-width: 50px;
 }
 .cart-item button {
   /*.item-number-box .item-number-btn { */
   border-style: none;
 }
-
 .cart-item button i:hover {
   /*.item-number-box .item-number-btn i:hover {*/
   color: #f01e21;
 }
-.cart-item button i:disabled {
+.cart-item button:disabled i {
   /*.item-number-box .item-number-btn i:hover {*/
-  color: grey;
+  color: dimgray;
 }
 /* 카트 정보 (선택에 맞춰서) */
 div.info-card {
