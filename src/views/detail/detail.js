@@ -1,3 +1,4 @@
+import * as Api from '/api.js';
 import { addCommas, selectElement } from '/useful-functions.js';
 
 import {
@@ -19,6 +20,32 @@ const itemPriceDiv = selectElement('#item-price');
 const itemExplanationDiv = selectElement('#item-explanation');
 const cartBtn = selectElement('#addCartBtn');
 const orderBtn = selectElement('#orderBtn');
+const isLoggedIn = checkUserStatus();
+let totalPrice = 0;
+let userRole = await userInit(); // 사용자 티어 가져오기
+const discountRateMap = {
+  '호크 아이': (100 - 0) / 100,
+  '피터 파커': (100 - 3) / 100,
+  '닥터 스트레인지': (100 - 5) / 100,
+  '토니 스타크': (100 - 15) / 100,
+  '블랙 팬서': (100 - 30) / 100,
+};
+async function userInit() {
+  if (!isLoggedIn) {
+    // 로그인 정보가 없다면
+    alert(
+      '당신은 호크 아이(비회원)입니다. 가입하시면 할인을 받을 수 있습니다.',
+    );
+    return '호크 아이';
+  }
+  try {
+    const result = await Api.get('/api/user/role');
+    return result;
+  } catch (err) {
+    console.error(err.stack);
+    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
+  }
+}
 // console.log(item);
 // navigation, footer 컴포넌트 넣기
 await addAllElements();
@@ -39,10 +66,15 @@ async function addAllEvents() {
 }
 
 function handleOrderBtn() {
-  if (checkUserStatus()) {
-    let order = [[id, 1]]; // 아이템 하나
-    console.log('order', order);
-    localStorage.setItem('order', JSON.stringify(order));
+  if (isLoggedIn) {
+    let list = [[id, 1, itemNameDiv.innerText]]; // 아이템 하나
+    const orderData = {
+      list,
+      originalPrice: totalPrice,
+      finalOrderPrice: totalPrice * discountRateMap[userRole],
+    };
+    console.log('orderData', orderData);
+    localStorage.setItem('orderData', JSON.stringify(orderData));
     window.location.href = '/order';
   } else {
     alert('로그인 정보가 없습니다. 로그인 후에 주문이 가능합니다.');
@@ -83,7 +115,7 @@ async function insertItemDetail(id) {
   itemCompanyDiv.innerText = manufacturingCompany;
   itemPriceDiv.innerText = `${addCommas(price)}원`;
   itemExplanationDiv.innerText = mainExplanation;
-
+  totalPrice = price;
   addRecentItem(id, itemName, imgUrl);
   addTagElements(hashTag);
 

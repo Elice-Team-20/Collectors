@@ -14,6 +14,7 @@ const cartItenWrapperDiv = document.querySelector('#cart-item-wrapper');
 const shipFreeMinPrice = 50000;
 
 let cart = cartInit(); // cart token 가져오기
+const isLoggedIn = checkUserStatus();
 let userRole = await userInit(); // 사용자 티어 가져오기
 console.log(userRole);
 let itemMap = makeCartItemMap(cart); // 카트 Map 만들기, id - 개수 구조
@@ -23,11 +24,14 @@ let deletedItems = []; // 삭제해야 할 상품 id 값 배열
 let avaiableStocksMap = {}; // 상품 id : 실제 수량
 let changedOrderNumber = false; // 실제 수량에 맞춰 카트 수량 변경 여부
 const discountRateMap = {
-  '피터 파커': (100 - 0) / 100,
+  '호크 아이': (100 - 0) / 100,
+  '피터 파커': (100 - 3) / 100,
   '닥터 스트레인지': (100 - 5) / 100,
   '토니 스타크': (100 - 15) / 100,
   '블랙 팬서': (100 - 30) / 100,
 };
+let finalOrderPrice = 0;
+let originalPrice = 0;
 
 function cartInit() {
   // cart token 가져오기
@@ -39,6 +43,13 @@ function cartInit() {
   return cart;
 }
 async function userInit() {
+  if (!isLoggedIn) {
+    // 로그인 정보가 없다면
+    alert(
+      '당신은 호크 아이(비회원)입니다. 가입하시면 할인을 받을 수 있습니다.',
+    );
+    return '호크 아이';
+  }
   try {
     const result = await Api.get('/api/user/role');
     return result;
@@ -220,7 +231,8 @@ function addOrderInfoElement() {
       totalPrice += Number(price * num);
     }
   });
-  let shipFee = totalPrice > shipFreeMinPrice ? 0 : 3000;
+  let shipFee =
+    totalPrice * discountRateMap[userRole] > shipFreeMinPrice ? 0 : 3000;
   document.querySelector('.order-info').innerHTML = `
     <div class="data">
       <p>상품 수</p>
@@ -228,14 +240,20 @@ function addOrderInfoElement() {
     </div>
     <div class="data">
       <p>상품 금액</p>
-      <p id="item-price">${addCommas(totalPrice)}원</p>
+      <p ${isLoggedIn ? 'id=originPrice' : ''}>${addCommas(totalPrice)}원</p>
     </div>
-    <div class="data">
-      <p>할인된 금액</p>
-      <p id="item-price">${addCommas(
-        totalPrice * discountRateMap[userRole],
-      )}원</p>
-    </div>
+    ${
+      isLoggedIn
+        ? `
+        <div class="data" id="discountPrice">
+          <p>할인된 금액</p>
+          <p id="item-price">${addCommas(
+            totalPrice * discountRateMap[userRole],
+          )}원</p>
+        </div>
+      `
+        : ``
+    }
     <div class="data">
       <p>배송비</p>
       <p id="shipping">${addCommas(shipFee)}원</p>
@@ -247,25 +265,32 @@ function addOrderInfoElement() {
       totalPrice * discountRateMap[userRole] + shipFee,
     )}원</p>
   `;
+  originalPrice = totalPrice;
+  finalOrderPrice = totalPrice * discountRateMap[userRole];
 }
 
 // 주문하기 버튼
 function handleOrderBtn() {
-  if (checkUserStatus()) {
-    let order = Object.keys(checkedItems).reduce((arr, id) => {
+  if (isLoggedIn) {
+    let list = Object.keys(checkedItems).reduce((arr, id) => {
       console.log(checkedItems[id]);
       if (checkedItems[id]) {
-        arr.push([id, itemMap[id]]);
+        arr.push([id, itemMap[id], infos[id].itemName]);
       }
       return arr;
     }, []);
-    if (order.length === 0) {
+    if (list.length === 0) {
       alert('주문할 상품이 없습니다. 상품 선택을 해주세요.');
       window.location.href = '/items';
       return;
     }
-    console.log('order', order, 'cart', cart);
-    localStorage.setItem('order', JSON.stringify(order));
+    console.log('order', list, 'cart', cart);
+    const data = {
+      list,
+      originalPrice,
+      finalOrderPrice,
+    };
+    localStorage.setItem('orderData', JSON.stringify(data)); // 주문
     window.location.href = '/order';
   } else {
     alert('로그인 정보가 없습니다. 로그인 후에 주문이 가능합니다.');

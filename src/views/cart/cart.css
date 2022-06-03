@@ -116,6 +116,10 @@ div.data {
   gap: 1rem;
   margin-top: 1rem;
 }
+.data #originPrice {
+  text-decoration: line-through;
+  color: dimgray;
+}
 
 div.total {
   font-size: 1.25rem;
