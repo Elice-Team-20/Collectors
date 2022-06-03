@@ -1,13 +1,11 @@
 section {
   display: flex;
   justify-content: center;
-
-  height: 85vh;
 }
 
 #content {
-  width: 40%;
-  margin-top: 5vh;
+  width: 60%;
+  height: 80vh;
 }
 
 #title {
