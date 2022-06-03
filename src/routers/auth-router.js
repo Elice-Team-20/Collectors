@@ -30,7 +30,14 @@ authRouter.get('/kakao/finish', async (req, res, next) => {
 
     // 유저 정보 요청
     const userInfo = await kakaoOAuthService.requestUser(config);
+    console.log('id ' + userInfo.id);
+
     // 우리 db에 있는지 확인
+    if (!userInfo.email) {
+      console.log('in email');
+      userInfo.email = userInfo.id + '@kakao.com';
+      console.log(userInfo.email);
+    }
     const isthereDB = await kakaoOAuthService.checkMember(userInfo);
     let user = null;
 
@@ -41,7 +48,7 @@ authRouter.get('/kakao/finish', async (req, res, next) => {
     }
     //있으면
     else {
-      const { email } = userInfo.kakao_account;
+      let { email } = userInfo.kakao_account;
       //기존회원이면 회원 정보 찾아옴
       user = await kakaoOAuthService.getUserByEmail(email);
     }
