@@ -147,6 +147,27 @@ class OrderinfoService {
     }
   }
 
+  async checkStock(orderInfo) {
+    try {
+      const newOrderInfo = await this.orderModel.create(orderInfo);
+      const orderId = newOrderInfo._id.toString();
+      const createdOrder = await this.orderModel.findByObjectId(orderId);
+      const itemList = createdOrder.itemList;
+      const boolList = await Promise.all(
+        itemList.map(async (e) => {
+          const currItem = await itemService.getItembyObId(e.itemId);
+          const inputItemCount = e.count;
+          const changeStock = await (currItem.stocks - inputItemCount);
+          return changeStock < 0;
+        }),
+      );
+
+      return boolList;
+    } catch (er) {
+      return er;
+    }
+  }
+
   // 배송이 완료되면 상태를 '배송 완료'로 바꾸고 누적cost를 업데이트
   async updateInfo(orderId, info) {
     if (checkData(orderId)) {
