@@ -79,35 +79,15 @@ async function handleSubmit(e) {
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
-async function handleNaverBtn() {
-  try {
-    const res = await Api.get('/api/auth/naver');
-    console.log(res);
-    alert(`정상적으로 회원가입되었습니다.`);
-
-    window.location.href = '/login';
-  } catch (err) {
-    console.log(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
-  }
+function handleNaverBtn(e) {
+  e.preventDefault();
+  window.location.href = '/api/auth/naver';
 }
-async function handleKakaoBtn() {
-  try {
-    await Api.get('/api/auth/kakao/start');
-    alert('정상적으로 회원가입되었습니다.');
-    window.location.href = '/login';
-  } catch (err) {
-    console.log(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
-  }
+function handleKakaoBtn(e) {
+  e.preventDefault();
+  window.location.href = '/api/auth/kakao/start';
 }
-async function handleGoogleBtn() {
-  try {
-    await Api.get('/api/auth/naver');
-    alert('정상적으로 회원가입되었습니다.');
-    window.location.href = '/login';
-  } catch (err) {
-    console.log(err.stack);
-    alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
-  }
+function handleGoogleBtn(e) {
+  e.preventDefault();
+  window.location.href = '/api/auth/google';
 }
