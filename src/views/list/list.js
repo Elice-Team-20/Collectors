@@ -87,9 +87,12 @@ async function insertItemElement() {
   searchedItems = []; // 빈객체로 초기화
   itemList.innerHTML = '';
   filteredItems.forEach(
-    ({ _id, itemName, summary, imgUrl, price, deleteFlag }) => {
+    ({ _id, itemName, summary, imgUrl, price, deleteFlag, stocks }) => {
       // isDeleted = true이면 deleted 클래스 넣기
       if (deleteFlag) return;
+      const aboutStock =
+        stocks <= 5 ? `<i class="fa-regular fa-bell"></i>` : ''; // 주문 임박 아이콘
+      console.log('about stock', aboutStock, stocks);
       itemList.innerHTML += `
       <a href="/item/?id=${_id}">
         <div class="item">
@@ -100,7 +103,7 @@ async function insertItemElement() {
           </div>
           <div class="description">
             <div class="detail">
-              <h1 id="itemName">${itemName}</h1>
+              <h1 id="itemName"><div>${itemName}</div>${aboutStock}</h1>
               <p id="summary">${summary}</p>
             </div>
             <div>
@@ -162,4 +165,11 @@ async function getSearchItems(value) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
+}
+function addStockNumber() {
+  const stockDiv = selectElement('#stock');
+  stockDiv.innerHTML = `
+    <i class="fa-regular fa-bell"></i>
+    매진 임박 상품
+  `;
 }

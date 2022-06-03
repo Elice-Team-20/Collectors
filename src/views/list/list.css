@@ -75,8 +75,25 @@ section {
 #itemName {
   font-size: 1.5em;
   margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
 }
-
+#itemName i {
+  color: #f01e21;
+  font-size: 1.25em;
+  animation: ringing 1s ease-in-out infinite;
+}
+@keyframes ringing {
+  0% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(10deg);
+  }
+}
 #summary {
   width: 100%;
   font-size: 0.8rem;
