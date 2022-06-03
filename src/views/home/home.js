@@ -29,7 +29,6 @@ const newItemsContainer = selectElement('.newItems-container');
 window.onload = () => {
   removeExpiredItem();
 };
-
 userInit();
 await addAllElements();
 await addAllEvents();
@@ -55,15 +54,19 @@ async function addAllEvents() {
 // 장바구니 생성하기
 async function userInit() {
   let cart = JSON.parse(localStorage.getItem('cart'));
-
   if (!cart) {
     cart = [];
     localStorage.setItem('cart', JSON.stringify([]));
   }
-
-  console.log(document.cookie);
   document.cookie.split(',').forEach((el) => {
     let [key, value] = el.split('=');
+    // 잘못된 토큰이 올경우 대비 jwt 는 무조건 e로시작
+    if (value !== undefined && value.charAt(0) === 'j') {
+      const temp = value.split('%22');
+
+      value = temp[3];
+      localStorage.setItem('token', value);
+    }
     if (key === 'token') localStorage.setItem('token', value);
   });
 }
