@@ -5,7 +5,6 @@ section {
 
 #content {
   width: 60%;
-  margin-top: 5vh;
 }
 #title {
   height: 50px;
@@ -16,7 +15,6 @@ section {
 .item-form {
   display: flex;
   justify-content: space-around;
-  /* height: 80%; */
   margin-top: 3%;
   margin-bottom: 3%;
 }
@@ -26,7 +24,6 @@ section {
   flex-direction: column;
   justify-content: space-evenly;
   width: 45%;
-  height: 80%;
 }
 /* 폼들 */
 .input,
@@ -34,7 +31,6 @@ select {
   width: 100%;
   height: 5vh;
   padding-left: 2%;
-
   background: #ffffff;
   border: 1px solid #c5c5c5;
   box-shadow: inset 3px 3px 4px rgba(0, 0, 0, 0.3);

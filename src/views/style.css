@@ -256,12 +256,6 @@ nav {
   overflow: hidden;
 }
 
-/* section style */
-section {
-  margin-top: 5vh; /* 상단 공백 */
-  padding-bottom: 100px; /* footer의 height값과 동일 하단에 있게 하기 위함 */
-}
-
 /* button */
 .main-btn {
   width: 100%;
@@ -279,7 +273,13 @@ section {
   border-color: #e7484b;
   background-color: #e7484b;
 }
-
+/* section style */
+section {
+  /* margin-top: 5vh; 상단 공백 */
+  padding: 5vh;
+  /* padding-top: 10vh;
+  padding-bottom: 75px; footer의 height값과 동일 하단에 있게 하기 위함 */
+}
 /* footer style */
 footer {
   width: 100vw;

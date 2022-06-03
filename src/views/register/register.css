@@ -1,8 +1,14 @@
-.register-user-form-container {
+/* .register-user-form-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 85vh;
+  height: 100vh;
+} */
+
+section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .register-user-form-box {
@@ -12,7 +18,7 @@
   justify-content: space-between;
 
   width: 40%;
-  height: 80%;
+  height: 80vh;
 }
 
 .register-user-form-box .field {
