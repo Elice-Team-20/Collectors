@@ -9,7 +9,6 @@ import {
 import { addFooterElements } from '../../components/Footer/event.js';
 
 // 요소(element), input 혹은 상수
-const token = localStorage.getItem('token');
 const submitButton = selectElement('#submitButton');
 const passwordInput = selectElement('#passwordInput');
 

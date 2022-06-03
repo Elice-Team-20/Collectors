@@ -93,9 +93,10 @@ async function getUserDataToInput() {
 
   // 유저 스탯 삽입
   const { equipment, magic, intelligence, psychic } = userData.stat;
-  console.log(userData.stat);
-  console.log('e', equipment, 'm', magic, 'i', intelligence, 'p', psychic);
+
   // 유저 스탯 프로그래스 바 추가하기
+
+  // 마법 스탯 프로그래스 바 추가
   let magicStat = new ProgressBar.Line('#magic', {
     strokeWidth: 4,
     easing: 'easeInOut',
@@ -121,6 +122,7 @@ async function getUserDataToInput() {
     },
   });
 
+  // 장비 스탯 프로그래스 바 추가
   let equipmentStat = new ProgressBar.Line('#equipment', {
     strokeWidth: 4,
     easing: 'easeInOut',
@@ -146,6 +148,7 @@ async function getUserDataToInput() {
     },
   });
 
+  // 초능력 스탯 프로그래스 바 추가
   let psychicStat = new ProgressBar.Line('#psychic', {
     strokeWidth: 4,
     easing: 'easeInOut',
@@ -171,6 +174,7 @@ async function getUserDataToInput() {
     },
   });
 
+  // 지능 스탯 프로그래스 바 추가
   let intelligenceStat = new ProgressBar.Line('#intelligence', {
     strokeWidth: 4,
     easing: 'easeInOut',
@@ -196,6 +200,7 @@ async function getUserDataToInput() {
     },
   });
 
+  // 애니메이션 추가
   magicStat.animate(magic / 100 || 0);
   equipmentStat.animate(equipment / 100 || 0);
   psychicStat.animate(psychic / 100 || 0);

@@ -25,10 +25,7 @@ addAllEvents();
 async function addAllElements() {
   addNavElements();
   addFooterElements();
-
-  // addOrderNavElements();
-  addOrderFinishedInfoElments();
-  // addOrderInfoElements();
+  addOrderFinishedInfoElements();
 }
 
 // 여러 개의 addEventListener들을 묶어주어서 코드를 깔끔하게 하는 역할임.
@@ -43,15 +40,12 @@ function addAllEvents() {
   });
 }
 
-function addOrderFinishedInfoElments() {
+function addOrderFinishedInfoElements() {
   const orderedItemDiv = document.querySelector('#orderedItem');
   const totalPriceDiv = document.querySelector('#totalPrice');
 
   orderedItemDiv.innerHTML = orderInfo.orderItemsText;
   totalPriceDiv.innerHTML = `${addCommas(orderInfo.totalCost)}원`;
-}
-function handleOrderListBtn() {
-  window.location.href = '/orderlist';
 }
 
 window.onunload = () => {

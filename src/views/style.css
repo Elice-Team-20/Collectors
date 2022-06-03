@@ -1,3 +1,4 @@
+/* 전체 스타일 */
 *,
 a {
   margin: 0;
@@ -9,6 +10,7 @@ a {
   list-style: none;
   scroll-behavior: smooth;
 }
+
 .input,
 select {
   width: 100%;
@@ -22,18 +24,18 @@ select {
 
   color: black;
 }
+
 .input:focus {
   border: 0.5px solid #e7484b;
   box-shadow: 0 0 0 0.125em #f01e21;
 }
+
 #wrap {
   min-height: 100vh;
   position: relative;
   width: 100%;
 }
-/* .deleted {
-  display: none;
-} */
+
 /* 구분자 */
 .seperator {
   width: 100%;
@@ -87,6 +89,7 @@ nav {
   height: 5vh;
 }
 
+/* nav 반응형 */
 @media screen and (max-width: 768px) {
   .navBrand a img {
     width: 100%;
@@ -147,11 +150,6 @@ nav {
     right: 5vw;
   }
 }
-
-/* 
-.navContainer #navMenuList #logoutBtn{
-  border-style: none;
-} */
 
 /* 카테고리 style */
 #category {
@@ -245,15 +243,14 @@ nav {
   cursor: pointer;
 }
 
+/* 탑 버튼 */
 .top {
   font-size: 2.5em;
   position: fixed;
-  /* bottom: 0.75em; */
   right: 2.5em;
   opacity: 0.5;
   border-radius: 50%;
   overflow: hidden;
-
   transition: all 0.75s;
 }
 
@@ -261,6 +258,7 @@ nav {
   opacity: 1;
 }
 
+/* 최근 본 상품 */
 .recent-item {
   height: 5rem;
 }
@@ -277,7 +275,7 @@ nav {
   overflow: hidden;
 }
 
-/* button */
+/* button 스타일 */
 .main-btn {
   width: 100%;
   height: 5vh;
@@ -294,17 +292,16 @@ nav {
   border-color: #e7484b;
   background-color: #e7484b;
 }
+
 /* section style */
 section {
-  /* margin-top: 5vh; 상단 공백 */
   padding: 5vh;
-  /* padding-top: 10vh;
-  padding-bottom: 75px; footer의 height값과 동일 하단에 있게 하기 위함 */
 }
+
 /* footer style */
 footer {
   width: 100vw;
-  height: 75px; /* 내용물에 따라 알맞는 값 설정 */
+  height: 75px;
   position: absolute;
   bottom: -75px;
   left: 0;
@@ -332,6 +329,7 @@ footer {
   margin-right: 1vw;
 }
 
+/* footer 반응형 */
 @media screen and (max-width: 768px) {
   .footer {
     flex-direction: column;

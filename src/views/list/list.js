@@ -25,8 +25,6 @@ import {
 } from '../components/QuickMenu/event.js';
 import { addSearchBarElement } from '../components/SearchBar/event.js';
 
-// GET / api/item/?id= ...
-
 const itemList = selectElement('.item-list');
 const categorySection = selectElement('#category');
 const quickMenu = selectElement('#quick-menu');
@@ -40,7 +38,7 @@ window.onload = () => {
   removeExpiredItem();
 };
 
-await initializsItems(); // 처음엔 전체 목록
+await initializeItems();
 await addAllElements();
 await addAllEvents();
 
@@ -65,12 +63,12 @@ function addAllEvents() {
     .querySelector('#searchBarBtn')
     .addEventListener('click', handleSearchBtn);
 }
-async function initializsItems() {
-  console.log(category);
+
+async function initializeItems() {
   if (!category) items = await getAllItems();
   else items = await getCategoryItems();
-  console.log('init', items);
 }
+
 async function insertItemElement() {
   let filteredItems = items;
   // 카테고리 내에서의 검색 결과 반영
@@ -84,16 +82,18 @@ async function insertItemElement() {
     alert('검색된 상품이 없습니다.');
     filteredItems = items; // 원래 검색 결과 보여주기
   }
-  searchedItems = []; // 빈객체로 초기화
+  searchedItems = []; // 초기화
   itemList.innerHTML = '';
   filteredItems.forEach(
     ({ _id, itemName, summary, imgUrl, price, deleteFlag, stocks }) => {
-      // isDeleted = true이면 deleted 클래스 넣기
+      // 삭제된 상품, 재고 없는 상품 제외
       if (deleteFlag) return;
       if (stocks === 0) return;
+
+      // 매진 임박 알림
       const aboutStock =
-        stocks <= 5 ? `<i class="fa-regular fa-bell"></i>` : ''; // 주문 임박 아이콘
-      console.log('about stock', aboutStock, stocks);
+        stocks <= 5 ? `<i class="fa-regular fa-bell"></i>` : '';
+
       itemList.innerHTML += `
       <a href="/item/?id=${_id}">
         <div class="item">
@@ -118,6 +118,7 @@ async function insertItemElement() {
   );
 }
 
+// 모든 아이템 가져오기
 async function getAllItems() {
   try {
     const result = await Api.get(`/api/item`);
@@ -127,6 +128,8 @@ async function getAllItems() {
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
+
+// 카테고리 아이템 가져오기
 async function getCategoryItems() {
   try {
     const result = await Api.get(`/api/item/category/${category}`);
@@ -136,6 +139,8 @@ async function getCategoryItems() {
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
 }
+
+// 검색 버튼 클릭
 async function handleSearchBtn(e) {
   e.preventDefault();
   const searchBarInput = document.querySelector('#searchBarInput');
@@ -143,22 +148,23 @@ async function handleSearchBtn(e) {
   if (searchBarInput.value) {
     searchedItems = await getSearchItems(searchBarInput.value);
   } else {
-    // 검색창에 아무것도 없으면
-    initializsItems();
+    // 검색어가 없을 경우
+    initializeItems();
   }
+
+  // 아이템 추가
   insertItemElement();
   searchBarInput.value = '';
 }
 
+// 검색된 아이템 가져오기
 async function getSearchItems(value) {
   try {
     const result = await Api.get(`/api/item/search?query=${value}`);
-    // const data = result.json();
-    console.log(result);
+
     if (result.length === 0) {
       alert('검색된 상품이 없습니다.');
     }
-    // console.log(data);
     const resultToId = result.map(({ _id }) => _id);
 
     return resultToId;
@@ -166,11 +172,4 @@ async function getSearchItems(value) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
-}
-function addStockNumber() {
-  const stockDiv = selectElement('#stock');
-  stockDiv.innerHTML = `
-    <i class="fa-regular fa-bell"></i>
-    매진 임박 상품
-  `;
 }
