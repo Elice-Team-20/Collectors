@@ -90,14 +90,10 @@ class OrderinfoService {
 
   // 1. 받은 정보를 기반으로 주문 정보를 만듦
   // 2. 받은 정보를 기반으로 유져 정보 변경(최신화)
-  async connectOrderAndDecreaseStock(userId, orderInfo) {
+  async connectOrderAndDecreaseStock(userId, orderId) {
     try {
-      // const order = await this.orderModel.findByObjectId(id);
-
-      // 새로운 주문 정보를 만듦
-      const newOrderInfo = await this.orderModel.create(orderInfo);
-      // 주문 정보로 부터 아이디 획득
-      const orderId = newOrderInfo._id.toString();
+      //const order = await this.orderModel.findByObjectId(id);
+      //const orderId = order._id;
       // 주문 정보를 조회해서 데이터 가져옴 ( 정보를  매개변수로 받은걸 그대로 쓸수 있지만
       // db에 number 와 String 차이처럼 저장되는게 다를수도 모른다는 생각을 했습니다)
       const DBorderData = await this.orderModel.findByObjectId({
@@ -147,10 +143,9 @@ class OrderinfoService {
 
   async checkStock(orderInfo) {
     try {
-      const newOrderInfo = await this.orderModel.create(orderInfo);
-      const orderId = newOrderInfo._id.toString();
-      const createdOrder = await this.orderModel.findByObjectId(orderId);
-      const itemList = createdOrder.itemList;
+      //const orderId = newOrderInfo._id.toString();
+      //const createdOrder = await this.orderModel.findByObjectId(orderId);
+      const itemList = orderInfo.itemList;
       const boolList = await Promise.all(
         itemList.map(async (e) => {
           const currItem = await itemService.getItembyObId(e.itemId);
@@ -189,6 +184,33 @@ class OrderinfoService {
     }
     return new Error('등록된 상품이 없습니다.');
   }
+
+  async deleteInfo(orderId) {
+    const deleteResult = await this.orderModel.deleteByObjectId(orderId);
+    if (deleteResult.deletedCount == 0) {
+      return new Error(' 지워진 데이터가 없습니다 아이디를 확인하세요');
+    } else {
+      return deleteResult;
+    }
+  }
+
+  // 취소한 갯수만큼 아이탬 수량 증가하는 함수
+  async addStock(orderId) {
+    // 현재 아이탬  수량 긁어오기
+    const currentOrder = await this.getOrderInfoById(orderId);
+    const orderItemList = currentOrder.itemList;
+    orderItemList.forEach(async (data) => {
+      // 들어온 주문정보에서 수량 긁어오고 마이너스 계산
+      const itemInfo = await itemService.getItembyObId(data.itemId);
+      const updateStock = itemInfo.stocks + data.count;
+      // 수량정보 갱신하기
+      const result = await itemService.updateItem(
+        { _id: data.itemId },
+        { stocks: updateStock },
+      );
+    });
+  }
+
   async deleteAndAddStat(orderId, userId) {
     try {
       const order = await orderInfo.findByObjectId(orderId);
@@ -228,32 +250,6 @@ class OrderinfoService {
     } catch (er) {
       return er;
     }
-  }
-
-  async deleteInfo(orderId) {
-    const deleteResult = await this.orderModel.deleteByObjectId(orderId);
-    if (deleteResult.deletedCount == 0) {
-      return new Error(' 지워진 데이터가 없습니다 아이디를 확인하세요');
-    } else {
-      return deleteResult;
-    }
-  }
-
-  // 취소한 갯수만큼 아이탬 수량 증가하는 함수
-  async addStock(orderId) {
-    // 현재 아이탬  수량 긁어오기
-    const currentOrder = await this.getOrderInfoById(orderId);
-    const orderItemList = currentOrder.itemList;
-    orderItemList.forEach(async (data) => {
-      // 들어온 주문정보에서 수량 긁어오고 마이너스 계산
-      const itemInfo = await itemService.getItembyObId(data.itemId);
-      const updateStock = itemInfo.stocks + data.count;
-      // 수량정보 갱신하기
-      const result = await itemService.updateItem(
-        { _id: data.itemId },
-        { stocks: updateStock },
-      );
-    });
   }
 }
 // 싱글톤
