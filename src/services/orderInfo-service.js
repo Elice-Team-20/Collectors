@@ -3,6 +3,7 @@ import { isElement } from 'lodash';
 import { orderInfo, userModel, itemModel } from '../db/index';
 import { getDate } from '../utils/get-date';
 import { itemService } from './index';
+import { userService } from './user-service';
 
 const checkData = async function (orderId) {
   return (await orderInfo.findByObjectId(orderId)) ? true : false;
@@ -123,9 +124,6 @@ class OrderinfoService {
         },
       });
       const itemList = createdOrder.itemList;
-
-      console.log(itemList);
-
       itemList.forEach(async (e) => {
         try {
           const currItem = await itemService.getItembyObId(e.itemId);
@@ -149,34 +147,22 @@ class OrderinfoService {
     }
   }
 
-  async checkStock(orderInfo) {
-    try {
-      const newOrderInfo = await this.orderModel.create(orderInfo);
-      const orderId = newOrderInfo._id.toString();
-      const createdOrder = await this.orderModel.findByObjectId(orderId);
-      const itemList = createdOrder.itemList;
-      const boolList = await Promise.all(
-        itemList.map(async (e) => {
-          const currItem = await itemService.getItembyObId(e.itemId);
-          const inputItemCount = e.count;
-          const changeStock = await (currItem.stocks - inputItemCount);
-          return changeStock < 0;
-        }),
-      );
-
-      return boolList;
-    } catch (er) {
-      return er;
-    }
-
-    //console.log(flag);
-  }
-
+  // 배송이 완료되면 상태를 '배송 완료'로 바꾸고 누적cost를 업데이트
   async updateInfo(orderId, info) {
-    const order = await this.orderModel.findByObjectId(orderId);
     if (checkData(orderId)) {
-      const result = await this.orderModel.updateByObjectId(orderId, info);
-      return result;
+      const order = await this.orderModel.findByObjectId(orderId);
+      const user = await userService.findByOrderId(orderId);
+      const updateCost = order.totalCost + user.accumulatedTotalCost;
+
+      const updatedOrder = await this.orderModel.updateByObjectId(
+        orderId,
+        info,
+      );
+      const updatedUser = await userService.updateUserInfo(user.id, {
+        accumulatedTotalCost: updateCost,
+      });
+
+      return updatedOrder;
     }
     return new Error('등록된 상품이 없습니다.');
   }
