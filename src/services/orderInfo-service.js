@@ -1,3 +1,5 @@
+import { ForecastService } from 'aws-sdk';
+import { isElement } from 'lodash';
 import { orderInfo, userModel, itemModel } from '../db/index';
 import { getDate } from '../utils/get-date';
 import { itemService } from './index';
@@ -80,7 +82,7 @@ class OrderinfoService {
 
   // 1. 받은 정보를 기반으로 주문 정보를 만듦
   // 2. 받은 정보를 기반으로 유져 정보 변경(최신화)
-  async connectOrderAndInfo(userId, orderInfo) {
+  async connectOrderAndDecreaseStock(userId, orderInfo) {
     try {
       // const order = await this.orderModel.findByObjectId(id);
 
@@ -111,35 +113,47 @@ class OrderinfoService {
           phoneNumber,
         },
       });
-      // 아이탬 업데이트
-      //1 주문 정보에서 아이탬 추출 ()
       const itemList = createdOrder.itemList;
 
       itemList.forEach(async (e) => {
-        try {
-          const currItem = await itemService.getItembyObId(e.itemId);
-          const inputItemCount = e.count;
-          const changeStock = currItem.stocks - inputItemCount;
-          if (changeStock < 0) {
-            return;
-          }
-          const updateReturn = await itemService.updateItem(
-            { _id: e.itemId },
-            { stocks: changeStock },
-          );
-          console.log(updateReturn);
-        } catch (er) {
-          throw new Error(er);
-        }
+        const currItem = await itemService.getItembyObId(e.itemId);
+        const inputItemCount = e.count;
+        const changeStock = currItem.stocks - inputItemCount;
+        const updateReturn = await itemService.updateItem(
+          { _id: e.itemId },
+          { stocks: changeStock },
+        );
       });
-
-      //2 아이탬 stock 줄이기  (0이하 처리)
       const populateRes = await this.userModel.getUserAndPopulate(userId);
       return populateRes;
     } catch (er) {
-      throw new Error(`${er} 에러 발생`);
+      return er;
     }
   }
+
+  async checkStock(orderInfo) {
+    try {
+      const newOrderInfo = await this.orderModel.create(orderInfo);
+      const orderId = newOrderInfo._id.toString();
+      const createdOrder = await this.orderModel.findByObjectId(orderId);
+      const itemList = createdOrder.itemList;
+      const boolList = await Promise.all(
+        itemList.map(async (e) => {
+          const currItem = await itemService.getItembyObId(e.itemId);
+          const inputItemCount = e.count;
+          const changeStock = await (currItem.stocks - inputItemCount);
+          return changeStock < 0;
+        }),
+      );
+
+      return boolList;
+    } catch (er) {
+      return er;
+    }
+
+    //console.log(flag);
+  }
+
   async updateInfo(orderId, info) {
     const order = await this.orderModel.findByObjectId(orderId);
     if (checkData(orderId)) {
