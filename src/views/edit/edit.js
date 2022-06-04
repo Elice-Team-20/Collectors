@@ -87,34 +87,30 @@ async function checkCurrentPassword() {
   const userEmail = emailInput.innerHTML;
 
   // 유저 비밀번호 확인
-  const response = await fetch(`/api/user/checkPassword/${userEmail}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-      userEmail: userEmail,
-    },
-    body: JSON.stringify(),
-  });
+  try {
+    const isMatched = await Api.post(`/api/user/checkPassword/${userEmail}`, {
+      password: currentPassword,
+    });
+    // 비밀번호가 일치하지 않을 때
+    if (!isMatched) {
+      alert('현재 비밀번호를 정확히 입력하세요.');
+      return;
+    }
 
-  const isMatched = response.json();
-
-  // 비밀번호가 일치하지 않을 때
-  if (!isMatched) {
-    alert('현재 비밀번호를 정확히 입력하세요.');
-    return;
+    // 비밀번호가 일치할 때
+    fullNameInput.disabled = false;
+    newPasswordInput.disabled = false;
+    passwordConfirmInput.disabled = false;
+    addressButton.disabled = false;
+    postcode.disabled = false;
+    address.disabled = false;
+    detailAddress.disabled = false;
+    phoneNumberInput.disabled = false;
+    submitButton.disabled = false;
+  } catch (err) {
+    console.error(err);
+    alert(`${err}`);
   }
-
-  // 비밀번호가 일치할 때
-  fullNameInput.disabled = false;
-  newPasswordInput.disabled = false;
-  passwordConfirmInput.disabled = false;
-  addressButton.disabled = false;
-  postcode.disabled = false;
-  address.disabled = false;
-  detailAddress.disabled = false;
-  phoneNumberInput.disabled = false;
-  submitButton.disabled = false;
 }
 
 // 유저 데이터 수정하기
@@ -190,4 +186,5 @@ async function updateUserData(e) {
   }
 
   alert('수정되었습니다.');
+  window.location.href = '/user/info';
 }
