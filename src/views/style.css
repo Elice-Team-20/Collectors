@@ -10,7 +10,9 @@ a {
   list-style: none;
   scroll-behavior: smooth;
 }
-
+section {
+  min-height: 90vh;
+}
 .input,
 select {
   width: 100%;

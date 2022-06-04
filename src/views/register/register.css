@@ -1,10 +1,3 @@
-/* .register-user-form-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-} */
-
 section {
   display: flex;
   align-items: center;
@@ -18,7 +11,7 @@ section {
   justify-content: space-between;
 
   width: 40%;
-  height: 80vh;
+  height: 70vh;
 }
 
 .register-user-form-box .field {
@@ -28,27 +21,4 @@ section {
 .register-user-form-box .field .label {
   display: block;
   margin-bottom: 10px;
-}
-
-#socialLoginBtnBox {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  column-gap: 3%;
-  width: 100%;
-  height: 5vh;
-}
-.social-btn {
-  border-radius: 10px;
-  height: 100%;
-  border-style: none;
-}
-#socialLoginBtnBox #naverBtn {
-  background-color: #03c75a;
-}
-#socialLoginBtnBox #kakaoBtn {
-  background-color: #fee500;
-  color: #000000;
-}
-#socialLoginBtnBox #googleBtn {
-  background-color: #4285f4;
 }

@@ -32,9 +32,6 @@ function addAllEvents() {
   addNavEventListeners();
   handleHamburger();
   submitButton.addEventListener('click', handleSubmit);
-  naverBtn.addEventListener('click', handleNaverBtn);
-  kakaoBtn.addEventListener('click', handleKakaoBtn);
-  googleBtn.addEventListener('click', handleGoogleBtn);
 }
 
 // 회원가입 진행
@@ -78,16 +75,4 @@ async function handleSubmit(e) {
     console.error(err.stack);
     alert(`문제가 발생하였습니다. 확인 후 다시 시도해 주세요: ${err.message}`);
   }
-}
-function handleNaverBtn(e) {
-  e.preventDefault();
-  window.location.href = '/api/auth/naver';
-}
-function handleKakaoBtn(e) {
-  e.preventDefault();
-  window.location.href = '/api/auth/kakao/start';
-}
-function handleGoogleBtn(e) {
-  e.preventDefault();
-  window.location.href = '/api/auth/google';
 }
