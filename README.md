@@ -1,6 +1,4 @@
-
-<img src="https://team20.s3.ap-northeast-2.amazonaws.com/image/2e32c500e182-11ec-83b6-a91808427d79.png" alt="Collector's" style="backgroundColor:black;" />
-
+<img src="/src/views/box_logo.png" alt="Collector's" style="margin: 0 auto; display: block;"/>
 
 # Collector’s
 
