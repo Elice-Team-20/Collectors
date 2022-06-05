@@ -1,62 +1,108 @@
-# 쇼핑몰 웹 서비스 프로젝트
 
-제품들을 조회하고, 장바구니에 추가하고, 또 주문을 할 수 있는 쇼핑몰 웹 서비스 제작 프로젝트입니다. <br />
-**웹 구현 예시** (링크는 프로젝트 기간에만 유효합니다)
-
-### http://shopping-demo.elicecoding.com/
-
-<br>
-
-** 핵심 기능은 하기입니다. (이외에도 더 있으며, 추가 안내 될 프로젝트 평가기준표에서 구체화될 예정입니다.) <br>
-1. 회원가입, 로그인, 회원정보 수정 등 **유저 정보 관련 CRUD** 
-2. **제품 목록**을 조회 및, **제품 상세 정보**를 조회 가능함. 
-3. 장바구니에 제품을 추가할 수 있으며, **장바구니에서 CRUD** 작업이 가능함.
-4. 장바구니는 서버 DB가 아닌, 프론트 단에서 저장 및 관리됨 (localStorage, indexedDB 등)
-5. 장바구니에서 주문을 진행하며, **주문 완료 후 조회 및 삭제**가 가능함.
-
-## 주요 사용 기술
-
-### 1. 프론트엔드
-
-- **Vanilla javascript**, html, css (**Bulma css**)
-- Font-awesome 
-- Daum 도로명 주소 api 
-- 이외
-
-### 2. 백엔드 
-
-- **Express** (nodemon, babel-node로 실행됩니다.)
-- Mongodb, Mongoose
-- cors
-- 이외
-
-## 폴더 구조
-- 프론트: `src/views` 폴더 
-- 백: src/views 이외 폴더 전체
-- 실행: **프론트, 백 동시에, express로 실행**
+<img src="https://team20.s3.ap-northeast-2.amazonaws.com/image/2e32c500e182-11ec-83b6-a91808427d79.png" alt="Collector's" style="backgroundColor:black;" />
 
 
+# Collector’s
 
-## 설치 방법
+빠르게 변화하는 현대 사회에서 살아가는 많은 사람들은 한 번쯤 자신이 초능력이나 마법 능력을 갖는 상상을 합니다. 사람들은 가끔씩 강력한 힘을 가지거나 천재적인 두뇌를 보유하여 자신의 이름을 세상에 남길만한 업적을 이루는 것을 상상하곤 합니다. 이러한 사람들의 니즈를 충족시키기 위해 팀스물은 여러분들을 위한 여러 능력들을 모아 판매하고 있습니다.
 
-1. **.env 파일 설정 (MONGODB_URL 환경변수를, 개인 로컬 혹은 Atlas 서버 URL로 설정해야 함)**
+수많은 사람들의 상상을 실현시켜줄 수 있는 쇼핑몰, **Collector’s**에 방문해보세요!
 
-2. express 실행
 
-```bash
-# npm 을 쓰는 경우 
-npm install
-npm run start
+## 1. Stacks
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white" />
+<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white" />
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white" />
+<img src="https://img.shields.io/badge/Swiper-6332F6?style=flat&logo=Swiper&logoColor=white" />
+<img src="https://img.shields.io/badge/Font Awesome-528DD7?style=flat&logo=FontAwesome&logoColor=white" />
+<br />
+<img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=white" />
+<img src="https://img.shields.io/badge/Express-000000?style=flat&logo=Express&logoColor=white" />
+<img src="https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=MongoDB&logoColor=white" />
+<img src="https://img.shields.io/badge/AmazonS3-569A31?style=flat&logo=AmazonS3&logoColor=white" />
+<br />
+<img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=Git&logoColor=white" />
+<img src="https://img.shields.io/badge/GitLab-FC6D26?style=flat&logo=GitLab&logoColor=white" />
+<br />
+<img src="https://img.shields.io/badge/Prettier-F7B93E?style=flat&logo=Prettier&logoColor=white" />
+<img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white" />
+<img src="https://img.shields.io/badge/Figma-F24E1E?style=flat&logo=Figma&logoColor=white" />
+<img src="https://img.shields.io/badge/VS Code-007ACC?&style=flat&logo=visualstudiocode&logoColor=white" />
 
-# yarn 을 쓰는 경우
-yarn
-yarn start
-```
 
-<br>
+## 2. 서비스 주요 기능
 
----
+> **전체 기능**
+> 
+1. GNB(Global Navigation Bar)
+2. 사이드 퀵 메뉴와 TopScroll 버튼
 
-본 프로젝트에서 제공하는 모든 코드 등의는 저작권법에 의해 보호받는 ㈜엘리스의 자산이며, 무단 사용 및 도용, 복제 및 배포를 금합니다.
-Copyright 2022 엘리스 Inc. All rights reserved.
+> **유저 기능**
+> 
+1. 회원 가입 및 로그인
+2. 소셜 로그인 - 카카오, 네이버, 구글
+3. 로그아웃 및 회원 탈퇴
+4. 홈페이지 메인
+    - 매진 임박 상품 추천 섹션
+    - 신상품 섹션
+    - 10,000원 이하 상품 섹션
+5. 최근 본 상품 기능
+6. 상품 목록 페이지
+    - 카테고리별 상품 조회 기능
+    - 상품명, 상품 태그 검색 기능
+    - 매진 임박 스티커 기능
 
+> **계정 관리 기능**
+> 
+1. 회원 정보 확인 기능
+    - 구매 누적 금액에 따른 회원 등급을 통해 구매 유도
+    - 구매 상품 내역에 따른 Stat 부여를 통해 구매 유도
+2. 회원 정보 수정 기능
+    - 비밀번호 변경 기능
+3. 회원 탈퇴 기능
+
+> **주문 기능**
+> 
+1. 장바구니 기능
+    - 상품 추가
+    - 수량 조절 가능
+    - 전체 삭제, 선택 삭제 기능
+    - 품절 상품 자동 제거 기능
+2. 주문하기 기능
+    - 배송지 정보 입력 - Daum api
+    - 요청 사항 선택 기능 - 직접 추가 가능
+    - 회원 등급에 따른 할인 혜택 부여
+3. 주문 내역 조회
+    - 주문 취소 기능
+
+
+> **관리자 기능**
+> 
+1. 상품 등록 기능
+    - 상품 상세 정보 입력 기능
+    - 상품 이미지 삽입
+    - 상품 검색 키워드 설정 기능
+2. 상품 관리 기능
+    - 상품 삭제 기능
+3. 상품 정보 수정 기능
+    - 상품 상세 정보 수정 기능
+    - 상품 검색 키워드 수정 기능
+4. 주문 내역 조회 기능
+    - 전 회원 주문 내역 조회
+    - 배송 상태 변경
+    - 주문 취소
+
+
+## 4. 서비스 흐름
+
+- 일반 회원
+- 관리자
+
+## 5. 프로젝트 팀원 역할 분담
+
+| 이름 | 담당 업무 |
+| --- | --- |
+| 김예리 | 팀장 / 프론트엔드 개발 |
+| 이형민 | 프론트엔드 개발 |
+| 김혜령 | 백엔드 개발 |
+| 김명진 | 백엔드 개발 |
