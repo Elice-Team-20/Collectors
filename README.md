@@ -1,10 +1,12 @@
 <img src="/src/views/box_logo.png" alt="Collector's" style="margin: 0 auto; display: block;"/>
 
+# http://kdt-sw2-seoul-team20.elicecoding.com/
+
 # Collector’s
 
 빠르게 변화하는 현대 사회에서 살아가는 많은 사람들은 한 번쯤 자신이 초능력이나 마법 능력을 갖는 상상을 합니다. 사람들은 가끔씩 강력한 힘을 가지거나 천재적인 두뇌를 보유하여 자신의 이름을 세상에 남길만한 업적을 이루는 것을 상상하곤 합니다. 이러한 사람들의 니즈를 충족시키기 위해 팀스물은 여러분들을 위한 여러 능력들을 모아 판매하고 있습니다.
 
-수많은 사람들의 상상을 실현시켜줄 수 있는 쇼핑몰, **Collector’s**에 방문해보세요!
+수많은 사람들의 상상을 실현시켜줄 수 있는 쇼핑몰, <a href="http://kdt-sw2-seoul-team20.elicecoding.com/">Collector’s</a>에 방문해보세요!
 
 
 ## 1. Stacks
