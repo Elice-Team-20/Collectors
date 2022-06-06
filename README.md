@@ -10,25 +10,32 @@
 
 
 ## 1. Stacks
+<div>
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white" />
 <img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white" />
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white" />
 <img src="https://img.shields.io/badge/Swiper-6332F6?style=flat&logo=Swiper&logoColor=white" />
 <img src="https://img.shields.io/badge/Font Awesome-528DD7?style=flat&logo=FontAwesome&logoColor=white" />
-<br />
+</div>
+
+<div>
 <img src="https://img.shields.io/badge/Node.js-339933?style=flat&logo=Node.js&logoColor=white" />
 <img src="https://img.shields.io/badge/Express-000000?style=flat&logo=Express&logoColor=white" />
 <img src="https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=MongoDB&logoColor=white" />
 <img src="https://img.shields.io/badge/AmazonS3-569A31?style=flat&logo=AmazonS3&logoColor=white" />
-<br />
+</div>
+
+<div>
 <img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=Git&logoColor=white" />
 <img src="https://img.shields.io/badge/GitLab-FC6D26?style=flat&logo=GitLab&logoColor=white" />
-<br />
+</div>
+
+<div>
 <img src="https://img.shields.io/badge/Prettier-F7B93E?style=flat&logo=Prettier&logoColor=white" />
 <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white" />
 <img src="https://img.shields.io/badge/Figma-F24E1E?style=flat&logo=Figma&logoColor=white" />
 <img src="https://img.shields.io/badge/VS Code-007ACC?&style=flat&logo=visualstudiocode&logoColor=white" />
-
+</div>
 
 ## 2. 서비스 주요 기능
 
