@@ -5,8 +5,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index.js --exec babel-node",
-    "build": "--name express start npm -- run start"
+    "start": "babel-node index.js",
+    "heroku-postbuild": "npm install"
   },
   "dependencies": {
     "@sindresorhus/is": "^4.6.0",
