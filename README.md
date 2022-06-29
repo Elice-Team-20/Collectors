@@ -1,6 +1,6 @@
 <img src="/src/views/box_logo.png" alt="Collector's" style="margin: 0 auto; display: block;"/>
 
-# http://kdt-sw2-seoul-team20.elicecoding.com/
+# https://collectors-twenty.herokuapp.com/
 
 # Collector’s
 
