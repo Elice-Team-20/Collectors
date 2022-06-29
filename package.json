@@ -36,5 +36,8 @@
     "@babel/preset-env": "^7.16.11",
     "nanoid": "^3.3.4",
     "nodemon": "^2.0.15"
-  }
+  },
+  "engines":{
+    "node": "16.14.0"
+  },
 }
