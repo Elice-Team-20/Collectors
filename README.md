@@ -1,8 +1,8 @@
 <img src="/src/views/box_logo.png" alt="Collector's" style="margin: 0 auto; display: block;"/>
 
-# https://collectors-twenty.herokuapp.com/
+~# https://collectors-twenty.herokuapp.com/~
 # 임시주소 
-http://3.36.7.48:5000/
+[임시주소](http://3.36.7.48:5000/)
 
 # Collector’s
 
